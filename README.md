@@ -12,8 +12,8 @@
 ```
 Start Mysql server if not running (e.g. mysqld).
 
-mysqladmin -u root create paproject -p
-mysqladmin -u root create paprojecttest -p
+mysqladmin -u root create tfg -p
+mysqladmin -u root create tfgtest -p
 
 mysql -u root -p
     CREATE USER 'tfg'@'localhost' IDENTIFIED BY 'tfg';
