@@ -1,7 +1,120 @@
+/* Bright Retro Font */
+@font-face {
+    font-family: 'BrightRetro';
+    src: url('./fonts/bright.ttf') format('truetype');
+}
+
+/* Color palette*/
+:root{
+    --light-black: #1F1E1E;
+    --light-grey: #F6F6EE;
+    --pastel-blue: #DAE7EB;
+    --pastel-pink: #F9E7DD;
+    --medium-pink: #F6D1BE;
+    --dark-pink: #F4B08D;
+}
+
 .navbar-collapse {
     text-align: center;
 }
 
 .form-group > label > span {
     font-weight: bold;
+}
+
+body{
+    font-family: 'Roboto',sans-serif;
+    background-color: var(--light-grey);
+}
+
+h2{
+    font-family: 'BrightRetro', sans-serif;
+    font-size: 32px;
+    text-align: center;
+}
+
+
+/* Specific styles */
+.logo-link{
+    font-family: 'BrightRetro', sans-serif;
+    font-size: 48px;
+    color: var(--light-black);
+}
+
+/* Background colors */
+.back-color-blue{
+    background-color: var(--pastel-blue);
+}
+
+.back-color-pink{
+    background-color: var(--pastel-pink);
+}
+
+.back-color-grey{
+    background-color: var(--light-grey);
+}
+
+/* Buttons */
+.button-pink{
+    background-color: var(--medium-pink);
+    color: var(--light-black);
+    font-size: 18px;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.button-pink:hover{
+    background-color: var(--dark-pink);
+    font-weight: bold;
+    border: 2px solid #ccc;
+}
+
+.button-light-pink{
+    background-color: var(--pastel-pink);
+    color: var(--light-black);
+    font-size: 18px;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.button-light-pink:hover{
+    background-color: var(--medium-pink);
+    border: 2px solid #ccc;
+}
+
+/* Bold title labels */
+.bold-label {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Links */
+.link-style{
+    color: var(--light-black);
+    font-style: italic;
+    font-size: 20px;
+    text-decoration: underline;
+}
+.link-style:hover{
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+.italic-message{
+    color: var(--light-black);
+    font-style: italic;
+}
+
+.custom-country-dropdown {
+    width: 100%;
+    padding: 8px;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
 }

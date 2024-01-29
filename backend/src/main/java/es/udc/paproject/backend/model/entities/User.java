@@ -4,30 +4,51 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+import java.time.LocalDate;
 
 @Entity
 public class User {
 	
-	public enum RoleType {USER};
+	public enum RoleType {USER, SELLER};
 
 	private Long id;
 	private String userName;
+	private String email;
 	private String password;
 	private String firstName;
-	private String lastName;
-	private String email;
+
+	private String language;
+	private String country;
+	private String crochetLevel;
+	private String knitLevel;
+	private String bio;
+
 	private RoleType role;
 
-	public User() {}
+	public User(){}
 
-	public User(String userName, String password, String firstName, String lastName, String email) {
-
+	public User(String userName, String email, String password, String firstName){
 		this.userName = userName;
+		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
-		this.lastName = lastName;
+	}
+
+	public User(String userName, String email, String password, String firstName, String language, String country, String crochetLevel, String knitLevel, String bio) {
+
+		this.userName = userName;
 		this.email = email;
-		
+		this.password = password;
+		this.firstName = firstName;
+		this.language = language;
+		this.country = country;
+		this.crochetLevel = crochetLevel;
+		this.knitLevel = knitLevel;
+		this.bio = bio;
 	}
 
 	@Id
@@ -48,6 +69,14 @@ public class User {
 		this.userName = userName;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -64,20 +93,45 @@ public class User {
 		this.firstName = firstName;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getLanguage() {
+		return language;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getCountry() {
+		return country;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+
+	public String getCrochetLevel() {
+		return crochetLevel;
+	}
+
+	public void setCrochetLevel(String crochetLevel) {
+		this.crochetLevel = crochetLevel;
+	}
+
+	public String getKnitLevel() {
+		return knitLevel;
+	}
+
+	public void setKnitLevel(String knitLevel) {
+		this.knitLevel = knitLevel;
+	}
+
+	public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
 	}
 
 	public RoleType getRole() {

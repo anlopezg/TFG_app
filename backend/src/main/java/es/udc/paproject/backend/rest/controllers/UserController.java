@@ -12,16 +12,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
@@ -124,8 +115,7 @@ public class UserController {
 			throw new PermissionException();
 		}
 		
-		return toUserDto(userService.updateProfile(id, userDto.getFirstName(), userDto.getLastName(),
-			userDto.getEmail()));
+		return toUserDto(userService.updateProfile(id, userDto.getEmail(), userDto.getFirstName(), userDto.getLanguage(), userDto.getCountry(),userDto.getCrochetLevel(), userDto.getKnitLevel(), userDto.getBio()));
 		
 	}
 	
@@ -150,5 +140,19 @@ public class UserController {
 		return jwtGenerator.generate(jwtInfo);
 		
 	}
+
+	@DeleteMapping("/{id}")
+	public void deleteProfile(@RequestAttribute Long userId, @PathVariable Long id) throws PermissionException, InstanceNotFoundException{
+
+		System.out.println("Path variable is : "+ id +"Request Attribute is: " +userId);
+
+		if(!id.equals(userId)){
+			throw new PermissionException();
+		}
+
+		userService.deleteProfile(id);
+
+	}
+
 	
 }

@@ -1,9 +1,9 @@
 export default {
 
-    'project.app.Footer.text': 'PA Project - Area of Telematics Engineering - University of A Coruña',
+    'project.app.Footer.text': 'TFG - Andrea López González',
     'project.app.Header.home': 'Home',
     'project.app.Header.logout': 'Logout',
-    'project.app.Home.welcome': 'MiniPortal main page content!',
+    'project.app.Home.welcome': 'Welcome to Yarn Crafters!',
 
     'project.common.ErrorDialog.title': 'Error',
 
@@ -13,16 +13,27 @@ export default {
     'project.global.buttons.ok': 'OK',
     'project.global.buttons.back': 'Back',
     'project.global.buttons.save': 'Save',
+    'project.global.buttons.submit': 'Submit',
     'project.global.exceptions.NetworkError': 'Network error',
     'project.global.fields.date': 'Date',
     'project.global.fields.email': 'Email address',
     'project.global.fields.firstName': 'First name',
-    'project.global.fields.lastName': 'Last name',
-    'project.global.fields.name': 'Name',
+    'project.global.fields.language': 'Language',
+    'project.global.fields.country': 'Country',
+    'project.global.fields.select.country': 'Select a country',
+    'project.global.fields.crochetLevel': 'Crochet level',
+    'project.global.fields.knitLevel': 'Knit level',
+    'project.global.fields.level.none': 'None',
+    'project.global.fields.level.beginner': 'Beginner',
+    'project.global.fields.level.intermediate': 'Intermediate',
+    'project.global.fields.level.advanced': 'Advanced',
+    'project.global.fields.bio': 'Bio',
+    'project.global.fields.name': 'First name',
     'project.global.fields.password': 'Password',
     'project.global.fields.postalAddress': 'Postal address',
     'project.global.fields.postalCode': 'Postal code',
     'project.global.fields.userName': 'Username',
+    'project.global.form.introduction': 'Fill in all the following inputs',
     'project.global.validator.email': 'Provide a correct e-mail address',
     'project.global.validator.passwordsDoNotMatch': 'Passwords do not match',
     'project.global.validator.required': 'Required field',
@@ -34,6 +45,13 @@ export default {
     'project.users.Login.title': 'Login',
     'project.users.SignUp.fields.confirmPassword': 'Confirm password',
     'project.users.SignUp.title': 'Sign up',
-    'project.users.UpdateProfile.title': 'Update profile'
+    'project.users.SignUp.here': 'Sign up here',
+    'project.users.SignUp.message': 'Don´t have an account?',
+    'project.users.UpdateProfile.title': 'Update profile',
+    'project.users.DeleteProfile.title': 'Delete profile',
+    'project.users.DeleteProfile.message': 'Are you sure you want to delete your profile?',
+    'project.users.ViewProfile.title' : 'View profile',
+    'project.users.ProfileInfo.title' : 'My profile information'
+
 
 }

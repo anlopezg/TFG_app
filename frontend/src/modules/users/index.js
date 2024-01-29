@@ -8,5 +8,7 @@ export {default as SignUp} from './components/SignUp';
 export {default as UpdateProfile} from './components/UpdateProfile';
 export {default as ChangePassword} from './components/ChangePassword';
 export {default as Logout} from './components/Logout';
+export {default as ViewProfile} from './components/ViewProfile.jsx';
+export {default as DeleteProfile} from './components/DeleteProfile.jsx';
 
 export default {actions, actionTypes, reducer, selectors};

@@ -1,7 +1,9 @@
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 import {Errors} from '../../common';
 import * as actions from '../actions';
@@ -11,11 +13,19 @@ const SignUp = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [userName, setUserName] = useState('');
+    const [email, setEmail]  = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail]  = useState('');
+    const [language, setLanguage] = useState('');
+    const [country, setCountry] = useState(null);
+    const [crochetLevel, setCrochetLevel] = useState('');
+    const [knitLevel, setKnitLevel] = useState('');
+    const [bio, setBio] = useState('');
+
+    //const [country, setCountry] = useState('');
+    const [region, setRegion] = useState('');
+
     const [backendErrors, setBackendErrors] = useState(null);
     const [passwordsDoNotMatch, setPasswordsDoNotMatch] = useState(false);
     let form;
@@ -29,10 +39,16 @@ const SignUp = () => {
             
             dispatch(actions.signUp(
                 {userName: userName.trim(),
-                password: password,
-                firstName: firstName.trim(),
-                lastName: lastName.trim(),
-                email: email.trim()},
+                    email: email.trim(),
+                    password: password,
+                    firstName: firstName.trim(),
+                    language: language.trim(),
+                    country: country.trim(),
+                    crochetLevel: crochetLevel.trim(),
+                    knitLevel: knitLevel.trim(),
+                    bio: bio.trim()
+
+                },
                 () => navigate('/'),
                 errors => setBackendErrors(errors),
                 () => {
@@ -77,110 +93,205 @@ const SignUp = () => {
     return (
         <div>
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
-            <div className="card bg-light border-dark">
-                <h5 className="card-header">
-                    <FormattedMessage id="project.users.SignUp.title"/>
-                </h5>
-                <div className="card-body">
-                    <form ref={node => form = node}
-                        className="needs-validation" noValidate 
-                        onSubmit={e => handleSubmit(e)}>
-                        <div className="form-group row">
-                            <label htmlFor="userName" className="col-md-3 col-form-label">
-                                <FormattedMessage id="project.global.fields.userName"/>
-                            </label>
-                            <div className="col-md-4">
-                                <input type="text" id="userName" className="form-control"
-                                    value={userName}
-                                    onChange={e => setUserName(e.target.value)}
-                                    autoFocus
-                                    required/>
-                                <div className="invalid-feedback">
-                                    <FormattedMessage id='project.global.validator.required'/>
+            <div className="mt-4 mb-4 container d-flex justify-content-center align-items-center">
+                <div className="card bg-light mb-3 ">
+                    <h2 className="card-header back-color-pink">
+                        <FormattedMessage id="project.users.SignUp.title"/>
+                    </h2>
+                    <div className="card-body back-color-grey">
+                        <form ref={node => form = node}
+                            className="needs-validation" noValidate
+                            onSubmit={e => handleSubmit(e)}>
+
+                            <div className="text-center back-color-grey">
+                                <div className="italic-message">
+                                    <FormattedMessage id="project.global.form.introduction"/>
                                 </div>
                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label htmlFor="password" className="col-md-3 col-form-label">
-                                <FormattedMessage id="project.global.fields.password"/>
-                            </label>
-                            <div className="col-md-4">
-                                <input type="password" id="password" className="form-control"
-                                    value={password}
-                                    onChange={e => setPassword(e.target.value)}
-                                    required/>
-                                <div className="invalid-feedback">
-                                    <FormattedMessage id='project.global.validator.required'/>
+
+                            <div className="form-group row">
+                                <label htmlFor="userName" className="col-md-12 col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.userName"/>
+                                </label>
+                                <div className="col-md-12">
+                                    <input type="text" id="userName" className="form-control"
+                                        value={userName}
+                                        onChange={e => setUserName(e.target.value)}
+                                        autoFocus
+                                        required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label htmlFor="confirmPassword" className="col-md-3 col-form-label">
-                                <FormattedMessage id="project.users.SignUp.fields.confirmPassword"/>
-                            </label>
-                            <div className="col-md-4">
-                                <input ref={node => confirmPasswordInput = node}
-                                    type="password" id="confirmPassword" className="form-control"
-                                    value={confirmPassword}
-                                    onChange={e => handleConfirmPasswordChange(e.target.value)}
-                                    required/>
-                                <div className="invalid-feedback">
-                                    {passwordsDoNotMatch ?
-                                        <FormattedMessage id='project.global.validator.passwordsDoNotMatch'/> :
-                                        <FormattedMessage id='project.global.validator.required'/>}
+                            <div className="form-group row">
+                                <label htmlFor="email" className="col-md-12 col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.email"/>
+                                </label>
+                                <div className="col-md-12">
+                                    <input type="email" id="email" className="form-control"
+                                           value={email}
+                                           onChange={e => setEmail(e.target.value)}
+                                           required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.email'/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label htmlFor="firstName" className="col-md-3 col-form-label">
-                                <FormattedMessage id="project.global.fields.firstName"/>
-                            </label>
-                            <div className="col-md-4">
-                                <input type="text" id="firstName" className="form-control"
-                                    value={firstName}
-                                    onChange={e => setFirstName(e.target.value)}
-                                    required/>
-                                <div className="invalid-feedback">
-                                    <FormattedMessage id='project.global.validator.required'/>
+                            <div className="form-group row">
+                                <label htmlFor="password" className="col-md-12 col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.password"/>
+                                </label>
+                                <div className="col-md-12">
+                                    <input type="password" id="password" className="form-control"
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
+                                        required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label htmlFor="lastName" className="col-md-3 col-form-label">
-                                <FormattedMessage id="project.global.fields.lastName"/>
-                            </label>
-                            <div className="col-md-4">
-                                <input type="text" id="lastName" className="form-control"
-                                    value={lastName}
-                                    onChange={e => setLastName(e.target.value)}
-                                    required/>
-                                <div className="invalid-feedback">
-                                    <FormattedMessage id='project.global.validator.required'/>
+                            <div className="form-group row">
+                                <label htmlFor="confirmPassword" className="col-md-12 col-form-label bold-label">
+                                    <FormattedMessage id="project.users.SignUp.fields.confirmPassword"/>
+                                </label>
+                                <div className="col-md-12">
+                                    <input ref={node => confirmPasswordInput = node}
+                                        type="password" id="confirmPassword" className="form-control"
+                                        value={confirmPassword}
+                                        onChange={e => handleConfirmPasswordChange(e.target.value)}
+                                        required/>
+                                    <div className="invalid-feedback">
+                                        {passwordsDoNotMatch ?
+                                            <FormattedMessage id='project.global.validator.passwordsDoNotMatch'/> :
+                                            <FormattedMessage id='project.global.validator.required'/>}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label htmlFor="email" className="col-md-3 col-form-label">
-                                <FormattedMessage id="project.global.fields.email"/>
-                            </label>
-                            <div className="col-md-4">
-                                <input type="email" id="email" className="form-control"
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                    required/>
-                                <div className="invalid-feedback">
-                                    <FormattedMessage id='project.global.validator.email'/>
+                            <div className="form-group row">
+                                <label htmlFor="firstName" className="col-md-12 col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.firstName"/>
+                                </label>
+                                <div className="col-md-12">
+                                    <input type="text" id="firstName" className="form-control"
+                                        value={firstName}
+                                        onChange={e => setFirstName(e.target.value)}
+                                        required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <div className="offset-md-3 col-md-2">
-                                <button type="submit" className="btn btn-primary">
-                                    <FormattedMessage id="project.users.SignUp.title"/>
-                                </button>
+
+                            <div className="container m-0 p-0">
+                                <div className="form-group row ">
+                                    <div className="col-md-6">
+                                        <label htmlFor="language" className="col-form-label bold-label">
+                                            <FormattedMessage id="project.global.fields.language"/>
+                                        </label>
+
+                                        <input type="text" id="language" className="form-control"
+                                        value={language}
+                                        onChange={e => setLanguage(e.target.value)}
+                                        required/>
+                                        <div className="invalid-feedback">
+                                            <FormattedMessage id='project.global.validator.required'/>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="country" className="col-form-label bold-label">
+                                            <FormattedMessage id="project.global.fields.country"/>
+                                        </label>
+
+                                        <CountryDropdown
+                                            value={country}
+                                            onChange={(val) => setCountry(val)}
+                                            defaultOptionLabel={<FormattedMessage id="project.global.fields.select.country"/>}
+                                            id="country" className="form-control custom-country-dropdown"/>
+                                        <div className="invalid-feedback">
+                                            <FormattedMessage id='project.global.validator.required'/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+
+                            <div className="container m-0 p-0">
+                                <div className="form-group row ">
+                                    <div className="col-md-6">
+                                        <label htmlFor="crochetLevel" className=" col-form-label bold-label">
+                                            <FormattedMessage id="project.global.fields.crochetLevel"/>
+                                        </label>
+
+                                        <select id="crochetLevel" className="form-control" value={crochetLevel}
+                                                onChange={e => setCrochetLevel(e.target.value)}
+                                                required>
+                                            <option value="None">
+                                                <FormattedMessage id="project.global.fields.level.none"/></option>
+                                            <option value="Beginner">
+                                                <FormattedMessage id="project.global.fields.level.beginner"/></option>
+                                            <option value="Intermediate">
+                                                <FormattedMessage id="project.global.fields.level.intermediate"/></option>
+                                            <option value="Advanced">
+                                                <FormattedMessage id="project.global.fields.level.advanced"/></option>
+                                        </select>
+                                        <div className="invalid-feedback">
+                                            <FormattedMessage id='project.global.validator.required'/>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="knitLevel" className="col-form-label bold-label">
+                                            <FormattedMessage id="project.global.fields.knitLevel"/>
+                                        </label>
+
+                                        <select id="knitLevel" className="form-control" value={knitLevel}
+                                                onChange={e => setKnitLevel(e.target.value)}
+                                                required>
+                                            <option value="None">
+                                                <FormattedMessage id="project.global.fields.level.none"/></option>
+                                            <option value="Beginner">
+                                                <FormattedMessage id="project.global.fields.level.beginner"/></option>
+                                            <option value="Intermediate">
+                                                <FormattedMessage id="project.global.fields.level.intermediate"/></option>
+                                            <option value="Advanced">
+                                                <FormattedMessage id="project.global.fields.level.advanced"/></option>
+                                        </select>
+                                        <div className="invalid-feedback">
+                                            <FormattedMessage id='project.global.validator.required'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-group row">
+                                <label htmlFor="bio" className="col-md-12 col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.bio"/>
+                                </label>
+                                <div className="col-md-12">
+                                    <textarea  id="bio" className="form-control" rows="2"
+                                           value={bio}
+                                           maxLength={200}
+                                           onChange={e => setBio(e.target.value)}
+                                           required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="form-group row">
+                                <div className="offset-md-3 col-md-2 ml-auto d-flex justify-content-end">
+                                    <button type="submit" className="btn button-pink bold-label">
+                                        <FormattedMessage id="project.users.SignUp.title"/>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

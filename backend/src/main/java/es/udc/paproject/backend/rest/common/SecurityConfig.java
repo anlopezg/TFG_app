@@ -36,6 +36,8 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/users/loginFromServiceToken").permitAll()
 				.requestMatchers(HttpMethod.PUT, "/users/*").hasRole("USER")
 				.requestMatchers(HttpMethod.POST, "/users/*/changePassword").hasRole("USER")
+				.requestMatchers(HttpMethod.DELETE, "/users/*").hasRole("USER")
+				.requestMatchers(HttpMethod.DELETE, "/users/*").hasRole("SELLER")
 				.anyRequest().denyAll());
 
 		return http.build();

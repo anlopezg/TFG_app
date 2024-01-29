@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
+
 public class UserDto {
 	
 	public interface AllValidations {}
@@ -12,23 +14,33 @@ public class UserDto {
 
 	private Long id;
 	private String userName;
+	private String email;
 	private String password;
 	private String firstName;
-	private String lastName;
-	private String email;
+	private String language;
+	private String country;
+	private String crochetLevel;
+	private String knitLevel;
+	private String bio;
+
 	private String role;
 
 	public UserDto() {}
 
-	public UserDto(Long id, String userName, String firstName, String lastName, String email, String role) {
+	public UserDto(Long id, String userName, String email, String firstName, String language, String country, String crochetLevel, String knitLevel, String bio, String role) {
 
 		this.id = id;
 		this.userName = userName != null ? userName.trim() : null;
-		this.firstName = firstName.trim();
-		this.lastName = lastName.trim();
 		this.email = email.trim();
+		this.firstName = firstName.trim();
+		this.language = language.trim();
+		this.country = country.trim();
+		this.crochetLevel = crochetLevel.trim();
+		this.knitLevel = knitLevel.trim();
+		this.bio = bio.trim();
+
 		this.role = role;
-		
+
 	}
 
 	public Long getId() {
@@ -71,16 +83,6 @@ public class UserDto {
 
 	@NotNull(groups={AllValidations.class, UpdateValidations.class})
 	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName.trim();
-	}
-
-	@NotNull(groups={AllValidations.class, UpdateValidations.class})
-	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
 	@Email(groups={AllValidations.class, UpdateValidations.class})
 	public String getEmail() {
 		return email;
@@ -88,6 +90,51 @@ public class UserDto {
 
 	public void setEmail(String email) {
 		this.email = email.trim();
+	}
+
+	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
+	public String getCrochetLevel() {
+		return crochetLevel;
+	}
+
+	public void setCrochetLevel(String crochetLevel) {
+		this.crochetLevel = crochetLevel;
+	}
+
+	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
+	public String getKnitLevel() {
+		return knitLevel;
+	}
+
+	public void setKnitLevel(String knitLevel) {
+		this.knitLevel = knitLevel;
+	}
+
+	@Size(min=1, max=200, groups={AllValidations.class, UpdateValidations.class})
+	public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
 	}
 
 	public String getRole() {

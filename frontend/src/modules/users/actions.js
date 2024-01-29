@@ -64,3 +64,12 @@ export const updateProfile = (user, onSuccess, onErrors) => dispatch =>
 
 export const changePassword = (id, oldPassword, newPassword, onSuccess, onErrors) => () =>
     backend.userService.changePassword(id, oldPassword, newPassword, onSuccess, onErrors);
+
+export const deleteProfile = (id, onSuccess, onErrors) => () =>
+    backend.userService.deleteProfile(id, ()=>{
+        backend.userService.logout();
+        onSuccess();
+    },
+    onErrors);
+
+

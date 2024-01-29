@@ -1,5 +1,6 @@
 package es.udc.paproject.backend.model.services;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import es.udc.paproject.backend.model.exceptions.IncorrectLoginException;
@@ -32,6 +33,10 @@ public class UserServiceImpl implements UserService {
 		
 		if (userDao.existsByUserName(user.getUserName())) {
 			throw new DuplicateInstanceException("project.entities.user", user.getUserName());
+		}
+
+		if (userDao.existsByEmail(user.getEmail())){
+			throw new DuplicateInstanceException("project.entities.user", user.getEmail());
 		}
 			
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -66,14 +71,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateProfile(Long id, String firstName, String lastName, String email) throws InstanceNotFoundException {
+	public User updateProfile(Long id, String email, String firstName, String language, String country, String crochetLevel, String knitLevel, String bio) throws InstanceNotFoundException {
 		
 		User user = permissionChecker.checkUser(id);
-		
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
+
 		user.setEmail(email);
-		
+		user.setFirstName(firstName);
+		user.setLanguage(language);
+		user.setCountry(country);
+		user.setCrochetLevel(crochetLevel);
+		user.setKnitLevel(knitLevel);
+		user.setBio(bio);
+
 		return user;
 
 	}
@@ -90,6 +99,33 @@ public class UserServiceImpl implements UserService {
 			user.setPassword(passwordEncoder.encode(newPassword));
 		}
 		
+	}
+
+	@Override
+	public void deleteProfile(Long id) throws InstanceNotFoundException{
+
+		System.out.println("******* Capa Servicios donde el id a borrar es : "+ id);
+
+
+		Optional<User> user = userDao.findById(id);
+
+		if(user.isPresent()){
+			userDao.delete(user.get());
+
+		}
+		else if (!user.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.user", id);
+		}
+
+
+		//Verifies the user exists and returns the current user
+		//User user = permissionChecker.checkUser(id);
+
+
+		System.out.println("******* Justo antes de borrar valor checkUser: "+ user.get().toString());
+
+		//userDao.delete(user);
+
 	}
 
 }

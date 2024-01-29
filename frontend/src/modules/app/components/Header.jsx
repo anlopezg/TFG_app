@@ -1,6 +1,8 @@
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
+import '../../../styles.css';
+
 
 import users from '../../users';
 
@@ -10,8 +12,8 @@ const Header = () => {
 
     return (
 
-        <nav className="navbar navbar-expand-lg navbar-light bg-light border">
-            <Link className="navbar-brand" to="/">PA Project</Link>
+        <nav className="navbar navbar-expand-lg navbar-light back-color-blue">
+            <Link className="navbar-brand logo-link" to="/" >Yarn Crafters</Link>
             <button className="navbar-toggler" type="button" 
                 data-toggle="collapse" data-target="#navbarSupportedContent" 
                 aria-controls="navbarSupportedContent" aria-expanded="false" 
@@ -35,13 +37,14 @@ const Header = () => {
                             <span className="fa-solid fa-user"></span>&nbsp;
                             {userName}
                         </a>
-                        <div className="dropdown-menu dropdown-menu-right">
-                            <Link className="dropdown-item" to="/users/update-profile">
-                                <FormattedMessage id="project.users.UpdateProfile.title"/>
+                        <div className="dropdown-menu dropdown-menu-right back-color-grey">
+                            <Link className="dropdown-item" to="/users/view-profile">
+                                <FormattedMessage id="project.users.ViewProfile.title"/>
                             </Link>
                             <Link className="dropdown-item" to="/users/change-password">
                                 <FormattedMessage id="project.users.ChangePassword.title"/>
                             </Link>
+
                             <div className="dropdown-divider"></div>
                             <Link className="dropdown-item" to="/users/logout">
                                 <FormattedMessage id="project.app.Header.logout"/>
