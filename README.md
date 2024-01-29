@@ -1,4 +1,4 @@
-# PA Project 
+# TFG Web App Project 
 
 ## Requirements
 
@@ -16,9 +16,9 @@ mysqladmin -u root create paproject -p
 mysqladmin -u root create paprojecttest -p
 
 mysql -u root -p
-    CREATE USER 'pa'@'localhost' IDENTIFIED BY 'pa';
-    GRANT ALL PRIVILEGES ON paproject.* to 'pa'@'localhost' WITH GRANT OPTION;
-    GRANT ALL PRIVILEGES ON paprojecttest.* to 'pa'@'localhost' WITH GRANT OPTION;
+    CREATE USER 'tfg'@'localhost' IDENTIFIED BY 'tfg';
+    GRANT ALL PRIVILEGES ON tfg.* to 'tfg'@'localhost' WITH GRANT OPTION;
+    GRANT ALL PRIVILEGES ON tfgtest.* to 'tfg'@'localhost' WITH GRANT OPTION;
     exit
 ```
 
