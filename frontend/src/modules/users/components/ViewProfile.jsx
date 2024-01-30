@@ -7,6 +7,19 @@ const ViewProfile = () => {
 
     const user = useSelector(selectors.getUser);
 
+    const getLevelName = (level) => {
+        switch (level){
+            case 0:
+                return  <FormattedMessage id="project.global.fields.level.none"/>;
+            case 1:
+                return <FormattedMessage id="project.global.fields.level.beginner"/>;
+            case 2:
+                return <FormattedMessage id="project.global.fields.level.intermediate"/>;
+            case 3:
+                return <FormattedMessage id="project.global.fields.level.advanced"/>;
+        }
+    }
+
     return(
         <div className="mt-4 mb-4 container justify-content-center align-items-center">
 
@@ -77,7 +90,7 @@ const ViewProfile = () => {
                             </label>
                         </div>
                         <div className="col-md-4 col-form-label">
-                            <p>{user.crochetLevel}</p>
+                            <p>{getLevelName(user.crochetLevel)}</p>
                         </div>
                     </div>
 
@@ -88,7 +101,7 @@ const ViewProfile = () => {
                             </label>
                         </div>
                         <div className="col-md-4 col-form-label">
-                            <p>{user.knitLevel}</p>
+                            <p>{getLevelName(user.knitLevel)}</p>
                         </div>
                     </div>
 
@@ -103,12 +116,7 @@ const ViewProfile = () => {
                         </div>
                     </div>
 
-                    <div className="row justify-content-center">
-                        <div className="ml-3 d-flex justify-content-start ">
-                            <Link className="btn button-light-pink" to="/users/delete-profile">
-                                <FormattedMessage id="project.users.DeleteProfile.title"/>
-                            </Link>
-                        </div>
+                    <div className="row">
                         <div className="offset-md-3 ml-auto mr-3 d-flex justify-content-end ">
                             <Link className="btn button-pink bold-label" to="/users/update-profile">
                                 <FormattedMessage id="project.users.UpdateProfile.title"/>

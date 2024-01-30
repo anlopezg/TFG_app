@@ -1,30 +1,45 @@
 package es.udc.paproject.backend.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.time.LocalDate;
 
 @Entity
 public class User {
 	
-	public enum RoleType {USER, SELLER};
+	public enum RoleType {USER, SELLER}
 
 	private Long id;
+
+	@NotNull
+	@Size(min=1, max=60)
 	private String userName;
+
+	@NotNull
+	@Email
 	private String email;
+
+	@NotNull
+	@Size(min=1, max=60)
 	private String password;
+
+	@NotNull
 	private String firstName;
 
+	@NotNull
 	private String language;
+
+	@NotNull
 	private String country;
-	private String crochetLevel;
-	private String knitLevel;
+
+	@NotNull
+	private int crochetLevel;
+
+	@NotNull
+	private int knitLevel;
+
 	private String bio;
 
 	private RoleType role;
@@ -38,7 +53,7 @@ public class User {
 		this.firstName = firstName;
 	}
 
-	public User(String userName, String email, String password, String firstName, String language, String country, String crochetLevel, String knitLevel, String bio) {
+	public User(String userName, String email, String password, String firstName, String language, String country, int crochetLevel, int knitLevel, String bio) {
 
 		this.userName = userName;
 		this.email = email;
@@ -110,19 +125,19 @@ public class User {
 	}
 
 
-	public String getCrochetLevel() {
+	public int getCrochetLevel() {
 		return crochetLevel;
 	}
 
-	public void setCrochetLevel(String crochetLevel) {
+	public void setCrochetLevel(int crochetLevel) {
 		this.crochetLevel = crochetLevel;
 	}
 
-	public String getKnitLevel() {
+	public int getKnitLevel() {
 		return knitLevel;
 	}
 
-	public void setKnitLevel(String knitLevel) {
+	public void setKnitLevel(int knitLevel) {
 		this.knitLevel = knitLevel;
 	}
 
@@ -141,5 +156,6 @@ public class User {
 	public void setRole(RoleType role) {
 		this.role = role;
 	}
+
 
 }

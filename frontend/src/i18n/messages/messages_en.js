@@ -23,7 +23,7 @@ export default {
     'project.global.fields.select.country': 'Select a country',
     'project.global.fields.crochetLevel': 'Crochet level',
     'project.global.fields.knitLevel': 'Knit level',
-    'project.global.fields.level.none': 'None',
+    'project.global.fields.level.none': 'No experience',
     'project.global.fields.level.beginner': 'Beginner',
     'project.global.fields.level.intermediate': 'Intermediate',
     'project.global.fields.level.advanced': 'Advanced',
@@ -48,8 +48,6 @@ export default {
     'project.users.SignUp.here': 'Sign up here',
     'project.users.SignUp.message': 'Don´t have an account?',
     'project.users.UpdateProfile.title': 'Update profile',
-    'project.users.DeleteProfile.title': 'Delete profile',
-    'project.users.DeleteProfile.message': 'Are you sure you want to delete your profile?',
     'project.users.ViewProfile.title' : 'View profile',
     'project.users.ProfileInfo.title' : 'My profile information'
 

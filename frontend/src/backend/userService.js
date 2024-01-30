@@ -50,8 +50,3 @@ export const changePassword = (id, oldPassword, newPassword, onSuccess,
     appFetch(`/users/${id}/changePassword`, 
         config('POST', {oldPassword, newPassword}),
         onSuccess, onErrors);
-
-
-export const deleteProfile = (id, onSuccess, onErrors) =>
-    appFetch(`/users/${id}`,
-        config('DELETE', onSuccess, onErrors));

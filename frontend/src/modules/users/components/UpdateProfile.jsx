@@ -39,8 +39,8 @@ const UpdateProfile = () => {
                     firstName: firstName.trim(),
                     language: language.trim(),
                     country: country.trim(),
-                    crochetLevel: crochetLevel.trim(),
-                    knitLevel: knitLevel.trim(),
+                    crochetLevel: crochetLevel,
+                    knitLevel: knitLevel,
                     bio: bio.trim()
                 },
                 () => navigate('/users/view-profile'),
@@ -156,13 +156,13 @@ const UpdateProfile = () => {
                                     <select id="crochetLevel" className="form-control" value={crochetLevel}
                                             onChange={e => setCrochetLevel(e.target.value)}
                                             required>
-                                        <option value="None">
+                                        <option value="0">
                                             <FormattedMessage id="project.global.fields.level.none"/></option>
-                                        <option value="Beginner">
+                                        <option value="1">
                                             <FormattedMessage id="project.global.fields.level.beginner"/></option>
-                                        <option value="Intermediate">
+                                        <option value="2">
                                             <FormattedMessage id="project.global.fields.level.intermediate"/></option>
-                                        <option value="Advanced">
+                                        <option value="3">
                                             <FormattedMessage id="project.global.fields.level.advanced"/></option>
                                     </select>
 
@@ -179,13 +179,13 @@ const UpdateProfile = () => {
                                     <select id="knitLevel" className="form-control" value={knitLevel}
                                             onChange={e => setKnitLevel(e.target.value)}
                                             required>
-                                        <option value="None">
+                                        <option value="0">
                                             <FormattedMessage id="project.global.fields.level.none"/></option>
-                                        <option value="Beginner">
+                                        <option value="1">
                                             <FormattedMessage id="project.global.fields.level.beginner"/></option>
-                                        <option value="Intermediate">
+                                        <option value="2">
                                             <FormattedMessage id="project.global.fields.level.intermediate"/></option>
-                                        <option value="Advanced">
+                                        <option value="3">
                                             <FormattedMessage id="project.global.fields.level.advanced"/></option>
                                     </select>
 
@@ -204,10 +204,8 @@ const UpdateProfile = () => {
                                                value={bio}
                                                maxLength={200}
                                                onChange={e => setBio(e.target.value)}
-                                               required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
+                                    />
+
                                 </div>
                             </div>
 

@@ -36,7 +36,7 @@ public class UserController {
 	
 	private final static String INCORRECT_LOGIN_EXCEPTION_CODE = "project.exceptions.IncorrectLoginException";
 	private final static String INCORRECT_PASSWORD_EXCEPTION_CODE = "project.exceptions.IncorrectPasswordException";
-	
+
 	@Autowired
 	private MessageSource messageSource;
 	
@@ -107,15 +107,15 @@ public class UserController {
 	}
 
 	@PutMapping("/{id}")
-	public UserDto updateProfile(@RequestAttribute Long userId, @PathVariable Long id,
+	public UserDto updateProfile(@Validated({UserDto.AllValidations.class}) @RequestAttribute Long userId, @PathVariable Long id,
 		@Validated({UserDto.UpdateValidations.class}) @RequestBody UserDto userDto) 
-		throws InstanceNotFoundException, PermissionException {
+		throws InstanceNotFoundException, PermissionException, DuplicateInstanceException {
 				
 		if (!id.equals(userId)) {
 			throw new PermissionException();
 		}
 		
-		return toUserDto(userService.updateProfile(id, userDto.getEmail(), userDto.getFirstName(), userDto.getLanguage(), userDto.getCountry(),userDto.getCrochetLevel(), userDto.getKnitLevel(), userDto.getBio()));
+		return toUserDto(userService.updateProfile(id, userDto.getUserName(), userDto.getEmail(), userDto.getFirstName(), userDto.getLanguage(), userDto.getCountry(),userDto.getCrochetLevel(), userDto.getKnitLevel(), userDto.getBio()));
 		
 	}
 	
@@ -139,19 +139,6 @@ public class UserController {
 		
 		return jwtGenerator.generate(jwtInfo);
 		
-	}
-
-	@DeleteMapping("/{id}")
-	public void deleteProfile(@RequestAttribute Long userId, @PathVariable Long id) throws PermissionException, InstanceNotFoundException{
-
-		System.out.println("Path variable is : "+ id +"Request Attribute is: " +userId);
-
-		if(!id.equals(userId)){
-			throw new PermissionException();
-		}
-
-		userService.deleteProfile(id);
-
 	}
 
 	

@@ -3,7 +3,7 @@ import {Route, Routes} from 'react-router-dom';
 
 import AppGlobalComponents from './AppGlobalComponents';
 import Home from './Home';
-import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile, DeleteProfile} from '../../users';
+import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile} from '../../users';
 import users from '../../users';
 
 const Body = () => {
@@ -21,7 +21,6 @@ const Body = () => {
                 {loggedIn && <Route path="/users/change-password" element={<ChangePassword/>}/>}
                 {loggedIn && <Route path="/users/logout" element={<Logout/>}/>}
                 {loggedIn && <Route path="/users/view-profile" element={<ViewProfile/>}/> }
-                {loggedIn && <Route path="/users/delete-profile" element={<DeleteProfile/>}/> }
                 {!loggedIn && <Route path="/users/login" element={<Login/>}/>}
                 {!loggedIn && <Route path="/users/signup" element={<SignUp/>}/>}
             </Routes>

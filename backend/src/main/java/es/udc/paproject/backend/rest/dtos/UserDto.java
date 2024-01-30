@@ -1,10 +1,7 @@
 package es.udc.paproject.backend.rest.dtos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
-import java.time.LocalDate;
 
 public class UserDto {
 	
@@ -19,15 +16,15 @@ public class UserDto {
 	private String firstName;
 	private String language;
 	private String country;
-	private String crochetLevel;
-	private String knitLevel;
+	private int crochetLevel;
+	private int knitLevel;
 	private String bio;
 
 	private String role;
 
 	public UserDto() {}
 
-	public UserDto(Long id, String userName, String email, String firstName, String language, String country, String crochetLevel, String knitLevel, String bio, String role) {
+	public UserDto(Long id, String userName, String email, String firstName, String language, String country, int crochetLevel, int knitLevel, String bio, String role) {
 
 		this.id = id;
 		this.userName = userName != null ? userName.trim() : null;
@@ -35,8 +32,8 @@ public class UserDto {
 		this.firstName = firstName.trim();
 		this.language = language.trim();
 		this.country = country.trim();
-		this.crochetLevel = crochetLevel.trim();
-		this.knitLevel = knitLevel.trim();
+		this.crochetLevel = crochetLevel;
+		this.knitLevel = knitLevel;
 		this.bio = bio.trim();
 
 		this.role = role;
@@ -92,6 +89,7 @@ public class UserDto {
 		this.email = email.trim();
 	}
 
+	@NotNull(groups={AllValidations.class, UpdateValidations.class})
 	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
 	public String getLanguage() {
 		return language;
@@ -101,6 +99,7 @@ public class UserDto {
 		this.language = language;
 	}
 
+	@NotNull(groups={AllValidations.class, UpdateValidations.class})
 	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
 	public String getCountry() {
 		return country;
@@ -110,25 +109,29 @@ public class UserDto {
 		this.country = country;
 	}
 
-	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
-	public String getCrochetLevel() {
+	@NotNull(groups={AllValidations.class, UpdateValidations.class})
+	@Min(value=0, groups={AllValidations.class, UpdateValidations.class})
+	@Max(value=3, groups={AllValidations.class, UpdateValidations.class})
+	public int getCrochetLevel() {
 		return crochetLevel;
 	}
 
-	public void setCrochetLevel(String crochetLevel) {
+	public void setCrochetLevel(int crochetLevel) {
 		this.crochetLevel = crochetLevel;
 	}
 
-	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
-	public String getKnitLevel() {
+	@NotNull(groups={AllValidations.class, UpdateValidations.class})
+	@Min(value=0, groups={AllValidations.class, UpdateValidations.class})
+	@Max(value=3, groups={AllValidations.class, UpdateValidations.class})
+	public int getKnitLevel() {
 		return knitLevel;
 	}
 
-	public void setKnitLevel(String knitLevel) {
+	public void setKnitLevel(int knitLevel) {
 		this.knitLevel = knitLevel;
 	}
 
-	@Size(min=1, max=200, groups={AllValidations.class, UpdateValidations.class})
+	@Size( max=200, groups={AllValidations.class, UpdateValidations.class})
 	public String getBio() {
 		return bio;
 	}
