@@ -1,6 +1,9 @@
 package es.udc.paproject.backend.model.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -45,13 +48,6 @@ public class User {
 	private RoleType role;
 
 	public User(){}
-
-	public User(String userName, String email, String password, String firstName){
-		this.userName = userName;
-		this.email = email;
-		this.password = password;
-		this.firstName = firstName;
-	}
 
 	public User(String userName, String email, String password, String firstName, String language, String country, int crochetLevel, int knitLevel, String bio) {
 

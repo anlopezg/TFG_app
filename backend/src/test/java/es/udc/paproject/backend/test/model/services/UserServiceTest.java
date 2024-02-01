@@ -24,15 +24,16 @@ public class UserServiceTest {
 	
 	@Autowired
 	private UserService userService;
-	/*
-	private User createUser(String userName) {
-		return new User(userName, userName + "@" + userName + ".com","password", "firstName");
+
+	private User createUser(String userName, String email) {
+		return new User(userName, email + "@a.com","password", "firstName", "language", "country",
+				1, 2, "long bio");
 	}
 	
 	@Test
 	public void testSignUpAndLoginFromId() throws DuplicateInstanceException, InstanceNotFoundException {
 		
-		User user = createUser("user");
+		User user = createUser("user", "email");
 		
 		userService.signUp(user);
 		
@@ -46,11 +47,21 @@ public class UserServiceTest {
 	@Test
 	public void testSignUpDuplicatedUserName() throws DuplicateInstanceException {
 		
-		User user = createUser("user");
+		User user = createUser("user", "email");
 		
 		userService.signUp(user);
 		assertThrows(DuplicateInstanceException.class, () -> userService.signUp(user));
 		
+	}
+
+	@Test
+	public void testSignUpDuplicatedEmail() throws DuplicateInstanceException {
+
+		User user = createUser("different", "email");
+
+		userService.signUp(user);
+		assertThrows(DuplicateInstanceException.class, () -> userService.signUp(user));
+
 	}
 	
 	@Test
@@ -61,7 +72,7 @@ public class UserServiceTest {
 	@Test
 	public void testLogin() throws DuplicateInstanceException, IncorrectLoginException {
 		
-		User user = createUser("user");
+		User user = createUser("user","email");
 		String clearPassword = user.getPassword();
 				
 		userService.signUp(user);
@@ -75,7 +86,7 @@ public class UserServiceTest {
 	@Test
 	public void testLoginWithIncorrectPassword() throws DuplicateInstanceException {
 		
-		User user = createUser("user");
+		User user = createUser("user","email");
 		String clearPassword = user.getPassword();
 		
 		userService.signUp(user);
@@ -92,15 +103,16 @@ public class UserServiceTest {
 	@Test
 	public void testUpdateProfile() throws InstanceNotFoundException, DuplicateInstanceException {
 		
-		User user = createUser("user");
+		User user = createUser("user" ,"email");
 		
 		userService.signUp(user);
-		
+
 		user.setFirstName('X' + user.getFirstName());
 		user.setEmail('X' + user.getEmail());
 		
-		userService.updateProfile(user.getId(), 'X' + user.getFirstName(),
-			'X' + user.getEmail());
+		userService.updateProfile(user.getId(), user.getUserName(), 'X' + user.getEmail(),'X' + user.getFirstName(),
+				user.getLanguage(), user.getCountry(), user.getCrochetLevel(), user.getKnitLevel(), user.getBio()
+			);
 		
 		User updatedUser = userService.loginFromId(user.getId());
 		
@@ -111,14 +123,15 @@ public class UserServiceTest {
 	@Test
 	public void testUpdateProfileWithNonExistentId() {
 		assertThrows(InstanceNotFoundException.class, () ->
-			userService.updateProfile(NON_EXISTENT_ID, "X", "X", "X"));
+			userService.updateProfile(NON_EXISTENT_ID, "X", "X@a.com", "X", "language",
+					"country", 1, 1, "bio"));
 	}
 	
 	@Test
 	public void testChangePassword() throws DuplicateInstanceException, InstanceNotFoundException,
 		IncorrectPasswordException, IncorrectLoginException {
 		
-		User user = createUser("user");
+		User user = createUser("user" ,"email");
 		String oldPassword = user.getPassword();
 		String newPassword = 'X' + oldPassword;
 		
@@ -137,7 +150,7 @@ public class UserServiceTest {
 	@Test
 	public void testChangePasswordWithIncorrectPassword() throws DuplicateInstanceException {
 		
-		User user = createUser("user");
+		User user = createUser("user" ,"email");
 		String oldPassword = user.getPassword();
 		String newPassword = 'X' + oldPassword;
 		
@@ -146,7 +159,5 @@ public class UserServiceTest {
 			userService.changePassword(user.getId(), 'Y' + oldPassword, newPassword));
 		
 	}
-	*/
-
 
 }
