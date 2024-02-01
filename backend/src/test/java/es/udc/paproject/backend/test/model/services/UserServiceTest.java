@@ -119,6 +119,23 @@ public class UserServiceTest {
 		assertEquals(user, updatedUser);
 		
 	}
+
+	@Test
+	public void testUpdateProfileNonUniqueUserName() throws InstanceNotFoundException, DuplicateInstanceException {
+
+		User user1 = createUser("user1" ,"email");
+
+		User user2 = createUser("user2", "email2");
+
+		userService.signUp(user1);
+
+		userService.signUp(user2);
+
+		assertThrows(DuplicateInstanceException.class, () -> userService.updateProfile(user2.getId(), user1.getUserName(), user2.getEmail(),
+				user2.getFirstName(), user2.getLanguage(), user2.getCountry(), user2.getCrochetLevel(),
+				user2.getKnitLevel(), user2.getBio()));
+
+	}
 	
 	@Test
 	public void testUpdateProfileWithNonExistentId() {
