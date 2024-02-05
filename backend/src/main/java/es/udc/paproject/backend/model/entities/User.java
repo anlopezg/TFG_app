@@ -4,9 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -16,31 +13,20 @@ public class User {
 
 	private Long id;
 
-	@NotNull
-	@Size(min=1, max=60)
 	private String userName;
 
-	@NotNull
-	@Email
 	private String email;
 
-	@NotNull
-	@Size(min=1, max=60)
 	private String password;
 
-	@NotNull
 	private String firstName;
 
-	@NotNull
 	private String language;
 
-	@NotNull
 	private String country;
 
-	@NotNull
 	private int crochetLevel;
 
-	@NotNull
 	private int knitLevel;
 
 	private String bio;
