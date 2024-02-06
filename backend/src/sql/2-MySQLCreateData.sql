@@ -28,8 +28,13 @@ INSERT INTO Category (parentId, categoryName) VALUES
       -- id: 4
             (2, 'Scarf');
 
-INSERT INTO Product (userId, craftId, categoryId, title, description, price, active, creationDate) VALUES
+INSERT INTO Product (userId, craftId, categoryId, title, description, price, active, creationDate , amount, size, color, details) VALUES
       --
-            (2, 1, 3, 'Floral Crochet Top', 'Top with floral pattern', 25.00, TRUE, '2024-01-20 12:30:00'),
+            (2, 1, 3, 'Floral Crochet Top', 'Top with floral pattern', 25.00, TRUE, '2024-01-20 12:30:00', 5, 'EU M', 'Light green', 'Made with acrylic yarn' ),
       --
-            (2, 2, 4, 'Long Knit Scarf', 'Wool scarf', 14.00, TRUE, '2024-02-02 16:00:00');
+            (2, 2, 4, 'Long Knit Scarf', 'Wool scarf', 14.00, TRUE, '2024-02-02 16:00:00', 10, 'Only size', 'Pastel pink', 'Made with wool');
+
+INSERT INTO Pattern (userId, craftId, categoryId, title, description, price, active, creationDate,
+                     introduction, abbreviations,  notes, gauge, size, difficultyLevel, time ) VALUES
+            (2, 1, 1, 'Off shoulder sweater', 'Wool sweater', 10.00, TRUE, '2024-02-05 18:15:00',
+             'How to crochet the sweater', 'Ss - slip stitch', 'Crochet loosely', '4x4 15 stitches 12 rows', 'EU S', 2, '25 hours' );

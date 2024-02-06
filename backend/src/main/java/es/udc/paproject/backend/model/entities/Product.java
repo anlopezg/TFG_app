@@ -1,104 +1,57 @@
 package es.udc.paproject.backend.model.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-public class Product {
+public abstract class Product extends Publication{
 
-    private Long id;
-    private User user;
-    private Craft craft;
-    private  Category category;
-    private String title;
-    private String description;
-    private BigDecimal price;
-    private Boolean active;
-    private LocalDateTime creationDate;
-
-    public Product(){}
+    private int amount;
+    private String size;
+    private String color;
 
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
+    public Product(){
+        super();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Product(User user, Craft craft, Category category, String title, String description, BigDecimal price,
+                   Boolean active, LocalDateTime creationDate,
+                   int amount, String size, String color){
+
+        super(user, craft, category, title, description, price, active, creationDate);
+
+        this.amount=amount;
+        this.size=size;
+        this.color=color;
     }
 
-    @ManyToOne(optional=false, fetch=FetchType.LAZY)
-    @JoinColumn(name="userId")
-    public User getUser() {
-        return user;
+
+
+    public int getAmount() {
+        return amount;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
-    @ManyToOne(optional=false, fetch=FetchType.LAZY)
-    @JoinColumn(name="craftId")
-    public Craft getCraft() {
-        return craft;
+    public String getSize() {
+        return size;
     }
 
-    public void setCraft(Craft craft) {
-        this.craft = craft;
+    public void setSize(String size) {
+        this.size = size;
     }
 
-    @ManyToOne(optional=false, fetch=FetchType.LAZY)
-    @JoinColumn(name="categoryId")
-    public Category getCategory() {
-        return category;
+    public String getColor() {
+        return color;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setColor(String color) {
+        this.color = color;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
 }
