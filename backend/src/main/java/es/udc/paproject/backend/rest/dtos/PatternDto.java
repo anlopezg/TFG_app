@@ -1,13 +1,9 @@
-package es.udc.paproject.backend.model.entities;
-
-import jakarta.persistence.*;
+package es.udc.paproject.backend.rest.dtos;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-@Entity
-@DiscriminatorValue("PATTERN")
-public class Pattern extends Product{
+public class PatternDto extends ProductDto{
+
     private String introduction;
     private String notes;
     private String gauge;
@@ -15,15 +11,13 @@ public class Pattern extends Product{
     private int difficultyLevel;
     private String time;
 
-    public Pattern(){
-        super();
-    }
+    private PatternDto(){}
 
-    public Pattern(User user, Craft craft, Subcategory subcategory, String title, String description, BigDecimal price,
-                   Boolean active, LocalDateTime creationDate,
-                   String introduction, String notes, String gauge, String sizing, int difficultyLevel, String time){
+    public PatternDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
+                      Boolean active,String introduction, String notes, String gauge, String sizing,
+                      int difficultyLevel, String time){
 
-        super(user, craft, subcategory, title, description, price, active, creationDate);
+        super(id, user, craft, subcategory, title, description, price, active);
 
         this.introduction=introduction;
         this.notes=notes;
@@ -31,9 +25,8 @@ public class Pattern extends Product{
         this.sizing=sizing;
         this.difficultyLevel=difficultyLevel;
         this.time=time;
+
     }
-
-
 
     public String getIntroduction() {
         return introduction;

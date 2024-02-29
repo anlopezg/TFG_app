@@ -31,13 +31,25 @@ public class SecurityConfig {
 			.sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.addFilterBefore(new JwtFilter(jwtGenerator), UsernamePasswordAuthenticationFilter.class)
 			.authorizeHttpRequests((authorize) -> authorize
-				.requestMatchers(HttpMethod.POST, "/users/signUp").permitAll()
-				.requestMatchers(HttpMethod.POST, "/users/login").permitAll()
-				.requestMatchers(HttpMethod.POST, "/users/loginFromServiceToken").permitAll()
-				.requestMatchers(HttpMethod.PUT, "/users/*").hasRole("USER")
-				.requestMatchers(HttpMethod.POST, "/users/*/changePassword").hasRole("USER")
-				.requestMatchers(HttpMethod.DELETE, "/users/*").hasRole("USER")
-				.requestMatchers(HttpMethod.DELETE, "/users/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.POST, "/users/signUp").permitAll()
+					.requestMatchers(HttpMethod.POST, "/users/login").permitAll()
+					.requestMatchers(HttpMethod.POST, "/users/loginFromServiceToken").permitAll()
+					.requestMatchers(HttpMethod.PUT, "/users/*").hasRole("USER")
+					.requestMatchers(HttpMethod.POST, "/users/*/changePassword").hasRole("USER")
+					.requestMatchers(HttpMethod.DELETE, "/users/*").hasRole("USER")
+					.requestMatchers(HttpMethod.DELETE, "/users/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.PUT, "/users/*/becomeSeller").hasRole("USER")
+
+					.requestMatchers(HttpMethod.GET, "/publications/products").permitAll()
+					.requestMatchers(HttpMethod.GET, "/publications/products/*").permitAll()
+					.requestMatchers(HttpMethod.POST, "/publications/patterns").permitAll()
+					.requestMatchers(HttpMethod.GET, "/publications/patterns/*").permitAll()
+					.requestMatchers(HttpMethod.POST, "/publications/physicals").permitAll()
+					.requestMatchers(HttpMethod.GET, "/publications/*/subcategories").permitAll()
+					.requestMatchers(HttpMethod.GET, "/publications/*/products").permitAll()
+					.requestMatchers(HttpMethod.GET, "/publications/*/patterns").permitAll()
+					.requestMatchers(HttpMethod.GET, "/publications/*/physicals").permitAll()
+					.requestMatchers(HttpMethod.GET, "/publications/*").permitAll()
 				.anyRequest().denyAll());
 
 		return http.build();

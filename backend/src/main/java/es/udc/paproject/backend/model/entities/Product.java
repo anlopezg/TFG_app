@@ -1,57 +1,126 @@
 package es.udc.paproject.backend.model.entities;
-
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
 @Entity
-public abstract class Product extends Publication{
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "productType")
+public class Product{
+    private Long id;
 
-    private int amount;
-    private String size;
-    private String color;
+
+    private User user;
 
 
-    public Product(){
-        super();
+    private Craft craft;
+
+
+    private Subcategory subcategory;
+    private String title;
+    private String description;
+    private BigDecimal price;
+    private Boolean active;
+    private LocalDateTime creationDate;
+
+
+    public Product(){}
+
+    public Product(User user, Craft craft, Subcategory subcategory, String title, String description, BigDecimal price,
+                   Boolean active, LocalDateTime creationDate){
+
+        this.user=user;
+        this.craft=craft;
+        this.subcategory = subcategory;
+        this.title=title;
+        this.description=description;
+        this.price=price;
+        this.active=active;
+        this.creationDate=creationDate;
     }
 
-    public Product(User user, Craft craft, Category category, String title, String description, BigDecimal price,
-                   Boolean active, LocalDateTime creationDate,
-                   int amount, String size, String color){
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
+    }
 
-        super(user, craft, category, title, description, price, active, creationDate);
-
-        this.amount=amount;
-        this.size=size;
-        this.color=color;
+    public void setId(Long id) {
+        this.id = id;
     }
 
 
-
-    public int getAmount() {
-        return amount;
+    @ManyToOne(optional=false, fetch=FetchType.LAZY)
+    @JoinColumn(name="userId")
+    public User getUser() {
+        return user;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getSize() {
-        return size;
+
+    @ManyToOne(optional=false, fetch=FetchType.LAZY)
+    @JoinColumn(name="craftId")
+    public Craft getCraft() {
+        return craft;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setCraft(Craft craft) {
+        this.craft = craft;
     }
 
-    public String getColor() {
-        return color;
+
+    @ManyToOne(optional=false, fetch=FetchType.LAZY)
+    @JoinColumn(name="subcategoryId")
+    public Subcategory getSubcategory() {
+        return subcategory;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setSubcategory(Subcategory subcategory) {
+        this.subcategory = subcategory;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price.setScale(2, RoundingMode.HALF_EVEN);
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
 }

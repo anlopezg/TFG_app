@@ -6,9 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 
-public interface PatternDao extends CrudRepository<Pattern, Long> {
+public interface PatternDao extends CrudRepository<Pattern, Long>, PagingAndSortingRepository<Pattern, Long> {
 
     Optional<Pattern> findByTitle(String title);
 
