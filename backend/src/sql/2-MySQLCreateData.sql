@@ -18,23 +18,42 @@ INSERT INTO Craft (craftName) VALUES
         -- id : 2
              ('knit');
 
-INSERT INTO Category (parentId, categoryName) VALUES
+INSERT INTO Category (categoryName) VALUES
       -- id: 1
-            (NULL, 'Clothing'),
+            ('Clothing'),
       -- id: 2
-            (NULL, 'Accesory'),
-      -- id: 3
-            (1, 'Tops'),
-      -- id: 4
-            (2, 'Scarf');
+            ('Accessory');
 
-INSERT INTO Product (userId, craftId, categoryId, title, description, price, active, creationDate , amount, size, color, details) VALUES
-      --
-            (2, 1, 3, 'Floral Crochet Top', 'Top with floral pattern', 25.00, TRUE, '2024-01-20 12:30:00', 5, 'EU M', 'Light green', 'Made with acrylic yarn' ),
-      --
-            (2, 2, 4, 'Long Knit Scarf', 'Wool scarf', 14.00, TRUE, '2024-02-02 16:00:00', 10, 'Only size', 'Pastel pink', 'Made with wool');
+INSERT INTO Subcategory (subcategoryName, categoryId) VALUES
+      -- In Clothing
+            ('Tops', 1),
+      -- In Accesory
+            ('Scarf', 2),
+      -- In Clothing
+            ('Sweater', 1);
 
-INSERT INTO Pattern (userId, craftId, categoryId, title, description, price, active, creationDate,
-                     introduction, abbreviations,  notes, gauge, size, difficultyLevel, time ) VALUES
-            (2, 1, 1, 'Off shoulder sweater', 'Wool sweater', 10.00, TRUE, '2024-02-05 18:15:00',
-             'How to crochet the sweater', 'Ss - slip stitch', 'Crochet loosely', '4x4 15 stitches 12 rows', 'EU S', 2, '25 hours' );
+INSERT INTO Product (userId, craftId, subcategoryId, title, description, price, active, creationDate, productType,
+                     amount, size, color, details,
+                     introduction, abbreviations,  notes, gauge, sizing, difficultyLevel, time) VALUES
+      -- Physical Product
+            (2, 1, 1, 'Floral Crochet Top', 'Top with floral pattern', 25.00, TRUE, '2024-01-20 12:30:00', 'PHYSICAL',
+             5, 'EU M', 'Light green', 'Made with acrylic yarn',
+             NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+
+      -- Physical Product
+            (2, 2, 2, 'Long Knit Scarf', 'Wool scarf', 14.00, TRUE, '2024-02-02 16:00:00', 'PHYSICAL',
+             10, 'Only size', 'Pastel pink', 'Made with wool',
+             NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+
+      -- Pattern
+            (2, 1, 3, 'Off shoulder sweater', 'Wool sweater', 10.00, TRUE, '2024-02-05 18:15:00','PATTERN',
+             NULL, NULL, NULL, NULL,
+             'How to crochet the sweater', 'Ss - slip stitch', 'Crochet loosely', '4x4 15 stitches 12 rows', 'EU S', 2,
+             '25 hours');
+
+
+INSERT INTO Favorite (userId, productId, isFavorite) VALUES
+      -- Physical product id=1 marked as fav
+            (1, 1, TRUE),
+      -- Pattern id=3 marked as fav
+            (1, 3, TRUE);
