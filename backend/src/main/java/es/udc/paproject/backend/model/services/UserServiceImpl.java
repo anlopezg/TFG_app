@@ -113,4 +113,12 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	public void userBecomesSeller(Long id) throws InstanceNotFoundException{
+
+		User user = permissionChecker.checkUser(id);
+
+		user.setRole(User.RoleType.SELLER);
+	}
+
 }

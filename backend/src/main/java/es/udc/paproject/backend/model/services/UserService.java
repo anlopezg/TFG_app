@@ -21,4 +21,12 @@ public interface UserService {
 	void changePassword(Long id, String oldPassword, String newPassword)
 		throws InstanceNotFoundException, IncorrectPasswordException;
 
+
+	/**
+	 * An user with the common role 'USER' becomes a 'SELLER'
+	 * @param id The user's id
+	 * @throws InstanceNotFoundException
+	 */
+	void userBecomesSeller(Long id) throws InstanceNotFoundException;
+
 }

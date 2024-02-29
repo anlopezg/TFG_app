@@ -8,17 +8,14 @@ import java.util.Set;
 @Entity
 public class Category {
     private Long id;
-    private Category parent;
     private String categoryName;
-
-
-    private Set<Category> subcategories = new HashSet<>();
+    private Set<Subcategory> subcategories = new HashSet<>();
 
     public Category(){}
 
-    public Category(Category parent, String categoryName){
-        this.parent = parent;
+    public Category(String categoryName, Set<Subcategory> subcategories) {
         this.categoryName = categoryName;
+        this.subcategories=subcategories;
     }
 
     @Id
@@ -31,22 +28,12 @@ public class Category {
         this.id = id;
     }
 
-    @ManyToOne(optional=false, fetch=FetchType.LAZY)
-    @JoinColumn(name="parentId")
-    public Category getParent() {
-        return parent;
-    }
-
-    public void setParent(Category parent) {
-        this.parent = parent;
-    }
-
-    @OneToMany(mappedBy = "parent")
-    public Set<Category> getSubcategories() {
+    @OneToMany(mappedBy = "category")
+    public Set<Subcategory> getSubcategories() {
         return subcategories;
     }
 
-    public void setSubcategories(Set<Category> subcategories) {
+    public void setSubcategories(Set<Subcategory> subcategories) {
         this.subcategories = subcategories;
     }
 

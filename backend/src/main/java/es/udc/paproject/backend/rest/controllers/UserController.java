@@ -141,5 +141,15 @@ public class UserController {
 		
 	}
 
+	@PutMapping("/{id}/becomeSeller")
+	public void userBecomesSeller(@RequestAttribute Long userId, @PathVariable Long id)throws PermissionException, InstanceNotFoundException{
+
+		if(!id.equals(userId)){
+			throw new PermissionException();
+		}
+
+		userService.userBecomesSeller(id);
+	}
+
 	
 }
