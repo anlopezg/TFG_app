@@ -50,3 +50,8 @@ export const changePassword = (id, oldPassword, newPassword, onSuccess,
     appFetch(`/users/${id}/changePassword`, 
         config('POST', {oldPassword, newPassword}),
         onSuccess, onErrors);
+
+
+export const userBecomesSeller = (id, onSuccess, onErrors) =>
+    appFetch(`/users/${id}/becomeSeller`,
+        config('PUT'), onSuccess, onErrors);

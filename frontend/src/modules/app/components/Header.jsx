@@ -1,5 +1,5 @@
 import {useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Form, Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import '../../../styles.css';
 
@@ -9,6 +9,7 @@ import users from '../../users';
 const Header = () => {
 
     const userName = useSelector(users.selectors.getUserName);
+    const isSeller = useSelector(users.selectors.isSeller);
 
     return (
 
@@ -29,7 +30,27 @@ const Header = () => {
                 {userName ? 
 
                 <ul className="navbar-nav">
-                
+
+                    {isSeller &&
+                        <li className="nav-item dropdown" style={{ marginRight: '20px' }}>
+                            <a className="dropdown-toggle nav-link" href="/"
+                               data-toggle="dropdown">
+                                <span className="fa-solid fa-store"></span>&nbsp;
+                                <FormattedMessage id="project.products.MyStore.heading"/>
+                            </a>
+                            <div className="dropdown-menu dropdown-menu-right back-color-grey">
+                                <Link className="dropdown-item" to="/publications/products">
+                                    <FormattedMessage id="project.products.Product.heading"/>
+                                </Link>
+
+                                <Link className="dropdown-item" to="/publications/patterns">
+                                    <FormattedMessage id="project.products.Pattern.heading"/>
+                                </Link>
+                            </div>
+
+                        </li>
+                    }
+
                     <li className="nav-item dropdown">
 
                         <a className="dropdown-toggle nav-link" href="/"
@@ -43,6 +64,10 @@ const Header = () => {
                             </Link>
                             <Link className="dropdown-item" to="/users/change-password">
                                 <FormattedMessage id="project.users.ChangePassword.title"/>
+                            </Link>
+
+                            <Link className="dropdown-item" to="/publications/products">
+                                <FormattedMessage id="project.products.MyStore.heading"/>
                             </Link>
 
                             <div className="dropdown-divider"></div>

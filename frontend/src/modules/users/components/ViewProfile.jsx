@@ -118,7 +118,7 @@ const ViewProfile = () => {
 
                     <div className="row">
                         <div className="offset-md-3 ml-auto mr-3 d-flex justify-content-end ">
-                            <Link className="btn button-pink bold-label" to="/users/update-profile">
+                            <Link className="btn button-pink extra-bold-label" to="/users/update-profile">
                                 <FormattedMessage id="project.users.UpdateProfile.title"/>
                             </Link>
                         </div>

@@ -3,13 +3,16 @@ import {Route, Routes} from 'react-router-dom';
 
 import AppGlobalComponents from './AppGlobalComponents';
 import Home from './Home';
-import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile} from '../../users';
+import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile, BecomesSeller} from '../../users';
 import users from '../../users';
+import {CreatePattern, ViewAddedPatterns, ViewAddedPhysicals,CreatePhysical} from "../../publications/index.js";
 
 const Body = () => {
 
     const loggedIn = useSelector(users.selectors.isLoggedIn);
-    
+    const isSeller = useSelector(users.selectors.isSeller);
+    const isNormalUser = useSelector(users.selectors.isUser);
+
    return (
 
         <div className="container">
@@ -23,6 +26,13 @@ const Body = () => {
                 {loggedIn && <Route path="/users/view-profile" element={<ViewProfile/>}/> }
                 {!loggedIn && <Route path="/users/login" element={<Login/>}/>}
                 {!loggedIn && <Route path="/users/signup" element={<SignUp/>}/>}
+
+                {loggedIn && isNormalUser && <Route path="/publications/products" element={<BecomesSeller/>}/>}
+
+                {loggedIn && isSeller && <Route path="/publications/products" element={<ViewAddedPhysicals/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/create-pattern" element={<CreatePattern/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/create-physical" element={<CreatePhysical/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/patterns" element={<ViewAddedPatterns/>}/>}
             </Routes>
         </div>
 

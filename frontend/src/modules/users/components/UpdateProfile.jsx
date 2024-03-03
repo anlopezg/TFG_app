@@ -211,7 +211,7 @@ const UpdateProfile = () => {
 
                             <div className="form-group row">
                                 <div className="offset-md-3 col-md-1 ml-auto mt-3 d-flex justify-content-end">
-                                    <button type="submit" className="btn button-pink bold-label">
+                                    <button type="submit" className="btn button-pink extra-bold-label">
                                         <FormattedMessage id="project.global.buttons.save"/>
                                     </button>
                                 </div>

@@ -22,6 +22,9 @@ const user = (state = initialState.user, action) => {
         case actionTypes.UPDATE_PROFILE_COMPLETED:
             return action.user;
 
+        case actionTypes.USER_BECOMES_SELLER_COMPLETED:
+            return action.user;
+
         default:
             return state;
 

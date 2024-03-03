@@ -49,7 +49,25 @@ export default {
     'project.users.SignUp.message': 'Don´t have an account?',
     'project.users.UpdateProfile.title': 'Update profile',
     'project.users.ViewProfile.title' : 'View profile',
-    'project.users.ProfileInfo.title' : 'My profile information'
+    'project.users.ProfileInfo.title' : 'My profile information',
+    'project.users.BecomeSeller.title' : 'Become a Seller to comercialize your creations',
+    'project.users.BecomeSeller.intro' : 'You are currently not register as a seller, in order to start selling your creations' +
+        ' you need to become a seller.',
+
+    'project.products.MyStore.heading' : 'My Store',
+    'project.products.Product.heading' : 'Products',
+    'project.products.Pattern.heading' : 'Patterns',
+    'project.products.AddedPattern.heading' : 'My Pattern Designs',
+    'project.products.TotalPatterns.title' : 'Total patterns:',
+    'project.products.Pattern.empty' : 'No patterns have been added yet',
+    'project.products.AddedPhysical.heading' : 'My Added Products',
+    'project.products.TotalPhysicals.title' : 'Total products:',
+    'project.products.Physical.empty' : 'No products have been added yet',
+
+    'project.products.CreatePattern.heading' : 'Create a Pattern',
+    'project.products.CreatePhysical.heading' : 'Create a Product',
+    'project.products.Product.title' : 'Title',
+    'project.products.Product.price' : 'Price'
 
 
 }

@@ -49,6 +49,26 @@ export default {
     'project.users.SignUp.message': '¿Aún no tienes una cuenta?',
     'project.users.UpdateProfile.title': 'Actualizar perfil',
     'project.users.ViewProfile.title' : 'Ver perfil',
-    'project.users.ProfileInfo.title' : 'Mi información personal'
+    'project.users.ProfileInfo.title' : 'Mi información personal',
+    'project.users.BecomeSeller.title' : 'Conviértete en Vendedor',
+    'project.users.BecomeSeller.intro' : 'Actualmente no estás registrado como vendedor,' +
+        ' para poder empezar a vender tus creaciones necesitas ser vendedor.',
+
+
+    'project.products.MyStore.heading' : 'Mi tienda',
+    'project.products.Product.heading' : 'Productos',
+    'project.products.Pattern.heading' : 'Patrones',
+    'project.products.AddedPattern.heading' : 'Mis diseños de patrones',
+    'project.products.TotalPatterns.title' : 'Patrones totales:',
+    'project.products.Pattern.empty' : 'No se ha añadido ningún patrón aún',
+
+    'project.products.AddedPhysical.heading' : 'Mis Productos añadidos',
+    'project.products.TotalPhysicals.title' : 'Productos totales:',
+    'project.products.Physical.empty' : 'No se ha añadido ningún patrón aún',
+
+    'project.products.CreatePattern.heading' : 'Crea un Patrón',
+    'project.products.CreatePhysical.heading' : 'Crea un Producto',
+    'project.products.Product.title' : 'Título',
+    'project.products.Product.price' : 'Price'
 
 }
