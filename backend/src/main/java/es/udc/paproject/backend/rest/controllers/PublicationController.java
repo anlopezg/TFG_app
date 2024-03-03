@@ -3,7 +3,6 @@ package es.udc.paproject.backend.rest.controllers;
 import es.udc.paproject.backend.model.entities.Pattern;
 import es.udc.paproject.backend.model.entities.Physical;
 import es.udc.paproject.backend.model.entities.Product;
-import es.udc.paproject.backend.model.exceptions.IncorrectLoginException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.PermissionException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
@@ -136,32 +135,23 @@ public class PublicationController {
         return new Block<>(toProductDtos(productBlock.getItems()), productBlock.getExistMoreItems());
     }
 
-    @GetMapping("/{id}/patterns")
-    public Block<PatternDto> findAddedPatterns(@PathVariable Long id, @RequestAttribute Long userId,
-                                               @RequestParam(defaultValue = "0") int page)
-            throws PermissionException{
-
-        if(!id.equals(userId)){
-            throw new PermissionException();
-        }
+    @GetMapping("/patterns")
+    public BlockDto<PatternDto> findAddedPatterns(@RequestAttribute Long userId,
+                                               @RequestParam(defaultValue = "0") int page){
 
         Block<Pattern> patternBlock = publicationService.findAddedPatters(userId, page,10 );
 
-        return new Block<>(toPatternDtos(patternBlock.getItems()), patternBlock.getExistMoreItems());
+        return new BlockDto<>(toPatternDtos(patternBlock.getItems()), patternBlock.getExistMoreItems());
     }
 
-    @GetMapping("/{id}/physicals")
-    public Block<PhysicalDto> findAddedPhysicals(@PathVariable Long id, @RequestAttribute Long userId,
-                                               @RequestParam(defaultValue = "0") int page)
-            throws PermissionException{
+    @GetMapping("/physicals")
+    public BlockDto<PhysicalDto> findAddedPhysicals(@RequestAttribute Long userId,
+                                               @RequestParam(defaultValue = "0") int page){
 
-        if(!id.equals(userId)){
-            throw new PermissionException();
-        }
 
         Block<Physical> physicalBlock = publicationService.findAddedPhysicals(userId, page,10 );
 
-        return new Block<>(toPhysicalDtos(physicalBlock.getItems()), physicalBlock.getExistMoreItems());
+        return new BlockDto<>(toPhysicalDtos(physicalBlock.getItems()), physicalBlock.getExistMoreItems());
     }
 
     @GetMapping("/products/{id}")
