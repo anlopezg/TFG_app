@@ -1,16 +1,13 @@
 package es.udc.paproject.backend.test.model.services;
 
+import es.udc.paproject.backend.model.exceptions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
-import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.entities.User;
-import es.udc.paproject.backend.model.exceptions.IncorrectLoginException;
-import es.udc.paproject.backend.model.exceptions.IncorrectPasswordException;
 import es.udc.paproject.backend.model.services.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -175,6 +172,32 @@ public class UserServiceTest {
 		assertThrows(IncorrectPasswordException.class, () ->
 			userService.changePassword(user.getId(), 'Y' + oldPassword, newPassword));
 		
+	}
+
+	@Test
+	public void testUserBecomesSeller() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException {
+
+		User user = createUser("user" ,"email");
+
+		userService.signUp(user);
+
+		userService.userBecomesSeller(user.getId());
+
+        assertSame(user.getRole(), User.RoleType.SELLER);
+	}
+
+	@Test
+	public void testUserAlreadySeller() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException {
+
+		User user = createUser("user" ,"email");
+
+		userService.signUp(user);
+
+		//The method userBecomesSeller is called twice
+		userService.userBecomesSeller(user.getId());
+
+		assertThrows(UserAlreadySellerException.class, ()->
+				userService.userBecomesSeller(user.getId()));
 	}
 
 }

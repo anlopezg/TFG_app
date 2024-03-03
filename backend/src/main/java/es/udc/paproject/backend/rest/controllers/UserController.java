@@ -7,6 +7,7 @@ import static es.udc.paproject.backend.rest.dtos.UserConversor.toUserDto;
 import java.net.URI;
 import java.util.Locale;
 
+import es.udc.paproject.backend.model.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -15,12 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
-import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.entities.User;
-import es.udc.paproject.backend.model.exceptions.IncorrectLoginException;
-import es.udc.paproject.backend.model.exceptions.IncorrectPasswordException;
-import es.udc.paproject.backend.model.exceptions.PermissionException;
 import es.udc.paproject.backend.model.services.UserService;
 import es.udc.paproject.backend.rest.common.ErrorsDto;
 import es.udc.paproject.backend.rest.common.JwtGenerator;
@@ -36,6 +32,7 @@ public class UserController {
 	
 	private final static String INCORRECT_LOGIN_EXCEPTION_CODE = "project.exceptions.IncorrectLoginException";
 	private final static String INCORRECT_PASSWORD_EXCEPTION_CODE = "project.exceptions.IncorrectPasswordException";
+	private final static String USER_ALREADY_SELLER_CODE = "project.exceptions.UserAlreadySellerException";
 
 	@Autowired
 	private MessageSource messageSource;
@@ -68,6 +65,18 @@ public class UserController {
 
 		return new ErrorsDto(errorMessage);
 		
+	}
+
+	@ExceptionHandler(UserAlreadySellerException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	@ResponseBody
+	public ErrorsDto handleUserAlreadySellerException(UserAlreadySellerException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(USER_ALREADY_SELLER_CODE, null,
+				USER_ALREADY_SELLER_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
 	}
 
 	@PostMapping("/signUp")
@@ -142,7 +151,8 @@ public class UserController {
 	}
 
 	@PutMapping("/{id}/becomeSeller")
-	public void userBecomesSeller(@RequestAttribute Long userId, @PathVariable Long id)throws PermissionException, InstanceNotFoundException{
+	public void userBecomesSeller(@RequestAttribute Long userId, @PathVariable Long id)throws PermissionException, InstanceNotFoundException,
+			UserAlreadySellerException {
 
 		if(!id.equals(userId)){
 			throw new PermissionException();

@@ -1,9 +1,6 @@
 package es.udc.paproject.backend.model.services;
 
-import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
-import es.udc.paproject.backend.model.exceptions.IncorrectLoginException;
-import es.udc.paproject.backend.model.exceptions.IncorrectPasswordException;
-import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
+import es.udc.paproject.backend.model.exceptions.*;
 import es.udc.paproject.backend.model.entities.User;
 
 
@@ -23,10 +20,11 @@ public interface UserService {
 
 
 	/**
-	 * An user with the common role 'USER' becomes a 'SELLER'
+	 * A user with the common role 'USER' becomes a 'SELLER' role
 	 * @param id The user's id
-	 * @throws InstanceNotFoundException
+	 * @throws InstanceNotFoundException No user with given id found
+	 * @throws UserAlreadySellerException The given user already has the role 'Seller'
 	 */
-	void userBecomesSeller(Long id) throws InstanceNotFoundException;
+	void userBecomesSeller(Long id) throws InstanceNotFoundException, UserAlreadySellerException;
 
 }
