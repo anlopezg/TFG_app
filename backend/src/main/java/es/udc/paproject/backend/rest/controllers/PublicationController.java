@@ -139,7 +139,7 @@ public class PublicationController {
     public BlockDto<PatternDto> findAddedPatterns(@RequestAttribute Long userId,
                                                @RequestParam(defaultValue = "0") int page){
 
-        Block<Pattern> patternBlock = publicationService.findAddedPatters(userId, page,10 );
+        Block<Pattern> patternBlock = publicationService.findAddedPatterns(userId, page,10 );
 
         return new BlockDto<>(toPatternDtos(patternBlock.getItems()), patternBlock.getExistMoreItems());
     }

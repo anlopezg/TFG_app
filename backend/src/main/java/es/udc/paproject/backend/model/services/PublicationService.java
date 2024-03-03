@@ -26,31 +26,25 @@ public interface PublicationService {
     Subcategory checkSubcategory(Long categoryId) throws InstanceNotFoundException;
 
 
-    Product addProduct(Product product) throws InstanceNotFoundException;
-
     /**
-     *
-     * Creates a new Product of type Pattern
+     * Creates a new Product of type Pattern given the following params
+     * @throws InstanceNotFoundException User, Craft or Subcategory not found
+     * @throws UserNotSellerException The user must be a Seller
      */
     Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                               BigDecimal price, Boolean active, String introduction, String notes, String gauge,
                               String sizing, int difficultyLevel, String time)
             throws InstanceNotFoundException, UserNotSellerException;
 
-    /*
-    void createPatternProduct(Pattern pattern) throws InstanceNotFoundException;*/
-
 
     /**
-     *
-     * Creates a new Product of type Physical
+     * Creates a new Product of type Physical given the following params
+     * @throws InstanceNotFoundException User, Craft or Subcategory not found
+     * @throws UserNotSellerException The user must be a Seller
      */
     Physical createPhysical(Long userId, Long craftId, Long subcategoryId, String title, String description,
                          BigDecimal price, Boolean active, int amount, String size, String color,
                          String details) throws InstanceNotFoundException,  UserNotSellerException;
-    /*
-    void createPhysicalProduct(Physical physical) throws InstanceNotFoundException;*/
-
 
 
     /**
@@ -73,18 +67,18 @@ public interface PublicationService {
     List<Subcategory> getSubcategoriesByCategory(Long categoryId);
 
 
-    /**
-     * Shows all the products a user has added to its store
-     * @param userId
-     * @param page
-     * @param size
-     * @return
-     */
     Block<Product> findAddedProducts(Long userId, int page, int size);
 
-    Block<Pattern> findAddedPatters(Long userId, int page, int size);
+    /**
+     * Returns all the patterns a particular user has added to their store
+     */
+    Block<Pattern> findAddedPatterns(Long userId, int page, int size);
 
+    /**
+     * Returns all the physical products a particular user has added to their store
+     */
     Block<Physical> findAddedPhysicals(Long userId, int page, int size);
+
 
     Block<Product> findProducts(Long categoryId, String keywords, int page, int size);
 

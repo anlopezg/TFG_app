@@ -1,0 +1,301 @@
+package es.udc.paproject.backend.test.model.services;
+
+import es.udc.paproject.backend.model.entities.*;
+import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
+import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
+import es.udc.paproject.backend.model.exceptions.UserAlreadySellerException;
+import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
+import es.udc.paproject.backend.model.services.Block;
+import es.udc.paproject.backend.model.services.PublicationService;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import es.udc.paproject.backend.model.services.UserService;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
+@ActiveProfiles("test")
+@Transactional
+public class PublicationServiceTest {
+
+    private final Long NON_EXISTENT_ID = Long.valueOf(-1);
+
+    @Autowired
+    private PublicationService publicationService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CraftDao craftDao;
+    @Autowired
+    private CategoryDao categoryDao;
+    @Autowired
+    private SubcategoryDao subcategoryDao;
+
+    /*   ENTITY CREATION  */
+
+    private User createSellerUser(String userName) throws DuplicateInstanceException, UserAlreadySellerException, InstanceNotFoundException {
+        User user = new User(userName, userName + "@a.com","password", "firstName", "language",
+                "country", 1, 2, "long bio");
+
+        userService.signUp(user);
+
+        userService.userBecomesSeller(user.getId());
+
+        return user;
+    }
+
+    private User createNormalUser(String userName) throws DuplicateInstanceException{
+        User user = new User(userName, userName + "@a.com","password", "firstName", "language",
+                "country", 1, 2, "long bio");
+
+        userService.signUp(user);
+
+        return user;
+    }
+
+    private Craft createCraft(String craftName){
+        Craft craft = new Craft(craftName);
+        craftDao.save(craft);
+        return craft;
+    }
+    private Category createCategory(String categoryName){
+
+        Category category = new Category(categoryName, null);
+        categoryDao.save(category);
+        return category;
+    }
+    private Subcategory createSubcategory(String subcategoryName, Category parent){
+
+        Subcategory subcategory= new Subcategory(subcategoryName, parent);
+        subcategoryDao.save(subcategory);
+        return subcategory;
+    }
+
+    private Pattern createPattern(User user, Craft craft, Subcategory subcategory, String title, BigDecimal price, LocalDateTime creationDate){
+        return new Pattern(user, craft, subcategory, title, "Description", price,true, creationDate,
+                "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+    }
+
+    private Physical createPhysical(User user, Craft craft, Subcategory subcategory, String title, BigDecimal price, LocalDateTime creationDate){
+        return new Physical(user, craft, subcategory, title, "Description", price,true, creationDate,
+                3, "Size", "Color", "Details");
+    }
+
+
+
+    /*   SERVICE'S TESTS  */
+    @Test
+    public void checkCraft() throws InstanceNotFoundException{
+
+        Craft craft = createCraft("Crochet");
+        craftDao.save(craft);
+        assertEquals(craft,  publicationService.checkCraft(craft.getId()));
+    }
+
+    @Test
+    public void checkNonExistentCraft(){
+
+        assertThrows(InstanceNotFoundException.class, () ->
+            publicationService.checkCraft(NON_EXISTENT_ID));
+    }
+
+    @Test
+    public void checkSubcategory() throws InstanceNotFoundException{
+
+        Category category = createCategory("Tops");
+        categoryDao.save(category);
+
+        Subcategory subcategory = createSubcategory("Jacket", category);
+        subcategoryDao.save(subcategory);
+
+        assertEquals(subcategory,  publicationService.checkSubcategory(subcategory.getId()));
+    }
+
+    @Test
+    public void checkNonExistentSubcategory(){
+        assertThrows(InstanceNotFoundException.class, ()->
+                publicationService.checkSubcategory(NON_EXISTENT_ID));
+    }
+
+    @Test
+    public void createPattern() throws InstanceNotFoundException, UserNotSellerException, DuplicateInstanceException, UserAlreadySellerException {
+
+        User user = createSellerUser("username");
+        Craft craft = createCraft("Crochet");
+        Category category = createCategory("Accesories");
+        Subcategory subcategory= createSubcategory("Ring", category);
+
+        String title = "title";
+        BigDecimal price = BigDecimal.valueOf(10);
+        Pattern expectedPattern = createPattern(user, craft, subcategory, title, price, LocalDateTime.now());
+
+        Pattern createdPattern = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title, "Description",
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+
+
+
+        assertEquals(expectedPattern.getUser(),createdPattern.getUser());
+        assertEquals(expectedPattern.getCraft(), createdPattern.getCraft());
+        assertEquals(expectedPattern.getSubcategory(), createdPattern.getSubcategory());
+        assertEquals(expectedPattern.getTitle(), createdPattern.getTitle());
+        assertEquals(expectedPattern.getPrice(), createdPattern.getPrice());
+    }
+
+    @Test
+    public void NonSellerCreatesPattern() throws DuplicateInstanceException{
+
+        //Non seller user
+        User user = createNormalUser("username");
+        Craft craft = createCraft("Crochet");
+        Category category = createCategory("Accesories");
+        Subcategory subcategory= createSubcategory("Ring", category);
+
+        assertThrows(UserNotSellerException.class, ()->
+                publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "title", "Description",
+                        BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
+                        "Sizing", 1, "10 hours"));
+    }
+
+    @Test
+    public void NonExistentUserCreatesPattern() {
+        assertThrows(InstanceNotFoundException.class, ()->
+                publicationService.createPattern(NON_EXISTENT_ID, NON_EXISTENT_ID, NON_EXISTENT_ID, "title", "Description",
+                        BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
+                        "Sizing", 1, "10 hours"));
+    }
+
+    @Test
+    public void createPhysical() throws InstanceNotFoundException, UserNotSellerException, DuplicateInstanceException, UserAlreadySellerException{
+
+        User user = createSellerUser("username");
+        Craft craft = createCraft("Crochet");
+        Category category = createCategory("Accesories");
+        Subcategory subcategory= createSubcategory("Ring", category);
+
+        String title = "title";
+        BigDecimal price = BigDecimal.valueOf(10);
+        Physical expectedPhysical = createPhysical(user, craft, subcategory, title, price, LocalDateTime.now());
+
+        Physical physical = publicationService.createPhysical(user.getId(), craft.getId(),subcategory.getId(), title, "Description",
+                price, true, 3, "Size", "Color", "Details");
+
+        assertEquals(expectedPhysical.getUser(),physical.getUser());
+        assertEquals(expectedPhysical.getCraft(), physical.getCraft());
+        assertEquals(expectedPhysical.getSubcategory(), physical.getSubcategory());
+        assertEquals(expectedPhysical.getTitle(), physical.getTitle());
+        assertEquals(expectedPhysical.getPrice(), physical.getPrice());
+    }
+
+    @Test
+    public void findAddedPatterns() throws DuplicateInstanceException, UserAlreadySellerException, InstanceNotFoundException, UserNotSellerException{
+
+        User user = createSellerUser("username");
+
+        Craft craft = createCraft("Crochet");
+        Category category = createCategory("Accesories");
+        Subcategory subcategory= createSubcategory("Ring", category);
+
+        String title1 = "pattern1";
+        String title2 = "pattern2";
+        BigDecimal price = BigDecimal.valueOf(10);
+
+        Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+
+        Pattern pattern2 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+
+        Block<Pattern> expectedBlock = new Block<>(Arrays.asList(pattern1, pattern2), false);
+        Block<Pattern> foundPatterns = publicationService.findAddedPatterns(user.getId(), 0, 2);
+
+        assertEquals(expectedBlock, foundPatterns);
+    }
+
+    @Test
+    public void findAddedPatternsByPages() throws DuplicateInstanceException, UserAlreadySellerException, InstanceNotFoundException, UserNotSellerException{
+
+        User user = createSellerUser("username");
+
+        Craft craft = createCraft("Crochet");
+        Category category = createCategory("Accesories");
+        Subcategory subcategory= createSubcategory("Ring", category);
+
+        String title1 = "pattern1";
+        String title2 = "pattern2";
+        String title3 = "pattern3";
+        BigDecimal price = BigDecimal.valueOf(10);
+
+        Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+
+        Pattern pattern2 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+
+        Pattern pattern3 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title3, "Description",
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+
+
+        Block<Pattern> firstBlock = new Block<>(Arrays.asList(pattern1, pattern2), true);
+        assertEquals(firstBlock, publicationService.findAddedPatterns(user.getId(), 0,2));
+
+        Block<Pattern> secondBlock = new Block<>(Arrays.asList(pattern3), false);
+        assertEquals(secondBlock, publicationService.findAddedPatterns(user.getId(), 1,2));
+    }
+
+    @Test
+    public void findAddedPatternsEmpty() throws DuplicateInstanceException, UserAlreadySellerException, InstanceNotFoundException{
+
+        User user = createSellerUser("username");
+
+        //Empty block
+        Block<Pattern> expectedBlock = new Block<>(new ArrayList<>(), false);
+        Block<Pattern> foundPatterns = publicationService.findAddedPatterns(user.getId(), 0, 1);
+
+        assertEquals(expectedBlock, foundPatterns);
+    }
+
+
+
+
+
+    /*
+
+
+    private Product createProduct(User user, Craft craft, Category category, String title){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        return new Product(user, craft, category, title, "Summer top", BigDecimal.valueOf(20.0), true,
+                LocalDateTime.parse("2024-02-01 15:30:00", formatter), 5, "EU M", "white");
+    }
+
+    @Test
+    public void testAddProduct() throws InstanceNotFoundException{
+
+        User user = createUser("userName");
+        Craft craft = createCraft("Crochet");
+        Category category = createCategory("Tops");
+        Product product = createProduct(user, craft, category, "Crochet top");
+
+        user.getEmail();
+        craft.getId();
+        product.getId();
+
+        /*Product addedProduct = publicationService.addProduct(user.getId(), craft.getId(), category.getId(),
+                product);*/
+
+        /*assertEquals(product, addedProduct);
+
+    }*/
+
+}

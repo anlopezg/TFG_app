@@ -68,23 +68,6 @@ public class PublicationServiceImpl implements PublicationService{
         return subcategory.get();
     }
 
-    /* BORRAR ESTA */
-    @Override
-    public Product addProduct(Product product) throws InstanceNotFoundException {
-
-        User user = permissionChecker.checkUser(product.getUser().getId());
-
-        Craft craft = checkCraft(product.getCraft().getId());
-        Subcategory subcategory = checkSubcategory(product.getSubcategory().getId());
-
-        product.setCreationDate(LocalDateTime.now());
-
-        productDao.save(product);
-
-        return product;
-
-    }
-
     /*
     @Override
     public void createPatternProduct(Pattern pattern) throws InstanceNotFoundException{
@@ -153,24 +136,6 @@ public class PublicationServiceImpl implements PublicationService{
         return physicalCreated;
     }
 
-    /*
-    @Override
-    public void createPhysicalProduct(Physical physical) throws InstanceNotFoundException{
-
-        permissionChecker.checkUser(physical.getUser().getId());
-
-        checkCraft(physical.getCraft().getId());
-        checkSubcategory(physical.getSubcategory().getId());
-
-        LocalDateTime creationDate = LocalDateTime.now();
-
-        Physical physicalCreated = new Physical(physical.getUser(), physical.getCraft(), physical.getSubcategory(),
-                physical.getTitle(), physical.getDescription(), physical.getPrice(), physical.getActive(), creationDate,
-                physical.getAmount(), physical.getSize(), physical.getColor(), physical.getDetails());
-
-        productDao.save(physicalCreated);
-    }*/
-
 
     @Override
     @Transactional(readOnly=true)
@@ -204,7 +169,7 @@ public class PublicationServiceImpl implements PublicationService{
 
     @Override
     @Transactional(readOnly = true)
-    public Block<Pattern> findAddedPatters(Long userId, int page, int size){
+    public Block<Pattern> findAddedPatterns(Long userId, int page, int size){
 
         Slice<Pattern> slice = patternDao.findAllByUserIdOrderByCreationDateDesc(userId,  PageRequest.of(page, size));
 
