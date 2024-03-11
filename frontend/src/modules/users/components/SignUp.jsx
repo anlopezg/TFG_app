@@ -248,7 +248,7 @@ const SignUp = () => {
                                         <select id="knitLevel" className="form-control" value={knitLevel}
                                                 onChange={e => setKnitLevel(e.target.value)}
                                                 required>
-                                            <option value="0e">
+                                            <option value="0">
                                                 <FormattedMessage id="project.global.fields.level.none"/></option>
                                             <option value="1">
                                                 <FormattedMessage id="project.global.fields.level.beginner"/></option>
