@@ -15,6 +15,7 @@ export default {
     'project.global.buttons.save': 'Guardar',
     'project.global.buttons.submit': 'Enviar',
     'project.global.exceptions.NetworkError': 'Fallo de comunicación',
+    'project.global.fields.active': 'Activo',
     'project.global.fields.date': 'Fecha',
     'project.global.fields.email': 'Correo electrónico',
     'project.global.fields.firstName': 'Nombre',
@@ -67,8 +68,38 @@ export default {
     'project.products.Physical.empty' : 'No se ha añadido ningún patrón aún',
 
     'project.products.CreatePattern.heading' : 'Crea un Patrón',
+    'project.products.CreatePattern.pattern' : 'Empieza a escribir tu patrón',
     'project.products.CreatePhysical.heading' : 'Crea un Producto',
     'project.products.Product.title' : 'Título',
-    'project.products.Product.price' : 'Price'
+    'project.products.Product.description': 'Descripción',
+    'project.products.Product.price' : 'Precio',
+    'project.products.Product.amount' : 'Cantidad',
+    'project.products.Product.color' : 'Color',
+    'project.products.Product.size' : 'Talla',
+    'project.products.Product.details' : 'Detalles',
+    'project.products.Product.active' : '¿Quieres publicar este producto o tenerlo como borrador?',
+    'project.products.Product.publish' : 'Publicarlo',
+    'project.products.Product.draft' : 'Guardar como borrador',
+    'project.products.Pattern.introduction' : 'Introducción',
+    'project.products.Pattern.notes' : 'Notas adicionales',
+    'project.products.Pattern.gauge' : 'Medida tejido',
+    'project.products.Pattern.sizing' : 'Tallaje',
+    'project.products.Pattern.time': 'Tiempo tardado',
+    'project.products.Pattern.difficultyLevel': 'Nivel de dificultad',
+
+    'project.catalog.CraftSelector.allCrafts': 'Todos los tipos',
+    'project.catalog.Selector.select' : 'Selecciona uno',
+    'project.catalog.Craft.field': 'Tipo de artesanía',
+    'project.catalog.Crafts.crochet': 'Ganchillo',
+    'project.catalog.Crafts.knit': 'Calceta',
+
+    'project.catalog.Category.field': 'Categoría',
+    'project.catalog.Categories.Clothing' : 'Prendas de ropa',
+    'project.catalog.Categories.Accessory' : 'Accesorios',
+
+    'project.catalog.Subcategories.Tops': 'Camiseta',
+    'project.catalog.Subcategories.Scarf': 'Bufanda',
+    'project.catalog.Subcategories.Sweater': 'Jersey'
+
 
 }

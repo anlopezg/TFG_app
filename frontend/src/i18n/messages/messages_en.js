@@ -15,6 +15,7 @@ export default {
     'project.global.buttons.save': 'Save',
     'project.global.buttons.submit': 'Submit',
     'project.global.exceptions.NetworkError': 'Network error',
+    'project.global.fields.active': 'Active',
     'project.global.fields.date': 'Date',
     'project.global.fields.email': 'Email address',
     'project.global.fields.firstName': 'First name',
@@ -65,9 +66,36 @@ export default {
     'project.products.Physical.empty' : 'No products have been added yet',
 
     'project.products.CreatePattern.heading' : 'Create a Pattern',
+    'project.products.CreatePattern.pattern' : 'Start writing your own pattern',
     'project.products.CreatePhysical.heading' : 'Create a Product',
     'project.products.Product.title' : 'Title',
-    'project.products.Product.price' : 'Price'
+    'project.products.Product.description': 'Description',
+    'project.products.Product.price' : 'Price',
+    'project.products.Product.amount' : 'Amount',
+    'project.products.Product.color' : 'Color',
+    'project.products.Product.size' : 'Size',
+    'project.products.Product.details' : 'Details',
+    'project.products.Product.active' : 'Do you want to publish this product or keep it as a draft?',
+    'project.products.Product.publish' : 'Publish it',
+    'project.products.Product.draft' : 'Keep it as a draft',
+    'project.products.Pattern.introduction' : 'Introduction',
+    'project.products.Pattern.notes' : 'Additional notes',
+    'project.products.Pattern.gauge' : 'Gauge',
+    'project.products.Pattern.sizing' : 'Sizing',
+    'project.products.Pattern.time': 'Time taken',
+    'project.products.Pattern.difficultyLevel': 'Difficulty Level',
 
+    'project.catalog.CraftSelector.allCrafts': 'All the crafts',
+    'project.catalog.Selector.select' : 'Select one',
+    'project.catalog.Craft.field': 'Craft',
+    'project.catalog.Crafts.crochet': 'Crochet',
+    'project.catalog.Crafts.knit': 'Knitting',
+    'project.catalog.Category.field': 'Category',
+    'project.catalog.Categories.Clothing' : 'Clothing',
+    'project.catalog.Categories.Accessory' : 'Accesories',
+
+    'project.catalog.Subcategories.Tops': 'Tops',
+    'project.catalog.Subcategories.Scarf': 'Scarf',
+    'project.catalog.Subcategories.Sweater': 'Sweater'
 
 }
