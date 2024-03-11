@@ -68,25 +68,6 @@ public class PublicationServiceImpl implements PublicationService{
         return subcategory.get();
     }
 
-    /*
-    @Override
-    public void createPatternProduct(Pattern pattern) throws InstanceNotFoundException{
-
-        permissionChecker.checkUser(pattern.getUser().getId());
-
-        checkCraft(pattern.getCraft().getId());
-        checkSubcategory(pattern.getSubcategory().getId());
-
-        LocalDateTime creationDate = LocalDateTime.now();
-
-        Pattern patternCreated = new Pattern(pattern.getUser(), pattern.getCraft(), pattern.getSubcategory(),
-                pattern.getTitle(), pattern.getDescription(), pattern.getPrice(), pattern.getActive(), creationDate,
-                pattern.getIntroduction(), pattern.getNotes(), pattern.getGauge(), pattern.getSizing(),
-                pattern.getDifficultyLevel(), pattern.getTime());
-
-        productDao.save(patternCreated);
-    }*/
-
     @Override
     public Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                               BigDecimal price, Boolean active, String introduction, String notes, String gauge,
@@ -152,7 +133,7 @@ public class PublicationServiceImpl implements PublicationService{
 
     @Override
     @Transactional(readOnly=true)
-    public List<Subcategory> getSubcategoriesByCategory(Long categoryId){
+    public List<Subcategory> getSubcategoriesByCategory(Long categoryId) {
         return subcategoryDao.findByCategoryId(categoryId);
 
     }
