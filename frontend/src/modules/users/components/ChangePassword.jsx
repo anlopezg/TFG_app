@@ -67,11 +67,11 @@ const ChangePassword = () => {
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
 
             <div className="mt-4 mb-4 container justify-content-center align-items-center">
-                <div className="card bg-light mb-3">
+                <div className="card mb-3">
                     <h2 className="card-header back-color-pink">
                         <FormattedMessage id="project.users.ChangePassword.title"/>
                     </h2>
-                    <div className="card-body back-color-grey">
+                    <div className="card-body">
                         <form ref={node => form = node}
                             className="needs-validation" noValidate onSubmit={e => handleSubmit(e)}>
                             <div className="form-group row justify-content-center">
@@ -121,8 +121,8 @@ const ChangePassword = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="form-group row">
-                                <div className="offset-md-3 col-md-1 ml-auto mt-3 d-flex justify-content-end">
+                            <div className="form-group row justify-content-center">
+                                <div className="col-md-6 mt-4">
                                     <button type="submit" className="btn button-light-pink extra-bold-label">
                                         <FormattedMessage id="project.global.buttons.save"/>
                                     </button>

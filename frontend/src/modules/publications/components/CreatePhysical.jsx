@@ -72,15 +72,15 @@ const CreatePhysical = () => {
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             <div className="mt-4 mb-4 container d-flex justify-content-center align-items-center">
                 <div className="card bg-light mb-3 ">
-                    <h2 className="card-header back-color-pink">
+                    <h2 className="card-header">
                         <FormattedMessage id="project.products.CreatePhysical.heading"/>
                     </h2>
-                    <div className="card-body back-color-grey">
+                    <div className="card-body ">
                         <form ref={node => form = node}
                               className="needs-validation" noValidate
                               onSubmit={e => handleSubmit(e)}>
 
-                            <div className="text-center back-color-grey">
+                            <div className="text-center">
                                 <div className="italic-message">
                                     <FormattedMessage id="project.global.form.introduction"/>
                                 </div>
@@ -254,8 +254,8 @@ const CreatePhysical = () => {
 
                             </div>
 
-                            <div className="form-group row">
-                                <div className="offset-md-3 col-md-2 ml-auto d-flex justify-content-end">
+                            <div className="form-group row row justify-content-center">
+                                <div className="col-md-6 mt-4">
                                     <button type="submit" className="btn button-light-pink bold-label">
                                         <FormattedMessage id="project.global.buttons.submit"/>
                                     </button>

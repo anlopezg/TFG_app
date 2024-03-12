@@ -23,11 +23,11 @@ const ViewProfile = () => {
     return(
         <div className="mt-4 mb-4 container justify-content-center align-items-center">
 
-            <div className="card bg-light mb-3">
+            <div className="card mb-3">
                 <h2 className="card-header back-color-pink">
                     <FormattedMessage id="project.users.ProfileInfo.title"/>
                 </h2>
-                <div className="card-body back-color-grey">
+                <div className="card-body">
                     <div className="row justify-content-center">
                         <div className="col-md-4">
                             <label htmlFor="userName" className="col-form-label bold-label">
@@ -116,8 +116,8 @@ const ViewProfile = () => {
                         </div>
                     </div>
 
-                    <div className="row">
-                        <div className="offset-md-3 ml-auto mr-3 d-flex justify-content-end ">
+                    <div className="row justify-content-center">
+                        <div className="col-md-6 mt-4">
                             <Link className="btn button-pink extra-bold-label" to="/users/update-profile">
                                 <FormattedMessage id="project.users.UpdateProfile.title"/>
                             </Link>

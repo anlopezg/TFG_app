@@ -44,11 +44,11 @@ const Login = () => {
         <div>
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             <div className="mt-4 mb-4 container d-flex justify-content-center align-items-center">
-                <div className="card bg-light mb-3 ">
+                <div className="card ">
                     <h2 className="card-header back-color-pink">
                         <FormattedMessage id="project.users.Login.title"/>
                     </h2>
-                    <div className="card-body back-color-grey">
+                    <div className="card-body">
                         <form ref={node => form = node}
                             className="needs-validation" noValidate
                             onSubmit={e => handleSubmit(e)}>
@@ -57,7 +57,7 @@ const Login = () => {
                                     <FormattedMessage id="project.global.fields.userName"/>
                                 </label>
                                 <div className="col-md-12">
-                                    <input type="text" id="userName" className="form-control back-color-grey"
+                                    <input type="text" id="userName" className="form-control"
                                         value={userName}
                                         onChange={e => setUserName(e.target.value)}
                                         autoFocus
@@ -72,7 +72,7 @@ const Login = () => {
                                     <FormattedMessage id="project.global.fields.password"/>
                                 </label>
                                 <div className="col-md-12">
-                                    <input type="password" id="password" className="form-control back-color-grey"
+                                    <input type="password" id="password" className="form-control "
                                         value={password}
                                         onChange={e => setPassword(e.target.value)}
                                         required/>
@@ -81,16 +81,16 @@ const Login = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="form-group row">
-                                <div className="offset-md-3 col-md-2 ml-auto d-flex justify-content-end ">
-                                    <button type="submit" className="btn button-pink bold-label">
+                            <div className="form-group row justify-content-center">
+                                <div className="col-md-6 mt-4">
+                                    <button type="submit" className="btn button-light-pink bold-label">
                                         <FormattedMessage id="project.global.buttons.submit"/>
                                     </button>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div className="text-center back-color-grey">
+                    <div className="text-center">
                         <div>
                             <FormattedMessage id="project.users.SignUp.message"/>
                         </div>

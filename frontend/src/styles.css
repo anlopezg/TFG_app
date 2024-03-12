@@ -27,11 +27,24 @@
 /* Color palette*/
 :root{
     --light-black: #1F1E1E;
+
+    /* Greys */
     --light-grey: #F6F6EE;
+    --pastel-grey: #F7F5EB;
+
+    /* Blues*/
+    --light-blue: #D5E3E8;
     --pastel-blue: #DAE7EB;
-    --pastel-pink: #F9E7DD;
-    --medium-pink: #F6D1BE;
-    --dark-pink: #F4B08D;
+    --darker-blue: #A0C3D2;
+
+    /* BrownISH */
+    --pastel-brown: #EAE0DA;
+
+    /* Pinks */
+    --pastel-pink: #EAC7C7;
+    --light-pink: #F9E7DD;
+    --medium-pink: #DE7C7C;
+    --dark-pink: #DE7C7C;
 }
 
 .navbar-collapse {
@@ -56,6 +69,19 @@ h2{
 h4{
     font-size: 20px;
     text-align: center;
+}
+
+.card {
+    border-radius: 20px !important;
+}
+
+.card-header{
+    background-color: var(--pastel-pink);
+    border-radius: 20px 20px 0 0 !important;
+}
+.card-body{
+    background-color: #ffffff;
+    border-radius: 0 0 20px 20px ;
 }
 
 .container-alert{
@@ -95,7 +121,18 @@ h4{
     font-size: 18px;
     line-height: 40px;
     border: 1px solid var(--light-grey);
+    border-radius: 10px;
     background-color: var(--pastel-pink);
+}
+
+.button-options:hover{
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    line-height: 40px;
+    border: 1px solid var(--light-grey);
+    border-radius: 10px;
+    background-color: var(--medium-pink);
 }
 
 /* Specific styles */
@@ -109,6 +146,7 @@ h4{
 .back-color-blue{
     background-color: var(--pastel-blue);
 }
+
 
 .back-color-pink{
     background-color: var(--pastel-pink);
@@ -125,24 +163,28 @@ h4{
 /* Buttons */
 .button-pink{
     background-color: var(--medium-pink);
+    width: 100%;
     color: var(--light-black);
     font-size: 18px;
     border: 1px solid #ccc;
+    border-radius: 10px;
     padding: 10px 20px;
     cursor: pointer;
 }
 
 .button-pink:hover{
-    background-color: var(--dark-pink);
     font-family: 'Bold', sans-serif;
     border: 2px solid #ccc;
+    border-radius: 10px;
 }
 
 .button-light-pink{
     background-color: var(--pastel-pink);
+    width: 100%;
     color: var(--light-black);
     font-size: 18px;
     border: 1px solid #ccc;
+    border-radius: 10px;
     padding: 10px 20px;
     cursor: pointer;
 }
@@ -150,24 +192,39 @@ h4{
 .button-light-pink:hover{
     background-color: var(--medium-pink);
     border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+.button-dark-blue{
+    background-color: var(--darker-blue);
+    width: 100%;
+    font-size: 18px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.button-dark-blue:hover{
+    font-size: 18.5px;
+    border: 1px solid #ffffff
 }
 
 .nav-tabs .nav-item .nav-link{
     border-radius: 20px     20px      0           0;
-    font-size: 30px;
-    font-family: 'BrightRetro', sans-serif;
+    font-size: 22px;
+    font-family: 'Bold', sans-serif;
     color: var(--light-black);
-    margin-left: 10px
+    margin-left: 5px
 }
 
-.nav-tabs .nav-item .nav-link.active,
+.nav-tabs .nav-item .nav-link.active{
+    background-color: var(--pastel-blue);
+    font-size: 24px;
+}
+
 .nav-tabs .nav-item .nav-link:hover{
-    border-radius: 20px     20px      0           0;
-    background-color: #ffffff;
-    font-size: 30px;
-    font-family: 'BrightRetro', sans-serif;
-    color: var(--light-black);
-    margin-left: 10px
+    background-color: var(--darker-blue);
+    font-size: 24px;
 }
 
 /* Bold title labels */

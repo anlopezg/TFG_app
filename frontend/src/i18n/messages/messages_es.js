@@ -63,7 +63,7 @@ export default {
     'project.products.TotalPatterns.title' : 'Patrones totales:',
     'project.products.Pattern.empty' : 'No se ha añadido ningún patrón aún',
 
-    'project.products.AddedPhysical.heading' : 'Mis Productos añadidos',
+    'project.products.AddedPhysical.heading' : 'Mis productos añadidos',
     'project.products.TotalPhysicals.title' : 'Productos totales:',
     'project.products.Physical.empty' : 'No se ha añadido ningún patrón aún',
 

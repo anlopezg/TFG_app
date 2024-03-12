@@ -41,7 +41,7 @@ const BecomesSeller = () => {
                     <h2 className="card-header back-color-blue">
                         <FormattedMessage id="project.users.BecomeSeller.title"/>
                     </h2>
-                    <div className="card-body p-5 back-color-grey">
+                    <div className="card-body p-5 ">
                         <form ref={node => form = node}
                                  className="needs-validation" noValidate onSubmit={e => handleSubmit(e)}>
                             <div className="row justify-content-center">

@@ -31,7 +31,7 @@ const ViewAddedPatterns = () => {
     return (
 
         <div className="mt-4 mb-4 container justify-content-center align-items-center">
-             <ul className="nav nav-tabs">
+             <ul className="nav nav-tabs nav-justified">
                  <li className="nav-item">
                      <Link className="nav-link nav-tab-item" to="/publications/products">
                          <i className="fa-solid fa-shirt mr-3"></i>
@@ -47,21 +47,21 @@ const ViewAddedPatterns = () => {
                  </li>
              </ul>
 
-            <div className="back-color-white">
+            <div className="back-color-blue card-body pt-5">
                 <div className="d-flex justify-content-between align-items-center">
                     <div>
-                        <h2 className="pt-3 pl-5">
+                        <h3 className="pt-3 pl-5">
                             <FormattedMessage id="project.products.AddedPattern.heading"/>
-                        </h2>
+                        </h3>
                     </div>
-                    <div>
-                        <Link className="btn button-pink bold-label m-5" to="/publications/create-pattern">
+                    <div className="col-md-3 mr-5">
+                        <Link className="btn button-dark-blue bold-label" to="/publications/create-pattern">
                             <FormattedMessage id="project.products.CreatePattern.heading"/>
                         </Link>
                     </div>
                 </div>
 
-                    <p className=" bold-label ml-5 m-2" style={{ textTransform: 'uppercase' }}>
+                    <p className=" bold-label ml-5 m-2 pt-3" style={{ textTransform: 'uppercase' }}>
                             <FormattedMessage id="project.products.TotalPatterns.title"/> {patternSearch?.result?.items?.length || 0}
                     </p>
 
