@@ -31,6 +31,9 @@ const ViewAddedPatterns = () => {
     return (
 
         <div className="mt-4 mb-4 container justify-content-center align-items-center">
+            <h1 className="p-4">
+                <FormattedMessage id="project.products.MyStore.heading"/>
+            </h1>
              <ul className="nav nav-tabs nav-justified">
                  <li className="nav-item">
                      <Link className="nav-link nav-tab-item" to="/publications/products">
@@ -61,29 +64,34 @@ const ViewAddedPatterns = () => {
                     </div>
                 </div>
 
-                    <p className=" bold-label ml-5 m-2 pt-3" style={{ textTransform: 'uppercase' }}>
+                    <p className=" bold-label ml-5" style={{ textTransform: 'uppercase' }}>
                             <FormattedMessage id="project.products.TotalPatterns.title"/> {patternSearch?.result?.items?.length || 0}
                     </p>
 
-
-            </div>
-
-            {patternSearch && patternSearch.result && patternSearch.result.items.length > 0 ? (
-            <div>
-                <AddedPatterns patterns={patternSearch.result.items}/>
-                <Pager back={{
-                    enabled: patternSearch.criteria.page >= 1,
-                    onClick:() => dispatch(actions.previousFindAddedPatternsResultPage(patternSearch.criteria))}}
-                       next={{
-                           enabled: patternSearch.result.existMoreItems,
-                           onClick: () => dispatch(actions.nextFindAddedPatternsResultPage(patternSearch.criteria))}}
-                       />
-            </div>
-            ):(
-                <div className="alert alert-info" role="alert">
-                    <FormattedMessage id="project.products.Pattern.empty"/>
+                <div className="p-5">
+                    {patternSearch && patternSearch.result && patternSearch.result.items.length > 0 ? (
+                        <div>
+                            <AddedPatterns patterns={patternSearch.result.items}/>
+                            <Pager back={{
+                                enabled: patternSearch.criteria.page >= 1,
+                                onClick:() => dispatch(actions.previousFindAddedPatternsResultPage(patternSearch.criteria))}}
+                                   next={{
+                                       enabled: patternSearch.result.existMoreItems,
+                                       onClick: () => dispatch(actions.nextFindAddedPatternsResultPage(patternSearch.criteria))}}
+                            />
+                        </div>
+                    ):(
+                        <div className="alert back-color-grey" role="alert">
+                            <FormattedMessage id="project.products.Pattern.empty"/>
+                        </div>
+                    )}
                 </div>
-            )}
+
+            </div>
+
+
+
+
 
 
         </div>

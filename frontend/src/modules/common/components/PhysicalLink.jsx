@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 const PhysicalLink = ({id, title}) => {
 
     return (
-        <Link to={`/publications/product-details/${id}`}>
+        <Link className="product-link-light" to={`/publications/product-details/${id}`}>
             {title}
         </Link>
     );

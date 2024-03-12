@@ -5,23 +5,38 @@ import {PatternLink} from '../../common';
 
 const AddedPatterns= ({patterns}) =>(
 
-    <table className="table table-striped table hover">
-        <thead>
-            <tr>
-                <th scope="col">
-                    <FormattedMessage id="project.products.Product.title"/>
-                </th>
-            </tr>
-        </thead>
+    <div className="row">
+        {patterns.map(pattern =>(
+            <div key={pattern.id} className="col-md-4 mb-3">
 
-        <tbody>
-            {patterns.map(pattern =>
-            <tr key={pattern.id}>
-                <td><PatternLink id={pattern.id} title={pattern.title}/></td>
-            </tr>
-            )}
-        </tbody>
-    </table>
+                <div className="card-deck">
+                    <div className="card">
+                        <img src="../../../../public/crochet_default.jpg" className="card-img-top" alt="Product image"/>
+                        <div className="card-body">
+                            <h5 className="card-title">
+                                <PatternLink id={pattern.id} title={pattern.title}/>
+                            </h5>
+                            <div className="d-flex justify-content-end">
+                                <p className="card-text bold-label">{pattern.price} €</p>
+
+                            </div>
+
+                            {/* cambiar los links cuando se hayan creado las páginas */}
+                            <div className="text-center mt-3">
+                                <a href={`/`} className="btn btn-primary mr-2">
+                                    <FormattedMessage id="project.global.buttons.edit"/>
+                                </a>
+                                <a href={`/borrar/${pattern.id}`} className="btn btn-danger">
+                                    <FormattedMessage id="project.global.buttons.delete"/>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ))}
+    </div>
 
 );
 

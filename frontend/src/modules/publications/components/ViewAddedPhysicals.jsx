@@ -31,6 +31,10 @@ const ViewAddedPhysicals = () => {
     return (
 
         <div className="mt-4 mb-4 container justify-content-center align-items-center">
+
+            <h1 className="p-4">
+                <FormattedMessage id="project.products.MyStore.heading"/>
+            </h1>
             <ul className="nav nav-tabs nav-justified">
                 <li className="nav-item">
                     <Link className="nav-link active nav-tab-item" to="/publications/products">
@@ -54,36 +58,44 @@ const ViewAddedPhysicals = () => {
                             <FormattedMessage id="project.products.AddedPhysical.heading"/>
                         </h3>
                     </div>
-                    <div className="col-md-3 mr-5">
+                    <div className="col-md-4 mr-5">
                         <Link className="btn button-dark-blue bold-label " to="/publications/create-physical">
                             <FormattedMessage id="project.products.CreatePhysical.heading"/>
                         </Link>
                     </div>
                 </div>
 
-                <p className=" bold-label ml-5 m-2 pt-3" style={{ textTransform: 'uppercase' }}>
+                <p className=" bold-label ml-5" style={{ textTransform: 'uppercase' }}>
                     <FormattedMessage id="project.products.TotalPhysicals.title"/> {physicalSearch?.result?.items?.length || 0}
                 </p>
 
+                <div className="p-5">
+                    {physicalSearch.result.items.length > 0 ? (
+                        <div>
+                            <AddedPhysicals physicals={physicalSearch.result.items}/>
+
+                            <div className="mt-4">
+                                <Pager back={{
+                                    enabled: physicalSearch.criteria.page >= 1,
+                                    onClick:() => dispatch(actions.previousFindAddedPhysicalsResultPage(physicalSearch.criteria))}}
+                                       next={{
+                                           enabled: physicalSearch.result.existMoreItems,
+                                           onClick: () => dispatch(actions.nextFindAddedPhysicalsResultPage(physicalSearch.criteria))}}
+                                /></div>
+                        </div>
+                    ):(
+                        <div className="alert back-color-grey" role="alert">
+                            <FormattedMessage id="project.products.Physical.empty"/>
+                        </div>
+                    )}
+                </div>
 
             </div>
 
-            {physicalSearch.result.items.length > 0 ? (
-                <div>
-                    <AddedPhysicals physicals={physicalSearch.result.items}/>
-                    <Pager back={{
-                        enabled: physicalSearch.criteria.page >= 1,
-                        onClick:() => dispatch(actions.previousFindAddedPhysicalsResultPage(physicalSearch.criteria))}}
-                           next={{
-                               enabled: physicalSearch.result.existMoreItems,
-                               onClick: () => dispatch(actions.nextFindAddedPhysicalsResultPage(physicalSearch.criteria))}}
-                    />
-                </div>
-            ):(
-                <div className="alert alert-info" role="alert">
-                    <FormattedMessage id="project.products.Physical.empty"/>
-                </div>
-            )}
+
+
+
+
 
 
         </div>
