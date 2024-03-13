@@ -40,16 +40,13 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.DELETE, "/users/*").hasRole("SELLER")
 					.requestMatchers(HttpMethod.PUT, "/users/*/becomeSeller").hasRole("USER")
 
-					.requestMatchers(HttpMethod.GET, "/publications/products").permitAll()
-					.requestMatchers(HttpMethod.GET, "/publications/products/*").permitAll()
-					.requestMatchers(HttpMethod.POST, "/publications/patterns").permitAll()
-					.requestMatchers(HttpMethod.GET, "/publications/patterns/*").permitAll()
-					.requestMatchers(HttpMethod.POST, "/publications/physicals").permitAll()
-					.requestMatchers(HttpMethod.GET, "/publications/*/subcategories").permitAll()
-					.requestMatchers(HttpMethod.GET, "/publications/*/products").permitAll()
-					.requestMatchers(HttpMethod.GET, "/publications/*/patterns").permitAll()
-					.requestMatchers(HttpMethod.GET, "/publications/*/physicals").permitAll()
-					.requestMatchers(HttpMethod.GET, "/publications/*").permitAll()
+					/* Related to Publication Controller */
+					.requestMatchers(HttpMethod.POST, "/publications/patterns").hasRole("SELLER")
+					.requestMatchers(HttpMethod.POST, "/publications/physicals").hasRole("SELLER")
+
+					.requestMatchers(HttpMethod.GET, "/publications/*").hasRole("SELLER")
+
+
 				.anyRequest().denyAll());
 
 		return http.build();

@@ -130,7 +130,7 @@ public class PublicationController {
             throw new PermissionException();
         }
 
-        Block<Product> productBlock = publicationService.findAddedProducts(userId, page,10 );
+        Block<Product> productBlock = publicationService.findAddedProducts(userId, page,6 );
 
         return new Block<>(toProductDtos(productBlock.getItems()), productBlock.getExistMoreItems());
     }
@@ -139,7 +139,7 @@ public class PublicationController {
     public BlockDto<PatternDto> findAddedPatterns(@RequestAttribute Long userId,
                                                @RequestParam(defaultValue = "0") int page){
 
-        Block<Pattern> patternBlock = publicationService.findAddedPatterns(userId, page,10 );
+        Block<Pattern> patternBlock = publicationService.findAddedPatterns(userId, page,6 );
 
         return new BlockDto<>(toPatternDtos(patternBlock.getItems()), patternBlock.getExistMoreItems());
     }
@@ -149,7 +149,7 @@ public class PublicationController {
                                                @RequestParam(defaultValue = "0") int page){
 
 
-        Block<Physical> physicalBlock = publicationService.findAddedPhysicals(userId, page,10 );
+        Block<Physical> physicalBlock = publicationService.findAddedPhysicals(userId, page,6 );
 
         return new BlockDto<>(toPhysicalDtos(physicalBlock.getItems()), physicalBlock.getExistMoreItems());
     }

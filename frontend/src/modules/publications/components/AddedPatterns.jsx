@@ -23,10 +23,10 @@ const AddedPatterns= ({patterns}) =>(
 
                             {/* cambiar los links cuando se hayan creado las páginas */}
                             <div className="text-center mt-3">
-                                <a href={`/`} className="btn btn-primary mr-2">
+                                <a href={`/`} className="btn btn-primary mr-2 disabled">
                                     <FormattedMessage id="project.global.buttons.edit"/>
                                 </a>
-                                <a href={`/borrar/${pattern.id}`} className="btn btn-danger">
+                                <a href={`/borrar/${pattern.id}`} className="btn btn-danger disabled">
                                     <FormattedMessage id="project.global.buttons.delete"/>
                                 </a>
                             </div>
