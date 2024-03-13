@@ -49,6 +49,8 @@ public class PublicationController {
 
     }
 
+
+    /****************************** CREATION OF PRODUCTS ******************************/
     @PostMapping("/patterns")
     public ResponseEntity<PatternDto> createPattern(@RequestAttribute Long userId,
            @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto)
@@ -88,7 +90,7 @@ public class PublicationController {
 
 
 
-    /* Cambiar a catalog controller ?*/
+    /* Cambiar a catalog controller*/
     @GetMapping("/crafts")
     public List<CraftDto> findAllCrafts(){
         return toCraftDtos(publicationService.findAllCrafts());
@@ -120,7 +122,7 @@ public class PublicationController {
 
 
 
-
+    /****************************** FIND ADDED PRODUCTS WITH PAGINATION ******************************/
     @GetMapping("/{id}/products")
     public Block<ProductDto> findAddedProducts(@PathVariable Long id, @RequestAttribute Long userId,
             @RequestParam(defaultValue = "0") int page)
@@ -154,6 +156,8 @@ public class PublicationController {
         return new BlockDto<>(toPhysicalDtos(physicalBlock.getItems()), physicalBlock.getExistMoreItems());
     }
 
+
+    /****************************** VIEW DETAILS OF SPECIFIC PRODUCT ******************************/
     @GetMapping("/products/{id}")
     public ProductDto findProductById(@PathVariable Long id) throws InstanceNotFoundException{
         return toProductDto(publicationService.findProductById(id));
@@ -164,6 +168,9 @@ public class PublicationController {
         return toPatternDto(publicationService.findPatternById(id));
     }
 
-
+    @GetMapping("/physicals/{id}")
+    public PhysicalDto findPhysicalById(@PathVariable Long id) throws InstanceNotFoundException{
+        return toPhysicalDto(publicationService.findPhysicalById(id));
+    }
 
 }

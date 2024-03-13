@@ -201,4 +201,16 @@ public class PublicationServiceImpl implements PublicationService{
         return pattern.get();
     }
 
+    @Override
+    public Physical findPhysicalById(Long productId) throws InstanceNotFoundException{
+
+        Optional<Physical> physical = physicalDao.findById(productId);
+
+        if(!physical.isPresent()){
+            throw new InstanceNotFoundException("project.entities.product", productId);
+        }
+
+        return physical.get();
+    }
+
 }

@@ -82,8 +82,10 @@ public interface PublicationService {
 
     Block<Product> findProducts(Long categoryId, String keywords, int page, int size);
 
-    Product findProductById(Long productId) throws InstanceNotFoundException;
 
+    /* VIEW DETAILS OF PRODUCTS */
+    Product findProductById(Long productId) throws InstanceNotFoundException;
     Pattern findPatternById(Long productId) throws InstanceNotFoundException;
+    Physical findPhysicalById(Long productId) throws InstanceNotFoundException;
 
 }

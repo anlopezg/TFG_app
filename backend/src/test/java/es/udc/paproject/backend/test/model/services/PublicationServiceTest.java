@@ -265,37 +265,47 @@ public class PublicationServiceTest {
         assertEquals(expectedBlock, foundPatterns);
     }
 
+    @Test
+    public void findPatternById() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException, UserNotSellerException{
 
+        User user = createSellerUser("username");
 
+        Craft craft = createCraft("Crochet");
+        Category category = createCategory("Accesories");
+        Subcategory subcategory= createSubcategory("Ring", category);
 
+        Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
 
-    /*
-
-
-    private Product createProduct(User user, Craft craft, Category category, String title){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        return new Product(user, craft, category, title, "Summer top", BigDecimal.valueOf(20.0), true,
-                LocalDateTime.parse("2024-02-01 15:30:00", formatter), 5, "EU M", "white");
+        assertEquals(pattern1, publicationService.findPatternById(pattern1.getId()));
     }
 
     @Test
-    public void testAddProduct() throws InstanceNotFoundException{
+    public void findPatternByNonExistentId(){
+        assertThrows(InstanceNotFoundException.class, ()->
+                publicationService.findPatternById(NON_EXISTENT_ID));
+    }
 
-        User user = createUser("userName");
+    @Test
+    public void findPhysicalById() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException, UserNotSellerException{
+
+        User user = createSellerUser("username");
+
         Craft craft = createCraft("Crochet");
-        Category category = createCategory("Tops");
-        Product product = createProduct(user, craft, category, "Crochet top");
+        Category category = createCategory("Accesories");
+        Subcategory subcategory= createSubcategory("Ring", category);
 
-        user.getEmail();
-        craft.getId();
-        product.getId();
+        Physical physical1 = publicationService.createPhysical(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
+                BigDecimal.valueOf(50), true, 3, "Size", "Color", "Details");
 
-        /*Product addedProduct = publicationService.addProduct(user.getId(), craft.getId(), category.getId(),
-                product);*/
+        assertEquals(physical1, publicationService.findPhysicalById(physical1.getId()));
+    }
 
-        /*assertEquals(product, addedProduct);
 
-    }*/
+    @Test
+    public void findPhysicalByNonExistentId(){
+        assertThrows(InstanceNotFoundException.class, ()->
+                publicationService.findPhysicalById(NON_EXISTENT_ID));
+    }
 
 }
