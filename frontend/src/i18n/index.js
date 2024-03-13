@@ -4,13 +4,26 @@ export const initReactIntl = () => {
 
     let locale = (navigator.languages && navigator.languages[0]) ||
         navigator.language || navigator.userLanguage || 'en';
+
     const localeWithoutRegionCode = locale.toLowerCase().split(/[_-]+/)[0];
     const localeMessages = messages[locale] || 
         messages[localeWithoutRegionCode] || messages['en'];
 
-    locale = localeMessages === messages['en'] ? 'en' : locale;
+    if (locale === 'en') {
+        return { locale: 'en', messages: messages['en'] };
+    } else {
 
-    return {locale, messages: localeMessages};
+        const englishKeys = new Set(Object.keys(messages['en']));
+
+        const untranslatedKeys = Array.from(englishKeys).filter(key => !localeMessages.hasOwnProperty(key));
+
+        const mergedMessages = {...localeMessages};
+        untranslatedKeys.forEach(key => {
+            mergedMessages[key] = messages['en'][key];
+        });
+
+        return { locale, messages: mergedMessages };
+    }
 
 }
 
