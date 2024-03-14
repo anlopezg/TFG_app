@@ -7,8 +7,10 @@ const BackLink = () => {
     
     return (
 
-        <button type="button" className="btn btn-link" 
+        <button type="button" className="btn btn-link back-link-blue"
             onClick={() => navigate(-1)}>
+
+            <i className="fa-solid fa-angle-left mr-2"></i>
 
             <FormattedMessage id='project.global.buttons.back'/>
 
