@@ -45,6 +45,8 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.POST, "/publications/physicals").hasRole("SELLER")
 
 					.requestMatchers(HttpMethod.GET, "/publications/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.GET, "/publications/patterns/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.GET, "/publications/physicals/*").hasRole("SELLER")
 
 
 				.anyRequest().denyAll());

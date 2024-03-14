@@ -11,9 +11,6 @@ export const findSubcategoriesByCategory = (categoryId, onSuccess)=>
     appFetch(`/publications/${categoryId}/subcategories`, config('GET'), onSuccess);
 
 
-export const findProductById = (id, onSuccess) =>
-    appFetch(`/publications/products/${id}`, config('GET'), onSuccess);
-
 
 export const createPattern = (pattern, onSuccess, onErrors) =>
     appFetch('/publications/patterns', config('POST', pattern), onSuccess, onErrors);
@@ -27,3 +24,10 @@ export const findAddedPatterns = ({page}, onSuccess) =>
 
 export const findAddedPhysicals = ({page}, onSuccess) =>
     appFetch(`/publications/physicals?page=${page}`, config('GET'), onSuccess);
+
+
+export const findPatternById = (patternId, onSuccess) =>
+    appFetch(`/publications/patterns/${patternId}`, config('GET'), onSuccess);
+
+export const findPhysicalById = (physicalId, onSuccess) =>
+    appFetch(`/publications/physicals/${physicalId}`, config('GET'), onSuccess);

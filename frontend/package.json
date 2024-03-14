@@ -1,8 +1,8 @@
 {
-  "name": "pa-project",
+  "name": "tfg-yarn-crafters",
   "version": "1.0.0",
   "type": "module",
-  "description": "PA Project",
+  "description": "TFG Yarn Crafters",
   "private": true,
   "license": "MIT",
   "scripts": {

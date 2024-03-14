@@ -2,6 +2,7 @@ import * as actionTypes from './actionTypes';
 import * as selectors from "./selectors.js";
 import backend from '../../backend';
 
+/*********************** ADDED PRODUCTS SEARCH ***********************/
 export const findAddedPatternsCompleted = patternSearch => ({
     type: actionTypes.FIND_ADDED_PATTERNS_COMPLETED,
     patternSearch
@@ -54,8 +55,7 @@ export const nextFindAddedPhysicalsResultPage = criteria => dispatch => {
 }
 
 
-
-
+/*********************** PRODUCTS CREATION ***********************/
 const patternCreated  = pattern =>({
     type: actionTypes.PATTERN_CREATED,
     pattern
@@ -81,6 +81,43 @@ export const createPhysical = (physical, onSuccess, onErrors) => dispatch =>
         onSuccess();
         },
         onErrors);
+
+
+/*********************** PATTERN DETAILS ***********************/
+export const clearPattern = () =>({
+    type:actionTypes.CLEAR_PATTERN
+});
+
+export const findPatternCompleted = pattern => ({
+    type: actionTypes.FIND_PATTERN_COMPLETED,
+    pattern
+})
+
+export const findPatternById = patternId => dispatch => {
+    backend.publicationService.findPatternById(patternId, pattern =>{
+        dispatch(findPatternCompleted(pattern));
+    });
+}
+
+/*********************** PHYSICAL DETAILS ***********************/
+export const clearPhysical = () =>({
+    type:actionTypes.CLEAR_PHYSICAL
+});
+
+export const findPhysicalCompleted = physical => ({
+    type: actionTypes.FIND_PHYSICAL_COMPLETED,
+    physical
+})
+
+export const findPhysicalById = physicalId => dispatch => {
+    backend.publicationService.findPhysicalById(physicalId, physical =>{
+        dispatch(findPhysicalCompleted(physical));
+    });
+}
+
+
+
+
 
 
 

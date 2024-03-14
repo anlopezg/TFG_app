@@ -225,6 +225,14 @@ h4{
     border-color: var(--medium-pink);
 }
 
+.framed-title{
+    background-color: var(--pastel-blue);
+    width: 100%;
+    font-size: 18px;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
 .nav-tabs .nav-item .nav-link{
     border-radius: 20px     20px      0           0;
     font-size: 22px;

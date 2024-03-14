@@ -84,9 +84,21 @@ const CreatePattern = () => {
                               className="needs-validation" noValidate
                               onSubmit={e => handleSubmit(e)}>
 
-                            <div className="text-center">
+                            <div className="m-3 text-center ">
                                 <div className="italic-message">
-                                    <FormattedMessage id="project.global.form.introduction"/>
+                                    <FormattedMessage id="project.products.CreatePattern.pattern"/>
+                                </div>
+                            </div>
+
+                            <div className="p-3 text-center">
+                                <div className="framed-title disabled bold-label">
+                                    <FormattedMessage id="project.products.Pattern.generalInfo"/>
+                                </div>
+                            </div>
+
+                            <div className="mb-3 text-center">
+                                <div className="italic-message small">
+                                    <FormattedMessage id="project.products.Pattern.generalInfo.message"/>
                                 </div>
                             </div>
 
@@ -167,9 +179,15 @@ const CreatePattern = () => {
                                 </div>
                             </div>
 
-                            <div className="pt-5 text-center">
-                                <div className="italic-message">
-                                    <FormattedMessage id="project.products.CreatePattern.pattern"/>
+
+                            <div className="mt-5 text-center">
+                                <div className="framed-title disabled bold-label">
+                                    <FormattedMessage id="project.products.Pattern.detailedInfo"/>
+                                </div>
+                            </div>
+                            <div className="mt-2 mb-3 text-center">
+                                <div className="italic-message small">
+                                    <FormattedMessage id="project.products.Pattern.detailedInfo.message"/>
                                 </div>
                             </div>
 
@@ -274,7 +292,7 @@ const CreatePattern = () => {
 
                             <div className="form-group row">
                                 <label htmlFor="active" className="col-md-12 col-form-label bold-label">
-                                    <FormattedMessage id="project.products.Product.active"/>
+                                    <FormattedMessage id="project.products.Product.active.message"/>
                                 </label>
                                 <div className="col-md-12 ml-5 mt-2">
                                     <input type="radio" id="active" className="form-check-input"

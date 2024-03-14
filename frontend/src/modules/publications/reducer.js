@@ -6,12 +6,14 @@ const initialState = {
     user: null,
     categories: null,
     crafts: null,
-    subcategories: null,
     patternSearch: null,
-    physicalSearch: null
+    physicalSearch: null,
+    pattern: null,
+    physical: null
 };
 
 
+/*********************** ADDED PRODUCTS SEARCH ***********************/
 const patternSearch = (state = initialState.patternSearch, action)=>{
 
     switch (action.type){
@@ -41,8 +43,7 @@ const physicalSearch = (state = initialState.physicalSearch, action) => {
     }
 }
 
-
-
+/*********************** CRAFTS, CATEGORIES ***********************/
 const categories = (state = initialState.categories, action) =>{
     switch (action.type){
         case actionTypes.FIND_ALL_CATEGORIES_COMPLETED:
@@ -61,26 +62,42 @@ const crafts = (state = initialState.crafts, action)=>{
     }
 }
 
-const subcategories = (state= initialState.subcategories, action)=>{
-
+/*********************** PATTERN DETAILS ***********************/
+const pattern=(state = initialState.pattern, action) =>{
     switch (action.type){
-        case actionTypes.FIND_SUBCATEGORIES_COMPLETED:
-            return action.subcategories;
+        case actionTypes.FIND_PATTERN_COMPLETED:
+            return action.pattern;
 
-        case actionTypes.CLEAR_SUBCATEGORIES:
-            return initialState.subcategories;
+        case actionTypes.CLEAR_PATTERN:
+            return initialState.pattern;
 
         default:
             return state;
     }
 }
 
+/*********************** PHYSICAL DETAILS ***********************/
+const physical=(state = initialState.physical, action) =>{
+    switch (action.type){
+        case actionTypes.FIND_PHYSICAL_COMPLETED:
+            return action.physical;
+
+        case actionTypes.CLEAR_PHYSICAL:
+            return initialState.physical;
+
+        default:
+            return state;
+    }
+}
+
+
 const reducer = combineReducers({
     categories,
     crafts,
-    subcategories,
     patternSearch,
-    physicalSearch
+    physicalSearch,
+    pattern,
+    physical
 });
 
 export default reducer;

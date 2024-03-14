@@ -5,7 +5,8 @@ import AppGlobalComponents from './AppGlobalComponents';
 import Home from './Home';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile, BecomesSeller} from '../../users';
 import users from '../../users';
-import {CreatePattern, ViewAddedPatterns, ViewAddedPhysicals,CreatePhysical} from "../../publications/index.js";
+import {CreatePattern, ViewAddedPatterns, ViewAddedPhysicals,CreatePhysical, PatternDetails
+, ProductDetails} from "../../publications/index.js";
 
 const Body = () => {
 
@@ -33,6 +34,9 @@ const Body = () => {
                 {loggedIn && isSeller && <Route path="/publications/create-pattern" element={<CreatePattern/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/create-physical" element={<CreatePhysical/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/patterns" element={<ViewAddedPatterns/>}/>}
+
+                {loggedIn && isSeller && <Route path="/publications/patterns/:id" element={<PatternDetails/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/physicals/:id" element={<ProductDetails/>}/>}
             </Routes>
         </div>
 

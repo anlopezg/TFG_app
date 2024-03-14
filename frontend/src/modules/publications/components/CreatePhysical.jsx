@@ -230,7 +230,7 @@ const CreatePhysical = () => {
 
                             <div className="form-group row">
                                 <label htmlFor="active" className="col-md-12 col-form-label bold-label">
-                                    <FormattedMessage id="project.products.Product.active"/>
+                                    <FormattedMessage id="project.products.Product.active.message"/>
                                 </label>
                                 <div className="col-md-12 ml-5 mt-2">
                                     <input type="radio" id="active" className="form-check-input"
