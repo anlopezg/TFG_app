@@ -7,6 +7,7 @@ import * as actions from '../actions';
 import * as selectors from '../selectors';
 import {CountryDropdown} from "react-country-region-selector";
 import {useState} from "react";
+import BackLink from "../../common/components/BackLink.jsx";
 
 const UpdateProfile = () => {
 
@@ -221,6 +222,10 @@ const UpdateProfile = () => {
                     </div>
 
                 </div>
+            </div>
+
+            <div className="ml-3">
+                <BackLink/>
             </div>
 
         </div>
