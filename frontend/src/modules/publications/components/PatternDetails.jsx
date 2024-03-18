@@ -70,7 +70,12 @@ const PatternDetails = () =>{
 
     return(
         <div>
-            <BackLink/>
+
+            <a href={`/publications/patterns/`} className="btn btn-link back-link-blue">
+                <i className="fa-solid fa-angle-left mr-2"></i>
+                <FormattedMessage id='project.global.buttons.back'/>
+            </a>
+
 
             <div className="mt-4 mb-4 justify-content-center align-items-center">
                 <div className="container d-flex">
