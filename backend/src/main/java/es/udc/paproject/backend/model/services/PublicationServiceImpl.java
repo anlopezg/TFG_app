@@ -213,4 +213,35 @@ public class PublicationServiceImpl implements PublicationService{
         return physical.get();
     }
 
+
+    @Override
+    public Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
+                               BigDecimal price, Boolean active, String introduction, String notes, String gauge,
+                               String sizing, int difficultyLevel, String time) throws InstanceNotFoundException{
+
+        User user = permissionChecker.checkUser(userId);
+        Craft craft  = checkCraft(craftId);
+        Subcategory subcategory= checkSubcategory(subcategoryId);
+
+        Pattern pattern = findPatternById(productId);
+
+        pattern.setUser(user);
+        pattern.setCraft(craft);
+        pattern.setSubcategory(subcategory);
+        pattern.setTitle(title);
+        pattern.setDescription(description);
+        pattern.setPrice(price);
+        pattern.setActive(active);
+        pattern.setIntroduction(introduction);
+        pattern.setNotes(notes);
+        pattern.setGauge(gauge);
+        pattern.setSizing(sizing);
+        pattern.setDifficultyLevel(difficultyLevel);
+        pattern.setTime(time);
+
+        patternDao.save(pattern);
+
+        return pattern;
+    }
+
 }

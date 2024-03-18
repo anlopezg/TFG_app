@@ -173,4 +173,15 @@ public class PublicationController {
         return toPhysicalDto(publicationService.findPhysicalById(id));
     }
 
+    /****************************** EDIT A PRODUCT ******************************/
+    @PutMapping("/patterns/edit/{id}")
+    public PatternDto editPattern(@RequestAttribute Long userId,
+                                  @PathVariable Long id,  @RequestBody PatternDto patternDto)
+            throws InstanceNotFoundException {
+
+        return toPatternDto(publicationService.editPattern(id, userId, patternDto.getCraftId(), patternDto.getSubcategoryId(),
+                patternDto.getTitle(), patternDto.getDescription(), patternDto.getPrice(), patternDto.getActive(),
+                patternDto.getIntroduction(), patternDto.getNotes(), patternDto.getGauge(), patternDto.getSizing(),
+                patternDto.getDifficultyLevel(), patternDto.getTime()));
+    }
 }

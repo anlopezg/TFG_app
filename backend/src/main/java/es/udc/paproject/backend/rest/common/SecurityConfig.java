@@ -31,14 +31,20 @@ public class SecurityConfig {
 			.sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.addFilterBefore(new JwtFilter(jwtGenerator), UsernamePasswordAuthenticationFilter.class)
 			.authorizeHttpRequests((authorize) -> authorize
+
 					.requestMatchers(HttpMethod.POST, "/users/signUp").permitAll()
 					.requestMatchers(HttpMethod.POST, "/users/login").permitAll()
 					.requestMatchers(HttpMethod.POST, "/users/loginFromServiceToken").permitAll()
-					.requestMatchers(HttpMethod.PUT, "/users/*").hasRole("USER")
-					.requestMatchers(HttpMethod.POST, "/users/*/changePassword").hasRole("USER")
-					.requestMatchers(HttpMethod.DELETE, "/users/*").hasRole("USER")
-					.requestMatchers(HttpMethod.DELETE, "/users/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.POST, "/users/*/changePassword").hasAnyRole("USER", "SELLER")
+
+					.requestMatchers(HttpMethod.PUT, "/users/*").hasAnyRole("USER", "SELLER")
 					.requestMatchers(HttpMethod.PUT, "/users/*/becomeSeller").hasRole("USER")
+
+					.requestMatchers(HttpMethod.DELETE, "/users/*").hasAnyRole("USER", "SELLER")
+
+					/* Crafts y categories, cambiar a otro servicio*/
+					.requestMatchers(HttpMethod.GET, "/publications/crafts").permitAll()
+					.requestMatchers(HttpMethod.GET, "/publications/categories").permitAll()
 
 					/* Related to Publication Controller */
 					.requestMatchers(HttpMethod.POST, "/publications/patterns").hasRole("SELLER")
@@ -47,6 +53,8 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.GET, "/publications/*").hasRole("SELLER")
 					.requestMatchers(HttpMethod.GET, "/publications/patterns/*").hasRole("SELLER")
 					.requestMatchers(HttpMethod.GET, "/publications/physicals/*").hasRole("SELLER")
+
+					.requestMatchers(HttpMethod.PUT, "/publications/patterns/edit/*").hasRole("SELLER")
 
 
 				.anyRequest().denyAll());

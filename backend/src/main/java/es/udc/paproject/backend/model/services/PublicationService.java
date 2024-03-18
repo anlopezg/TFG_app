@@ -83,9 +83,14 @@ public interface PublicationService {
     Block<Product> findProducts(Long categoryId, String keywords, int page, int size);
 
 
-    /* VIEW DETAILS OF PRODUCTS */
+    /************************ VIEW DETAILS OF PRODUCTS *************************/
     Product findProductById(Long productId) throws InstanceNotFoundException;
     Pattern findPatternById(Long productId) throws InstanceNotFoundException;
     Physical findPhysicalById(Long productId) throws InstanceNotFoundException;
+
+    /************************ EDIT PRODUCTS *************************/
+    Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
+                        BigDecimal price, Boolean active, String introduction, String notes, String gauge,
+                        String sizing, int difficultyLevel, String time) throws InstanceNotFoundException;
 
 }
