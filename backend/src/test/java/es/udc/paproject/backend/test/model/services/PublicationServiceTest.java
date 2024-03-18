@@ -308,4 +308,28 @@ public class PublicationServiceTest {
                 publicationService.findPhysicalById(NON_EXISTENT_ID));
     }
 
+
+    @Test
+    public void editPattern() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException, UserNotSellerException{
+        User user = createSellerUser("username");
+
+        Craft craft = createCraft("Crochet");
+        Category category = createCategory("Accesories");
+        Subcategory subcategory= createSubcategory("Ring", category);
+
+        Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+
+        String updatedTitle = "titleUpdated";
+        String updatedDescr = "descripUpdated";
+
+        pattern1.setTitle(updatedTitle);
+        pattern1.setDescription(updatedDescr);
+
+        Pattern updatedPattern = publicationService.editPattern(pattern1.getId(), user.getId(), craft.getId(), subcategory.getId(), updatedTitle, updatedDescr,
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+
+        assertEquals(pattern1, updatedPattern);
+    }
+
 }
