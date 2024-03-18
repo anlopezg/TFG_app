@@ -6,7 +6,7 @@ import Home from './Home';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile, BecomesSeller} from '../../users';
 import users from '../../users';
 import {CreatePattern, ViewAddedPatterns, ViewAddedPhysicals,CreatePhysical, PatternDetails
-, ProductDetails} from "../../publications/index.js";
+, ProductDetails, EditPattern, ManagePattern} from "../../publications/index.js";
 
 const Body = () => {
 
@@ -37,6 +37,8 @@ const Body = () => {
 
                 {loggedIn && isSeller && <Route path="/publications/patterns/:id" element={<PatternDetails/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/physicals/:id" element={<ProductDetails/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/patterns/edit/:id" element={<EditPattern/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/patterns/manage/:id" element={<ManagePattern/>}/>}
             </Routes>
         </div>
 

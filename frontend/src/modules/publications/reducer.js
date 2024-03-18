@@ -63,13 +63,18 @@ const crafts = (state = initialState.crafts, action)=>{
 }
 
 /*********************** PATTERN DETAILS ***********************/
-const pattern=(state = initialState.pattern, action) =>{
+const pattern = (state = initialState.pattern, action) =>{
     switch (action.type){
         case actionTypes.FIND_PATTERN_COMPLETED:
             return action.pattern;
 
+        case actionTypes.EDIT_PATTERN_COMPLETED:
+            return action.pattern;
+
         case actionTypes.CLEAR_PATTERN:
             return initialState.pattern;
+
+
 
         default:
             return state;
@@ -84,6 +89,9 @@ const physical=(state = initialState.physical, action) =>{
 
         case actionTypes.CLEAR_PHYSICAL:
             return initialState.physical;
+
+        case actionTypes.EDIT_PHYSICAL_COMPLETED:
+            return action.physical;
 
         default:
             return state;

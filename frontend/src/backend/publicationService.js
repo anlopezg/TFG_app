@@ -31,3 +31,12 @@ export const findPatternById = (patternId, onSuccess) =>
 
 export const findPhysicalById = (physicalId, onSuccess) =>
     appFetch(`/publications/physicals/${physicalId}`, config('GET'), onSuccess);
+
+
+export const editPattern = (pattern, onSuccess, onErrors) =>
+    appFetch(`/publications/patterns/edit/${pattern.id}`, config('PUT', pattern),
+        onSuccess, onErrors);
+
+export const editPhysical = (physical, onSuccess, onErrors) =>
+    appFetch(`/publications/physicals/${physical.id}`, config('PUT', physical),
+        onSuccess, onErrors);

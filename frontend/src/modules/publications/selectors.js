@@ -21,6 +21,7 @@ export const getCategories = state =>
 
 export const getCrafts = state =>
     getModuleState(state).crafts;
+
 export const getCraftName = (crafts, id) => {
 
     if(!crafts){

@@ -13,6 +13,9 @@ export {default as AddedPhysicals} from './components/AddedPhysicals.jsx';
 export {default as PatternDetails} from './components/PatternDetails.jsx';
 export {default as ProductDetails} from './components/ProductDetails.jsx';
 
+export {default as EditPattern} from './components/EditPattern.jsx';
+export {default as ManagePattern} from './components/ManagePattern.jsx';
+
 export {default as SubcategorySelector} from './components/SubcategorySelector.jsx';
 export {default as CraftSelector} from './components/CraftSelector.jsx';
 

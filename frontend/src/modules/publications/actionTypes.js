@@ -17,6 +17,11 @@ export const CLEAR_PHYSICAL = "project/publications/clearPhysical";
 export const FIND_PHYSICAL_COMPLETED = "project/publications/findPhysicalCompleted";
 
 
+/*********************** EDIT PRODUCTS ***********************/
+export const EDIT_PATTERN_COMPLETED = "/project/publications/editPatternCompleted";
+export const EDIT_PHYSICAL_COMPLETED = "/project/publications/editPhysicalCompleted";
+
+
 /*********************** ... ***********************/
 export const PRODUCT_CREATED="project/publications/productCreated";
 export const FIND_PRODUCTS_COMPLETED = "project/publications/findProductsCompleted";

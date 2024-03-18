@@ -71,6 +71,7 @@ export default {
 
     'project.products.CreatePattern.heading' : 'Create a Pattern',
     'project.products.CreatePattern.pattern' : 'Start writing your own pattern',
+    'project.products.EditPattern.heading': 'Edit your Pattern',
     'project.products.CreatePhysical.heading' : 'Create a Product',
     'project.products.Product.title' : 'Title',
     'project.products.Product.description': 'Description',

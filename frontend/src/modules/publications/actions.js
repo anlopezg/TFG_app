@@ -116,6 +116,35 @@ export const findPhysicalById = physicalId => dispatch => {
 }
 
 
+/*********************** EDIT PATTERN ***********************/
+export const editPatternCompleted = pattern =>({
+    type: actionTypes.EDIT_PATTERN_COMPLETED,
+    pattern
+});
+
+export const editPattern = (pattern, onSuccess, onErrors) => dispatch =>
+
+    backend.publicationService.editPattern(pattern,
+        pattern => {
+            dispatch(editPatternCompleted(pattern));
+            onSuccess();
+        },
+        onErrors);
+
+/*********************** EDIT PHYSICAL ***********************/
+
+export const editPhysicalCompleted = physical =>({
+    type: actionTypes.EDIT_PHYSICAL_COMPLETED,
+    physical
+});
+
+export const editPhysical = (physical, onSuccess, onErrors)=> dispatch =>
+    backend.publicationService.editPhysical(physical,
+        physical => {
+            dispatch(editPhysicalCompleted(physical));
+            onSuccess();
+        },
+        onErrors);
 
 
 

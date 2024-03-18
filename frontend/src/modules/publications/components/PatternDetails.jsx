@@ -7,7 +7,6 @@ import * as actions from '../actions';
 import {BackLink} from '../../common';
 import {FormattedMessage} from "react-intl";
 
-
 const PatternDetails = () =>{
 
     const {id} = useParams();
@@ -15,6 +14,7 @@ const PatternDetails = () =>{
     const dispatch = useDispatch();
     const crafts = useSelector(selectors.getCrafts);
     const categories = useSelector(selectors.getCategories);
+
 
     useEffect(() => {
 
@@ -214,11 +214,15 @@ const PatternDetails = () =>{
                             </div>
 
 
+                            <div className="text-center mt-3">
+                                <a href={`/publications/patterns/manage/${pattern.id}`} className="btn btn-primary mr-2">
+                                    <FormattedMessage id="project.global.buttons.edit"/>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
     )

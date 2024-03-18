@@ -1,66 +1,74 @@
-import {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {FormattedMessage} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
 
-
-import {Errors} from '../../common';
-import * as actions from '../actions';
+import * as actions from "../actions.js";
+import * as selectors from "../selectors.js";
 import * as userSelector from "../../users/selectors.js";
+import Errors from "../../common/components/Errors.jsx";
+import {FormattedMessage} from "react-intl";
 import CraftSelector from "./CraftSelector.jsx";
 import SubcategorySelector from "./SubcategorySelector.jsx";
 
-const CreatePattern = () => {
+const EditPattern = ()=>{
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    //const {id} = useParams();
+    const pattern= useSelector(selectors.getPattern);
     const user = useSelector(userSelector.getUser);
-
-    const[ craftId, setCraftId] = useState('');
-    const[ subcategoryId, setSubcategoryId] = useState('');
-    const[ title, setTitle] = useState('');
-    const[ description, setDescription] = useState('');
-    const[ price , setPrice ] = useState('');
-    const[ active, setActive ] = useState('');
-    const[ introduction, setIntroduction ] = useState('');
-    const[ notes, setNotes ] = useState('');
-    const[ gauge, setGauge] = useState('');
-    const[ sizing, setSizing ] = useState('');
-    const[ difficultyLevel, setDifficultyLevel ] = useState('');
-    const[ time, setTime ] = useState('');
 
     const [backendErrors, setBackendErrors] = useState(null);
     let form;
 
-    const handleSubmit = event => {
+
+    /***********  Pattern attributes  ************/
+    const[ craftId, setCraftId] = useState(pattern.craftId);
+    const[ subcategoryId, setSubcategoryId] = useState(pattern.subcategoryId);
+    const[ title, setTitle] = useState(pattern.title);
+    const[ description, setDescription] = useState( pattern.description);
+    const[ price , setPrice ] = useState( pattern.price);
+    const[ active, setActive ] = useState(pattern.active);
+    const[ introduction, setIntroduction ] = useState(pattern.introduction );
+    const[ notes, setNotes ] = useState(pattern.notes );
+    const[ gauge, setGauge] = useState(pattern.gauge );
+    const[ sizing, setSizing ] = useState(pattern.sizing );
+    const[ difficultyLevel, setDifficultyLevel ] = useState(pattern.difficultyLevel );
+    const[ time, setTime ] = useState(pattern.time);
+
+    const handleSubmit = event =>{
         event.preventDefault();
 
         if(form.checkValidity()){
-            dispatch(actions.createPattern(
-                {userId: user.id,
-                    craftId: toNumber(craftId),
-                    subcategoryId: toNumber(subcategoryId),
+            dispatch(actions.editPattern(
+                {
+                    id: pattern.id,
+                    userId: user.id,
+                    craftId: craftId,
+                    subcategoryId: subcategoryId,
                     title: title.trim(),
                     description: description.trim(),
                     price: price,
                     active: active,
-                introduction: introduction.trim(),
-                notes: notes.trim(),
-                gauge: gauge.trim(),
-                sizing: sizing.trim(),
-                difficultyLevel: difficultyLevel,
-                time: time.trim()
-                },
-                () => navigate('/publications/patterns'),
+                    introduction: introduction.trim(),
+                    notes: notes.trim(),
+                    gauge: gauge.trim(),
+                    sizing: sizing.trim(),
+                    difficultyLevel: difficultyLevel,
+                    time: time.trim()
+                }, ()=>
+                    navigate(`/publications/patterns/${pattern.id}`),
+
                 errors => setBackendErrors(errors)
             ));
-        } else {
+        } else{
             setBackendErrors(null);
             form.classList.add('was-validated');
         }
-    }
+    };
 
+
+    // Active box
     const handleCheckboxChange = (newValue) => {
         if(newValue==="publish"){
             setActive(true);
@@ -69,26 +77,23 @@ const CreatePattern = () => {
         }
     };
 
+
     const toNumber = value => value.length > 0 ? Number(value) : null;
+
 
     return (
         <div>
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
-            <div className="mt-4 mb-4 container d-flex justify-content-center align-items-center">
-                <div className="card bg-light mb-3 ">
+            <div className="mt-4 mb-4 justify-content-center align-items-center">
+                <div className="card bg-light mb-3">
                     <h2 className="card-header">
-                        <FormattedMessage id="project.products.CreatePattern.heading"/>
+                        <FormattedMessage id="project.products.EditPattern.heading"/>
                     </h2>
+
                     <div className="card-body">
                         <form ref={node => form = node}
                               className="needs-validation" noValidate
-                              onSubmit={e => handleSubmit(e)}>
-
-                            <div className="m-3 text-center ">
-                                <div className="italic-message">
-                                    <FormattedMessage id="project.products.CreatePattern.pattern"/>
-                                </div>
-                            </div>
+                              onSubmit={(e)=> handleSubmit(e)}>
 
                             <div className="p-3 text-center">
                                 <div className="framed-title disabled bold-label">
@@ -102,7 +107,7 @@ const CreatePattern = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group row ">
                                 <label htmlFor="title" className="col-md-12 col-form-label bold-label">
                                     <FormattedMessage id="project.products.Product.title"/>
                                 </label>
@@ -144,6 +149,7 @@ const CreatePattern = () => {
                                     <input type="number" id="price" className="form-control"
                                            value={price}
                                            min={0}
+                                           step="0.01"
                                            onChange={e => setPrice(e.target.value)}
                                            required/>
                                     <div className="invalid-feedback">
@@ -175,7 +181,6 @@ const CreatePattern = () => {
                                     </div>
                                 </div>
                             </div>
-
 
                             <div className="mt-5 text-center">
                                 <div className="framed-title disabled bold-label">
@@ -237,9 +242,9 @@ const CreatePattern = () => {
                                         <FormattedMessage id="project.products.Pattern.sizing"/>
                                     </label>
                                     <textarea id="sizing" className="form-control" rows="2"
-                                           value={sizing}
-                                           maxLength="200"
-                                           onChange={e => setSizing(e.target.value)}
+                                              value={sizing}
+                                              maxLength="200"
+                                              onChange={e => setSizing(e.target.value)}
                                               required/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
@@ -290,7 +295,8 @@ const CreatePattern = () => {
                                 <div className="col-md-12 ml-5 mt-2">
                                     <input type="radio" id="active" className="form-check-input"
                                            checked={active}
-                                           onChange={()=> handleCheckboxChange('publish')}/>
+                                           onChange={()=> handleCheckboxChange('publish')}
+                                    />
                                     <label htmlFor="publish" className="form-check-label">
                                         <FormattedMessage id="project.products.Product.publish"/>
                                     </label>
@@ -299,29 +305,32 @@ const CreatePattern = () => {
                                 <div className="col-md-12 ml-5 mt-2">
                                     <input type="radio" id="draft" className="form-check-input"
                                            checked={!active}
-                                           onChange={()=> handleCheckboxChange('draft')}/>
+                                           onChange={()=> handleCheckboxChange('draft')}
+                                    />
                                     <label htmlFor="draft" className="form-check-label">
                                         <FormattedMessage id="project.products.Product.draft"/>
                                     </label>
                                 </div>
-
                             </div>
 
                             <div className="form-group row justify-content-center">
                                 <div className="col-md-6 mt-4">
                                     <button type="submit" className="btn button-light-pink bold-label">
-                                        <FormattedMessage id="project.global.buttons.submit"/>
+                                        <FormattedMessage id="project.global.buttons.save"/>
                                     </button>
                                 </div>
                             </div>
+
+
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
+    )
 
-    );
 
 }
 
-export default CreatePattern;
+export default EditPattern;
