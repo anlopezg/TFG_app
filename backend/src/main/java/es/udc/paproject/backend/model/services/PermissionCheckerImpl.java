@@ -39,4 +39,26 @@ public class PermissionCheckerImpl implements PermissionChecker {
 		
 	}
 
+	@Override
+	public User checkUserName(String userName) throws InstanceNotFoundException{
+
+		Optional<User> user = userDao.findByUserName(userName);
+
+		if (!user.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.user", userName);
+		}
+
+		return user.get();
+
+	}
+
+
+	@Override
+	public boolean checkUserByName(Long userId, String userName) throws InstanceNotFoundException{
+
+		String foundUserName = checkUser(userId).getUserName();
+
+		return foundUserName.equals(userName);
+	}
+
 }

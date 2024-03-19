@@ -9,21 +9,7 @@ import java.util.List;
 
 public interface PublicationService {
 
-    /**
-     * Checks a craft exists by its id
-     * @param craftId The craft id
-     * @return The craft
-     * @throws InstanceNotFoundException Craft not found
-     */
-    Craft checkCraft(Long craftId) throws InstanceNotFoundException;
 
-    /**
-     * Checks a category exists by its id
-     * @param categoryId The category id
-     * @return The category
-     * @throws InstanceNotFoundException Category not found
-     */
-    Subcategory checkSubcategory(Long categoryId) throws InstanceNotFoundException;
 
 
     /**
@@ -47,24 +33,7 @@ public interface PublicationService {
                          String details) throws InstanceNotFoundException,  UserNotSellerException;
 
 
-    /**
-     *
-     * @return All the crafts
-     */
-    List<Craft> findAllCrafts();
 
-    /**
-     *
-     * @return All the categories and their subcategories
-     */
-    List<Category> findAllCategories();
-
-    /**
-     *
-     * @param categoryId The id of the category
-     * @return All the subcategories that belong to the passed category
-     */
-    List<Subcategory> getSubcategoriesByCategory(Long categoryId);
 
 
     Block<Product> findAddedProducts(Long userId, int page, int size);
@@ -72,7 +41,7 @@ public interface PublicationService {
     /**
      * Returns all the patterns a particular user has added to their store
      */
-    Block<Pattern> findAddedPatterns(Long userId, int page, int size);
+    Block<Pattern> findAddedPatterns(Long userId, int page, int size) throws InstanceNotFoundException, UserNotSellerException;
 
     /**
      * Returns all the physical products a particular user has added to their store
@@ -92,5 +61,9 @@ public interface PublicationService {
     Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
                         BigDecimal price, Boolean active, String introduction, String notes, String gauge,
                         String sizing, int difficultyLevel, String time) throws InstanceNotFoundException;
+
+    void deletePattern(Long productId) throws InstanceNotFoundException;
+
+    //boolean isSellerTheOwner(Long userId, Long productId) throws InstanceNotFoundException;
 
 }

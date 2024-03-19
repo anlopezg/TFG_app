@@ -22,16 +22,7 @@ public class PublicationServiceImpl implements PublicationService{
     private PermissionChecker permissionChecker;
 
     @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private CraftDao craftDao;
-
-    @Autowired
-    private CategoryDao categoryDao;
-
-    @Autowired
-    private SubcategoryDao subcategoryDao;
+    private CatalogService catalogService;
 
     @Autowired
     private ProductDao productDao;
@@ -41,32 +32,6 @@ public class PublicationServiceImpl implements PublicationService{
 
     @Autowired
     private PhysicalDao physicalDao;
-
-    @Override
-    @Transactional(readOnly=true)
-    public Craft checkCraft(Long craftId) throws InstanceNotFoundException{
-
-        Optional<Craft> craft = craftDao.findById(craftId);
-
-        if(!craft.isPresent()){
-            throw new InstanceNotFoundException("project.entities.craft", craftId);
-        }
-
-        return craft.get();
-    }
-
-    @Override
-    @Transactional(readOnly=true)
-    public Subcategory checkSubcategory(Long subcategoryId) throws InstanceNotFoundException{
-
-        Optional<Subcategory> subcategory = subcategoryDao.findById(subcategoryId);
-
-        if(!subcategory.isPresent()){
-            throw new InstanceNotFoundException("project.entities.subcategory", subcategoryId);
-        }
-
-        return subcategory.get();
-    }
 
     @Override
     public Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
@@ -80,8 +45,8 @@ public class PublicationServiceImpl implements PublicationService{
             throw new UserNotSellerException();
         }
 
-        Craft craft = checkCraft(craftId);
-        Subcategory subcategory = checkSubcategory(subcategoryId);
+        Craft craft = catalogService.checkCraft(craftId);
+        Subcategory subcategory = catalogService.checkSubcategory(subcategoryId);
 
         LocalDateTime creationDate = LocalDateTime.now();
 
@@ -104,8 +69,8 @@ public class PublicationServiceImpl implements PublicationService{
             throw new UserNotSellerException();
         }
 
-        Craft craft = checkCraft(craftId);
-        Subcategory subcategory = checkSubcategory(subcategoryId);
+        Craft craft = catalogService.checkCraft(craftId);
+        Subcategory subcategory = catalogService.checkSubcategory(subcategoryId);
 
         LocalDateTime creationDate = LocalDateTime.now();
 
@@ -117,26 +82,6 @@ public class PublicationServiceImpl implements PublicationService{
         return physicalCreated;
     }
 
-
-    @Override
-    @Transactional(readOnly=true)
-    public List<Craft> findAllCrafts(){
-        return craftDao.findAll(Sort.by(Sort.Direction.ASC, "craftName"));
-    }
-
-    @Override
-    @Transactional(readOnly=true)
-    public List<Category> findAllCategories(){
-        return categoryDao.findAll(Sort.by(Sort.Direction.ASC, "categoryName"));
-
-    }
-
-    @Override
-    @Transactional(readOnly=true)
-    public List<Subcategory> getSubcategoriesByCategory(Long categoryId) {
-        return subcategoryDao.findByCategoryId(categoryId);
-
-    }
 
 
     @Override
@@ -150,7 +95,13 @@ public class PublicationServiceImpl implements PublicationService{
 
     @Override
     @Transactional(readOnly = true)
-    public Block<Pattern> findAddedPatterns(Long userId, int page, int size){
+    public Block<Pattern> findAddedPatterns(Long userId, int page, int size) throws InstanceNotFoundException, UserNotSellerException {
+
+        User user = permissionChecker.checkUser(userId);
+
+        if(user.getRole() != User.RoleType.SELLER){
+            throw new UserNotSellerException();
+        }
 
         Slice<Pattern> slice = patternDao.findAllByUserIdOrderByCreationDateDesc(userId,  PageRequest.of(page, size));
 
@@ -220,8 +171,8 @@ public class PublicationServiceImpl implements PublicationService{
                                String sizing, int difficultyLevel, String time) throws InstanceNotFoundException{
 
         User user = permissionChecker.checkUser(userId);
-        Craft craft  = checkCraft(craftId);
-        Subcategory subcategory= checkSubcategory(subcategoryId);
+        Craft craft  = catalogService.checkCraft(craftId);
+        Subcategory subcategory= catalogService.checkSubcategory(subcategoryId);
 
         Pattern pattern = findPatternById(productId);
 
@@ -242,6 +193,14 @@ public class PublicationServiceImpl implements PublicationService{
         patternDao.save(pattern);
 
         return pattern;
+    }
+
+    @Override
+    public void deletePattern(Long productId) throws InstanceNotFoundException{
+
+        Pattern pattern = findPatternById(productId);
+
+        patternDao.delete(pattern);
     }
 
 }

@@ -32,6 +32,7 @@ public class SecurityConfig {
 			.addFilterBefore(new JwtFilter(jwtGenerator), UsernamePasswordAuthenticationFilter.class)
 			.authorizeHttpRequests((authorize) -> authorize
 
+					/********************* USER CONTROLLER *********************/
 					.requestMatchers(HttpMethod.POST, "/users/signUp").permitAll()
 					.requestMatchers(HttpMethod.POST, "/users/login").permitAll()
 					.requestMatchers(HttpMethod.POST, "/users/loginFromServiceToken").permitAll()
@@ -42,19 +43,21 @@ public class SecurityConfig {
 
 					.requestMatchers(HttpMethod.DELETE, "/users/*").hasAnyRole("USER", "SELLER")
 
-					/* Crafts y categories, cambiar a otro servicio*/
-					.requestMatchers(HttpMethod.GET, "/publications/crafts").permitAll()
-					.requestMatchers(HttpMethod.GET, "/publications/categories").permitAll()
+					/********************* CATALOG CONTROLLER *********************/
+					.requestMatchers(HttpMethod.GET, "/catalog/crafts").permitAll()
+					.requestMatchers(HttpMethod.GET, "/catalog/categories").permitAll()
 
-					/* Related to Publication Controller */
-					.requestMatchers(HttpMethod.POST, "/publications/patterns").hasRole("SELLER")
+					/********************* PUBLICATION CONTROLLER *********************/
+					.requestMatchers(HttpMethod.POST, "/publications/*/patterns").hasRole("SELLER")
 					.requestMatchers(HttpMethod.POST, "/publications/physicals").hasRole("SELLER")
 
 					.requestMatchers(HttpMethod.GET, "/publications/*").hasRole("SELLER")
-					.requestMatchers(HttpMethod.GET, "/publications/patterns/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.GET, "/publications/*/patterns").hasRole("SELLER")
+					.requestMatchers(HttpMethod.GET, "/publications/*/patterns/*").hasRole("SELLER")
 					.requestMatchers(HttpMethod.GET, "/publications/physicals/*").hasRole("SELLER")
 
-					.requestMatchers(HttpMethod.PUT, "/publications/patterns/edit/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.PUT, "/publications/*/patterns/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.DELETE, "/publications/*/patterns/*").hasRole("SELLER")
 
 
 				.anyRequest().denyAll());

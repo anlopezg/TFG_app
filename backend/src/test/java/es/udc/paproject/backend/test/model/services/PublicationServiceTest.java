@@ -5,15 +5,13 @@ import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserAlreadySellerException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
-import es.udc.paproject.backend.model.services.Block;
-import es.udc.paproject.backend.model.services.PublicationService;
+import es.udc.paproject.backend.model.services.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import es.udc.paproject.backend.model.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,6 +29,9 @@ public class PublicationServiceTest {
 
     @Autowired
     private PublicationService publicationService;
+
+    @Autowired
+    private CatalogService catalogService;
 
     @Autowired
     private UserService userService;
@@ -100,14 +101,14 @@ public class PublicationServiceTest {
 
         Craft craft = createCraft("Crochet");
         craftDao.save(craft);
-        assertEquals(craft,  publicationService.checkCraft(craft.getId()));
+        assertEquals(craft,  catalogService.checkCraft(craft.getId()));
     }
 
     @Test
     public void checkNonExistentCraft(){
 
         assertThrows(InstanceNotFoundException.class, () ->
-            publicationService.checkCraft(NON_EXISTENT_ID));
+                catalogService.checkCraft(NON_EXISTENT_ID));
     }
 
     @Test
@@ -119,13 +120,13 @@ public class PublicationServiceTest {
         Subcategory subcategory = createSubcategory("Jacket", category);
         subcategoryDao.save(subcategory);
 
-        assertEquals(subcategory,  publicationService.checkSubcategory(subcategory.getId()));
+        assertEquals(subcategory,  catalogService.checkSubcategory(subcategory.getId()));
     }
 
     @Test
     public void checkNonExistentSubcategory(){
         assertThrows(InstanceNotFoundException.class, ()->
-                publicationService.checkSubcategory(NON_EXISTENT_ID));
+                catalogService.checkSubcategory(NON_EXISTENT_ID));
     }
 
     @Test
@@ -254,7 +255,7 @@ public class PublicationServiceTest {
     }
 
     @Test
-    public void findAddedPatternsEmpty() throws DuplicateInstanceException, UserAlreadySellerException, InstanceNotFoundException{
+    public void findAddedPatternsEmpty() throws DuplicateInstanceException, UserAlreadySellerException, InstanceNotFoundException, UserNotSellerException{
 
         User user = createSellerUser("username");
 
