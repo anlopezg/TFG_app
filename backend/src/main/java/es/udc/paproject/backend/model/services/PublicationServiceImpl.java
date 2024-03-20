@@ -6,13 +6,11 @@ import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -196,11 +194,38 @@ public class PublicationServiceImpl implements PublicationService{
     }
 
     @Override
-    public void deletePattern(Long productId) throws InstanceNotFoundException{
+    public Physical editPhysical(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
+                          BigDecimal price, Boolean active, int amount, String size, String color,
+                          String details) throws InstanceNotFoundException{
 
-        Pattern pattern = findPatternById(productId);
+        User user = permissionChecker.checkUser(userId);
+        Craft craft  = catalogService.checkCraft(craftId);
+        Subcategory subcategory= catalogService.checkSubcategory(subcategoryId);
 
-        patternDao.delete(pattern);
+        Physical physical = findPhysicalById(productId);
+
+        physical.setUser(user);
+        physical.setCraft(craft);
+        physical.setSubcategory(subcategory);
+        physical.setTitle(title);
+        physical.setDescription(description);
+        physical.setPrice(price);
+        physical.setActive(active);
+        physical.setAmount(amount);
+        physical.setSize(size);
+        physical.setColor(color);
+        physical.setDetails(details);
+
+        physicalDao.save(physical);
+
+        return physical;
     }
 
+    @Override
+    public void deleteProduct(Long productId) throws InstanceNotFoundException{
+
+        Product product = findProductById(productId);
+
+        productDao.delete(product);
+    }
 }

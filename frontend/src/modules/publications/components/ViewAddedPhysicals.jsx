@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 import * as actions from "../actions.js";
 import * as selectors from "../selectors.js";
+import * as userSelectors from '../../users/selectors.js';
 
 import AddedPhysicals from "./AddedPhysicals.jsx";
 import {Pager} from "../../common/index.js";
@@ -13,10 +14,11 @@ const ViewAddedPhysicals = () => {
 
     const physicalSearch = useSelector(selectors.getPhysicalSearch);
     const dispatch = useDispatch();
+    const user = useSelector(userSelectors.getUser);
 
     useEffect(() => {
 
-        dispatch(actions.findAddedPhysicals({page: 0}));
+        dispatch(actions.findAddedPhysicals(user.userName,{page: 0}));
 
         return () => dispatch(actions.clearAddedPhysicalSearch());
 

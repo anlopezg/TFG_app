@@ -37,9 +37,9 @@ export const clearAddedPhysicalSearch= () => ({
 });
 
 
-export const findAddedPhysicals = criteria => dispatch =>{
+export const findAddedPhysicals = (username, criteria) => dispatch =>{
 
-    backend.publicationService.findAddedPhysicals(criteria,
+    backend.publicationService.findAddedPhysicals(username, criteria,
         result => dispatch(findAddedPhysicalsCompleted({criteria, result})))
 }
 
@@ -73,8 +73,8 @@ const physicalCreated = (physical) => ({
     physical
 })
 
-export const createPhysical = (physical, onSuccess, onErrors) => dispatch =>
-    backend.publicationService.createPhysical(physical,
+export const createPhysical = (username, physical, onSuccess, onErrors) => dispatch =>
+    backend.publicationService.createPhysical(username, physical,
         physical => {
         dispatch(physicalCreated(physical));
         onSuccess();
@@ -108,14 +108,14 @@ export const findPhysicalCompleted = physical => ({
     physical
 })
 
-export const findPhysicalById = physicalId => dispatch => {
-    backend.publicationService.findPhysicalById(physicalId, physical =>{
+export const findPhysicalById = (username, physicalId) => dispatch => {
+    backend.publicationService.findPhysicalById(username, physicalId, physical =>{
         dispatch(findPhysicalCompleted(physical));
     });
 }
 
 
-/*********************** EDIT PATTERN ***********************/
+/*********************** EDIT PRODUCTS ***********************/
 export const editPatternCompleted = pattern =>({
     type: actionTypes.EDIT_PATTERN_COMPLETED,
     pattern
@@ -130,15 +130,16 @@ export const editPattern = (username, pattern, onSuccess, onErrors) => dispatch 
         },
         onErrors);
 
-/*********************** EDIT PHYSICAL ***********************/
+
 
 export const editPhysicalCompleted = physical =>({
     type: actionTypes.EDIT_PHYSICAL_COMPLETED,
     physical
 });
 
-export const editPhysical = (physical, onSuccess, onErrors)=> dispatch =>
-    backend.publicationService.editPhysical(physical,
+export const editPhysical = (username, physical, onSuccess, onErrors)=> dispatch =>
+
+    backend.publicationService.editPhysical(username, physical,
         physical => {
             dispatch(editPhysicalCompleted(physical));
             onSuccess();
@@ -146,18 +147,31 @@ export const editPhysical = (physical, onSuccess, onErrors)=> dispatch =>
         onErrors);
 
 
+/*********************** DELETE PRODUCTS ***********************/
 export const deletePatternCompleted = patternId =>({
     type: actionTypes.DELETE_PATTERN_COMPLETED,
     patternId
 });
 
 export const deletePattern  = (username, patternId, onSuccess)=> dispatch =>
-    backend.publicationService.deletePattern(username, patternId,
+    backend.publicationService.deleteProduct(username, patternId,
             patternId => {dispatch(deletePatternCompleted(patternId));
             onSuccess();
             }
     );
 
+
+export const deletePhysicalCompleted = physicalId =>({
+    type: actionTypes.DELETE_PHYSICAL_COMPLETED,
+    physicalId
+});
+
+export const deletePhysical  = (username, physicalId, onSuccess)=> dispatch =>
+    backend.publicationService.deleteProduct(username, physicalId,
+        physicalId => {dispatch(deletePhysicalCompleted(physicalId));
+            onSuccess();
+        }
+    );
 
 
 

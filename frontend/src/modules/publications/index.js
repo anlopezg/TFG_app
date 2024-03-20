@@ -17,4 +17,8 @@ export {default as EditPattern} from './components/EditPattern.jsx';
 export {default as ManagePattern} from './components/ManagePattern.jsx';
 export {default as DeletePattern} from './components/DeletePattern.jsx';
 
+export {default as EditPhysical} from './components/EditPhysical.jsx';
+export {default as ManagePhysical} from './components/ManagePhysical.jsx';
+export {default as DeletePhysical} from './components/DeletePhysical.jsx';
+
 export default {actions, reducer, selectors};

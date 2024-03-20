@@ -53,7 +53,7 @@ public class PublicationController {
     /****************************** CREATION OF PRODUCTS ******************************/
     @PostMapping("/{userName}/patterns")
     public ResponseEntity<PatternDto> createPattern(@RequestAttribute Long userId, @PathVariable String userName,
-           @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto) throws InstanceNotFoundException, PermissionException, UserNotSellerException {
+                                                   @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto) throws InstanceNotFoundException, PermissionException, UserNotSellerException {
 
         // The authenticated user is not the same as the path request one
         if(!permissionChecker.checkUserByName(userId, userName)){
@@ -71,12 +71,10 @@ public class PublicationController {
     }
 
 
-    @PostMapping("/physicals")
-    public ResponseEntity<PhysicalDto> createPhysical(@RequestAttribute Long userId,
-            @Validated({PatternDto.AllValidations.class}) @RequestBody PhysicalDto physicalDto)
-            throws InstanceNotFoundException, PermissionException,  UserNotSellerException{
+    @PostMapping("/{userName}/physicals")
+    public ResponseEntity<PhysicalDto> createPhysical(@RequestAttribute Long userId, @PathVariable String userName, @Validated({PatternDto.AllValidations.class}) @RequestBody PhysicalDto physicalDto) throws InstanceNotFoundException, PermissionException,  UserNotSellerException{
 
-        if(!physicalDto.getUserId().equals(userId)){
+        if(!permissionChecker.checkUserByName(userId, userName)){
             throw new PermissionException();
         }
 
@@ -117,9 +115,12 @@ public class PublicationController {
         return new BlockDto<>(toPatternDtos(patternBlock.getItems()), patternBlock.getExistMoreItems());
     }
 
-    @GetMapping("/physicals")
-    public BlockDto<PhysicalDto> findAddedPhysicals(@RequestAttribute Long userId, @RequestParam(defaultValue = "0") int page){
+    @GetMapping("/{userName}/physicals")
+    public BlockDto<PhysicalDto> findAddedPhysicals(@RequestAttribute Long userId, @PathVariable String userName, @RequestParam(defaultValue = "0") int page) throws InstanceNotFoundException, PermissionException {
 
+        if(!permissionChecker.checkUserByName(userId, userName)){
+            throw new PermissionException();
+        }
 
         Block<Physical> physicalBlock = publicationService.findAddedPhysicals(userId, page,6 );
 
@@ -128,8 +129,13 @@ public class PublicationController {
 
 
     /****************************** VIEW DETAILS OF SPECIFIC PRODUCT ******************************/
-    /*@GetMapping("/products/{id}")
-    public ProductDto findProductById(@PathVariable Long id) throws InstanceNotFoundException{
+    /*@GetMapping("/{userName}/products/{id}")
+    public ProductDto findProductById(@RequestAttribute Long userId, @PathVariable String userName, @PathVariable Long id) throws InstanceNotFoundException, PermissionException {
+
+        if(!permissionChecker.checkUserByName(userId, userName)){
+            throw new PermissionException();
+        }
+
         return toProductDto(publicationService.findProductById(id));
     }*/
 
@@ -144,8 +150,13 @@ public class PublicationController {
         return toPatternDto(publicationService.findPatternById(id));
     }
 
-    @GetMapping("/physicals/{id}")
-    public PhysicalDto findPhysicalById(@PathVariable Long id) throws InstanceNotFoundException{
+    @GetMapping("/{userName}/physicals/{id}")
+    public PhysicalDto findPhysicalById(@RequestAttribute Long userId, @PathVariable String userName,@PathVariable Long id) throws InstanceNotFoundException, PermissionException {
+
+        if(!permissionChecker.checkUserByName(userId, userName)){
+            throw new PermissionException();
+        }
+
         return toPhysicalDto(publicationService.findPhysicalById(id));
     }
 
@@ -163,17 +174,29 @@ public class PublicationController {
                 patternDto.getDifficultyLevel(), patternDto.getTime()));
     }
 
-
-    /****************************** DELETE A PRODUCT ******************************/
-    @DeleteMapping("/{userName}/patterns/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePattern(@RequestAttribute Long userId, @PathVariable String userName,@PathVariable Long id) throws InstanceNotFoundException, PermissionException {
+    @PutMapping("/{userName}/physicals/{id}")
+    public PhysicalDto editPhysical(@RequestAttribute Long userId, @PathVariable String userName, @PathVariable Long id,  @RequestBody PhysicalDto physicalDto) throws InstanceNotFoundException, PermissionException {
 
         if(!permissionChecker.checkUserByName(userId, userName)){
             throw new PermissionException();
         }
 
-        publicationService.deletePattern(id);
+        return toPhysicalDto(publicationService.editPhysical(id, userId, physicalDto.getCraftId(), physicalDto.getSubcategoryId(),
+                physicalDto.getTitle(), physicalDto.getDescription(), physicalDto.getPrice(), physicalDto.getActive(),
+                physicalDto.getAmount(), physicalDto.getSize(), physicalDto.getColor(), physicalDto.getDetails()));
+    }
+
+
+    /****************************** DELETE A PRODUCT ******************************/
+    @DeleteMapping("/{userName}/products/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProduct(@RequestAttribute Long userId, @PathVariable String userName, @PathVariable Long id) throws InstanceNotFoundException, PermissionException {
+
+        if(!permissionChecker.checkUserByName(userId, userName)){
+            throw new PermissionException();
+        }
+
+        publicationService.deleteProduct(id);
 
     }
 }

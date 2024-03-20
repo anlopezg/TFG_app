@@ -88,8 +88,7 @@ CREATE TABLE Product (
     CONSTRAINT ProductPK PRIMARY KEY (id),
     CONSTRAINT ProductUserFK FOREIGN KEY (userId) REFERENCES User(id),
     CONSTRAINT ProductCraftFK FOREIGN KEY (craftId) REFERENCES Craft(id),
-    CONSTRAINT ProductSubcategoryFK FOREIGN KEY (subcategoryId) REFERENCES Subcategory(id),
-    CONSTRAINT ProductTitleUnique UNIQUE (title)
+    CONSTRAINT ProductSubcategoryFK FOREIGN KEY (subcategoryId) REFERENCES Subcategory(id)
 
 ) ENGINE = InnoDB;
 

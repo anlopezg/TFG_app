@@ -49,15 +49,18 @@ public class SecurityConfig {
 
 					/********************* PUBLICATION CONTROLLER *********************/
 					.requestMatchers(HttpMethod.POST, "/publications/*/patterns").hasRole("SELLER")
-					.requestMatchers(HttpMethod.POST, "/publications/physicals").hasRole("SELLER")
+					.requestMatchers(HttpMethod.POST, "/publications/*/physicals").hasRole("SELLER")
 
 					.requestMatchers(HttpMethod.GET, "/publications/*").hasRole("SELLER")
 					.requestMatchers(HttpMethod.GET, "/publications/*/patterns").hasRole("SELLER")
 					.requestMatchers(HttpMethod.GET, "/publications/*/patterns/*").hasRole("SELLER")
-					.requestMatchers(HttpMethod.GET, "/publications/physicals/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.GET, "/publications/*/physicals").hasRole("SELLER")
+					.requestMatchers(HttpMethod.GET, "/publications/*/physicals/*").hasRole("SELLER")
+
 
 					.requestMatchers(HttpMethod.PUT, "/publications/*/patterns/*").hasRole("SELLER")
-					.requestMatchers(HttpMethod.DELETE, "/publications/*/patterns/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.PUT, "/publications/*/physicals/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.DELETE, "/publications/*/products/*").hasRole("SELLER")
 
 
 				.anyRequest().denyAll());

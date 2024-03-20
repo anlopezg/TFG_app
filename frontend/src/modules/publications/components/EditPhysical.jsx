@@ -1,21 +1,20 @@
-import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-
-import * as actions from "../actions.js";
+import {useNavigate} from "react-router-dom";
 import * as selectors from "../selectors.js";
 import * as userSelector from "../../users/selectors.js";
+import {useState} from "react";
+import * as actions from "../actions.js";
 import Errors from "../../common/components/Errors.jsx";
 import {FormattedMessage} from "react-intl";
 import CraftSelector from "../../catalog/components/CraftSelector.jsx";
 import SubcategorySelector from "../../catalog/components/SubcategorySelector.jsx";
 
-const EditPattern = ()=>{
+const EditPhysical = () =>{
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     //const {id} = useParams();
-    const pattern= useSelector(selectors.getPattern);
+    const physical= useSelector(selectors.getPhysical);
     const user = useSelector(userSelector.getUser);
 
     const [backendErrors, setBackendErrors] = useState(null);
@@ -23,41 +22,36 @@ const EditPattern = ()=>{
 
 
     /***********  Pattern attributes  ************/
-    const[ craftId, setCraftId] = useState(pattern.craftId);
-    const[ subcategoryId, setSubcategoryId] = useState(pattern.subcategoryId);
-    const[ title, setTitle] = useState(pattern.title);
-    const[ description, setDescription] = useState( pattern.description);
-    const[ price , setPrice ] = useState( pattern.price);
-    const[ active, setActive ] = useState(pattern.active);
-    const[ introduction, setIntroduction ] = useState(pattern.introduction );
-    const[ notes, setNotes ] = useState(pattern.notes );
-    const[ gauge, setGauge] = useState(pattern.gauge );
-    const[ sizing, setSizing ] = useState(pattern.sizing );
-    const[ difficultyLevel, setDifficultyLevel ] = useState(pattern.difficultyLevel );
-    const[ time, setTime ] = useState(pattern.time);
-
+    const[ craftId, setCraftId] = useState(physical.craftId);
+    const[ subcategoryId, setSubcategoryId] = useState(physical.subcategoryId);
+    const[ title, setTitle] = useState(physical.title);
+    const[ description, setDescription] = useState( physical.description);
+    const[ price , setPrice ] = useState( physical.price);
+    const[ active, setActive ] = useState(physical.active);
+    const[ amount, setAmount ] = useState(physical.amount);
+    const[ size, setSize] = useState(physical.size);
+    const[ color, setColor] = useState(physical.color);
+    const[ details, setDetails ] = useState(physical.details);
     const handleSubmit = event =>{
         event.preventDefault();
 
         if(form.checkValidity()){
-            dispatch(actions.editPattern(
+            dispatch(actions.editPhysical(
                 user.userName, {
-                    id: pattern.id,
-                    userId: pattern.userId,
+                    id: physical.id,
+                    userId: physical.userId,
                     craftId: craftId,
                     subcategoryId: subcategoryId,
                     title: title.trim(),
                     description: description.trim(),
                     price: price,
                     active: active,
-                    introduction: introduction.trim(),
-                    notes: notes.trim(),
-                    gauge: gauge.trim(),
-                    sizing: sizing.trim(),
-                    difficultyLevel: difficultyLevel,
-                    time: time.trim()
+                    amount: amount,
+                    size: size.trim(),
+                    color: color.trim(),
+                    details: details.trim()
                 }, ()=>
-                    navigate(`/publications/pattern-details/${pattern.id}`),
+                    navigate(`/publications/physical-details/${physical.id}`),
 
                 errors => setBackendErrors(errors)
             ));
@@ -84,7 +78,7 @@ const EditPattern = ()=>{
             <div className="mt-4 mb-4 justify-content-center align-items-center">
                 <div className="card bg-light mb-3">
                     <h2 className="card-header">
-                        <FormattedMessage id="project.products.EditPattern.heading"/>
+                        <FormattedMessage id="project.products.EditPhysical.heading"/>
                     </h2>
 
                     <div className="card-body">
@@ -136,18 +130,34 @@ const EditPattern = ()=>{
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="price" className=" col-md-12 col-form-label bold-label">
-                                    <FormattedMessage id="project.products.Product.price"/>
-                                </label>
-                                <div className=" col-md-6 input-group">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text">€</span>
+                                <div className="col-md-6">
+                                    <label htmlFor="price" className="col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Product.price"/>
+                                    </label>
+                                    <div className="input-group">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text">€</span>
+                                        </div>
+                                        <input type="number" id="price" className="form-control"
+                                               value={price}
+                                               min={0}
+                                               step="0.01"
+                                               onChange={e => setPrice(e.target.value)}
+                                               required/>
+                                        <div className="invalid-feedback">
+                                            <FormattedMessage id='project.global.validator.required'/>
+                                        </div>
                                     </div>
-                                    <input type="number" id="price" className="form-control"
-                                           value={price}
-                                           min={0}
-                                           step="0.01"
-                                           onChange={e => setPrice(e.target.value)}
+                                </div>
+
+                                <div className="col-md-6">
+                                    <label htmlFor="amount" className="col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Product.amount"/>
+                                    </label>
+                                    <input type="number" id="amount" className="form-control"
+                                           value={amount}
+                                           min={1}
+                                           onChange={e => setAmount(e.target.value)}
                                            required/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
@@ -179,86 +189,17 @@ const EditPattern = ()=>{
                                 </div>
                             </div>
 
-                            <div className="mt-5 text-center">
-                                <div className="framed-title disabled bold-label">
-                                    <FormattedMessage id="project.products.Pattern.detailedInfo"/>
-                                </div>
-                            </div>
-                            <div className="mt-2 mb-3 text-center">
-                                <div className="italic-message small">
-                                    <FormattedMessage id="project.products.Pattern.detailedInfo.message"/>
-                                </div>
-                            </div>
-
-                            <div className="form-group row">
-                                <label htmlFor="introduction" className="col-md-12 col-form-label bold-label">
-                                    <FormattedMessage id="project.products.Pattern.introduction"/>
-                                </label>
-                                <div className="col-md-12">
-                                    <textarea id="introduction" className="form-control" rows="2"
-                                              value={introduction}
-                                              maxLength="500"
-                                              onChange={e => setIntroduction(e.target.value)}
-                                              required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="form-group row">
-                                <label htmlFor="notes" className="col-md-12 col-form-label bold-label">
-                                    <FormattedMessage id="project.products.Pattern.notes"/>
-                                </label>
-                                <div className="col-md-12">
-                                    <textarea id="notes" className="form-control" rows="2"
-                                              value={notes}
-                                              maxLength="500"
-                                              onChange={e => setNotes(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-
                             <div className="form-group row">
                                 <div className="col-md-6">
-                                    <label htmlFor="gauge" className="col-form-label bold-label">
-                                        <FormattedMessage id="project.products.Pattern.gauge"/>
-                                    </label>
-                                    <textarea id="gauge" className="form-control" rows="2"
-                                              value={gauge}
-                                              maxLength="200"
-                                              onChange={e => setGauge(e.target.value)}
-                                              required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
-
-                                <div className="col-md-6">
-                                    <label htmlFor="sizing" className="col-form-label bold-label">
-                                        <FormattedMessage id="project.products.Pattern.sizing"/>
-                                    </label>
-                                    <textarea id="sizing" className="form-control" rows="2"
-                                              value={sizing}
-                                              maxLength="200"
-                                              onChange={e => setSizing(e.target.value)}
-                                              required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="form-group row">
-                                <div className="col-md-6">
-                                    <label htmlFor="time" className="col-form-label bold-label">
-                                        <FormattedMessage id="project.products.Pattern.time"/>
+                                    <label htmlFor="color" className="col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Product.color"/>
                                     </label>
 
-                                    <input type="text" id="time" className="form-control"
-                                           value={time}
+                                    <input type="text" id="color" className="form-control"
+                                           value={color}
                                            maxLength="60"
-                                           onChange={e => setTime(e.target.value)}
+                                           onChange={e => setColor(e.target.value)}
+                                           autoFocus
                                            required/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
@@ -266,24 +207,35 @@ const EditPattern = ()=>{
                                 </div>
 
                                 <div className="col-md-6">
-                                    <label htmlFor="difficultyLevel" className="col-form-label bold-label">
-                                        <FormattedMessage id="project.products.Pattern.difficultyLevel"/>
+                                    <label htmlFor="size" className="col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Product.size"/>
                                     </label>
-                                    <select id="difficultyLevel" className="form-control" value={difficultyLevel}
-                                            onChange={e => setDifficultyLevel(e.target.value)}
-                                            required>
-                                        <option value="0">
-                                            <FormattedMessage id="project.global.fields.level.beginner"/></option>
-                                        <option value="1">
-                                            <FormattedMessage id="project.global.fields.level.intermediate"/></option>
-                                        <option value="2">
-                                            <FormattedMessage id="project.global.fields.level.advanced"/></option>
-                                    </select>
+                                    <input type="text" id="size" className="form-control"
+                                           value={size}
+                                           maxLength="60"
+                                           onChange={e => setSize(e.target.value)}
+                                           autoFocus
+                                           required/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
                                     </div>
                                 </div>
                             </div>
+
+                            <div className="form-group row">
+                                <label htmlFor="details" className="col-md-12 col-form-label bold-label">
+                                    <FormattedMessage id="project.products.Product.details"/>
+                                </label>
+                                <div className="col-md-12">
+                                    <textarea id="details" className="form-control" rows="2"
+                                              value={details}
+                                              maxLength="500"
+                                              onChange={e => setDetails(e.target.value)}
+                                              autoFocus/>
+                                </div>
+                            </div>
+
+
 
                             <div className="form-group row">
                                 <label htmlFor="active" className="col-md-12 col-form-label bold-label">
@@ -327,7 +279,6 @@ const EditPattern = ()=>{
         </div>
     )
 
-
 }
 
-export default EditPattern;
+export default EditPhysical;

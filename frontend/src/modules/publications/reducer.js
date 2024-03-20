@@ -45,6 +45,10 @@ const physicalSearch = (state = initialState.physicalSearch, action) => {
 /*********************** PATTERN DETAILS ***********************/
 const pattern = (state = initialState.pattern, action) =>{
     switch (action.type){
+
+        case actionTypes.PATTERN_CREATED:
+            return action.pattern;
+
         case actionTypes.FIND_PATTERN_COMPLETED:
             return action.pattern;
 
@@ -65,14 +69,21 @@ const pattern = (state = initialState.pattern, action) =>{
 /*********************** PHYSICAL DETAILS ***********************/
 const physical=(state = initialState.physical, action) =>{
     switch (action.type){
+
+        case actionTypes.PHYSICAL_CREATED:
+            return action.physical;
+
         case actionTypes.FIND_PHYSICAL_COMPLETED:
             return action.physical;
 
-        case actionTypes.CLEAR_PHYSICAL:
-            return initialState.physical;
-
         case actionTypes.EDIT_PHYSICAL_COMPLETED:
             return action.physical;
+
+        case actionTypes.DELETE_PHYSICAL_COMPLETED:
+            return initialState.physical;
+
+        case actionTypes.CLEAR_PHYSICAL:
+            return initialState.physical;
 
         default:
             return state;

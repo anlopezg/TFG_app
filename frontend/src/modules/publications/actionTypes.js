@@ -24,6 +24,7 @@ export const EDIT_PHYSICAL_COMPLETED = "/project/publications/editPhysicalComple
 
 /*********************** DELETE PRODUCTS ***********************/
 export const DELETE_PATTERN_COMPLETED ="/project/publications/deletePatternCompleted";
+export const DELETE_PHYSICAL_COMPLETED="/project/publications/deletePhysicalCompleted";
 
 
 

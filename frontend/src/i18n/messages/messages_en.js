@@ -71,6 +71,7 @@ export default {
 
     'project.products.CreatePattern.heading' : 'Create a Pattern',
     'project.products.CreatePattern.pattern' : 'Start writing your own pattern',
+    'project.products.EditPhysical.heading': 'Edit your Product',
     'project.products.EditPattern.heading': 'Edit your Pattern',
     'project.products.CreatePhysical.heading' : 'Create a Product',
     'project.products.Product.title' : 'Title',
@@ -87,6 +88,8 @@ export default {
     'project.products.Product.isPublished' : 'The product is Published',
     'project.products.Product.draft' : 'Keep it as a draft',
     'project.products.Product.isDraft' : 'The product is saved as a Draft',
+    'project.products.Physical.delete.title':'Remove product',
+    'project.products.Physical.delete.msg':'Are you sure you want to delete this product?',
     'project.products.Pattern.introduction' : 'Introduction',
     'project.products.Pattern.notes' : 'Additional notes',
     'project.products.Pattern.gauge' : 'Gauge',

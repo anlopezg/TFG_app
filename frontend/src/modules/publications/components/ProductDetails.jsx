@@ -6,6 +6,8 @@ import * as selectors from '../selectors';
 import * as actions from '../actions';
 import {BackLink} from '../../common';
 import {FormattedMessage} from "react-intl";
+import * as catalogSelectors from "../../catalog/selectors.js";
+import * as userSelectors from "../../users/selectors.js";
 
 
 const ProductDetails = () =>{
@@ -13,13 +15,14 @@ const ProductDetails = () =>{
     const {id} = useParams();
     const physical = useSelector(selectors.getPhysical);
     const dispatch = useDispatch();
-    const crafts = useSelector(selectors.getCrafts);
-    const categories = useSelector(selectors.getCategories);
+    const crafts = useSelector(catalogSelectors.getCrafts);
+    const categories = useSelector(catalogSelectors.getCategories);
+    const user = useSelector(userSelectors.getUser);
 
     useEffect(() => {
 
         if(!Number.isNaN(id)){
-            dispatch(actions.findPhysicalById(id));
+            dispatch(actions.findPhysicalById(user.userName, id));
         }
 
         return () => dispatch(actions.clearPhysical());
@@ -121,7 +124,7 @@ const ProductDetails = () =>{
                                     <FormattedMessage id="project.catalog.Craft.field"/>
                                 </label>
                                 <div className="col-md-12 col-form-label">
-                                    <p>{craftNameTranslation(selectors.getCraftName(crafts, physical.craftId))} </p>
+                                    <p>{craftNameTranslation(catalogSelectors.getCraftName(crafts, physical.craftId))} </p>
                                 </div>
                             </div>
 
@@ -178,6 +181,15 @@ const ProductDetails = () =>{
                                 <div className="col-md-12 col-form-label">
                                     <p>{isItActive(physical.active)}</p>
                                 </div>
+                            </div>
+
+                            <div className="text-center mt-3">
+                                <a href={`/publications/manage-physical/${physical.id}`} className="btn btn-primary mr-2">
+                                    <FormattedMessage id="project.global.buttons.edit"/>
+                                </a>
+                                <a href={`/publications/delete-physical/${physical.id}`} className="btn btn-danger mr-2">
+                                    <FormattedMessage id="project.global.buttons.delete"/>
+                                </a>
                             </div>
 
 

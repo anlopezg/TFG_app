@@ -46,12 +46,12 @@ const CreatePattern = () => {
                     description: description.trim(),
                     price: price,
                     active: active,
-                introduction: introduction.trim(),
-                notes: notes.trim(),
-                gauge: gauge.trim(),
-                sizing: sizing.trim(),
-                difficultyLevel: difficultyLevel,
-                time: time.trim()
+                    introduction: introduction.trim(),
+                    notes: notes.trim(),
+                    gauge: gauge.trim(),
+                    sizing: sizing.trim(),
+                    difficultyLevel: difficultyLevel,
+                    time: time.trim()
                 },
                 () => navigate('/publications/patterns'),
                 errors => setBackendErrors(errors)

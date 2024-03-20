@@ -35,7 +35,6 @@ public interface PublicationService {
 
 
 
-
     Block<Product> findAddedProducts(Long userId, int page, int size);
 
     /**
@@ -62,7 +61,16 @@ public interface PublicationService {
                         BigDecimal price, Boolean active, String introduction, String notes, String gauge,
                         String sizing, int difficultyLevel, String time) throws InstanceNotFoundException;
 
-    void deletePattern(Long productId) throws InstanceNotFoundException;
+    Physical editPhysical(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
+                        BigDecimal price, Boolean active, int amount, String size, String color, String details) throws InstanceNotFoundException;
+
+
+    /**
+     * Deletes a product, whether it is a Pattern or a Physical product
+     * @param productId The product's id
+     * @throws InstanceNotFoundException No product found
+     */
+    void deleteProduct(Long productId) throws InstanceNotFoundException;
 
     //boolean isSellerTheOwner(Long userId, Long productId) throws InstanceNotFoundException;
 
