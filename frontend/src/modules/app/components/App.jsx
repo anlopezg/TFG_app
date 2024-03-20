@@ -5,7 +5,8 @@ import Header from './Header';
 import Body from './Body';
 import Footer from './Footer';
 import users from '../../users';
-import publications from "../../publications/index.js";
+import publications from "../../publications";
+import catalog from "../../catalog";
 
 const App = () => {
 
@@ -16,8 +17,8 @@ const App = () => {
         dispatch(users.actions.tryLoginFromServiceToken(
             () => dispatch(users.actions.logout())));
 
-        dispatch(publications.actions.findAllCrafts());
-        dispatch(publications.actions.findAllCategories());
+        dispatch(catalog.actions.findAllCrafts());
+        dispatch(catalog.actions.findAllCategories());
     
     }, [dispatch]);
 

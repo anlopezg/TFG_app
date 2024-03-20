@@ -28,3 +28,8 @@ export const editPattern = (username, pattern, onSuccess, onErrors) =>
 export const editPhysical = (physical, onSuccess, onErrors) =>
     appFetch(`/publications/physicals/${physical.id}`, config('PUT', physical),
         onSuccess, onErrors);
+
+
+export const deletePattern = (username, patternId, onSuccess)=>
+    appFetch(`/publications/${username}/patterns/${patternId}`, config('DELETE'),
+        onSuccess);

@@ -3,23 +3,25 @@ import {useParams} from "react-router-dom";
 import {useEffect} from "react";
 
 import * as selectors from '../selectors';
+import * as catalogSelectors from '../../catalog/selectors';
 import * as actions from '../actions';
-import {BackLink} from '../../common';
 import {FormattedMessage} from "react-intl";
+import * as userSelectors from "../../users/selectors.js";
 
 const PatternDetails = () =>{
 
     const {id} = useParams();
     const pattern = useSelector(selectors.getPattern);
     const dispatch = useDispatch();
-    const crafts = useSelector(selectors.getCrafts);
-    const categories = useSelector(selectors.getCategories);
+    const crafts = useSelector(catalogSelectors.getCrafts);
+    const categories = useSelector(catalogSelectors.getCategories);
+    const user = useSelector(userSelectors.getUser);
 
 
     useEffect(() => {
 
         if(!Number.isNaN(id)){
-            dispatch(actions.findPatternById(id));
+            dispatch(actions.findPatternById(user.userName, id));
         }
 
         return () => dispatch(actions.clearPattern());
@@ -130,7 +132,7 @@ const PatternDetails = () =>{
                                         <FormattedMessage id="project.catalog.Craft.field"/>
                                 </label>
                                 <div className="col-md-12 col-form-label">
-                                    <p>{craftNameTranslation(selectors.getCraftName(crafts, pattern.craftId))} </p>
+                                    <p>{craftNameTranslation(catalogSelectors.getCraftName(crafts, pattern.craftId))} </p>
                                 </div>
                             </div>
 
@@ -220,8 +222,11 @@ const PatternDetails = () =>{
 
 
                             <div className="text-center mt-3">
-                                <a href={`/publications/patterns/manage/${pattern.id}`} className="btn btn-primary mr-2">
+                                <a href={`/publications/manage-pattern/${pattern.id}`} className="btn btn-primary mr-2">
                                     <FormattedMessage id="project.global.buttons.edit"/>
+                                </a>
+                                <a href={`/publications/delete-pattern/${pattern.id}`} className="btn btn-danger mr-2">
+                                    <FormattedMessage id="project.global.buttons.delete"/>
                                 </a>
                             </div>
                         </div>

@@ -166,15 +166,14 @@ public class PublicationController {
 
     /****************************** DELETE A PRODUCT ******************************/
     @DeleteMapping("/{userName}/patterns/{id}")
-    public ResponseEntity<Void> deletePattern(@RequestAttribute Long userId, @PathVariable String userName,@PathVariable Long id) throws InstanceNotFoundException, PermissionException {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePattern(@RequestAttribute Long userId, @PathVariable String userName,@PathVariable Long id) throws InstanceNotFoundException, PermissionException {
 
         if(!permissionChecker.checkUserByName(userId, userName)){
             throw new PermissionException();
         }
 
         publicationService.deletePattern(id);
-
-        return ResponseEntity.ok().build();
 
     }
 }

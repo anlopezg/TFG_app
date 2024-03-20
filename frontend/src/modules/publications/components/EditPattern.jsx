@@ -7,8 +7,8 @@ import * as selectors from "../selectors.js";
 import * as userSelector from "../../users/selectors.js";
 import Errors from "../../common/components/Errors.jsx";
 import {FormattedMessage} from "react-intl";
-import CraftSelector from "./CraftSelector.jsx";
-import SubcategorySelector from "./SubcategorySelector.jsx";
+import CraftSelector from "../../catalog/components/CraftSelector.jsx";
+import SubcategorySelector from "../../catalog/components/SubcategorySelector.jsx";
 
 const EditPattern = ()=>{
 
@@ -41,9 +41,9 @@ const EditPattern = ()=>{
 
         if(form.checkValidity()){
             dispatch(actions.editPattern(
-                {
+                user.userName, {
                     id: pattern.id,
-                    userId: user.id,
+                    userId: pattern.userId,
                     craftId: craftId,
                     subcategoryId: subcategoryId,
                     title: title.trim(),
@@ -57,7 +57,7 @@ const EditPattern = ()=>{
                     difficultyLevel: difficultyLevel,
                     time: time.trim()
                 }, ()=>
-                    navigate(`/publications/patterns/${pattern.id}`),
+                    navigate(`/publications/pattern-details/${pattern.id}`),
 
                 errors => setBackendErrors(errors)
             ));

@@ -69,7 +69,7 @@ export default {
 
     'project.products.AddedPhysical.heading' : 'Mis productos añadidos',
     'project.products.TotalPhysicals.title' : 'Productos totales:',
-    'project.products.Physical.empty' : 'No se ha añadido ningún patrón aún',
+    'project.products.Physical.empty' : 'No se ha añadido ningún producto aún',
 
     'project.products.CreatePattern.heading' : 'Crea un Patrón',
     'project.products.CreatePattern.pattern' : 'Empieza a escribir tu patrón',
@@ -100,6 +100,9 @@ export default {
     'project.products.Pattern.detailedInfo':'Información detallada',
     'project.products.Pattern.detailedInfo.message':'Solo los usuarios que compren el patrón' +
         ' podrán visualizar estos campos',
+
+    'project.products.Pattern.delete.title':'Eliminación de patrón',
+    'project.products.Pattern.delete.msg':'¿Estás seguro de querer eliminar este patrón?',
 
     'project.catalog.CraftSelector.allCrafts': 'Todos los tipos',
     'project.catalog.Selector.select' : 'Selecciona uno',

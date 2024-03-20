@@ -22,10 +22,13 @@ export const EDIT_PATTERN_COMPLETED = "/project/publications/editPatternComplete
 export const EDIT_PHYSICAL_COMPLETED = "/project/publications/editPhysicalCompleted";
 
 
+/*********************** DELETE PRODUCTS ***********************/
+export const DELETE_PATTERN_COMPLETED ="/project/publications/deletePatternCompleted";
+
+
+
 /*********************** ... ***********************/
 export const PRODUCT_CREATED="project/publications/productCreated";
 export const FIND_PRODUCTS_COMPLETED = "project/publications/findProductsCompleted";
 export const CLEAR_PRODUCT_SEARCH = "project/publications/clearProductSearch";
 
-export const FIND_ALL_CATEGORIES_COMPLETED = "project/publications/findAllCategoriesCompleted";
-export const FIND_ALL_CRAFTS_COMPLETED = "project/publications/findAllCraftsCompleted";

@@ -97,6 +97,8 @@ export default {
     'project.products.Pattern.generalInfo.message':'Every user will have access to this information',
     'project.products.Pattern.detailedInfo':'Detailed information',
     'project.products.Pattern.detailedInfo.message':'Only users who buy the pattern will have access to this information',
+    'project.products.Pattern.delete.title':'Delete pattern',
+    'project.products.Pattern.delete.msg':'Are you sure you want to delete this pattern?',
 
     'project.catalog.CraftSelector.allCrafts': 'All the crafts',
     'project.catalog.Selector.select' : 'Select one',

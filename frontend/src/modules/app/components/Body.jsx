@@ -6,7 +6,7 @@ import Home from './Home';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile, BecomesSeller} from '../../users';
 import users from '../../users';
 import {CreatePattern, ViewAddedPatterns, ViewAddedPhysicals,CreatePhysical, PatternDetails
-, ProductDetails, EditPattern, ManagePattern} from "../../publications/index.js";
+, ProductDetails, EditPattern, ManagePattern, DeletePattern} from "../../publications/index.js";
 
 const Body = () => {
 
@@ -31,14 +31,16 @@ const Body = () => {
                 {loggedIn && isNormalUser && <Route path="/publications/products" element={<BecomesSeller/>}/>}
 
                 {loggedIn && isSeller && <Route path="/publications/products" element={<ViewAddedPhysicals/>}/>}
-                {loggedIn && isSeller && <Route path="/publications/create-pattern" element={<CreatePattern/>}/>}
-                {loggedIn && isSeller && <Route path="/publications/create-physical" element={<CreatePhysical/>}/>}
-                {loggedIn && isSeller && <Route path="/publications/patterns" element={<ViewAddedPatterns/>}/>}
-
-                {loggedIn && isSeller && <Route path="/publications/patterns/:id" element={<PatternDetails/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/physicals/:id" element={<ProductDetails/>}/>}
-                {loggedIn && isSeller && <Route path="/publications/patterns/edit/:id" element={<EditPattern/>}/>}
-                {loggedIn && isSeller && <Route path="/publications/patterns/manage/:id" element={<ManagePattern/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/create-physical" element={<CreatePhysical/>}/>}
+
+
+                {loggedIn && isSeller && <Route path="/publications/create-pattern" element={<CreatePattern/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/pattern-details/:id" element={<PatternDetails/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/patterns" element={<ViewAddedPatterns/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/edit-pattern/:id" element={<EditPattern/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/manage-pattern/:id" element={<ManagePattern/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/delete-pattern/:id" element={<DeletePattern/>}/>}
             </Routes>
         </div>
 

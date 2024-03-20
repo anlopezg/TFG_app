@@ -15,8 +15,6 @@ export {default as ProductDetails} from './components/ProductDetails.jsx';
 
 export {default as EditPattern} from './components/EditPattern.jsx';
 export {default as ManagePattern} from './components/ManagePattern.jsx';
-
-export {default as SubcategorySelector} from './components/SubcategorySelector.jsx';
-export {default as CraftSelector} from './components/CraftSelector.jsx';
+export {default as DeletePattern} from './components/DeletePattern.jsx';
 
 export default {actions, reducer, selectors};

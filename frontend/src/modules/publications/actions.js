@@ -1,5 +1,4 @@
 import * as actionTypes from './actionTypes';
-import * as selectors from "./selectors.js";
 import backend from '../../backend';
 
 /*********************** ADDED PRODUCTS SEARCH ***********************/
@@ -12,9 +11,9 @@ export const clearAddedPatternSearch= () => ({
     type: actionTypes.CLEAR_ADDED_PATTERN_SEARCH
 });
 
-export const findAddedPatterns = criteria => dispatch =>{
+export const findAddedPatterns = (username, criteria) => dispatch =>{
 
-    backend.publicationService.findAddedPatterns(criteria,
+    backend.publicationService.findAddedPatterns(username, criteria,
             result => dispatch(findAddedPatternsCompleted({criteria, result})))
 }
 
@@ -61,8 +60,8 @@ const patternCreated  = pattern =>({
     pattern
 });
 
-export const createPattern = (pattern, onSuccess, onErrors) => dispatch =>
-    backend.publicationService.createPattern(pattern,
+export const createPattern = (username ,pattern, onSuccess, onErrors) => dispatch =>
+    backend.publicationService.createPattern(username, pattern,
         pattern => {
             dispatch(patternCreated(pattern));
             onSuccess();
@@ -93,8 +92,8 @@ export const findPatternCompleted = pattern => ({
     pattern
 })
 
-export const findPatternById = patternId => dispatch => {
-    backend.publicationService.findPatternById(patternId, pattern =>{
+export const findPatternById = (username ,patternId) => dispatch => {
+    backend.publicationService.findPatternById(username, patternId, pattern =>{
         dispatch(findPatternCompleted(pattern));
     });
 }
@@ -122,9 +121,9 @@ export const editPatternCompleted = pattern =>({
     pattern
 });
 
-export const editPattern = (pattern, onSuccess, onErrors) => dispatch =>
+export const editPattern = (username, pattern, onSuccess, onErrors) => dispatch =>
 
-    backend.publicationService.editPattern(pattern,
+    backend.publicationService.editPattern(username, pattern,
         pattern => {
             dispatch(editPatternCompleted(pattern));
             onSuccess();
@@ -147,6 +146,17 @@ export const editPhysical = (physical, onSuccess, onErrors)=> dispatch =>
         onErrors);
 
 
+export const deletePatternCompleted = patternId =>({
+    type: actionTypes.DELETE_PATTERN_COMPLETED,
+    patternId
+});
+
+export const deletePattern  = (username, patternId, onSuccess)=> dispatch =>
+    backend.publicationService.deletePattern(username, patternId,
+            patternId => {dispatch(deletePatternCompleted(patternId));
+            onSuccess();
+            }
+    );
 
 
 
@@ -175,35 +185,4 @@ export const clearProduct = () => ({
     type: actionTypes.CLEAR_PRODUCT
 });
 
-const findAllCategoriesCompleted = categories => ({
-    type: actionTypes.FIND_ALL_CATEGORIES_COMPLETED,
-    categories
-});
 
-export const findAllCategories = () => (dispatch, getState) => {
-
-    const categories = selectors.getCategories(getState());
-
-    if (!categories) {
-
-        backend.publicationService.findAllCategories(
-            categories => dispatch(findAllCategoriesCompleted(categories))
-        );
-
-    }
-
-}
-const findAllCraftsCompleted = crafts =>({
-    type: actionTypes.FIND_ALL_CRAFTS_COMPLETED,
-    crafts
-});
-
-export const findAllCrafts = () =>(dispatch, getState)=>{
-    const crafts = selectors.getCrafts(getState());
-
-    if(!crafts){
-        backend.publicationService.findAllCrafts(
-            crafts => dispatch(findAllCraftsCompleted(crafts))
-        );
-    }
-}

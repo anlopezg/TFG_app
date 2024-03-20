@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 const PatternLink = ({id, title}) => {
 
     return (
-        <Link className="product-link-light" to={`/publications/patterns/${id}`}>
+        <Link className="product-link-light" to={`/publications/pattern-details/${id}`}>
             {title}
         </Link>
     );

@@ -3,9 +3,6 @@ import {combineReducers} from 'redux';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-    user: null,
-    categories: null,
-    crafts: null,
     patternSearch: null,
     physicalSearch: null,
     pattern: null,
@@ -43,24 +40,7 @@ const physicalSearch = (state = initialState.physicalSearch, action) => {
     }
 }
 
-/*********************** CRAFTS, CATEGORIES ***********************/
-const categories = (state = initialState.categories, action) =>{
-    switch (action.type){
-        case actionTypes.FIND_ALL_CATEGORIES_COMPLETED:
-            return action.categories;
-        default:
-            return state;
-    }
-}
 
-const crafts = (state = initialState.crafts, action)=>{
-    switch (action.type){
-        case actionTypes.FIND_ALL_CRAFTS_COMPLETED:
-            return action.crafts;
-        default:
-            return state;
-    }
-}
 
 /*********************** PATTERN DETAILS ***********************/
 const pattern = (state = initialState.pattern, action) =>{
@@ -71,10 +51,11 @@ const pattern = (state = initialState.pattern, action) =>{
         case actionTypes.EDIT_PATTERN_COMPLETED:
             return action.pattern;
 
-        case actionTypes.CLEAR_PATTERN:
+        case actionTypes.DELETE_PATTERN_COMPLETED:
             return initialState.pattern;
 
-
+        case actionTypes.CLEAR_PATTERN:
+            return initialState.pattern;
 
         default:
             return state;
@@ -100,8 +81,6 @@ const physical=(state = initialState.physical, action) =>{
 
 
 const reducer = combineReducers({
-    categories,
-    crafts,
     patternSearch,
     physicalSearch,
     pattern,
