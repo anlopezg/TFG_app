@@ -1,5 +1,12 @@
 package es.udc.paproject.backend.rest.dtos;
 
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.NumberFormat;
+
 import java.math.BigDecimal;
 
 public class PatternDto extends ProductDto{
@@ -10,12 +17,15 @@ public class PatternDto extends ProductDto{
     private String sizing;
     private int difficultyLevel;
     private String time;
+    private String abbreviations;
+    private String specialAbbreviations;
+    private String tools;
 
     private PatternDto(){}
 
     public PatternDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
                       Boolean active,String introduction, String notes, String gauge, String sizing,
-                      int difficultyLevel, String time){
+                      int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools){
 
         super(id, user, craft, subcategory, title, description, price, active);
 
@@ -25,9 +35,14 @@ public class PatternDto extends ProductDto{
         this.sizing=sizing;
         this.difficultyLevel=difficultyLevel;
         this.time=time;
+        this.abbreviations = abbreviations;
+        this.specialAbbreviations = specialAbbreviations;
+        this.tools= tools;
 
     }
 
+    @NotNull(groups = {AllValidations.class})
+    @Size(min=1, max=500, groups={AllValidations.class})
     public String getIntroduction() {
         return introduction;
     }
@@ -36,6 +51,8 @@ public class PatternDto extends ProductDto{
         this.introduction = introduction;
     }
 
+    @Nullable
+    @Size(min=1, max=500, groups={AllValidations.class})
     public String getNotes() {
         return notes;
     }
@@ -44,6 +61,8 @@ public class PatternDto extends ProductDto{
         this.notes = notes;
     }
 
+    @NotNull(groups = {AllValidations.class})
+    @Size(min=1, max=200, groups={AllValidations.class})
     public String getGauge() {
         return gauge;
     }
@@ -52,6 +71,8 @@ public class PatternDto extends ProductDto{
         this.gauge = gauge;
     }
 
+    @NotNull(groups = {AllValidations.class})
+    @Size(min=1, max=200, groups={AllValidations.class})
     public String getSizing() {
         return sizing;
     }
@@ -60,6 +81,9 @@ public class PatternDto extends ProductDto{
         this.sizing = sizing;
     }
 
+    @NotNull(groups = {AllValidations.class})
+    @Min(value=0)
+    @Max(value=3)
     public int getDifficultyLevel() {
         return difficultyLevel;
     }
@@ -68,11 +92,43 @@ public class PatternDto extends ProductDto{
         this.difficultyLevel = difficultyLevel;
     }
 
+    @NotNull(groups = {AllValidations.class})
+    @Size(min=1, max=60, groups={AllValidations.class})
     public String getTime() {
         return time;
     }
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+
+
+    public String getAbbreviations() {
+        return abbreviations;
+    }
+
+    public void setAbbreviations(String abbreviations) {
+        this.abbreviations = abbreviations;
+    }
+
+    @Nullable
+    @Size(min=1, max=500, groups={AllValidations.class})
+    public String getSpecialAbbreviations() {
+        return specialAbbreviations;
+    }
+
+    public void setSpecialAbbreviations(String specialAbbreviations) {
+        this.specialAbbreviations = specialAbbreviations;
+    }
+
+    @NotNull(groups = {AllValidations.class})
+    @Size(min=1, max=500, groups={AllValidations.class})
+    public String getTools() {
+        return tools;
+    }
+
+    public void setTools(String tools) {
+        this.tools = tools;
     }
 }

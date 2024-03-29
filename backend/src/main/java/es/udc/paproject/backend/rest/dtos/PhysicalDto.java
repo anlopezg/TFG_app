@@ -1,5 +1,10 @@
 package es.udc.paproject.backend.rest.dtos;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.math.BigDecimal;
 
 public class PhysicalDto extends ProductDto{
@@ -23,6 +28,9 @@ public class PhysicalDto extends ProductDto{
         this.details=details;
     }
 
+    @NotNull(groups = {AllValidations.class})
+    @Min(value=0)
+    @Max(value=10000)
     public int getAmount() {
         return amount;
     }
@@ -31,6 +39,8 @@ public class PhysicalDto extends ProductDto{
         this.amount = amount;
     }
 
+    @NotNull(groups = {AllValidations.class})
+    @Size(min=1, max=60, groups={AllValidations.class})
     public String getSize() {
         return size;
     }
@@ -39,6 +49,8 @@ public class PhysicalDto extends ProductDto{
         this.size = size;
     }
 
+    @NotNull(groups = {AllValidations.class})
+    @Size(min=1, max=60, groups={AllValidations.class})
     public String getColor() {
         return color;
     }
@@ -47,6 +59,7 @@ public class PhysicalDto extends ProductDto{
         this.color = color;
     }
 
+    @Size(min=1, max=500, groups={AllValidations.class})
     public String getDetails() {
         return details;
     }

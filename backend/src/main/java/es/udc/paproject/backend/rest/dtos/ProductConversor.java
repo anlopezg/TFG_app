@@ -28,7 +28,8 @@ public class ProductConversor {
                 pattern.getSubcategory().getId(),
                 pattern.getTitle(), pattern.getDescription(), pattern.getPrice(), pattern.getActive(),
                 pattern.getIntroduction(), pattern.getNotes(),
-                pattern.getGauge(), pattern.getSizing(), pattern.getDifficultyLevel(), pattern.getTime());
+                pattern.getGauge(), pattern.getSizing(), pattern.getDifficultyLevel(), pattern.getTime(),
+                pattern.getAbbreviations(), pattern.getSpecialAbbreviations(), pattern.getTools());
     }
 
     public final static List<PatternDto> toPatternDtos(List<Pattern> patterns){

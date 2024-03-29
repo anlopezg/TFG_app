@@ -14,6 +14,9 @@ public class Pattern extends Product{
     private String sizing;
     private int difficultyLevel;
     private String time;
+    private String abbreviations;
+    private String specialAbbreviations;
+    private String tools;
 
     public Pattern(){
         super();
@@ -21,7 +24,8 @@ public class Pattern extends Product{
 
     public Pattern(User user, Craft craft, Subcategory subcategory, String title, String description, BigDecimal price,
                    Boolean active, LocalDateTime creationDate,
-                   String introduction, String notes, String gauge, String sizing, int difficultyLevel, String time){
+                   String introduction, String notes, String gauge, String sizing, int difficultyLevel, String time,
+                   String abbreviations, String specialAbbreviations, String tools){
 
         super(user, craft, subcategory, title, description, price, active, creationDate);
 
@@ -31,6 +35,9 @@ public class Pattern extends Product{
         this.sizing=sizing;
         this.difficultyLevel=difficultyLevel;
         this.time=time;
+        this.abbreviations = abbreviations;
+        this.specialAbbreviations = specialAbbreviations;
+        this.tools= tools;
     }
 
 
@@ -81,5 +88,29 @@ public class Pattern extends Product{
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getAbbreviations() {
+        return abbreviations;
+    }
+
+    public void setAbbreviations(String abbreviations) {
+        this.abbreviations = abbreviations;
+    }
+
+    public String getSpecialAbbreviations() {
+        return specialAbbreviations;
+    }
+
+    public void setSpecialAbbreviations(String specialAbbreviations) {
+        this.specialAbbreviations = specialAbbreviations;
+    }
+
+    public String getTools() {
+        return tools;
+    }
+
+    public void setTools(String tools) {
+        this.tools = tools;
     }
 }

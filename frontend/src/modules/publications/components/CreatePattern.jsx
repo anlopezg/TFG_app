@@ -3,12 +3,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
 
-
 import {Errors} from '../../common';
 import * as actions from '../actions';
 import * as userSelector from "../../users/selectors.js";
 import CraftSelector from "../../catalog/components/CraftSelector.jsx";
 import SubcategorySelector from "../../catalog/components/SubcategorySelector.jsx";
+import * as catalogSelector from "../../catalog/selectors.js";
+
+
 
 const CreatePattern = () => {
 
@@ -16,22 +18,33 @@ const CreatePattern = () => {
     const navigate = useNavigate();
 
     const user = useSelector(userSelector.getUser);
+    const crafts  = useSelector(catalogSelector.getCrafts);
+    const categories = useSelector(catalogSelector.getCategories);
 
     const[ craftId, setCraftId] = useState('');
     const[ subcategoryId, setSubcategoryId] = useState('');
     const[ title, setTitle] = useState('');
     const[ description, setDescription] = useState('');
     const[ price , setPrice ] = useState('');
-    const[ active, setActive ] = useState('');
+    const[ active, setActive ] = useState(true);
     const[ introduction, setIntroduction ] = useState('');
     const[ notes, setNotes ] = useState('');
     const[ gauge, setGauge] = useState('');
     const[ sizing, setSizing ] = useState('');
     const[ difficultyLevel, setDifficultyLevel ] = useState('');
-    const[ time, setTime ] = useState('');
+
+    const[abbreviations, setAbbreviations]= useState('');
+    const[specialAbbreviations, setSpecialAbbreviations]= useState('');
+    const[tools, setTools] = useState('');
+
+    const[timeValue, setTimeValue]= useState('');
+    const[timeUnit, setTimeUnit] = useState('');
+    const[time, setTime ] = `${timeValue} ${timeUnit}`;
+
 
     const [backendErrors, setBackendErrors] = useState(null);
     let form;
+
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -51,7 +64,10 @@ const CreatePattern = () => {
                     gauge: gauge.trim(),
                     sizing: sizing.trim(),
                     difficultyLevel: difficultyLevel,
-                    time: time.trim()
+                    time: time.trim(),
+                    abbreviations: abbreviations.trim(),
+                    specialAbbreviations: specialAbbreviations.trim(),
+                    tools: tools.trim()
                 },
                 () => navigate('/publications/patterns'),
                 errors => setBackendErrors(errors)
@@ -69,6 +85,7 @@ const CreatePattern = () => {
             setActive(false);
         }
     };
+
 
     const toNumber = value => value.length > 0 ? Number(value) : null;
 
@@ -155,7 +172,7 @@ const CreatePattern = () => {
 
                             <div className="form-group row">
                                 <div className="col-md-6">
-                                    <label htmlFor="craft" className="col-form-label bold-label">
+                                    <label htmlFor="craftId" className="col-form-label bold-label">
                                         <FormattedMessage id="project.catalog.Craft.field"/>
                                     </label>
                                     <CraftSelector id="craftId" className="custom-select my-1 mr-sm-2"
@@ -166,7 +183,7 @@ const CreatePattern = () => {
                                 </div>
 
                                 <div className="col-md-6">
-                                    <label htmlFor="subcategory" className="col-form-label bold-label">
+                                    <label htmlFor="subcategoryId" className="col-form-label bold-label">
                                         <FormattedMessage id="project.catalog.Category.field"/>
                                     </label>
                                     <SubcategorySelector id="subcategoryId" className="custom-select my-1 mr-sm-2"
@@ -220,6 +237,113 @@ const CreatePattern = () => {
 
                             <div className="form-group row">
                                 <div className="col-md-6">
+                                    <label htmlFor="time" className=" col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Pattern.time"/>
+                                    </label>
+
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <input type="number" id="time" className="form-control"
+                                                   value={timeValue}
+                                                   onChange={e => setTimeValue(e.target.value)}
+                                                   required/>
+                                            <div className="invalid-feedback">
+                                                <FormattedMessage id='project.global.validator.required'/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <select id="timeUnit" className="form-control" value={timeUnit}
+                                                    onChange={e=> setTimeUnit(e.target.value)} required>
+                                                <option value="minutes"><FormattedMessage id="project.products.Pattern.time.minutes"/></option>
+                                                <option value="hours"><FormattedMessage id="project.products.Pattern.time.hours"/></option>
+                                                <option value="days"><FormattedMessage id="project.products.Pattern.time.days"/></option>
+                                                <option value="weeks"><FormattedMessage id="project.products.Pattern.time.weeks"/></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-md-6">
+                                    <label htmlFor="difficultyLevel" className="col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Pattern.difficultyLevel"/>
+                                    </label>
+                                    <select id="difficultyLevel" className="form-control" value={difficultyLevel}
+                                            onChange={e => setDifficultyLevel(e.target.value)}
+                                            required>
+                                        <option value="0">
+                                            <FormattedMessage id="project.global.fields.level.beginner"/></option>
+                                        <option value="1">
+                                            <FormattedMessage id="project.global.fields.level.intermediate"/></option>
+                                        <option value="2">
+                                            <FormattedMessage id="project.global.fields.level.advanced"/></option>
+                                    </select>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="form-group row">
+                                <div className="col-md-6">
+                                    <label htmlFor="abbreviations" className=" col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Pattern.abbreviations"/>
+                                    </label>
+                                    <select id="abbreviations" className="form-control" value={abbreviations}
+                                            onChange={e=> setAbbreviations(e.target.value)} required>
+                                        <option value="custom">
+                                            <FormattedMessage id="project.products.Pattern.standard.custom"/></option>
+                                        <option value="usa">
+                                            <FormattedMessage id="project.products.Pattern.standard.usa"/></option>
+                                        <option value="spanish">
+                                            <FormattedMessage id="project.products.Pattern.standard.spanish"/></option>
+                                    </select>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <label htmlFor="specialAbbreviations" className=" col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Pattern.special.abbreviations"/>
+                                    </label>
+                                    <textarea
+                                        id="specialAbbreviations" className="form-control" rows="2"
+                                        value={specialAbbreviations}
+                                        maxLength="200"
+                                        onChange={e => setSpecialAbbreviations(e.target.value)}>
+
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div className="mt-5 text-center">
+                                <div className="framed-title disabled bold-label">
+                                    <FormattedMessage id="project.products.Pattern.materials"/>
+                                </div>
+                            </div>
+
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <p className="col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Pattern.tools"/>
+                                    </p>
+                                    <div className="italic-message small">
+                                        <FormattedMessage id="project.products.Pattern.tools.message"/>
+                                    </div>
+                                    <input id="tools" className="form-control"
+                                           value={tools}
+                                           maxLength="200"
+                                           onChange={e=>setTools(e.target.value)}
+                                           required
+                                        />
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-group row">
+                                <div className="col-md-6">
                                     <label htmlFor="gauge" className="col-form-label bold-label">
                                         <FormattedMessage id="project.products.Pattern.gauge"/>
                                     </label>
@@ -248,49 +372,17 @@ const CreatePattern = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
-                                <div className="col-md-6">
-                                    <label htmlFor="time" className="col-form-label bold-label">
-                                        <FormattedMessage id="project.products.Pattern.time"/>
-                                    </label>
 
-                                    <input type="text" id="time" className="form-control"
-                                           value={time}
-                                           maxLength="60"
-                                           onChange={e => setTime(e.target.value)}
-                                           required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
 
-                                <div className="col-md-6">
-                                    <label htmlFor="difficultyLevel" className="col-form-label bold-label">
-                                        <FormattedMessage id="project.products.Pattern.difficultyLevel"/>
-                                    </label>
-                                    <select id="difficultyLevel" className="form-control" value={difficultyLevel}
-                                            onChange={e => setDifficultyLevel(e.target.value)}
-                                            required>
-                                        <option value="0">
-                                            <FormattedMessage id="project.global.fields.level.beginner"/></option>
-                                        <option value="1">
-                                            <FormattedMessage id="project.global.fields.level.intermediate"/></option>
-                                        <option value="2">
-                                            <FormattedMessage id="project.global.fields.level.advanced"/></option>
-                                    </select>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
-                            </div>
+
 
                             <div className="form-group row">
-                                <label htmlFor="active" className="col-md-12 col-form-label bold-label">
+                                <p className="col-md-12 col-form-label bold-label">
                                     <FormattedMessage id="project.products.Product.active.message"/>
-                                </label>
+                                </p>
                                 <div className="col-md-12 ml-5 mt-2">
-                                    <input type="radio" id="active" className="form-check-input"
-                                           checked={active}
+                                    <input id="publish" type="radio" className="form-check-input"
+                                           checked={active === true}
                                            onChange={()=> handleCheckboxChange('publish')}/>
                                     <label htmlFor="publish" className="form-check-label">
                                         <FormattedMessage id="project.products.Product.publish"/>
@@ -299,7 +391,7 @@ const CreatePattern = () => {
 
                                 <div className="col-md-12 ml-5 mt-2">
                                     <input type="radio" id="draft" className="form-check-input"
-                                           checked={!active}
+                                           checked={active === false}
                                            onChange={()=> handleCheckboxChange('draft')}/>
                                     <label htmlFor="draft" className="form-check-label">
                                         <FormattedMessage id="project.products.Product.draft"/>

@@ -78,12 +78,15 @@ CREATE TABLE Product (
 
     -- Pattern attributes
     introduction VARCHAR(500),
-    abbreviations VARCHAR(500),
     notes VARCHAR(500),
+    time VARCHAR(60) ,
+    difficultyLevel TINYINT,
+    abbreviations VARCHAR(60),
+    specialAbbreviations VARCHAR(500),
     gauge VARCHAR(200),
     sizing VARCHAR(200),
-    difficultyLevel TINYINT,
-    time VARCHAR(60) ,
+    tools VARCHAR(500),
+
 
     CONSTRAINT ProductPK PRIMARY KEY (id),
     CONSTRAINT ProductUserFK FOREIGN KEY (userId) REFERENCES User(id),

@@ -10,9 +10,10 @@ const CraftSelector = (selectProps) =>{
 
     return(
         <select {...selectProps}>
+            <option value="" disabled><FormattedMessage id="project.global.selectors.default"/></option>
 
             {crafts && crafts.map(craft =>
-                <option key={craft.id} value={craft.id}>
+                <option key={craft.id} value={craft.id} >
                     <FormattedMessage id={`project.catalog.Crafts.${craft.craftName}`} />
                 </option>
                     )}

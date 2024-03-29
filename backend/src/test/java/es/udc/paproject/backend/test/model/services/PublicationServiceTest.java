@@ -85,7 +85,7 @@ public class PublicationServiceTest {
 
     private Pattern createPattern(User user, Craft craft, Subcategory subcategory, String title, BigDecimal price, LocalDateTime creationDate){
         return new Pattern(user, craft, subcategory, title, "Description", price,true, creationDate,
-                "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+                "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "5mm Crochet Hook x1");
     }
 
     private Physical createPhysical(User user, Craft craft, Subcategory subcategory, String title, BigDecimal price, LocalDateTime creationDate){
@@ -142,7 +142,7 @@ public class PublicationServiceTest {
         Pattern expectedPattern = createPattern(user, craft, subcategory, title, price, LocalDateTime.now());
 
         Pattern createdPattern = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
 
 
 
@@ -165,7 +165,7 @@ public class PublicationServiceTest {
         assertThrows(UserNotSellerException.class, ()->
                 publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "title", "Description",
                         BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours"));
+                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook"));
     }
 
     @Test
@@ -173,7 +173,7 @@ public class PublicationServiceTest {
         assertThrows(InstanceNotFoundException.class, ()->
                 publicationService.createPattern(NON_EXISTENT_ID, NON_EXISTENT_ID, NON_EXISTENT_ID, "title", "Description",
                         BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours"));
+                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook"));
     }
 
     @Test
@@ -212,10 +212,10 @@ public class PublicationServiceTest {
         BigDecimal price = BigDecimal.valueOf(10);
 
         Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
 
         Pattern pattern2 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
 
         Block<Pattern> expectedBlock = new Block<>(Arrays.asList(pattern1, pattern2), false);
         Block<Pattern> foundPatterns = publicationService.findAddedPatterns(user.getId(), 0, 2);
@@ -238,13 +238,13 @@ public class PublicationServiceTest {
         BigDecimal price = BigDecimal.valueOf(10);
 
         Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
 
         Pattern pattern2 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
 
         Pattern pattern3 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title3, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
 
 
         Block<Pattern> firstBlock = new Block<>(Arrays.asList(pattern1, pattern2), true);
@@ -276,7 +276,7 @@ public class PublicationServiceTest {
         Subcategory subcategory= createSubcategory("Ring", category);
 
         Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
 
         assertEquals(pattern1, publicationService.findPatternById(pattern1.getId()));
     }
@@ -319,7 +319,7 @@ public class PublicationServiceTest {
         Subcategory subcategory= createSubcategory("Ring", category);
 
         Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
 
         String updatedTitle = "titleUpdated";
         String updatedDescr = "descripUpdated";
@@ -328,7 +328,7 @@ public class PublicationServiceTest {
         pattern1.setDescription(updatedDescr);
 
         Pattern updatedPattern = publicationService.editPattern(pattern1.getId(), user.getId(), craft.getId(), subcategory.getId(), updatedTitle, updatedDescr,
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours");
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
 
         assertEquals(pattern1, updatedPattern);
     }

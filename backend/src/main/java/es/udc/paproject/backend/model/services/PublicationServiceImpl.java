@@ -34,7 +34,7 @@ public class PublicationServiceImpl implements PublicationService{
     @Override
     public Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                               BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                              String sizing, int difficultyLevel, String time)
+                              String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools)
             throws InstanceNotFoundException, UserNotSellerException{
 
         User user = permissionChecker.checkUser(userId);
@@ -49,7 +49,7 @@ public class PublicationServiceImpl implements PublicationService{
         LocalDateTime creationDate = LocalDateTime.now();
 
         Pattern patternCreated = new Pattern(user, craft, subcategory,
-                title, description, price, active, creationDate,introduction, notes, gauge, sizing, difficultyLevel, time);
+                title, description, price, active, creationDate,introduction, notes, gauge, sizing, difficultyLevel, time, abbreviations, specialAbbreviations, tools);
 
         productDao.save(patternCreated);
 
@@ -166,7 +166,7 @@ public class PublicationServiceImpl implements PublicationService{
     @Override
     public Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
                                BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                               String sizing, int difficultyLevel, String time) throws InstanceNotFoundException{
+                               String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools) throws InstanceNotFoundException{
 
         User user = permissionChecker.checkUser(userId);
         Craft craft  = catalogService.checkCraft(craftId);
@@ -187,6 +187,9 @@ public class PublicationServiceImpl implements PublicationService{
         pattern.setSizing(sizing);
         pattern.setDifficultyLevel(difficultyLevel);
         pattern.setTime(time);
+        pattern.setAbbreviations(abbreviations);
+        pattern.setSpecialAbbreviations(specialAbbreviations);
+        pattern.setTools(tools);
 
         patternDao.save(pattern);
 

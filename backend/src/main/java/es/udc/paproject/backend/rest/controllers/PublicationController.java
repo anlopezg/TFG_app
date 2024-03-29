@@ -63,7 +63,8 @@ public class PublicationController {
         Pattern createdPattern = publicationService.createPattern(patternDto.getUserId(), patternDto.getCraftId(), patternDto.getSubcategoryId(),
                 patternDto.getTitle(), patternDto.getDescription(), patternDto.getPrice(), patternDto.getActive(),
                 patternDto.getIntroduction(), patternDto.getNotes(), patternDto.getGauge(), patternDto.getSizing(),
-                patternDto.getDifficultyLevel(), patternDto.getTime());
+                patternDto.getDifficultyLevel(), patternDto.getTime(),
+                patternDto.getAbbreviations(), patternDto.getSpecialAbbreviations(), patternDto.getTools());
 
         PatternDto createdPatternDto = toPatternDto(createdPattern);
 
@@ -72,7 +73,7 @@ public class PublicationController {
 
 
     @PostMapping("/{userName}/physicals")
-    public ResponseEntity<PhysicalDto> createPhysical(@RequestAttribute Long userId, @PathVariable String userName, @Validated({PatternDto.AllValidations.class}) @RequestBody PhysicalDto physicalDto) throws InstanceNotFoundException, PermissionException,  UserNotSellerException{
+    public ResponseEntity<PhysicalDto> createPhysical(@RequestAttribute Long userId, @PathVariable String userName, @Validated({PhysicalDto.AllValidations.class}) @RequestBody PhysicalDto physicalDto) throws InstanceNotFoundException, PermissionException,  UserNotSellerException{
 
         if(!permissionChecker.checkUserByName(userId, userName)){
             throw new PermissionException();
@@ -171,7 +172,7 @@ public class PublicationController {
         return toPatternDto(publicationService.editPattern(id, userId, patternDto.getCraftId(), patternDto.getSubcategoryId(),
                 patternDto.getTitle(), patternDto.getDescription(), patternDto.getPrice(), patternDto.getActive(),
                 patternDto.getIntroduction(), patternDto.getNotes(), patternDto.getGauge(), patternDto.getSizing(),
-                patternDto.getDifficultyLevel(), patternDto.getTime()));
+                patternDto.getDifficultyLevel(), patternDto.getTime(), patternDto.getAbbreviations(), patternDto.getSpecialAbbreviations(), patternDto.getTools()));
     }
 
     @PutMapping("/{userName}/physicals/{id}")

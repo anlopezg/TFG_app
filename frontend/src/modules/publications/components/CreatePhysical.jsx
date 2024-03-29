@@ -22,7 +22,7 @@ const CreatePhysical = () => {
     const[ title, setTitle] = useState('');
     const[ description, setDescription] = useState('');
     const[ price , setPrice ] = useState('');
-    const[ active, setActive ] = useState('');
+    const[ active, setActive ] = useState(true);
     const[ amount, setAmount ] = useState('');
     const[ size, setSize] = useState('');
     const[ color, setColor] = useState('');
@@ -230,14 +230,13 @@ const CreatePhysical = () => {
 
 
                             <div className="form-group row">
-                                <label htmlFor="active" className="col-md-12 col-form-label bold-label">
+                                <p className="col-md-12 col-form-label bold-label">
                                     <FormattedMessage id="project.products.Product.active.message"/>
-                                </label>
+                                </p>
                                 <div className="col-md-12 ml-5 mt-2">
-                                    <input type="radio" id="active" className="form-check-input"
+                                    <input type="radio" id="publish" className="form-check-input"
                                            checked={active}
-                                           onChange={()=> handleCheckboxChange('publish')}
-                                           autoFocus/>
+                                           onChange={()=> handleCheckboxChange('publish')}/>
                                     <label htmlFor="publish" className="form-check-label">
                                         <FormattedMessage id="project.products.Product.publish"/>
                                     </label>
@@ -246,8 +245,7 @@ const CreatePhysical = () => {
                                 <div className="col-md-12 ml-5 mt-2">
                                     <input type="radio" id="draft" className="form-check-input"
                                            checked={!active}
-                                           onChange={()=> handleCheckboxChange('draft')}
-                                           autoFocus/>
+                                           onChange={()=> handleCheckboxChange('draft')}/>
                                     <label htmlFor="draft" className="form-check-label">
                                         <FormattedMessage id="project.products.Product.draft"/>
                                     </label>

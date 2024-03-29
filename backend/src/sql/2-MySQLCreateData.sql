@@ -34,22 +34,22 @@ INSERT INTO Subcategory (subcategoryName, categoryId) VALUES
 
 INSERT INTO Product (userId, craftId, subcategoryId, title, description, price, active, creationDate, productType,
                      amount, size, color, details,
-                     introduction, abbreviations,  notes, gauge, sizing, difficultyLevel, time) VALUES
+                     introduction, notes, time, difficultyLevel, abbreviations, specialAbbreviations, gauge, sizing, tools) VALUES
       -- Physical Product
             (2, 1, 1, 'Floral Crochet Top', 'Top with floral pattern', 25.00, TRUE, '2024-01-20 12:30:00', 'PHYSICAL',
              5, 'EU M', 'Light green', 'Made with acrylic yarn',
-             NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 
       -- Physical Product
             (2, 2, 2, 'Long Knit Scarf', 'Wool scarf', 14.00, TRUE, '2024-02-02 16:00:00', 'PHYSICAL',
              10, 'Only size', 'Pastel pink', 'Made with wool',
-             NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 
       -- Pattern
             (2, 1, 3, 'Off shoulder sweater', 'Wool sweater', 10.00, TRUE, '2024-02-05 18:15:00','PATTERN',
              NULL, NULL, NULL, NULL,
-             'How to crochet the sweater', 'Ss - slip stitch', 'Crochet loosely', '4x4 15 stitches 12 rows', 'EU S', 2,
-             '25 hours');
+             'How to crochet the sweater',  'Crochet loosely', '25 hours', 2 ,'US Standard', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S',
+             '3mm Crochet Hook x1, Needle x1, Markers x5');
 
 
 INSERT INTO Favorite (userId, productId, isFavorite) VALUES
