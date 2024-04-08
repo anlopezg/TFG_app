@@ -42,20 +42,24 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.PUT, "/users/*/becomeSeller").hasRole("USER")
 
 					.requestMatchers(HttpMethod.DELETE, "/users/*").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.GET, "/users/*").permitAll()
 
 					/********************* CATALOG CONTROLLER *********************/
-					.requestMatchers(HttpMethod.GET, "/catalog/crafts").permitAll()
-					.requestMatchers(HttpMethod.GET, "/catalog/categories").permitAll()
+					//.requestMatchers(HttpMethod.GET, "/catalog/crafts").permitAll()
+					//.requestMatchers(HttpMethod.GET, "/catalog/categories").permitAll()
+					.requestMatchers(HttpMethod.GET, "/catalog/**").permitAll()
+					//.requestMatchers(HttpMethod.GET, "/catalog/products/*").permitAll()
+					//.requestMatchers(HttpMethod.GET, "/catalog/products").permitAll()
 
 					/********************* PUBLICATION CONTROLLER *********************/
 					.requestMatchers(HttpMethod.POST, "/publications/*/patterns").hasRole("SELLER")
 					.requestMatchers(HttpMethod.POST, "/publications/*/physicals").hasRole("SELLER")
 
-					.requestMatchers(HttpMethod.GET, "/publications/*").hasRole("SELLER")
-					.requestMatchers(HttpMethod.GET, "/publications/*/patterns").hasRole("SELLER")
-					.requestMatchers(HttpMethod.GET, "/publications/*/patterns/*").hasRole("SELLER")
-					.requestMatchers(HttpMethod.GET, "/publications/*/physicals").hasRole("SELLER")
-					.requestMatchers(HttpMethod.GET, "/publications/*/physicals/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.GET, "/publications/**").hasRole("SELLER")
+					//.requestMatchers(HttpMethod.GET, "/publications/*/patterns").hasRole("SELLER")
+					//.requestMatchers(HttpMethod.GET, "/publications/*/patterns/*").hasRole("SELLER")
+					//.requestMatchers(HttpMethod.GET, "/publications/*/physicals").hasRole("SELLER")
+					//.requestMatchers(HttpMethod.GET, "/publications/*/physicals/*").hasRole("SELLER")
 
 
 					.requestMatchers(HttpMethod.PUT, "/publications/*/patterns/*").hasRole("SELLER")

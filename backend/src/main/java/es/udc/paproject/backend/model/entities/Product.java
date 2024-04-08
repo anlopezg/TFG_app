@@ -10,14 +10,8 @@ import java.time.LocalDateTime;
 @DiscriminatorColumn(name = "productType")
 public class Product{
     private Long id;
-
-
     private User user;
-
-
     private Craft craft;
-
-
     private Subcategory subcategory;
     private String title;
     private String description;
@@ -26,10 +20,26 @@ public class Product{
     private LocalDateTime creationDate;
 
 
+    @Column(name = "productType", insertable = false, updatable = false)
+    private String productType;
+
     public Product(){}
 
     public Product(User user, Craft craft, Subcategory subcategory, String title, String description, BigDecimal price,
                    Boolean active, LocalDateTime creationDate){
+
+        this.user=user;
+        this.craft=craft;
+        this.subcategory = subcategory;
+        this.title=title;
+        this.description=description;
+        this.price=price;
+        this.active=active;
+        this.creationDate=creationDate;
+    }
+
+    public Product(User user, Craft craft, Subcategory subcategory, String title, String description, BigDecimal price,
+                   Boolean active, LocalDateTime creationDate, String productType){
 
         this.user=user;
         this.craft=craft;
@@ -122,5 +132,11 @@ public class Product{
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+
+    @Transient
+    public String getProductType() {
+        return productType;
     }
 }

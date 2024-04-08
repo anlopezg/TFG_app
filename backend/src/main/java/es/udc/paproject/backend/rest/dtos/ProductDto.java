@@ -98,6 +98,7 @@ public class ProductDto {
         this.price = price;
     }
 
+    @NotNull(groups = {AllValidations.class})
     public Boolean getActive() {
         return active;
     }

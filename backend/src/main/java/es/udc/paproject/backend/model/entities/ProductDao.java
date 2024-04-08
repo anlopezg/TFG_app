@@ -13,4 +13,10 @@ public interface ProductDao extends CrudRepository<Product, Long>, PagingAndSort
 
     @Query("SELECT p FROM Product p WHERE p.user.id = :userId ORDER BY p.creationDate DESC")
     Slice<Product> findAllByUserIdOrderByCreationDateDesc(Long userId, Pageable pageable);
+
+    @Query("SELECT p FROM Product p WHERE p.user.id = :userId AND p.active=true ORDER BY p.creationDate DESC")
+    Slice<Product> findAllByUserIdAndActiveOrderByCreationDateDesc(Long userId, Pageable pageable);
+
+    @Query("SELECT p FROM Product p JOIN FETCH p.user WHERE p.id = :productId AND p.active=true ORDER BY p.creationDate DESC")
+    Optional<Product> findByIdAndActiveOrderByCreationDateDesc(Long productId);
 }

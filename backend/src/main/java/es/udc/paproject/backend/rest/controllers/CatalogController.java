@@ -1,21 +1,23 @@
 package es.udc.paproject.backend.rest.controllers;
 
+import es.udc.paproject.backend.model.entities.Product;
+import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
+import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
+import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.CatalogService;
-import es.udc.paproject.backend.rest.dtos.CategoryDto;
-import es.udc.paproject.backend.rest.dtos.CraftDto;
-import es.udc.paproject.backend.rest.dtos.SubcategoryDto;
+import es.udc.paproject.backend.rest.common.ErrorsDto;
+import es.udc.paproject.backend.rest.dtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.Locale;
 
 import static es.udc.paproject.backend.rest.dtos.CategoryConversor.toCategoryDtos;
 import static es.udc.paproject.backend.rest.dtos.CategoryConversor.toSubcategoryDtos;
 import static es.udc.paproject.backend.rest.dtos.CraftConversor.toCraftDtos;
+import static es.udc.paproject.backend.rest.dtos.ProductConversor.*;
 
 @RestController
 @RequestMapping("/catalog")
@@ -24,20 +26,74 @@ public class CatalogController {
     @Autowired
     private CatalogService catalogService;
 
+    private final static String USER_NOT_SELLER_EXCEPTION_CODE = "project.exceptions.UserNotSellerException";
+
+    @Autowired
+    private MessageSource messageSource;
+
+
+    @ExceptionHandler(UserNotSellerException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseBody
+    public ErrorsDto handleUserNotSellerException(UserNotSellerException exception, Locale locale) {
+
+        String errorMessage = messageSource.getMessage(USER_NOT_SELLER_EXCEPTION_CODE, null,
+                USER_NOT_SELLER_EXCEPTION_CODE, locale);
+
+        return new ErrorsDto(errorMessage);
+
+    }
+
+
     @GetMapping("/crafts")
-    public List<CraftDto> findAllCrafts(){
+    public List<CraftDto> findAllCrafts() {
         return toCraftDtos(catalogService.findAllCrafts());
     }
 
     @GetMapping("/categories")
-    public List<CategoryDto> findAllCategories(){
+    public List<CategoryDto> findAllCategories() {
 
         return toCategoryDtos(catalogService.findAllCategories());
     }
 
     @GetMapping("/{categoryId}/subcategories")
-    public List<SubcategoryDto> findSubcategoriesByCategory(@PathVariable Long categoryId){
+    public List<SubcategoryDto> findSubcategoriesByCategory(@PathVariable Long categoryId) {
 
         return toSubcategoryDtos(catalogService.getSubcategoriesByCategory(categoryId));
     }
+
+    /****************************** PRODUCT SEARCH ******************************/
+    @GetMapping("/products")
+    public BlockDto<ProductSummaryDto> findProducts(
+            @RequestParam(required = false) Long craftId,
+            @RequestParam(required = false) Long subcategoryId,
+            @RequestParam(required = false) String keywords,
+            @RequestParam(defaultValue = "0") int page){
+
+        Block<Product> productBlock = catalogService.findProducts(craftId, subcategoryId,
+                keywords != null ? keywords.trim() : null, page, 9);
+
+        return new BlockDto<>(toProductSummaryDtos(productBlock.getItems()), productBlock.getExistMoreItems());
+
+    }
+
+    @GetMapping("/{username}/products")
+    public BlockDto<ProductSummaryDto> findUserProducts(
+            @PathVariable String username,
+            @RequestParam(defaultValue = "0") int page) throws InstanceNotFoundException, UserNotSellerException {
+
+        Block<Product> productBlock = catalogService.findUserProducts( username, page, 9);
+
+        return new BlockDto<>(toProductSummaryDtos(productBlock.getItems()), productBlock.getExistMoreItems());
+
+    }
+
+    @GetMapping("/products/{id}")
+    public ProductSummaryDto findProductById(@PathVariable Long id) throws InstanceNotFoundException{
+
+        Product product = catalogService.findProduct(id);
+
+        return toProductSummaryDto(product);
+    }
+
 }

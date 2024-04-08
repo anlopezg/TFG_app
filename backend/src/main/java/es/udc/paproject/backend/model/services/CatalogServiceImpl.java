@@ -2,7 +2,10 @@ package es.udc.paproject.backend.model.services;
 
 import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
+import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +18,9 @@ import java.util.Optional;
 public class CatalogServiceImpl implements CatalogService{
 
     @Autowired
+    private UserDao userDao;
+
+    @Autowired
     private CraftDao craftDao;
 
     @Autowired
@@ -22,6 +28,12 @@ public class CatalogServiceImpl implements CatalogService{
 
     @Autowired
     private SubcategoryDao subcategoryDao;
+
+    @Autowired
+    private ProductDao productDao;
+
+    @Autowired
+    private PermissionChecker permissionChecker;
 
 
     @Override
@@ -64,5 +76,43 @@ public class CatalogServiceImpl implements CatalogService{
     public List<Subcategory> getSubcategoriesByCategory(Long categoryId) {
         return subcategoryDao.findByCategoryId(categoryId);
 
+    }
+
+
+    // Change to show only the active products
+    @Override
+    public Block<Product> findProducts(Long craftId, Long subcategoryId, String keywords, int page, int size){
+
+        Slice<Product> slice = productDao.find(craftId, subcategoryId, keywords, page, size);
+
+        return new Block<>(slice.getContent(), slice.hasNext());
+
+    }
+
+    @Override
+    public Block<Product> findUserProducts(String username, int page, int size) throws InstanceNotFoundException, UserNotSellerException {
+
+        User userFound = permissionChecker.checkUserName(username);
+
+        if(!userFound.getRole().equals(User.RoleType.SELLER)){
+            throw new UserNotSellerException();
+        }
+
+        Slice<Product> slice = productDao.findAllByUserIdAndActiveOrderByCreationDateDesc(userFound.getId(), PageRequest.of(page, size));
+
+        return new Block<>(slice.getContent(), slice.hasNext());
+
+    }
+
+    @Override
+    public Product findProduct(Long productId) throws InstanceNotFoundException {
+
+        Optional<Product> product = productDao.findByIdAndActiveOrderByCreationDateDesc(productId);
+
+        if(!product.isPresent()){
+            throw new InstanceNotFoundException("project.entities.product", productId);
+        }
+
+        return product.get();
     }
 }

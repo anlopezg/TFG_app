@@ -23,6 +23,15 @@ public class ProductConversor {
                 product.getTitle(), product.getDescription(), product.getPrice(), product.getActive());
     }
 
+    public final static List<ProductSummaryDto> toProductSummaryDtos(List<Product> products){
+        return products.stream().map(p -> toProductSummaryDto(p)).collect(Collectors.toList());
+    }
+
+    public final static ProductSummaryDto toProductSummaryDto(Product product){
+        return new ProductSummaryDto(product.getId(), product.getUser().getId(), product.getCraft().getId(),
+                product.getSubcategory().getId(), product.getTitle(), product.getPrice(), product.getProductType(), product.getUser().getUserName());
+    }
+
     public final static PatternDto toPatternDto(Pattern pattern){
         return new PatternDto(pattern.getId(), pattern.getUser().getId(),  pattern.getCraft().getId(),
                 pattern.getSubcategory().getId(),

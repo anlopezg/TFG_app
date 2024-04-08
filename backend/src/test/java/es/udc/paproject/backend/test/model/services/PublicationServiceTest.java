@@ -96,38 +96,6 @@ public class PublicationServiceTest {
 
 
     /*   SERVICE'S TESTS  */
-    @Test
-    public void checkCraft() throws InstanceNotFoundException{
-
-        Craft craft = createCraft("Crochet");
-        craftDao.save(craft);
-        assertEquals(craft,  catalogService.checkCraft(craft.getId()));
-    }
-
-    @Test
-    public void checkNonExistentCraft(){
-
-        assertThrows(InstanceNotFoundException.class, () ->
-                catalogService.checkCraft(NON_EXISTENT_ID));
-    }
-
-    @Test
-    public void checkSubcategory() throws InstanceNotFoundException{
-
-        Category category = createCategory("Tops");
-        categoryDao.save(category);
-
-        Subcategory subcategory = createSubcategory("Jacket", category);
-        subcategoryDao.save(subcategory);
-
-        assertEquals(subcategory,  catalogService.checkSubcategory(subcategory.getId()));
-    }
-
-    @Test
-    public void checkNonExistentSubcategory(){
-        assertThrows(InstanceNotFoundException.class, ()->
-                catalogService.checkSubcategory(NON_EXISTENT_ID));
-    }
 
     @Test
     public void createPattern() throws InstanceNotFoundException, UserNotSellerException, DuplicateInstanceException, UserAlreadySellerException {

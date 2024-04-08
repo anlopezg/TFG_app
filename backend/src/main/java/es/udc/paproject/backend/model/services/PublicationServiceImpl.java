@@ -116,6 +116,7 @@ public class PublicationServiceImpl implements PublicationService{
     }
 
 
+    /*
     @Override
     @Transactional(readOnly = true)
     public Block<Product> findProducts(Long categoryId, String keywords, int page, int size){
@@ -123,7 +124,7 @@ public class PublicationServiceImpl implements PublicationService{
         Slice<Product> slice = productDao.find(categoryId, keywords, page, size);
 
         return new Block<>(slice.getContent(), slice.hasNext());
-    }
+    }*/
 
 
     @Override

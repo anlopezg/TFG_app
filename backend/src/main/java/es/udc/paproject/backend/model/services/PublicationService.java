@@ -49,7 +49,7 @@ public interface PublicationService {
     Block<Physical> findAddedPhysicals(Long userId, int page, int size);
 
 
-    Block<Product> findProducts(Long categoryId, String keywords, int page, int size);
+    //Block<Product> findProducts(Long categoryId, String keywords, int page, int size);
 
 
     /************************ VIEW DETAILS OF PRODUCTS *************************/

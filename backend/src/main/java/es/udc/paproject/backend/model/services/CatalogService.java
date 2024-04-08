@@ -2,8 +2,10 @@ package es.udc.paproject.backend.model.services;
 
 import es.udc.paproject.backend.model.entities.Category;
 import es.udc.paproject.backend.model.entities.Craft;
+import es.udc.paproject.backend.model.entities.Product;
 import es.udc.paproject.backend.model.entities.Subcategory;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
+import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 
 import java.util.List;
 
@@ -27,13 +29,13 @@ public interface CatalogService {
 
     /**
      *
-     * @return All the crafts
+     * @return All the crafts in alphabetical order
      */
     List<Craft> findAllCrafts();
 
     /**
      *
-     * @return All the categories and their subcategories
+     * @return All the categories in alphabetical order and their subcategories
      */
     List<Category> findAllCategories();
 
@@ -43,4 +45,18 @@ public interface CatalogService {
      * @return All the subcategories that belong to the passed category
      */
     List<Subcategory> getSubcategoriesByCategory(Long categoryId);
+
+
+    /**
+     * Returns all active Products, that match the given criteria
+     */
+    Block<Product> findProducts(Long craftId, Long subcategoryId, String keywords, int page, int size);
+
+
+    /**
+     * Returns all active products, whose owner matches the username
+     */
+    Block<Product> findUserProducts(String username, int page, int size) throws InstanceNotFoundException, UserNotSellerException;
+
+    Product findProduct(Long productId) throws InstanceNotFoundException;
 }
