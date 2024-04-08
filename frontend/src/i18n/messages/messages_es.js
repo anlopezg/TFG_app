@@ -4,6 +4,7 @@ export default {
     'project.app.Header.home': 'Inicio',
     'project.app.Header.logout': 'Cerrar sesión',
     'project.app.Home.welcome': '¡Bienvenidas a Yarn Crafters!',
+    'project.app.Home.filter' : 'Filtra tu búsqueda',
     
     'project.common.ErrorDialog.title': 'Error',
 
@@ -13,11 +14,13 @@ export default {
     'project.global.buttons.ok': 'Aceptar',
     'project.global.buttons.back': 'Anterior',
     'project.global.buttons.save': 'Guardar',
+    'project.global.buttons.search': 'Buscar',
     'project.global.buttons.submit': 'Enviar',
     'project.global.buttons.edit': 'Editar',
     'project.global.buttons.delete': 'Borrar',
     'project.global.exceptions.NetworkError': 'Fallo de comunicación',
     'project.global.selectors.default': 'Selecciona una opción',
+    'project.global.fields.keywords': 'Palabras clave',
     'project.global.fields.active': 'Activo',
     'project.global.fields.date': 'Fecha',
     'project.global.fields.email': 'Correo electrónico',
@@ -125,6 +128,8 @@ export default {
     'project.products.Pattern.removeTool': 'Eliminar herramienta',
     'project.products.Pattern.tools.message': 'Añade todas las herramientas necesarias para completar el patrón',
 
+
+    'project.catalog.Selector.all': 'Todos',
     'project.catalog.CraftSelector.allCrafts': 'Todos los tipos',
     'project.catalog.Selector.select' : 'Selecciona uno',
     'project.catalog.Craft.field': 'Tipo de proyecto',
@@ -137,7 +142,15 @@ export default {
 
     'project.catalog.Subcategories.Tops': 'Camiseta',
     'project.catalog.Subcategories.Scarf': 'Bufanda',
-    'project.catalog.Subcategories.Sweater': 'Jersey'
+    'project.catalog.Subcategories.Sweater': 'Jersey',
+
+    'project.catalog.FindAllProductsResult.noProductsFound':'Ningún producto ha sido añadido aún',
+
+    'project.catalog.FindProductsResult.noProductsFound': 'No se ha encontrado ningún producto con esas características',
+    'project.catalog.UserProducts.noProductsFound': ' actualmente no tiene nigún producto disponible :(',
+    'project.catalog.UserProducts.All': 'Todos',
+
+    'project.catalog.Product.AddCart': 'Añadir a la cesta'
 
 
 }

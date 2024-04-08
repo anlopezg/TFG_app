@@ -78,3 +78,17 @@ export const userBecomesSeller = (id, onSuccess, onErrors) => () =>
         },
         onErrors);
 
+
+const findUserCompleted = user => ({
+    type: actionTypes.FIND_USER_COMPLETED,
+    user
+});
+
+export const findUserByUsername = username => dispatch =>
+    backend.userService.findUserByUsername(username ,
+        user => dispatch(findUserCompleted(user)));
+
+
+export const clearUser = () => ({
+    type: actionTypes.CLEAR_USER
+})

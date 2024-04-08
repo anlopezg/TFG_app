@@ -161,5 +161,11 @@ public class UserController {
 		userService.userBecomesSeller(id);
 	}
 
+	@GetMapping("/{username}")
+	public UserDto findUserByUsername(@PathVariable String username) throws InstanceNotFoundException{
+
+		return toUserDto(userService.findUserByUsername(username));
+	}
+
 	
 }

@@ -55,3 +55,7 @@ export const changePassword = (id, oldPassword, newPassword, onSuccess,
 export const userBecomesSeller = (id, onSuccess, onErrors) =>
     appFetch(`/users/${id}/becomeSeller`,
         config('PUT'), onSuccess, onErrors);
+
+
+export const findUserByUsername = (username, onSuccess) =>
+    appFetch(`/users/${username}`, config('GET'), onSuccess);

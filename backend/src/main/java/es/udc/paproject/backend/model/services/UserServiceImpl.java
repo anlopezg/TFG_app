@@ -122,4 +122,12 @@ public class UserServiceImpl implements UserService {
 		user.setRole(User.RoleType.SELLER);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public User findUserByUsername(String username) throws InstanceNotFoundException{
+
+        return permissionChecker.checkUserName(username);
+
+	}
+
 }

@@ -45,6 +45,12 @@
     --light-pink: #F9E7DD;
     --medium-pink: #DE7C7C;
     --dark-pink: #DE7C7C;
+
+    --lilac-pink: #EBDEE7;
+    --coral: #FFBB9A;
+    --light-coral: #F2E2D5;
+    --lime-green: #D8FA6F;
+    --lighter-beis: #F5F2ED;
 }
 
 .navbar-collapse {
@@ -60,13 +66,13 @@ body{
     background-color: var(--light-grey);
 }
 
-h1{
+.h1-retro{
     font-family: 'BrightRetro', sans-serif;
     font-size: 50px;
     text-align: center;
 }
 
-h2{
+.h2-retro{
     font-family: 'BrightRetro', sans-serif;
     font-size: 32px;
     text-align: center;
@@ -88,6 +94,10 @@ h4{
 .card-body{
     background-color: #ffffff;
     border-radius: 0 0 20px 20px ;
+}
+
+.card .card-img-top{
+    border-radius: 20px 20px 0 0
 }
 
 .container-alert{
@@ -141,6 +151,22 @@ h4{
     background-color: var(--medium-pink);
 }
 
+.button-lime{
+    border-radius: 20px;
+    background-color: var(--lime-green);
+    font-family: 'Bold', sans-serif;
+    border: 1px solid #1F1E1E;
+    width: 70%;
+    font-size: 18px;
+}
+
+.button-coral{
+    border-radius: 20px;
+    background-color: var(--coral);
+    font-family: 'Bold', sans-serif;
+    width: 100%
+}
+
 /* Specific styles */
 .logo-link{
     font-family: 'BrightRetro', sans-serif;
@@ -158,12 +184,34 @@ h4{
     background-color: var(--pastel-pink);
 }
 
+.back-color-light-pink{
+    background-color: var(--light-pink);
+}
+
+.back-color-lilac-pink{
+    background-color: var(--lilac-pink);
+    border: 1px solid var(--lilac-pink);
+}
+
+.back-color-light-coral{
+    background-color: var(--light-coral);
+    border: 1px solid #1F1E1E;
+}
+
+.back-color-lighter-beis{
+    background-color: var(--lighter-beis);
+}
+
 .back-color-grey{
     background-color: var(--light-grey);
 }
 
 .back-color-white{
     background-color: #ffffff;
+}
+
+.back-color-brown{
+    background-color: var(--pastel-brown);
 }
 
 /* Buttons */
@@ -265,6 +313,11 @@ h4{
     font-family: 'Bold', sans-serif;
     font-size: 18px;
 }
+
+.font-bold{
+    font-family: 'Bold', sans-serif;
+}
+
 .extra-bold-label {
     font-family: 'ExtraBold', sans-serif;
     font-size: 18px;
@@ -282,6 +335,24 @@ h4{
     font-family: 'Bold', sans-serif;
     font-size: 20px;
     text-decoration: underline;
+}
+
+.product-link{
+    color: var(--light-black);
+    font-size: 20px;
+}
+
+.product-link:hover{
+    color: black;
+    text-decoration: underline;
+}
+
+.user-link{
+    background-color: var(--lilac-pink);
+    border-radius: 10px;
+    color: var(--light-black);
+    width: 20%;
+    height: 100%;
 }
 
 .product-link-light{
@@ -308,3 +379,112 @@ h4{
     font-size: 24px;
     color: #A0C3D2;
 }
+
+.arrow-lime{
+    background-color: var(--lime-green);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.arrow-lime:disabled{
+    background-color: var(--light-grey);
+}
+
+.page-link{
+    color: var(--light-black);
+
+}
+
+.page-link:enabled{
+    font-family: 'Bold', sans-serif;
+}
+
+
+.input-amount{
+    width: 50%;
+}
+
+
+/* User Profile Store */
+.profile-header {
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.profile-header .profile-header-cover {
+    background-color: var(--light-coral);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 20px;
+}
+
+.profile-header .profile-header-content {
+    color: var(--light-black);
+    padding: 25px
+}
+
+.profile-header-img {
+    float: left;
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+    margin: 0 0 -20px;
+    padding: 3px;
+    border-radius: 10px;
+}
+
+.profile-header-img img {
+    max-width: 100%
+}
+
+.profile-header-info h4 {
+    font-family: 'BrightRetro', sans-serif;
+    font-size: 32px;
+}
+
+/* Space between profile pic and info*/
+.profile-header-img+.profile-header-info {
+    margin-left: 140px
+}
+
+.profile-header .profile-header-content,
+.profile-header .profile-header-tab {
+    position: relative
+}
+
+.profile-header .profile-header-tab {
+    background: var(--coral);
+    margin: -10px 0 0;
+    padding: 0 0 0 150px;
+    border-radius: 0
+}
+
+.profile-header .profile-header-tab>li>a {
+    display: block;
+    color: var(--light-black);
+    padding: 10px 20px;
+    font-size: 12px;
+}
+
+.profile-header .profile-header-tab>li.active>a,
+.profile-header .profile-header-tab>li>a.active {
+    font-weight: bold;
+}
+
+.profile-content {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 0 0 20px 20px;
+}
+
+

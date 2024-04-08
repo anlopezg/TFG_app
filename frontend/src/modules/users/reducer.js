@@ -25,6 +25,12 @@ const user = (state = initialState.user, action) => {
         case actionTypes.USER_BECOMES_SELLER_COMPLETED:
             return action.user;
 
+        case actionTypes.FIND_USER_COMPLETED:
+            return action.user;
+
+        case actionTypes.CLEAR_USER:
+            return initialState.user;
+
         default:
             return state;
 

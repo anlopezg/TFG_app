@@ -27,4 +27,6 @@ public interface UserService {
 	 */
 	void userBecomesSeller(Long id) throws InstanceNotFoundException, UserAlreadySellerException;
 
+	User findUserByUsername(String username) throws InstanceNotFoundException;
+
 }

@@ -4,6 +4,7 @@ export default {
     'project.app.Header.home': 'Home',
     'project.app.Header.logout': 'Logout',
     'project.app.Home.welcome': 'Welcome to Yarn Crafters!',
+    'project.app.Home.filter' : 'Filter your search',
 
     'project.common.ErrorDialog.title': 'Error',
 
@@ -13,11 +14,13 @@ export default {
     'project.global.buttons.ok': 'OK',
     'project.global.buttons.back': 'Back',
     'project.global.buttons.save': 'Save',
+    'project.global.buttons.search': 'Search',
     'project.global.buttons.submit': 'Submit',
     'project.global.buttons.edit': 'Edit',
     'project.global.buttons.delete': 'Delete',
     'project.global.exceptions.NetworkError': 'Network error',
     'project.global.selectors.default': 'Select an option',
+    'project.global.fields.keywords': 'Keywords',
     'project.global.fields.active': 'Active',
     'project.global.fields.date': 'Date',
     'project.global.fields.email': 'Email address',
@@ -121,6 +124,7 @@ export default {
     'project.products.Pattern.removeTool': 'Remove tool',
     'project.products.Pattern.tools.message': 'Add all the tools that are necessary to complete pattern',
 
+    'project.catalog.Selector.all': 'All',
     'project.catalog.CraftSelector.allCrafts': 'All the crafts',
     'project.catalog.Selector.select' : 'Select one',
     'project.catalog.Craft.field': 'Craft type',
@@ -130,8 +134,17 @@ export default {
     'project.catalog.Categories.Clothing' : 'Clothing',
     'project.catalog.Categories.Accessory' : 'Accesories',
 
+
     'project.catalog.Subcategories.Tops': 'Tops',
     'project.catalog.Subcategories.Scarf': 'Scarf',
-    'project.catalog.Subcategories.Sweater': 'Sweater'
+    'project.catalog.Subcategories.Sweater': 'Sweater',
+
+    'project.catalog.FindAllProductsResult.noProductsFound':'No products have been added yet',
+
+    'project.catalog.FindProductsResult.noProductsFound': 'No products with those characteristics have been found',
+    'project.catalog.UserProducts.noProductsFound': ' does not currently have any product available :(',
+    'project.catalog.UserProducts.All': 'All',
+
+    'project.catalog.Product.AddCart': 'Add to cart'
 
 }
