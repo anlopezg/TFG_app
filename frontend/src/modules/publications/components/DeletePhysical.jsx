@@ -33,6 +33,7 @@ const DeletePhysical = () => {
                         <div className="row justify-content-center">
                             <h4>
                                 <FormattedMessage id="project.products.Physical.delete.msg"/>
+
                             </h4>
                         </div>
                         <div className="mt-5 container-button-row">

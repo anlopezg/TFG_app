@@ -10,7 +10,7 @@ const SubcategorySelector = (selectProps) =>{
 
     return (
         <select {...selectProps}>
-            <option value="" disabled><FormattedMessage id="project.global.selectors.default"/></option>
+            <option value=""><FormattedMessage id="project.catalog.Selector.all"/></option>
             {categories && categories.map(category => (
 
                 <optgroup key={category.id} label={category.categoryName}>

@@ -175,7 +175,7 @@ export const deletePhysical  = (username, physicalId, onSuccess)=> dispatch =>
 
 
 
-const findProductsCompleted = productSearch => ({
+/*const findProductsCompleted = productSearch => ({
     type: actionTypes.FIND_PRODUCTS_COMPLETED,
     productSearch
 });
@@ -199,4 +199,4 @@ export const clearProduct = () => ({
     type: actionTypes.CLEAR_PRODUCT
 });
 
-
+*/

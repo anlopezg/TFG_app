@@ -8,16 +8,20 @@ const Pager = ({back, next}) => (
             <li className={`page-item ${back.enabled ? "": "disabled"}`}>
                 <button className="page-link"
                     onClick={back.onClick}>
-                    <i className="fa-solid fa-angle-left mr-2"></i>
-                    <FormattedMessage id='project.global.buttons.back'/>
+                    <div className="d-flex align-items-center">
+                        <i className="fa-solid fa-arrow-left-long arrow-lime mr-1"></i>
+                        <FormattedMessage id='project.global.buttons.back'/>
+                    </div>
                 </button>
             </li>
             <li className={`page-item ${next.enabled ? "": "disabled"}`}>
                 <button className="page-link"
                     onClick={next.onClick}>
 
-                    <FormattedMessage id='project.global.buttons.next'/>
-                    <i className="fa-solid fa-angle-right ml-1"></i>
+                    <div className="d-flex align-items-center">
+                        <FormattedMessage id='project.global.buttons.next'/>
+                        <i className="fa-solid fa-arrow-right-long arrow-lime ml-1"></i>
+                    </div>
                 </button>
             </li>
         </ul>

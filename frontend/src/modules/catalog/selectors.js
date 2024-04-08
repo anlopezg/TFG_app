@@ -34,3 +34,9 @@ export const getSubcategoryName = (subcategories, id) => {
 
     return subcategory.subcategoryName;
 }
+
+export const getProductSearch = state =>
+    getModuleState(state).productSearch;
+
+export const getProduct = state =>
+    getModuleState(state).product;

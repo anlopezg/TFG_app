@@ -5,3 +5,5 @@ export {default as Pager} from "./components/Pager";
 export {default as BackLink} from "./components/BackLink";
 export {default as PatternLink} from "./components/PatternLink.jsx";
 export {default as PhysicalLink} from "./components/PhysicalLink.jsx";
+export {default as ProductLink} from "./components/ProductLink.jsx";
+export {default as UserLink} from "./components/UserLink.jsx";

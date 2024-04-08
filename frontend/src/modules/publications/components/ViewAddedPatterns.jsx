@@ -29,7 +29,6 @@ const ViewAddedPatterns = () => {
         return null;
     }
 
-
     return (
 
         <div className="mt-4 mb-4 container justify-content-center align-items-center">
@@ -66,9 +65,6 @@ const ViewAddedPatterns = () => {
                     </div>
                 </div>
 
-                    <p className=" bold-label ml-5" style={{ textTransform: 'uppercase' }}>
-                            <FormattedMessage id="project.products.TotalPatterns.title"/> {patternSearch?.result?.items?.length || 0}
-                    </p>
 
                 <div className="p-5">
                     {patternSearch && patternSearch.result && patternSearch.result.items.length > 0 ? (

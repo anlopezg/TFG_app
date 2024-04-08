@@ -11,7 +11,7 @@ export {default as ViewAddedPhysicals} from './components/ViewAddedPhysicals.jsx
 export {default as AddedPhysicals} from './components/AddedPhysicals.jsx';
 
 export {default as PatternDetails} from './components/PatternDetails.jsx';
-export {default as ProductDetails} from './components/ProductDetails.jsx';
+export {default as PhysicalDetails} from './components/PhysicalDetails.jsx';
 
 export {default as EditPattern} from './components/EditPattern.jsx';
 export {default as ManagePattern} from './components/ManagePattern.jsx';

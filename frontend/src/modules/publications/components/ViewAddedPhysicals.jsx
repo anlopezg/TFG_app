@@ -67,10 +67,6 @@ const ViewAddedPhysicals = () => {
                     </div>
                 </div>
 
-                <p className=" bold-label ml-5" style={{ textTransform: 'uppercase' }}>
-                    <FormattedMessage id="project.products.TotalPhysicals.title"/> {physicalSearch?.result?.items?.length || 0}
-                </p>
-
                 <div className="p-5">
                     {physicalSearch.result.items.length > 0 ? (
                         <div>
@@ -93,12 +89,6 @@ const ViewAddedPhysicals = () => {
                 </div>
 
             </div>
-
-
-
-
-
-
 
         </div>
     )

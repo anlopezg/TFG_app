@@ -6,7 +6,9 @@ import Home from './Home';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile, BecomesSeller} from '../../users';
 import users from '../../users';
 import {CreatePattern, ViewAddedPatterns, ViewAddedPhysicals,CreatePhysical, PatternDetails
-, ProductDetails, EditPattern, ManagePattern, DeletePattern, EditPhysical, ManagePhysical, DeletePhysical} from "../../publications/index.js";
+, PhysicalDetails, EditPattern, ManagePattern, DeletePattern, EditPhysical, ManagePhysical, DeletePhysical} from "../../publications/index.js";
+
+import {FindProductsResult, ProductDetails, FindAllProducts, UserProducts} from "../../catalog/index.js";
 
 const Body = () => {
 
@@ -21,6 +23,11 @@ const Body = () => {
             <AppGlobalComponents/>
             <Routes>
                 <Route path="/*" element={<Home/>}/>
+                <Route path="/catalog" element={<FindAllProducts/>}/>
+                <Route path="/catalog/find-products-result" element={<FindProductsResult/>}/>
+                <Route path="/catalog/product-details/:id" element={<ProductDetails/>}/>
+                <Route path="/catalog/:username/products" element={<UserProducts/>}/>
+
                 {loggedIn && <Route path="/users/update-profile" element={<UpdateProfile/>}/>}
                 {loggedIn && <Route path="/users/change-password" element={<ChangePassword/>}/>}
                 {loggedIn && <Route path="/users/logout" element={<Logout/>}/>}
@@ -39,7 +46,7 @@ const Body = () => {
                 {loggedIn && isSeller && <Route path="/publications/delete-pattern/:id" element={<DeletePattern/>}/>}
 
                 {loggedIn && isSeller && <Route path="/publications/create-physical" element={<CreatePhysical/>}/>}
-                {loggedIn && isSeller && <Route path="/publications/physical-details/:id" element={<ProductDetails/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/physical-details/:id" element={<PhysicalDetails/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/products" element={<ViewAddedPhysicals/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/edit-physical/:id" element={<EditPhysical/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/manage-physical/:id" element={<ManagePhysical/>}/>}

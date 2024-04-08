@@ -10,7 +10,7 @@ import * as catalogSelectors from "../../catalog/selectors.js";
 import * as userSelectors from "../../users/selectors.js";
 
 
-const ProductDetails = () =>{
+const PhysicalDetails = () =>{
 
     const {id} = useParams();
     const physical = useSelector(selectors.getPhysical);
@@ -204,4 +204,4 @@ const ProductDetails = () =>{
     )
 }
 
-export default ProductDetails;
+export default PhysicalDetails;
