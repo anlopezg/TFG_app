@@ -84,19 +84,22 @@ public class CustomizedProductDaoImpl implements CustomizedProductDao {
 
 
     @Override
-    public Slice<Product> find(Long craftId, Long subcategoryId, String keywords, int page, int size){
+    public Slice<Product> find(Long craftId, Long subcategoryId, String keywords, Class<?> productType, int page, int size){
 
         String[] tokens = getTokens(keywords);
         String queryString = "SELECT p FROM Product p WHERE p.active= true";
 
-        if (craftId != null || subcategoryId != null || tokens.length > 0) {
+        if (craftId != null || subcategoryId != null || tokens.length > 0 || productType != null) {
             queryString += " AND ";
         }
 
+        // Craft
         if(craftId != null ){
             queryString += " p.craft.id = :craftId ";
         }
 
+
+        //Subcategory
         if (subcategoryId != null) {
 
             if (craftId != null) {
@@ -106,6 +109,8 @@ public class CustomizedProductDaoImpl implements CustomizedProductDao {
             queryString += " p.subcategory.id = :subcategoryId ";
         }
 
+
+        //Keywords
         if (tokens.length != 0) {
 
             if (subcategoryId != null) {
@@ -120,6 +125,15 @@ public class CustomizedProductDaoImpl implements CustomizedProductDao {
 
         }
 
+        //Product type
+        if (productType != null) {
+            if (subcategoryId != null || craftId != null || tokens.length != 0) {
+                queryString += " AND ";
+            }
+            queryString += " TYPE(p) = :productType";
+        }
+
+        //Order by title
         queryString += " ORDER BY p.title";
 
         Query query = entityManager.createQuery(queryString).setFirstResult(page*size).setMaxResults(size+1);
@@ -138,6 +152,11 @@ public class CustomizedProductDaoImpl implements CustomizedProductDao {
             }
 
         }
+
+        if (productType != null) {
+            query.setParameter("productType", productType);
+        }
+
 
         List<Product> products = query.getResultList();
         boolean hasNext = products.size() == (size+1);

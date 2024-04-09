@@ -64,6 +64,7 @@ export default {
 
     'project.products.MyStore.heading' : 'My Store',
     'project.products.Product.heading' : 'Products',
+    'project.products.Physical.heading' : 'Physical products',
     'project.products.Pattern.heading' : 'Patterns',
     'project.products.AddedPattern.heading' : 'My Pattern Designs',
     'project.products.ViewPattern.heading' : 'My Pattern',
@@ -134,10 +135,11 @@ export default {
     'project.catalog.Categories.Clothing' : 'Clothing',
     'project.catalog.Categories.Accessory' : 'Accesories',
 
-
     'project.catalog.Subcategories.Tops': 'Tops',
     'project.catalog.Subcategories.Scarf': 'Scarf',
     'project.catalog.Subcategories.Sweater': 'Sweater',
+
+    'project.catalog.Product.type': 'Product type',
 
     'project.catalog.FindAllProductsResult.noProductsFound':'No products have been added yet',
 

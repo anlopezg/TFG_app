@@ -79,11 +79,33 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
 
+    @Override
+    public Class<?> getProductTypeClass(String productType){
+        switch (productType){
+            case "physical":
+                return Physical.class;
+            case "pattern":
+                return Pattern.class;
+            default:
+                return null;
+        }
+    }
+
     // Change to show only the active products
     @Override
-    public Block<Product> findProducts(Long craftId, Long subcategoryId, String keywords, int page, int size){
+    public Block<Product> findProducts(Long craftId, Long subcategoryId, String keywords, String productType, int page, int size){
 
-        Slice<Product> slice = productDao.find(craftId, subcategoryId, keywords, page, size);
+        Class<?> productTypeClass = null;
+
+        //Checks if product type is null
+        if (productType != null) {
+            productTypeClass = getProductTypeClass(productType);
+            if (productTypeClass == null) {
+                return null;
+            }
+        }
+
+        Slice<Product> slice = productDao.find(craftId, subcategoryId, keywords, productTypeClass, page, size);
 
         return new Block<>(slice.getContent(), slice.hasNext());
 

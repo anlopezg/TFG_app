@@ -6,5 +6,5 @@ public interface CustomizedProductDao {
 
     //Slice<Product> find(Long categoryId, String keywords, int page, int size);
 
-    Slice<Product> find(Long craftId, Long subcategoryId, String keywords, int page, int size);
+    Slice<Product> find(Long craftId, Long subcategoryId, String keywords, Class<?> productType, int page, int size);
 }

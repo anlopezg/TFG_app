@@ -1,9 +1,6 @@
 package es.udc.paproject.backend.model.services;
 
-import es.udc.paproject.backend.model.entities.Category;
-import es.udc.paproject.backend.model.entities.Craft;
-import es.udc.paproject.backend.model.entities.Product;
-import es.udc.paproject.backend.model.entities.Subcategory;
+import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 
@@ -48,9 +45,14 @@ public interface CatalogService {
 
 
     /**
+     * Returns the class of the product type
+     */
+    Class<?> getProductTypeClass(String productType);
+
+    /**
      * Returns all active Products, that match the given criteria
      */
-    Block<Product> findProducts(Long craftId, Long subcategoryId, String keywords, int page, int size);
+    Block<Product> findProducts(Long craftId, Long subcategoryId, String keywords, String productType, int page, int size);
 
 
     /**

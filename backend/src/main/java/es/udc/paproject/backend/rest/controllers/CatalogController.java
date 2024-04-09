@@ -1,5 +1,6 @@
 package es.udc.paproject.backend.rest.controllers;
 
+import es.udc.paproject.backend.model.entities.Pattern;
 import es.udc.paproject.backend.model.entities.Product;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
@@ -68,10 +69,11 @@ public class CatalogController {
             @RequestParam(required = false) Long craftId,
             @RequestParam(required = false) Long subcategoryId,
             @RequestParam(required = false) String keywords,
+            @RequestParam(required = false) String productType,
             @RequestParam(defaultValue = "0") int page){
 
         Block<Product> productBlock = catalogService.findProducts(craftId, subcategoryId,
-                keywords != null ? keywords.trim() : null, page, 9);
+                keywords != null ? keywords.trim() : null, productType, page, 9);
 
         return new BlockDto<>(toProductSummaryDtos(productBlock.getItems()), productBlock.getExistMoreItems());
 

@@ -148,7 +148,7 @@ public class CatalogServiceTest {
         Product product2 = createProduct(user1, craft1, subcategory1, "Product2");
 
         Block<Product> expectedBlock = new Block<>(Arrays.asList(product1, product2), false);
-        assertEquals(expectedBlock, catalogService.findProducts(craft1.getId(), null, null, 0, 2));
+        assertEquals(expectedBlock, catalogService.findProducts(craft1.getId(), null, null, null, 0, 2));
 
     }
 
@@ -166,7 +166,7 @@ public class CatalogServiceTest {
         Product product2 = createProduct(user1, craft1, subcategory2, "Product2");
 
         Block<Product> expectedBlock = new Block<>(Arrays.asList(product1), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, subcategory1.getId(), null, 0, 1));
+        assertEquals(expectedBlock, catalogService.findProducts(null, subcategory1.getId(), null, null,0, 1));
 
     }
 
@@ -174,6 +174,7 @@ public class CatalogServiceTest {
     public void testFindProductsByUser() throws InstanceNotFoundException, UserNotSellerException {
 
         User user1 = createUser("user1");
+        user1.setRole(User.RoleType.SELLER);
         User user2 = createUser("user2");
         Craft craft1 = createCraft("Crochet");
         Category category1 = createCategory("Tops");
@@ -188,7 +189,16 @@ public class CatalogServiceTest {
     }
 
     @Test
-    public void testFindProductsByUnknownUser() throws InstanceNotFoundException {
+    public void testFindProductsByNotSellerUser(){
+
+        User user1 = createUser("user1");
+
+        assertThrows(UserNotSellerException.class, ()->
+                catalogService.findUserProducts(user1.getUserName(), 0, 1));
+    }
+
+    @Test
+    public void testFindProductsByUnknownUser() {
 
         assertThrows(InstanceNotFoundException.class, ()->
                 catalogService.findUserProducts("NOTUSER", 0, 1));
@@ -208,6 +218,21 @@ public class CatalogServiceTest {
         product1.setActive(false);
 
         Block<Product> expectedBlock = new Block<>(Collections.emptyList(), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, null, null, 0, 1));
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, null, null, 0, 1));
+    }
+
+    @Test
+    public void testFindProduct() throws InstanceNotFoundException{
+
+        User user1 = createUser("user1");
+
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+
+        Product product1 = createProduct(user1, craft1, subcategory1, "Product1");
+
+        assertEquals(product1, catalogService.findProduct(product1.getId()));
+
     }
 }

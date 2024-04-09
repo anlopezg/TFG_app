@@ -16,7 +16,11 @@ const Header = () => {
         <nav className="navbar navbar-expand-lg navbar-light back-color-blue">
             <Link className="navbar-brand logo-link" to="/" >Yarn Crafters</Link>
 
-            <Link className="nav-link" to="/catalog/find-products-result">
+            <Link className="nav-link product-link ml-2" to="/catalog/find-products-result">
+                <FormattedMessage id="project.products.Pattern.heading"/>
+            </Link>
+
+            <Link className="nav-link product-link" to="/catalog/find-products-result">
                 <FormattedMessage id="project.products.Product.heading"/>
             </Link>
 

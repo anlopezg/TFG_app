@@ -66,6 +66,7 @@ export default {
     'project.products.MyStore.heading' : 'Mi tienda',
     'project.products.Product.heading' : 'Productos',
     'project.products.Pattern.heading' : 'Patrones',
+    'project.products.Physical.heading' : 'Productos físicos',
     'project.products.AddedPattern.heading' : 'Mis diseños de patrones',
     'project.products.ViewPattern.heading' : 'Mi Patrón',
     'project.products.ViewProduct.heading' : 'Mi Producto',
@@ -143,6 +144,8 @@ export default {
     'project.catalog.Subcategories.Tops': 'Camiseta',
     'project.catalog.Subcategories.Scarf': 'Bufanda',
     'project.catalog.Subcategories.Sweater': 'Jersey',
+
+    'project.catalog.Product.type': 'Tipo de producto',
 
     'project.catalog.FindAllProductsResult.noProductsFound':'Ningún producto ha sido añadido aún',
 

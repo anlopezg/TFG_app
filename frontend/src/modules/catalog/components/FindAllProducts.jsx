@@ -18,7 +18,7 @@ const FindAllProducts =()=>{
 
     useEffect(() => {
 
-        dispatch(actions.findProducts({craftId: null, subcategoryId: null, keywords: '', page: 0 }));
+        dispatch(actions.findProducts({craftId: null, subcategoryId: null, keywords: '', productType: null, page: 0 }));
 
     }, [dispatch]);
 

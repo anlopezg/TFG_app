@@ -15,6 +15,7 @@ const ProductFilter = () => {
     const [craftId, setCraftId] = useState('');
     const [subcategoryId, setSubcategoryId] = useState('');
     const [keywords, setKeywords] = useState('');
+    const [productType, setProductType] = useState('');
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -22,7 +23,9 @@ const ProductFilter = () => {
         dispatch(actions.findProducts(
             {craftId: toNumber(craftId),
                 subcategoryId: toNumber(subcategoryId),
-                keywords: keywords.trim(), page: 0}));
+                keywords: keywords.trim(),
+                productType: productType.trim(),
+                page: 0}));
         navigate('/catalog/find-products-result');
     }
 
@@ -57,11 +60,30 @@ const ProductFilter = () => {
                         </label>
                         <SubcategorySelector id="subcategoryId" className="custom-select"
                                              value={subcategoryId} onChange={e => setSubcategoryId(e.target.value)}/>
+                    </div>
 
+                    <div className="form-group col-md-2">
+                        <label htmlFor="subcategoryId" className="italic-message">
+                            <FormattedMessage id="project.catalog.Product.type"/>
+                        </label>
+                        <select id="productType" className="custom-select"
+                                onChange={e=> setProductType(e.target.value)}
+                                value={productType}>
+                            <option value="">
+                                <FormattedMessage id="project.catalog.Selector.all"/>
+                            </option>
+                            <option value="pattern">
+                                <FormattedMessage id="project.products.Pattern.heading"/>
+                            </option>
+                            <option value="physical">
+                                <FormattedMessage id="project.products.Physical.heading"/>
+                            </option>
+
+                        </select>
                     </div>
 
 
-                    <div className="form-group col-md-6">
+                    <div className="form-group col-md-4">
 
                         <label htmlFor="keywords" className="italic-message">
                             <FormattedMessage id="project.global.fields.keywords"/>
