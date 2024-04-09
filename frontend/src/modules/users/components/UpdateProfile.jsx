@@ -63,7 +63,7 @@ const UpdateProfile = () => {
 
             <div className="mt-4 mb-4 container justify-content-center align-items-center">
                 <div className="card">
-                    <h2 className="card-header">
+                    <h2 className="retro card-header">
                         <FormattedMessage id="project.users.UpdateProfile.title"/>
                     </h2>
 

@@ -45,7 +45,7 @@ const Login = () => {
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             <div className="mt-4 mb-4 container d-flex justify-content-center align-items-center">
                 <div className="card ">
-                    <h2 className="card-header back-color-pink">
+                    <h2 className="retro card-header back-color-pink">
                         <FormattedMessage id="project.users.Login.title"/>
                     </h2>
                     <div className="card-body">

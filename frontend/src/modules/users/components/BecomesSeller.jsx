@@ -38,7 +38,7 @@ const BecomesSeller = () => {
             <div className="container-alert container-fluid pt-4">
 
                 <div className="card bg-light mx-auto w-75">
-                    <h2 className="card-header back-color-blue">
+                    <h2 className="retro card-header back-color-blue">
                         <FormattedMessage id="project.users.BecomeSeller.title"/>
                     </h2>
                     <div className="card-body p-5 ">

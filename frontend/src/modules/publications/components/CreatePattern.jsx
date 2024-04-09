@@ -94,7 +94,7 @@ const CreatePattern = () => {
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             <div className="mt-4 mb-4 container d-flex justify-content-center align-items-center">
                 <div className="card bg-light mb-3 ">
-                    <h2 className="card-header">
+                    <h2 className="retro card-header">
                         <FormattedMessage id="project.products.CreatePattern.heading"/>
                     </h2>
                     <div className="card-body">

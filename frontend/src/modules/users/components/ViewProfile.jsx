@@ -24,7 +24,7 @@ const ViewProfile = () => {
         <div className="mt-4 mb-4 container justify-content-center align-items-center">
 
             <div className="card mb-3">
-                <h2 className="card-header back-color-pink">
+                <h2 className="retro card-header back-color-pink">
                     <FormattedMessage id="project.users.ProfileInfo.title"/>
                 </h2>
                 <div className="card-body">

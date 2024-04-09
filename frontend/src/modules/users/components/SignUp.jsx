@@ -93,7 +93,7 @@ const SignUp = () => {
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             <div className="mt-4 mb-4 container d-flex justify-content-center align-items-center">
                 <div className="card">
-                    <h2 className="card-header">
+                    <h2 className="retro card-header">
                         <FormattedMessage id="project.users.SignUp.title"/>
                     </h2>
                     <div className="card-body">
