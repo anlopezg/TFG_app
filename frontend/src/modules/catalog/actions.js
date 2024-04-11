@@ -79,3 +79,27 @@ export const findUserProducts = (username, criteria, onErrors) => dispatch => {
         result => dispatch(findProductsCompleted({criteria, result}),
             onErrors));
 }
+
+
+const findUsersCompleted = userSearch => ({
+    type: actionTypes.FIND_USERS_COMPLETED,
+    userSearch
+});
+
+export const findUsers = criteria => dispatch =>{
+
+    dispatch(clearUserSearch());
+    backend.catalogService.findUsers(criteria,
+        result => dispatch(findUsersCompleted({criteria, result})));
+}
+
+export const previousFindUsersResultPage = criteria =>
+    findUsers({...criteria, page: criteria.page-1});
+
+export const nextFindUsersResultPage = criteria =>
+    findUsers({...criteria, page: criteria.page+1});
+
+
+const clearUserSearch = () => ({
+    type: actionTypes.CLEAR_USER_SEARCH
+});

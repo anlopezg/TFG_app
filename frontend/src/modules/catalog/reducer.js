@@ -6,7 +6,8 @@ const initialState = {
     categories: null,
     crafts: null,
     productSearch: null,
-    product: null
+    product: null,
+    userSearch: null
 };
 
 
@@ -63,11 +64,29 @@ const product = (state = initialState.product, action) => {
 
 }
 
+const userSearch = (state = initialState.userSearch, action) => {
+
+    switch (action.type) {
+
+        case actionTypes.FIND_USERS_COMPLETED:
+            return action.userSearch;
+
+        case actionTypes.CLEAR_USER_SEARCH:
+            return initialState.userSearch;
+
+        default:
+            return state;
+
+    }
+
+}
+
 const reducer = combineReducers({
     categories,
     crafts,
     productSearch,
-    product
+    product,
+    userSearch
 });
 
 export default reducer;

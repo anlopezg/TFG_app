@@ -100,6 +100,29 @@ h4{
     border-radius: 20px 20px 0 0
 }
 
+.user-result .card {
+    background-color: var(--light-coral);
+    margin: 20px;
+    border: none;
+}
+
+.user-result .card-body{
+    background-color: var(--light-coral);
+    border-radius: 20px;
+}
+
+.user-result .card-header{
+    background-color: var(--light-coral);
+    border: none;
+    align-items: start;
+    justify-content: start;
+}
+
+.user-result .card .img-fluid{
+    margin: 2px;
+    border-radius: 20px;
+}
+
 .container-alert{
     width: 70%;
     height: 80%;
@@ -408,6 +431,13 @@ h4{
     width: 50%;
 }
 
+
+.search-placeholder{
+    align-content: center;
+    margin-right: 10px;
+    opacity: 70%;
+
+}
 
 /* User Profile Store */
 .profile-header {

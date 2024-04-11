@@ -29,3 +29,12 @@ export const findProductById = (id, onSuccess) =>
 export const findUserProducts = (username,{page}, onSuccess, onErrors) => {
     appFetch(`/catalog/${username}/products?page=${page}`, config('GET'), onSuccess, onErrors);
 }
+
+export const findUsers = ({username, page}, onSuccess) =>{
+
+    let path = `/catalog/users?page=${page}`;
+
+    path += username ? `&username=${username}` : "";
+
+    appFetch(path, config('GET'), onSuccess);
+}

@@ -140,8 +140,11 @@ export default {
     'project.catalog.Subcategories.Sweater': 'Sweater',
 
     'project.catalog.Product.type': 'Product type',
+    'project.catalog.Search.ByUsername': 'Search for a user',
+    'project.catalog.Users.visit': 'Visit',
 
     'project.catalog.FindAllProductsResult.noProductsFound':'No products have been added yet',
+    'project.catalog.FindUsersResult.noUsersFound' : 'No users match the given username',
 
     'project.catalog.FindProductsResult.noProductsFound': 'No products with those characteristics have been found',
     'project.catalog.UserProducts.noProductsFound': ' does not currently have any product available :(',

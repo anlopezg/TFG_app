@@ -23,12 +23,13 @@ const UserProducts = () => {
 
     useEffect(() => {
 
+        dispatch(userActions.findUserByUsername(username,));
+
         dispatch(actions.findUserProducts(username, {page:0},
             errors => setBackendErrors(errors),
             ));
 
-        dispatch(userActions.findUserByUsername(username,
-            ));
+
 
     },[dispatch]);
 

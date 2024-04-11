@@ -40,3 +40,6 @@ export const getProductSearch = state =>
 
 export const getProduct = state =>
     getModuleState(state).product;
+
+export const getUserSearch = state =>
+    getModuleState(state).userSearch;

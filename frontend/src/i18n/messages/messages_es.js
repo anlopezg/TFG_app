@@ -146,8 +146,11 @@ export default {
     'project.catalog.Subcategories.Sweater': 'Jersey',
 
     'project.catalog.Product.type': 'Tipo de producto',
+    'project.catalog.Search.ByUsername': 'Busca a un usuario',
+    'project.catalog.Users.visit': 'Visitar',
 
     'project.catalog.FindAllProductsResult.noProductsFound':'Ningún producto ha sido añadido aún',
+    'project.catalog.FindUsersResult.noUsersFound' : 'No existe ningún usuario con ese nombre',
 
     'project.catalog.FindProductsResult.noProductsFound': 'No se ha encontrado ningún producto con esas características',
     'project.catalog.UserProducts.noProductsFound': ' actualmente no tiene nigún producto disponible :(',

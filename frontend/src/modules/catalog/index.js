@@ -11,6 +11,9 @@ export {default as FindProductsResult} from './components/FindProductsResult';
 export {default as ProductDetails} from './components/ProductDetails';
 export {default as FindAllProducts} from './components/FindAllProducts.jsx';
 export {default as UserProducts} from './components/UserProducts.jsx';
+export {default as UserFilter} from './components/UserFilter.jsx';
+export {default as Users} from './components/Users.jsx';
+export {default as FindUsersResult} from './components/FindUsersResult.jsx';
 
 
 export default {actions, actionTypes, reducer, selectors};

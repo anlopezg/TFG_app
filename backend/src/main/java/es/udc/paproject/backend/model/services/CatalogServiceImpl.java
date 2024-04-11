@@ -1,6 +1,17 @@
 package es.udc.paproject.backend.model.services;
 
-import es.udc.paproject.backend.model.entities.*;
+import es.udc.paproject.backend.model.entities.Category;
+import es.udc.paproject.backend.model.daos.CategoryDao;
+import es.udc.paproject.backend.model.entities.Subcategory;
+import es.udc.paproject.backend.model.daos.SubcategoryDao;
+import es.udc.paproject.backend.model.entities.Craft;
+import es.udc.paproject.backend.model.daos.CraftDao;
+import es.udc.paproject.backend.model.entities.Pattern;
+import es.udc.paproject.backend.model.entities.Physical;
+import es.udc.paproject.backend.model.entities.Product;
+import es.udc.paproject.backend.model.daos.ProductDao;
+import es.udc.paproject.backend.model.entities.User;
+import es.udc.paproject.backend.model.daos.UserDao;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,12 +83,6 @@ public class CatalogServiceImpl implements CatalogService{
 
     }
 
-    @Override
-    public List<Subcategory> getSubcategoriesByCategory(Long categoryId) {
-        return subcategoryDao.findByCategoryId(categoryId);
-
-    }
-
 
     @Override
     public Class<?> getProductTypeClass(String productType){
@@ -91,7 +96,6 @@ public class CatalogServiceImpl implements CatalogService{
         }
     }
 
-    // Change to show only the active products
     @Override
     public Block<Product> findProducts(Long craftId, Long subcategoryId, String keywords, String productType, int page, int size){
 
@@ -112,6 +116,18 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
     @Override
+    public Product findProduct(Long productId) throws InstanceNotFoundException {
+
+        Optional<Product> product = productDao.findByIdAndActiveOrderByCreationDateDesc(productId);
+
+        if(!product.isPresent()){
+            throw new InstanceNotFoundException("project.entities.product", productId);
+        }
+
+        return product.get();
+    }
+
+    @Override
     public Block<Product> findUserProducts(String username, int page, int size) throws InstanceNotFoundException, UserNotSellerException {
 
         User userFound = permissionChecker.checkUserName(username);
@@ -127,14 +143,10 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
     @Override
-    public Product findProduct(Long productId) throws InstanceNotFoundException {
+    public Block<User> findUsers(String username, int page, int size){
 
-        Optional<Product> product = productDao.findByIdAndActiveOrderByCreationDateDesc(productId);
+        Slice<User> slice = userDao.findSellers(username, page, size);
 
-        if(!product.isPresent()){
-            throw new InstanceNotFoundException("project.entities.product", productId);
-        }
-
-        return product.get();
+        return new Block<>(slice.getContent(), slice.hasNext());
     }
 }

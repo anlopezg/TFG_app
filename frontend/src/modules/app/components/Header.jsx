@@ -3,7 +3,7 @@ import {Form, Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import '../../../styles.css';
 
-
+import {UserFilter} from "../../catalog/index.js";
 import users from '../../users';
 
 const Header = () => {
@@ -14,15 +14,15 @@ const Header = () => {
     return (
 
         <nav className="navbar navbar-expand-lg navbar-light back-color-blue">
-            <Link className="navbar-brand logo-link" to="/" >Yarn Crafters</Link>
+            <div className="row col-md-3">
+                <Link className="navbar-brand logo-link" to="/" >Yarn Crafters</Link>
+            </div>
 
-            <Link className="nav-link product-link ml-2" to="/catalog/find-products-result">
-                <FormattedMessage id="project.products.Pattern.heading"/>
-            </Link>
 
-            <Link className="nav-link product-link" to="/catalog/find-products-result">
-                <FormattedMessage id="project.products.Product.heading"/>
-            </Link>
+            <div className="row col-md-6 align-items-center">
+                <UserFilter/>
+            </div>
+
 
 
             <button className="navbar-toggler" type="button" 
