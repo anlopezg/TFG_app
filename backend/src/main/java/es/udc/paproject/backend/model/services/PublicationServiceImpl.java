@@ -3,6 +3,7 @@ package es.udc.paproject.backend.model.services;
 import es.udc.paproject.backend.model.daos.PatternDao;
 import es.udc.paproject.backend.model.daos.PhysicalDao;
 import es.udc.paproject.backend.model.daos.ProductDao;
+import es.udc.paproject.backend.model.daos.UserDao;
 import es.udc.paproject.backend.model.entities.Subcategory;
 import es.udc.paproject.backend.model.entities.Craft;
 import es.udc.paproject.backend.model.entities.Pattern;
@@ -10,6 +11,7 @@ import es.udc.paproject.backend.model.entities.Physical;
 import es.udc.paproject.backend.model.entities.Product;
 import es.udc.paproject.backend.model.entities.User;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
+import es.udc.paproject.backend.model.exceptions.UserNotOwnerException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +41,18 @@ public class PublicationServiceImpl implements PublicationService{
     @Autowired
     private PhysicalDao physicalDao;
 
+
+    @Override
+    public void checkProductOwner(Long userId, Long productId) throws UserNotOwnerException {
+
+        Optional<Product> product = productDao.findById(productId);
+
+        if(!product.get().getUser().getId().equals(userId)){
+            throw new UserNotOwnerException();
+        }
+    }
+
+
     @Override
     public Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                                  BigDecimal price, Boolean active, String introduction, String notes, String gauge,
@@ -46,7 +60,6 @@ public class PublicationServiceImpl implements PublicationService{
             throws InstanceNotFoundException, UserNotSellerException{
 
         User user = permissionChecker.checkUser(userId);
-
         if(user.getRole() != User.RoleType.SELLER){
             throw new UserNotSellerException();
         }
@@ -70,7 +83,6 @@ public class PublicationServiceImpl implements PublicationService{
                                    String details) throws InstanceNotFoundException, UserNotSellerException{
 
         User user = permissionChecker.checkUser(userId);
-
         if(user.getRole() != User.RoleType.SELLER){
             throw new UserNotSellerException();
         }
@@ -92,7 +104,12 @@ public class PublicationServiceImpl implements PublicationService{
 
     @Override
     @Transactional(readOnly = true)
-    public Block<Product> findAddedProducts(Long userId, int page, int size){
+    public Block<Product> findAddedProducts(Long userId, int page, int size) throws InstanceNotFoundException, UserNotSellerException {
+
+        User user = permissionChecker.checkUser(userId);
+        if(user.getRole() != User.RoleType.SELLER){
+            throw new UserNotSellerException();
+        }
 
         Slice<Product> slice = productDao.findAllByUserIdOrderByCreationDateDesc(userId, PageRequest.of(page, size));
 
@@ -104,7 +121,6 @@ public class PublicationServiceImpl implements PublicationService{
     public Block<Pattern> findAddedPatterns(Long userId, int page, int size) throws InstanceNotFoundException, UserNotSellerException {
 
         User user = permissionChecker.checkUser(userId);
-
         if(user.getRole() != User.RoleType.SELLER){
             throw new UserNotSellerException();
         }
@@ -116,7 +132,12 @@ public class PublicationServiceImpl implements PublicationService{
 
     @Override
     @Transactional(readOnly = true)
-    public Block<Physical> findAddedPhysicals(Long userId, int page, int size){
+    public Block<Physical> findAddedPhysicals(Long userId, int page, int size) throws InstanceNotFoundException, UserNotSellerException {
+
+        User user = permissionChecker.checkUser(userId);
+        if(user.getRole() != User.RoleType.SELLER){
+            throw new UserNotSellerException();
+        }
 
         Slice<Physical> slice = physicalDao.findAllByUserIdOrderByCreationDateDesc(userId, PageRequest.of(page, size) );
 
@@ -124,19 +145,9 @@ public class PublicationServiceImpl implements PublicationService{
     }
 
 
-    /*
-    @Override
-    @Transactional(readOnly = true)
-    public Block<Product> findProducts(Long categoryId, String keywords, int page, int size){
-
-        Slice<Product> slice = productDao.find(categoryId, keywords, page, size);
-
-        return new Block<>(slice.getContent(), slice.hasNext());
-    }*/
-
 
     @Override
-    public Product findProductById(Long productId) throws InstanceNotFoundException{
+    public Product findProductById(Long productId) throws InstanceNotFoundException, UserNotOwnerException{
 
         Optional<Product> product = productDao.findById(productId);
 
@@ -148,7 +159,7 @@ public class PublicationServiceImpl implements PublicationService{
     }
 
     @Override
-    public Pattern findPatternById(Long patternId) throws InstanceNotFoundException{
+    public Pattern findPatternById(Long userId, Long patternId) throws InstanceNotFoundException, UserNotOwnerException {
 
         Optional<Pattern> pattern = patternDao.findById(patternId);
 
@@ -156,17 +167,21 @@ public class PublicationServiceImpl implements PublicationService{
             throw new InstanceNotFoundException("project.entities.product", patternId);
         }
 
+        checkProductOwner(userId, patternId);
+
         return pattern.get();
     }
 
     @Override
-    public Physical findPhysicalById(Long productId) throws InstanceNotFoundException{
+    public Physical findPhysicalById(Long userId, Long productId) throws InstanceNotFoundException, UserNotOwnerException {
 
         Optional<Physical> physical = physicalDao.findById(productId);
 
         if(!physical.isPresent()){
             throw new InstanceNotFoundException("project.entities.product", productId);
         }
+
+        checkProductOwner(userId, productId);
 
         return physical.get();
     }
@@ -175,13 +190,14 @@ public class PublicationServiceImpl implements PublicationService{
     @Override
     public Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
                                BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                               String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools) throws InstanceNotFoundException{
+                               String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools) throws InstanceNotFoundException, UserNotOwnerException {
+
 
         User user = permissionChecker.checkUser(userId);
         Craft craft  = catalogService.checkCraft(craftId);
         Subcategory subcategory= catalogService.checkSubcategory(subcategoryId);
 
-        Pattern pattern = findPatternById(productId);
+        Pattern pattern = findPatternById(userId, productId);
 
         pattern.setUser(user);
         pattern.setCraft(craft);
@@ -208,13 +224,14 @@ public class PublicationServiceImpl implements PublicationService{
     @Override
     public Physical editPhysical(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
                           BigDecimal price, Boolean active, int amount, String size, String color,
-                          String details) throws InstanceNotFoundException{
+                          String details) throws InstanceNotFoundException, UserNotOwnerException {
+
 
         User user = permissionChecker.checkUser(userId);
         Craft craft  = catalogService.checkCraft(craftId);
         Subcategory subcategory= catalogService.checkSubcategory(subcategoryId);
 
-        Physical physical = findPhysicalById(productId);
+        Physical physical = findPhysicalById(userId, productId);
 
         physical.setUser(user);
         physical.setCraft(craft);
@@ -234,9 +251,11 @@ public class PublicationServiceImpl implements PublicationService{
     }
 
     @Override
-    public void deleteProduct(Long productId) throws InstanceNotFoundException{
+    public void deleteProduct(Long userId, Long productId) throws InstanceNotFoundException, UserNotOwnerException {
 
         Product product = findProductById(productId);
+
+        checkProductOwner(userId, productId);
 
         productDao.delete(product);
     }
