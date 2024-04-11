@@ -18,8 +18,6 @@ const CreatePattern = () => {
     const navigate = useNavigate();
 
     const user = useSelector(userSelector.getUser);
-    const crafts  = useSelector(catalogSelector.getCrafts);
-    const categories = useSelector(catalogSelector.getCategories);
 
     const[ craftId, setCraftId] = useState('');
     const[ subcategoryId, setSubcategoryId] = useState('');
@@ -51,7 +49,6 @@ const CreatePattern = () => {
 
         if(form.checkValidity()){
             dispatch(actions.createPattern(
-                user.userName,
                 {userId: user.id,
                     craftId: toNumber(craftId),
                     subcategoryId: toNumber(subcategoryId),

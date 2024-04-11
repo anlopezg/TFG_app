@@ -1,19 +1,16 @@
-import {useDispatch, useSelector} from "react-redux";
-import * as userSelectors from "../../users/selectors.js";
+import {useDispatch} from "react-redux";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import * as actions from "../actions.js";
 import {FormattedMessage} from "react-intl";
 
 const DeletePhysical = () => {
 
-    const user = useSelector(userSelectors.getUser);
     const {id} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleSubmit = ()=>{
         dispatch(actions.deletePhysical(
-            user.userName,
             id,
             ()=> navigate('/publications/products')
         ));
@@ -26,7 +23,7 @@ const DeletePhysical = () => {
             <div className="container-alert container-fluid pt-4">
 
                 <div className="card bg-light mx-auto w-75">
-                    <h2 className="card-header back-color-blue">
+                    <h2 className="retro card-header back-color-blue">
                         <FormattedMessage id="project.products.Physical.delete.title"/>
                     </h2>
                     <div className="card-body p-5 ">

@@ -11,9 +11,9 @@ export const clearAddedPatternSearch= () => ({
     type: actionTypes.CLEAR_ADDED_PATTERN_SEARCH
 });
 
-export const findAddedPatterns = (username, criteria) => dispatch =>{
+export const findAddedPatterns = criteria => dispatch =>{
 
-    backend.publicationService.findAddedPatterns(username, criteria,
+    backend.publicationService.findAddedPatterns(criteria,
             result => dispatch(findAddedPatternsCompleted({criteria, result})))
 }
 
@@ -37,9 +37,9 @@ export const clearAddedPhysicalSearch= () => ({
 });
 
 
-export const findAddedPhysicals = (username, criteria) => dispatch =>{
+export const findAddedPhysicals = criteria => dispatch =>{
 
-    backend.publicationService.findAddedPhysicals(username, criteria,
+    backend.publicationService.findAddedPhysicals(criteria,
         result => dispatch(findAddedPhysicalsCompleted({criteria, result})))
 }
 
@@ -60,8 +60,8 @@ const patternCreated  = pattern =>({
     pattern
 });
 
-export const createPattern = (username ,pattern, onSuccess, onErrors) => dispatch =>
-    backend.publicationService.createPattern(username, pattern,
+export const createPattern = (pattern, onSuccess, onErrors) => dispatch =>
+    backend.publicationService.createPattern(pattern,
         pattern => {
             dispatch(patternCreated(pattern));
             onSuccess();
@@ -73,8 +73,8 @@ const physicalCreated = (physical) => ({
     physical
 })
 
-export const createPhysical = (username, physical, onSuccess, onErrors) => dispatch =>
-    backend.publicationService.createPhysical(username, physical,
+export const createPhysical = (physical, onSuccess, onErrors) => dispatch =>
+    backend.publicationService.createPhysical(physical,
         physical => {
         dispatch(physicalCreated(physical));
         onSuccess();
@@ -92,8 +92,8 @@ export const findPatternCompleted = pattern => ({
     pattern
 })
 
-export const findPatternById = (username ,patternId) => dispatch => {
-    backend.publicationService.findPatternById(username, patternId, pattern =>{
+export const findPatternById = (patternId) => dispatch => {
+    backend.publicationService.findPatternById(patternId, pattern =>{
         dispatch(findPatternCompleted(pattern));
     });
 }
@@ -108,8 +108,8 @@ export const findPhysicalCompleted = physical => ({
     physical
 })
 
-export const findPhysicalById = (username, physicalId) => dispatch => {
-    backend.publicationService.findPhysicalById(username, physicalId, physical =>{
+export const findPhysicalById = (physicalId) => dispatch => {
+    backend.publicationService.findPhysicalById(physicalId, physical =>{
         dispatch(findPhysicalCompleted(physical));
     });
 }
@@ -121,9 +121,9 @@ export const editPatternCompleted = pattern =>({
     pattern
 });
 
-export const editPattern = (username, pattern, onSuccess, onErrors) => dispatch =>
+export const editPattern = (pattern, onSuccess, onErrors) => dispatch =>
 
-    backend.publicationService.editPattern(username, pattern,
+    backend.publicationService.editPattern(pattern,
         pattern => {
             dispatch(editPatternCompleted(pattern));
             onSuccess();
@@ -137,9 +137,9 @@ export const editPhysicalCompleted = physical =>({
     physical
 });
 
-export const editPhysical = (username, physical, onSuccess, onErrors)=> dispatch =>
+export const editPhysical = ( physical, onSuccess, onErrors)=> dispatch =>
 
-    backend.publicationService.editPhysical(username, physical,
+    backend.publicationService.editPhysical( physical,
         physical => {
             dispatch(editPhysicalCompleted(physical));
             onSuccess();
@@ -153,8 +153,8 @@ export const deletePatternCompleted = patternId =>({
     patternId
 });
 
-export const deletePattern  = (username, patternId, onSuccess)=> dispatch =>
-    backend.publicationService.deleteProduct(username, patternId,
+export const deletePattern  = (patternId, onSuccess)=> dispatch =>
+    backend.publicationService.deleteProduct(patternId,
             patternId => {dispatch(deletePatternCompleted(patternId));
             onSuccess();
             }
@@ -166,37 +166,10 @@ export const deletePhysicalCompleted = physicalId =>({
     physicalId
 });
 
-export const deletePhysical  = (username, physicalId, onSuccess)=> dispatch =>
-    backend.publicationService.deleteProduct(username, physicalId,
+export const deletePhysical  = (physicalId, onSuccess)=> dispatch =>
+    backend.publicationService.deleteProduct(physicalId,
         physicalId => {dispatch(deletePhysicalCompleted(physicalId));
             onSuccess();
         }
     );
 
-
-
-/*const findProductsCompleted = productSearch => ({
-    type: actionTypes.FIND_PRODUCTS_COMPLETED,
-    productSearch
-});
-
-
-export const clearProductSearch = () => ({
-    type: actionTypes.CLEAR_PRODUCT_SEARCH
-});
-
-export const findAddedProducts = criteria => dispatch => {
-    backend.publicationService.findAddedProducts(criteria,
-        result => dispatch(findProductsCompleted({criteria, result})));
-}
-
-export const findProductById = id => dispatch => {
-    backend.publicationService.findByProductId(id,
-        product => dispatch(findProductByIdCompleted(product)));
-}
-
-export const clearProduct = () => ({
-    type: actionTypes.CLEAR_PRODUCT
-});
-
-*/

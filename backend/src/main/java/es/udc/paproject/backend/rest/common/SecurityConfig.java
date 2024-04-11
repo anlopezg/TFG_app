@@ -45,26 +45,17 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.GET, "/users/*").permitAll()
 
 					/********************* CATALOG CONTROLLER *********************/
-					//.requestMatchers(HttpMethod.GET, "/catalog/crafts").permitAll()
-					//.requestMatchers(HttpMethod.GET, "/catalog/categories").permitAll()
 					.requestMatchers(HttpMethod.GET, "/catalog/**").permitAll()
-					//.requestMatchers(HttpMethod.GET, "/catalog/products/*").permitAll()
-					//.requestMatchers(HttpMethod.GET, "/catalog/products").permitAll()
 
 					/********************* PUBLICATION CONTROLLER *********************/
-					.requestMatchers(HttpMethod.POST, "/publications/*/patterns").hasRole("SELLER")
-					.requestMatchers(HttpMethod.POST, "/publications/*/physicals").hasRole("SELLER")
+					.requestMatchers(HttpMethod.POST, "/publications/patterns").hasRole("SELLER")
+					.requestMatchers(HttpMethod.POST, "/publications/physicals").hasRole("SELLER")
 
 					.requestMatchers(HttpMethod.GET, "/publications/**").hasRole("SELLER")
-					//.requestMatchers(HttpMethod.GET, "/publications/*/patterns").hasRole("SELLER")
-					//.requestMatchers(HttpMethod.GET, "/publications/*/patterns/*").hasRole("SELLER")
-					//.requestMatchers(HttpMethod.GET, "/publications/*/physicals").hasRole("SELLER")
-					//.requestMatchers(HttpMethod.GET, "/publications/*/physicals/*").hasRole("SELLER")
 
-
-					.requestMatchers(HttpMethod.PUT, "/publications/*/patterns/*").hasRole("SELLER")
-					.requestMatchers(HttpMethod.PUT, "/publications/*/physicals/*").hasRole("SELLER")
-					.requestMatchers(HttpMethod.DELETE, "/publications/*/products/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.PUT, "/publications/patterns/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.PUT, "/publications/physicals/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.DELETE, "/publications/products/*").hasRole("SELLER")
 
 
 				.anyRequest().denyAll());

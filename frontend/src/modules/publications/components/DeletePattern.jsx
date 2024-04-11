@@ -1,20 +1,17 @@
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import {Link, useNavigate, useParams} from "react-router-dom";
 
-import * as userSelectors from "../../users/selectors.js";
 import * as actions from "../actions.js";
 import {FormattedMessage} from "react-intl";
 
 const DeletePattern= () =>{
 
-    const user = useSelector(userSelectors.getUser);
     const {id} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleSubmit = ()=>{
         dispatch(actions.deletePattern(
-            user.userName,
             id,
             ()=> navigate('/publications/patterns')
         ));
@@ -27,7 +24,7 @@ const DeletePattern= () =>{
             <div className="container-alert container-fluid pt-4">
 
                 <div className="card bg-light mx-auto w-75">
-                    <h2 className="card-header back-color-blue">
+                    <h2 className="retro card-header back-color-blue">
                         <FormattedMessage id="project.products.Pattern.delete.title"/>
                     </h2>
                     <div className="card-body p-5 ">

@@ -24,7 +24,6 @@ const AddedPhysicals= ({physicals}) =>(
 
                             </div>
 
-                            {/* cambiar los links cuando se hayan creado las páginas */}
                             <div className="text-center mt-3">
                                 <a href={`/publications/manage-physical/${physical.id}`} className="btn btn-primary mr-2">
                                     <FormattedMessage id="project.global.buttons.edit"/>

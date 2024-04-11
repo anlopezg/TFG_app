@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 
 import * as actions from "../actions.js";
 import * as selectors from "../selectors.js";
-import * as userSelectors from '../../users/selectors.js';
 
 import AddedPatterns from "./AddedPatterns.jsx";
 import {Pager} from "../../common/index.js";
@@ -13,12 +12,11 @@ import {useEffect} from "react";
 const ViewAddedPatterns = () => {
 
     const patternSearch = useSelector(selectors.getPatternSearch);
-    const user = useSelector(userSelectors.getUser);
     const dispatch = useDispatch();
 
     useEffect(() => {
 
-        dispatch(actions.findAddedPatterns(user.userName, {page: 0}));
+        dispatch(actions.findAddedPatterns({page: 0}));
 
         return () => dispatch(actions.clearAddedPatternSearch());
 

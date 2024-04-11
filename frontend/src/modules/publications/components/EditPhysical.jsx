@@ -1,7 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import * as selectors from "../selectors.js";
-import * as userSelector from "../../users/selectors.js";
 import {useState} from "react";
 import * as actions from "../actions.js";
 import Errors from "../../common/components/Errors.jsx";
@@ -13,9 +12,7 @@ const EditPhysical = () =>{
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    //const {id} = useParams();
     const physical= useSelector(selectors.getPhysical);
-    const user = useSelector(userSelector.getUser);
 
     const [backendErrors, setBackendErrors] = useState(null);
     let form;
@@ -37,7 +34,7 @@ const EditPhysical = () =>{
 
         if(form.checkValidity()){
             dispatch(actions.editPhysical(
-                user.userName, {
+                {
                     id: physical.id,
                     userId: physical.userId,
                     craftId: craftId,
@@ -77,7 +74,7 @@ const EditPhysical = () =>{
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             <div className="mt-4 mb-4 justify-content-center align-items-center">
                 <div className="card bg-light mb-3">
-                    <h2 className="card-header">
+                    <h2 className="retro card-header">
                         <FormattedMessage id="project.products.EditPhysical.heading"/>
                     </h2>
 

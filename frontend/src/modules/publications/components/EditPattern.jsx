@@ -4,7 +4,6 @@ import {useState} from "react";
 
 import * as actions from "../actions.js";
 import * as selectors from "../selectors.js";
-import * as userSelector from "../../users/selectors.js";
 import Errors from "../../common/components/Errors.jsx";
 import {FormattedMessage} from "react-intl";
 import CraftSelector from "../../catalog/components/CraftSelector.jsx";
@@ -16,7 +15,6 @@ const EditPattern = ()=>{
     const navigate = useNavigate();
     //const {id} = useParams();
     const pattern= useSelector(selectors.getPattern);
-    const user = useSelector(userSelector.getUser);
 
     const [backendErrors, setBackendErrors] = useState(null);
     let form;
@@ -41,7 +39,7 @@ const EditPattern = ()=>{
 
         if(form.checkValidity()){
             dispatch(actions.editPattern(
-                user.userName, {
+                {
                     id: pattern.id,
                     userId: pattern.userId,
                     craftId: craftId,
@@ -83,7 +81,7 @@ const EditPattern = ()=>{
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             <div className="mt-4 mb-4 justify-content-center align-items-center">
                 <div className="card bg-light mb-3">
-                    <h2 className="card-header">
+                    <h2 className="retro card-header">
                         <FormattedMessage id="project.products.EditPattern.heading"/>
                     </h2>
 

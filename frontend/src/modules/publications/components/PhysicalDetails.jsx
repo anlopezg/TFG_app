@@ -7,7 +7,6 @@ import * as actions from '../actions';
 import {BackLink} from '../../common';
 import {FormattedMessage} from "react-intl";
 import * as catalogSelectors from "../../catalog/selectors.js";
-import * as userSelectors from "../../users/selectors.js";
 
 
 const PhysicalDetails = () =>{
@@ -17,12 +16,11 @@ const PhysicalDetails = () =>{
     const dispatch = useDispatch();
     const crafts = useSelector(catalogSelectors.getCrafts);
     const categories = useSelector(catalogSelectors.getCategories);
-    const user = useSelector(userSelectors.getUser);
 
     useEffect(() => {
 
         if(!Number.isNaN(id)){
-            dispatch(actions.findPhysicalById(user.userName, id));
+            dispatch(actions.findPhysicalById(id));
         }
 
         return () => dispatch(actions.clearPhysical());
@@ -67,7 +65,7 @@ const PhysicalDetails = () =>{
             <div className="mt-4 mb-4 justify-content-center align-items-center">
                 <div className="container d-flex">
                     <div className="card mb-3 mx-auto ">
-                        <h2 className="card-header">
+                        <h2 className="retro card-header">
                             <FormattedMessage id="project.products.ViewProduct.heading"/>
                         </h2>
                         <div className="card-body">

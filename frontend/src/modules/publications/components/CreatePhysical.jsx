@@ -36,7 +36,6 @@ const CreatePhysical = () => {
 
         if(form.checkValidity()){
             dispatch(actions.createPhysical(
-                user.userName,
                 { userId: user.id,
                     craftId: toNumber(craftId),
                     subcategoryId: toNumber(subcategoryId),

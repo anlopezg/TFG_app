@@ -6,7 +6,6 @@ import * as selectors from '../selectors';
 import * as catalogSelectors from '../../catalog/selectors';
 import * as actions from '../actions';
 import {FormattedMessage} from "react-intl";
-import * as userSelectors from "../../users/selectors.js";
 
 const PatternDetails = () =>{
 
@@ -15,13 +14,12 @@ const PatternDetails = () =>{
     const dispatch = useDispatch();
     const crafts = useSelector(catalogSelectors.getCrafts);
     const categories = useSelector(catalogSelectors.getCategories);
-    const user = useSelector(userSelectors.getUser);
 
 
     useEffect(() => {
 
         if(!Number.isNaN(id)){
-            dispatch(actions.findPatternById(user.userName, id));
+            dispatch(actions.findPatternById(id));
         }
 
         return () => dispatch(actions.clearPattern());
@@ -82,7 +80,7 @@ const PatternDetails = () =>{
             <div className="mt-4 mb-4 justify-content-center align-items-center">
                 <div className="container d-flex">
                     <div className="card mb-3 mx-auto ">
-                        <h2 className="card-header">
+                        <h2 className="retro card-header">
                             <FormattedMessage id="project.products.ViewPattern.heading"/>
                         </h2>
                         <div className="card-body">
