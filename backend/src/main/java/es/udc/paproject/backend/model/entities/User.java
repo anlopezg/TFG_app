@@ -13,7 +13,7 @@ public class User {
 
 	private Long id;
 
-	private String userName;
+	private String username;
 
 	private String email;
 
@@ -35,9 +35,9 @@ public class User {
 
 	public User(){}
 
-	public User(String userName, String email, String password, String firstName, String language, String country, int crochetLevel, int knitLevel, String bio) {
+	public User(String username, String email, String password, String firstName, String language, String country, int crochetLevel, int knitLevel, String bio) {
 
-		this.userName = userName;
+		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
@@ -58,12 +58,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String userName) {
+		this.username = userName;
 	}
 
 	public String getEmail() {

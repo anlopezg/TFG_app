@@ -7,7 +7,7 @@ DROP TABLE User;
 
 CREATE TABLE User (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    userName VARCHAR(60) COLLATE latin1_bin NOT NULL,
+    username VARCHAR(60) COLLATE latin1_bin NOT NULL,
     email VARCHAR(60) NOT NULL,
     password VARCHAR(60) NOT NULL,
     firstName VARCHAR(60) NOT NULL,
@@ -18,12 +18,12 @@ CREATE TABLE User (
     bio VARCHAR(200),
     role TINYINT NOT NULL,
     CONSTRAINT UserPK PRIMARY KEY (id),
-    CONSTRAINT UserNameUniqueKey UNIQUE (userName),
+    CONSTRAINT UsernameUniqueKey UNIQUE (username),
     CONSTRAINT EmailUniqueKey UNIQUE (email)
 
 ) ENGINE = InnoDB;
 
-CREATE INDEX UserIndexByUserName ON User (userName);
+CREATE INDEX UserIndexByUsername ON User (username);
 
 CREATE INDEX UserIndexByEmail ON User (email);
 

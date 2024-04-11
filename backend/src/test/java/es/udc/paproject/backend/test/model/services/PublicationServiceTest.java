@@ -1,6 +1,14 @@
 package es.udc.paproject.backend.test.model.services;
 
-import es.udc.paproject.backend.model.entities.*;
+import es.udc.paproject.backend.model.entities.Category;
+import es.udc.paproject.backend.model.daos.CategoryDao;
+import es.udc.paproject.backend.model.entities.Subcategory;
+import es.udc.paproject.backend.model.daos.SubcategoryDao;
+import es.udc.paproject.backend.model.entities.Craft;
+import es.udc.paproject.backend.model.daos.CraftDao;
+import es.udc.paproject.backend.model.entities.Pattern;
+import es.udc.paproject.backend.model.entities.Physical;
+import es.udc.paproject.backend.model.entities.User;
 import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserAlreadySellerException;

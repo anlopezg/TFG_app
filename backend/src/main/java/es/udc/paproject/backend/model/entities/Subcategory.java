@@ -1,5 +1,6 @@
 package es.udc.paproject.backend.model.entities;
 
+import es.udc.paproject.backend.model.entities.Category;
 import jakarta.persistence.*;
 
 @Entity

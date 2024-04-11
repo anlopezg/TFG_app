@@ -74,7 +74,7 @@ public class UserServiceTest {
 				
 		userService.signUp(user);
 		
-		User loggedInUser = userService.login(user.getUserName(), clearPassword);
+		User loggedInUser = userService.login(user.getUsername(), clearPassword);
 		
 		assertEquals(user, loggedInUser);
 		
@@ -88,7 +88,7 @@ public class UserServiceTest {
 		
 		userService.signUp(user);
 		assertThrows(IncorrectLoginException.class, () ->
-			userService.login(user.getUserName(), 'X' + clearPassword));
+			userService.login(user.getUsername(), 'X' + clearPassword));
 		
 	}
 	
@@ -107,7 +107,7 @@ public class UserServiceTest {
 		user.setFirstName('X' + user.getFirstName());
 		user.setEmail('X' + user.getEmail());
 		
-		userService.updateProfile(user.getId(), user.getUserName(), 'X' + user.getEmail(),'X' + user.getFirstName(),
+		userService.updateProfile(user.getId(), user.getUsername(), 'X' + user.getEmail(),'X' + user.getFirstName(),
 				user.getLanguage(), user.getCountry(), user.getCrochetLevel(), user.getKnitLevel(), user.getBio()
 			);
 		
@@ -128,7 +128,7 @@ public class UserServiceTest {
 
 		userService.signUp(user2);
 
-		assertThrows(DuplicateInstanceException.class, () -> userService.updateProfile(user2.getId(), user1.getUserName(), user2.getEmail(),
+		assertThrows(DuplicateInstanceException.class, () -> userService.updateProfile(user2.getId(), user1.getUsername(), user2.getEmail(),
 				user2.getFirstName(), user2.getLanguage(), user2.getCountry(), user2.getCrochetLevel(),
 				user2.getKnitLevel(), user2.getBio()));
 
@@ -151,7 +151,7 @@ public class UserServiceTest {
 		
 		userService.signUp(user);
 		userService.changePassword(user.getId(), oldPassword, newPassword);
-		userService.login(user.getUserName(), newPassword);
+		userService.login(user.getUsername(), newPassword);
 		
 	}
 	

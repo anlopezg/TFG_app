@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @DiscriminatorValue("PATTERN")
-public class Pattern extends Product{
+public class Pattern extends Product {
     private String introduction;
     private String notes;
     private String gauge;

@@ -2,7 +2,6 @@ package es.udc.paproject.backend.rest.controllers;
 
 import es.udc.paproject.backend.model.entities.Pattern;
 import es.udc.paproject.backend.model.entities.Physical;
-import es.udc.paproject.backend.model.entities.Product;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.PermissionException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;

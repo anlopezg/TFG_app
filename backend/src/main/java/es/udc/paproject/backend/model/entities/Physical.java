@@ -20,8 +20,8 @@ public class Physical extends Product {
     }
 
     public Physical(User user, Craft craft, Subcategory subcategory, String title, String description, BigDecimal price,
-                   Boolean active, LocalDateTime creationDate,
-                   int amount, String size, String color, String details){
+                    Boolean active, LocalDateTime creationDate,
+                    int amount, String size, String color, String details){
 
         super(user, craft, subcategory, title, description, price, active, creationDate);
 

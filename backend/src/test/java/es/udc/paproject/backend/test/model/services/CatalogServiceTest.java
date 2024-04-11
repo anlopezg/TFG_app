@@ -1,12 +1,20 @@
 package es.udc.paproject.backend.test.model.services;
 
 
-import es.udc.paproject.backend.model.entities.*;
+import es.udc.paproject.backend.model.entities.Category;
+import es.udc.paproject.backend.model.daos.CategoryDao;
+import es.udc.paproject.backend.model.entities.Subcategory;
+import es.udc.paproject.backend.model.daos.SubcategoryDao;
+import es.udc.paproject.backend.model.entities.Craft;
+import es.udc.paproject.backend.model.daos.CraftDao;
+import es.udc.paproject.backend.model.entities.Product;
+import es.udc.paproject.backend.model.daos.ProductDao;
+import es.udc.paproject.backend.model.entities.User;
+import es.udc.paproject.backend.model.daos.UserDao;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.CatalogService;
-import es.udc.paproject.backend.model.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -184,7 +192,7 @@ public class CatalogServiceTest {
         Product product2 = createProduct(user2, craft1, subcategory1, "Product2");
 
         Block<Product> expectedBlock = new Block<>(Arrays.asList(product1), false);
-        assertEquals(expectedBlock, catalogService.findUserProducts(user1.getUserName(), 0, 1));
+        assertEquals(expectedBlock, catalogService.findUserProducts(user1.getUsername(), 0, 1));
 
     }
 
@@ -194,7 +202,7 @@ public class CatalogServiceTest {
         User user1 = createUser("user1");
 
         assertThrows(UserNotSellerException.class, ()->
-                catalogService.findUserProducts(user1.getUserName(), 0, 1));
+                catalogService.findUserProducts(user1.getUsername(), 0, 1));
     }
 
     @Test

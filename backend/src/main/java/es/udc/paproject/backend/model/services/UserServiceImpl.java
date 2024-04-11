@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.paproject.backend.model.entities.User;
-import es.udc.paproject.backend.model.entities.UserDao;
+import es.udc.paproject.backend.model.daos.UserDao;
 
 @Service
 @Transactional
@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void signUp(User user) throws DuplicateInstanceException {
 		
-		if (userDao.existsByUserName(user.getUserName())) {
-			throw new DuplicateInstanceException("project.entities.user", user.getUserName());
+		if (userDao.existsByUsername(user.getUsername())) {
+			throw new DuplicateInstanceException("project.entities.user", user.getUsername());
 		}
 
 		if (userDao.existsByEmail(user.getEmail())){
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional(readOnly=true)
 	public User login(String userName, String password) throws IncorrectLoginException {
 		
-		Optional<User> user = userDao.findByUserName(userName);
+		Optional<User> user = userDao.findByUsername(userName);
 		
 		if (!user.isPresent()) {
 			throw new IncorrectLoginException(userName, password);
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 		User user = permissionChecker.checkUser(id);
 
 		//When the username is modified from the one stored, the new one has to be unique
-		if (!Objects.equals(user.getUserName(), username) && userDao.existsByUserName(username)) {
+		if (!Objects.equals(user.getUsername(), username) && userDao.existsByUsername(username)) {
 			throw new DuplicateInstanceException("project.entities.user", username);
 		}
 
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 		}
 
 
-		user.setUserName(username);
+		user.setUsername(username);
 		user.setEmail(email);
 		user.setFirstName(firstName);
 		user.setLanguage(language);

@@ -1,6 +1,8 @@
-package es.udc.paproject.backend.model.entities;
+package es.udc.paproject.backend.model.daos;
 
 import java.util.Optional;
+
+import es.udc.paproject.backend.model.entities.Product;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.Query;

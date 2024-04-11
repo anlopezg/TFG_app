@@ -29,7 +29,7 @@ public class ProductConversor {
 
     public final static ProductSummaryDto toProductSummaryDto(Product product){
         return new ProductSummaryDto(product.getId(), product.getUser().getId(), product.getCraft().getId(),
-                product.getSubcategory().getId(), product.getTitle(), product.getPrice(), product.getProductType(), product.getUser().getUserName());
+                product.getSubcategory().getId(), product.getTitle(), product.getPrice(), product.getProductType(), product.getUser().getUsername());
     }
 
     public final static PatternDto toPatternDto(Pattern pattern){

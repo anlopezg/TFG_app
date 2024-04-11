@@ -1,11 +1,12 @@
 package es.udc.paproject.backend.model.services;
 
-import es.udc.paproject.backend.model.entities.*;
+import es.udc.paproject.backend.model.entities.Pattern;
+import es.udc.paproject.backend.model.entities.Physical;
+import es.udc.paproject.backend.model.entities.Product;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public interface PublicationService {
 
@@ -18,9 +19,9 @@ public interface PublicationService {
      * @throws UserNotSellerException The user must be a Seller
      */
     Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
-                              BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                              String sizing, int difficultyLevel, String time,
-                              String abbreviations, String specialAbbreviations, String tools)
+                          BigDecimal price, Boolean active, String introduction, String notes, String gauge,
+                          String sizing, int difficultyLevel, String time,
+                          String abbreviations, String specialAbbreviations, String tools)
             throws InstanceNotFoundException, UserNotSellerException;
 
 
@@ -30,8 +31,8 @@ public interface PublicationService {
      * @throws UserNotSellerException The user must be a Seller
      */
     Physical createPhysical(Long userId, Long craftId, Long subcategoryId, String title, String description,
-                         BigDecimal price, Boolean active, int amount, String size, String color,
-                         String details) throws InstanceNotFoundException,  UserNotSellerException;
+                            BigDecimal price, Boolean active, int amount, String size, String color,
+                            String details) throws InstanceNotFoundException,  UserNotSellerException;
 
 
 

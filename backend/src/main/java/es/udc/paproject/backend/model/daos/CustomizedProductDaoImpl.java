@@ -1,5 +1,6 @@
-package es.udc.paproject.backend.model.entities;
+package es.udc.paproject.backend.model.daos;
 
+import es.udc.paproject.backend.model.entities.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;

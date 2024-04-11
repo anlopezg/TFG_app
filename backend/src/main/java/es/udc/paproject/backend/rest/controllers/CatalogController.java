@@ -1,7 +1,7 @@
 package es.udc.paproject.backend.rest.controllers;
 
-import es.udc.paproject.backend.model.entities.Pattern;
 import es.udc.paproject.backend.model.entities.Product;
+import es.udc.paproject.backend.model.entities.User;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import es.udc.paproject.backend.model.services.Block;
@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Locale;
 
 import static es.udc.paproject.backend.rest.dtos.CategoryConversor.toCategoryDtos;
-import static es.udc.paproject.backend.rest.dtos.CategoryConversor.toSubcategoryDtos;
 import static es.udc.paproject.backend.rest.dtos.CraftConversor.toCraftDtos;
 import static es.udc.paproject.backend.rest.dtos.ProductConversor.*;
+import static es.udc.paproject.backend.rest.dtos.UserConversor.toUserDtos;
 
 @RestController
 @RequestMapping("/catalog")
@@ -57,12 +57,6 @@ public class CatalogController {
         return toCategoryDtos(catalogService.findAllCategories());
     }
 
-    @GetMapping("/{categoryId}/subcategories")
-    public List<SubcategoryDto> findSubcategoriesByCategory(@PathVariable Long categoryId) {
-
-        return toSubcategoryDtos(catalogService.getSubcategoriesByCategory(categoryId));
-    }
-
     /****************************** PRODUCT SEARCH ******************************/
     @GetMapping("/products")
     public BlockDto<ProductSummaryDto> findProducts(
@@ -79,6 +73,17 @@ public class CatalogController {
 
     }
 
+    @GetMapping("/products/{id}")
+    public ProductSummaryDto findProductById(@PathVariable Long id) throws InstanceNotFoundException{
+
+        Product product = catalogService.findProduct(id);
+
+        return toProductSummaryDto(product);
+    }
+
+
+    /****************************** USER PRODUCT SEARCH ******************************/
+
     @GetMapping("/{username}/products")
     public BlockDto<ProductSummaryDto> findUserProducts(
             @PathVariable String username,
@@ -90,12 +95,15 @@ public class CatalogController {
 
     }
 
-    @GetMapping("/products/{id}")
-    public ProductSummaryDto findProductById(@PathVariable Long id) throws InstanceNotFoundException{
+    @GetMapping("/users")
+    public BlockDto<UserDto> findUsers(@RequestParam(required = false) String username,
+                             @RequestParam(defaultValue = "0") int page){
 
-        Product product = catalogService.findProduct(id);
+        Block<User> userBlock = catalogService.findUsers(username, page, 10);
 
-        return toProductSummaryDto(product);
+        return new BlockDto<>(toUserDtos(userBlock.getItems()), userBlock.getExistMoreItems());
     }
+
+
 
 }

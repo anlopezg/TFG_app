@@ -1,7 +1,8 @@
-package es.udc.paproject.backend.model.entities;
+package es.udc.paproject.backend.model.daos;
 
 import java.util.Optional;
 
+import es.udc.paproject.backend.model.entities.Craft;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.ListPagingAndSortingRepository;
 

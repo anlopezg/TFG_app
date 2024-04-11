@@ -1,5 +1,6 @@
-package es.udc.paproject.backend.model.entities;
+package es.udc.paproject.backend.model.daos;
 
+import es.udc.paproject.backend.model.entities.Product;
 import org.springframework.data.domain.Slice;
 
 public interface CustomizedProductDao {

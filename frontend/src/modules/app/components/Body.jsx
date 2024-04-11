@@ -8,7 +8,7 @@ import users from '../../users';
 import {CreatePattern, ViewAddedPatterns, ViewAddedPhysicals,CreatePhysical, PatternDetails
 , PhysicalDetails, EditPattern, ManagePattern, DeletePattern, EditPhysical, ManagePhysical, DeletePhysical} from "../../publications/index.js";
 
-import {FindProductsResult, ProductDetails, FindAllProducts, UserProducts} from "../../catalog/index.js";
+import {FindProductsResult, ProductDetails, FindAllProducts, UserProducts, FindUsersResult} from "../../catalog/index.js";
 
 const Body = () => {
 
@@ -27,6 +27,7 @@ const Body = () => {
                 <Route path="/catalog/find-products-result" element={<FindProductsResult/>}/>
                 <Route path="/catalog/product-details/:id" element={<ProductDetails/>}/>
                 <Route path="/catalog/:username/products" element={<UserProducts/>}/>
+                <Route path="/catalog/find-users-result" element={<FindUsersResult/>}/>
 
                 {loggedIn && <Route path="/users/update-profile" element={<UpdateProfile/>}/>}
                 {loggedIn && <Route path="/users/change-password" element={<ChangePassword/>}/>}
