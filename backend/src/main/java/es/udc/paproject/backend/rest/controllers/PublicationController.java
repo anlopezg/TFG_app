@@ -26,7 +26,6 @@ import static es.udc.paproject.backend.rest.dtos.ProductConversor.*;
 @RequestMapping("/publications")
 public class PublicationController {
 
-    private final static String USER_NOT_SELLER_EXCEPTION_CODE = "project.exceptions.UserNotSellerException";
     private final static String USER_NOT_OWNER_EXCEPTION_CODE = "project.exceptions.UserNotOwnerException";
 
     @Autowired
@@ -38,17 +37,6 @@ public class PublicationController {
     @Autowired
     private PermissionChecker permissionChecker;
 
-    @ExceptionHandler(UserNotSellerException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ResponseBody
-    public ErrorsDto handleUserNotSellerException(UserNotSellerException exception, Locale locale) {
-
-        String errorMessage = messageSource.getMessage(USER_NOT_SELLER_EXCEPTION_CODE, null,
-                USER_NOT_SELLER_EXCEPTION_CODE, locale);
-
-        return new ErrorsDto(errorMessage);
-
-    }
 
     @ExceptionHandler(UserNotOwnerException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
@@ -69,7 +57,7 @@ public class PublicationController {
     public ResponseEntity<PatternDto> createPattern(@RequestAttribute Long userId,
                                                    @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto) throws InstanceNotFoundException, PermissionException, UserNotSellerException {
 
-        if(!permissionChecker.checkUserByName(userId, patternDto.getUserId().toString() )){
+        if(!userId.equals(patternDto.getUserId())){
             throw new PermissionException();
         }
 
@@ -88,7 +76,7 @@ public class PublicationController {
     @PostMapping("/physicals")
     public ResponseEntity<PhysicalDto> createPhysical(@RequestAttribute Long userId,  @Validated({PhysicalDto.AllValidations.class}) @RequestBody PhysicalDto physicalDto) throws InstanceNotFoundException, PermissionException,  UserNotSellerException{
 
-        if(!permissionChecker.checkUserByName(userId, physicalDto.getUserId().toString())){
+        if(!userId.equals(physicalDto.getUserId())){
             throw new PermissionException();
         }
 
@@ -136,7 +124,7 @@ public class PublicationController {
 
     /****************************** EDIT A PRODUCT ******************************/
     @PutMapping("/patterns/{id}")
-    public PatternDto editPattern(@RequestAttribute Long userId,  @PathVariable Long id,  @RequestBody PatternDto patternDto) throws InstanceNotFoundException, UserNotOwnerException {
+    public PatternDto editPattern(@RequestAttribute Long userId,  @PathVariable Long id,  @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto) throws InstanceNotFoundException, UserNotOwnerException {
 
         return toPatternDto(publicationService.editPattern(id, userId, patternDto.getCraftId(), patternDto.getSubcategoryId(),
                 patternDto.getTitle(), patternDto.getDescription(), patternDto.getPrice(), patternDto.getActive(),
@@ -145,7 +133,7 @@ public class PublicationController {
     }
 
     @PutMapping("/physicals/{id}")
-    public PhysicalDto editPhysical(@RequestAttribute Long userId, @PathVariable Long id,  @RequestBody PhysicalDto physicalDto) throws InstanceNotFoundException, UserNotOwnerException {
+    public PhysicalDto editPhysical(@RequestAttribute Long userId, @PathVariable Long id,  @Validated({PhysicalDto.AllValidations.class}) @RequestBody PhysicalDto physicalDto) throws InstanceNotFoundException, UserNotOwnerException {
 
         return toPhysicalDto(publicationService.editPhysical(id, userId, physicalDto.getCraftId(), physicalDto.getSubcategoryId(),
                 physicalDto.getTitle(), physicalDto.getDescription(), physicalDto.getPrice(), physicalDto.getActive(),

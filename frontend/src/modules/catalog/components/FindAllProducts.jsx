@@ -26,6 +26,14 @@ const FindAllProducts =()=>{
         return null;
     }
 
+    if(!categories){
+        return null;
+    }
+
+    if(!crafts){
+        return null;
+    }
+
     if (productSearch.result.items.length === 0) {
         return (
             <div className="alert alert-danger" role="alert">

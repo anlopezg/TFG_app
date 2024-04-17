@@ -7,29 +7,19 @@ import {UserLink} from "../../common/index.js";
 
 const Products = ({products, crafts, categories}) => {
 
-const productsChunks = chunkArray(products, 3);
+    const productsChunks = chunkArray(products, 3);
 
-const craftNameTranslation = (craftName) =>{
-    return <FormattedMessage id={`project.catalog.Crafts.${craftName}`}/>
-}
-
-const subcategoryNameTranslation = (subcategoryId, categories) =>{
-
-    for (const category of categories) {
-        for (const subcategory of category.subcategories) {
-            if (subcategory.id === subcategoryId) {
-                return (
-                    <FormattedMessage
-                        id={`project.catalog.Subcategories.${subcategory.subcategoryName}`}
-                    />
-                );
-            }
-        }
+    const craftNameTranslation = (craftName) =>{
+        return <FormattedMessage id={`project.catalog.Crafts.${craftName}`}/>
     }
-    return <FormattedMessage id="project.catalog.Subcategories.unknown"/>
-}
 
-return(
+    const subcategoryNameTranslation = (subcategoryName) =>{
+
+        return <FormattedMessage id={`project.catalog.Subcategories.${subcategoryName}`}/>
+    }
+
+
+    return(
     <div>
         {productsChunks.map((chunk, index)  =>(
             <div key={index} className="row">
@@ -48,7 +38,7 @@ return(
 
                                     <div className="card-text align-items-center d-flex">
                                         <p>{craftNameTranslation(selectors.getCraftName(crafts, product.craftId))} / </p>
-                                        <p> {subcategoryNameTranslation(product.subcategoryId, categories)}</p>
+                                        <p>{subcategoryNameTranslation(selectors.getSubcategoryName(categories, product.subcategoryId))}</p>
                                     </div>
                                     <div className="d-flex">
                                         <i className="fa-solid fa-user-tag m-1"></i>
@@ -74,7 +64,8 @@ return(
 
 Products.propTypes = {
     products: PropTypes.array.isRequired,
-    crafts: PropTypes.array.isRequired
+    crafts: PropTypes.array.isRequired,
+    categories: PropTypes.array.isRequired
 };
 
 function chunkArray(array, size) {

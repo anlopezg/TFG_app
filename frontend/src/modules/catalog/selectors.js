@@ -1,3 +1,5 @@
+import {FormattedMessage} from "react-intl";
+
 const getModuleState = state => state.catalog;
 
 /*********************** CRAFTS, CATEGORIES ***********************/
@@ -20,20 +22,37 @@ export const getCraftName = (crafts, id) => {
     return craft.craftName;
 }
 
-export const getSubcategoryName = (subcategories, id) => {
-
-    if(!subcategories){
+export const getCategoryNameBySubcategoryId = (categories, subcategoryId) => {
+    if (!categories || !subcategoryId) {
         return '';
     }
 
-    const subcategory = subcategories.find(subcategory => subcategory.id === id);
+    for (const category of categories) {
+        for (const subcategory of category.subcategories) {
+            if (subcategory.id === subcategoryId) {
+                return category.categoryName;
+            }
+        }
+    }
 
-    if(!subcategory){
+    return 'unknown';
+};
+
+export const getSubcategoryName = (categories, subcategoryId) => {
+    if (!categories || !subcategoryId) {
         return '';
     }
 
-    return subcategory.subcategoryName;
-}
+    for (const category of categories) {
+        for (const subcategory of category.subcategories) {
+            if (subcategory.id === subcategoryId) {
+                return subcategory.subcategoryName;
+            }
+        }
+    }
+
+    return 'unknown';
+};
 
 export const getProductSearch = state =>
     getModuleState(state).productSearch;

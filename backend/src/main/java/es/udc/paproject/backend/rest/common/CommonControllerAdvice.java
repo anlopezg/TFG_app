@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import es.udc.paproject.backend.model.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -13,17 +14,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
-import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
-import es.udc.paproject.backend.model.exceptions.PermissionException;
-
 @ControllerAdvice
 public class CommonControllerAdvice {
 	
 	private final static String INSTANCE_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.InstanceNotFoundException";
 	private final static String DUPLICATE_INSTANCE_EXCEPTION_CODE = "project.exceptions.DuplicateInstanceException";
 	private final static String PERMISSION_EXCEPTION_CODE = "project.exceptions.PermissionException";
-	
+	private final static String USER_NOT_SELLER_EXCEPTION_CODE = "project.exceptions.UserNotSellerException";
+
+
 	@Autowired
 	private MessageSource messageSource;
 	
@@ -76,5 +75,19 @@ public class CommonControllerAdvice {
 		return new ErrorsDto(errorMessage);
 		
 	}
+
+	@ExceptionHandler(UserNotSellerException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ResponseBody
+	public ErrorsDto handleUserNotSellerException(UserNotSellerException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(USER_NOT_SELLER_EXCEPTION_CODE, null,
+				USER_NOT_SELLER_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+
+	}
+
+
 
 }

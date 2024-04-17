@@ -100,6 +100,6 @@ export const nextFindUsersResultPage = criteria =>
     findUsers({...criteria, page: criteria.page+1});
 
 
-const clearUserSearch = () => ({
+export const clearUserSearch = () => ({
     type: actionTypes.CLEAR_USER_SEARCH
 });

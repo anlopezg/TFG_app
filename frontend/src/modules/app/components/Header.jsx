@@ -18,7 +18,6 @@ const Header = () => {
                 <Link className="navbar-brand logo-link" to="/" >Yarn Crafters</Link>
             </div>
 
-
             <div className="row col-md-6 align-items-center">
                 <UserFilter/>
             </div>

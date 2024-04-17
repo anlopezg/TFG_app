@@ -17,7 +17,12 @@ const UserFilter = () =>{
             username: username.trim(),
             page:0}));
 
+        dispatch(actions.clearUserSearch());
+        setUsername('');
+
         navigate('/catalog/find-users-result');
+
+
     }
 
     return (

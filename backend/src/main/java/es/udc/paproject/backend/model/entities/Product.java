@@ -19,8 +19,7 @@ public class Product{
     private Boolean active;
     private LocalDateTime creationDate;
 
-
-    @Column(name = "productType", insertable = false, updatable = false)
+    @Version
     private String productType;
 
     public Product(){}
@@ -138,5 +137,9 @@ public class Product{
     @Transient
     public String getProductType() {
         return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 }

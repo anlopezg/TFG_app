@@ -124,6 +124,8 @@ export default {
     'project.products.Pattern.addTool': 'Add tool',
     'project.products.Pattern.removeTool': 'Remove tool',
     'project.products.Pattern.tools.message': 'Add all the tools that are necessary to complete pattern',
+    'project.product.ProductType.Pattern':'Digital pattern',
+    'project.product.ProductType.Physical':'Physical product',
 
     'project.catalog.Selector.all': 'All',
     'project.catalog.CraftSelector.allCrafts': 'All the crafts',
@@ -138,6 +140,7 @@ export default {
     'project.catalog.Subcategories.Tops': 'Tops',
     'project.catalog.Subcategories.Scarf': 'Scarf',
     'project.catalog.Subcategories.Sweater': 'Sweater',
+    'project.catalog.Subcategories.unknown': 'Unknown',
 
     'project.catalog.Product.type': 'Product type',
     'project.catalog.Search.ByUsername': 'Search for a user',

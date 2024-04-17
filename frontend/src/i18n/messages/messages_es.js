@@ -144,6 +144,7 @@ export default {
     'project.catalog.Subcategories.Tops': 'Camiseta',
     'project.catalog.Subcategories.Scarf': 'Bufanda',
     'project.catalog.Subcategories.Sweater': 'Jersey',
+    'project.catalog.Subcategories.unknown': 'Desconocida',
 
     'project.catalog.Product.type': 'Tipo de producto',
     'project.catalog.Search.ByUsername': 'Busca a un usuario',

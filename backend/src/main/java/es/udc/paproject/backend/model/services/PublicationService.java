@@ -9,6 +9,7 @@ import es.udc.paproject.backend.model.exceptions.UserNotOwnerException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface PublicationService {
 
@@ -31,6 +32,9 @@ public interface PublicationService {
                           String sizing, int difficultyLevel, String time,
                           String abbreviations, String specialAbbreviations, String tools)
             throws InstanceNotFoundException, UserNotSellerException;
+
+
+    //Product uploadImages(Long productId, List<String> imagePaths) throws InstanceNotFoundException;
 
 
     /**
