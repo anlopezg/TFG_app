@@ -58,15 +58,17 @@ public interface CatalogService {
      */
     Product findProduct(Long productId) throws InstanceNotFoundException;
 
+    void getProductType(Product product);
+
     /**
      * Returns all active products, whose owner matches the username.
      */
-    Block<Product> findUserProducts(String username, int page, int size) throws InstanceNotFoundException, UserNotSellerException;
+    Block<Product> findSellerProducts(String username, int page, int size) throws InstanceNotFoundException, UserNotSellerException;
 
 
     /**
      * Return all users with the seller role, whose username matches the given one.
      */
-    Block<User> findUsers(String username, int page, int size);
+    Block<User> findSellers(String username, int page, int size);
 
 }

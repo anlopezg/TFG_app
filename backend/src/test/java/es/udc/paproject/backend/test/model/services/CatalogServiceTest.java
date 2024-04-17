@@ -1,16 +1,8 @@
 package es.udc.paproject.backend.test.model.services;
 
 
-import es.udc.paproject.backend.model.entities.Category;
-import es.udc.paproject.backend.model.daos.CategoryDao;
-import es.udc.paproject.backend.model.entities.Subcategory;
-import es.udc.paproject.backend.model.daos.SubcategoryDao;
-import es.udc.paproject.backend.model.entities.Craft;
-import es.udc.paproject.backend.model.daos.CraftDao;
-import es.udc.paproject.backend.model.entities.Product;
-import es.udc.paproject.backend.model.daos.ProductDao;
-import es.udc.paproject.backend.model.entities.User;
-import es.udc.paproject.backend.model.daos.UserDao;
+import es.udc.paproject.backend.model.daos.*;
+import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import es.udc.paproject.backend.model.services.Block;
@@ -49,6 +41,8 @@ public class CatalogServiceTest {
     private SubcategoryDao subcategoryDao;
     @Autowired
     private ProductDao productDao;
+    @Autowired
+    private PatternDao patternDao;
 
 
     /* Object Creation */
@@ -88,6 +82,17 @@ public class CatalogServiceTest {
 
         productDao.save(product);
         return product;
+    }
+
+    private Pattern createPattern(User user, Craft craft, Subcategory subcategory, String title){
+
+        Pattern pattern = new Pattern(user, craft, subcategory, title, "descrip", BigDecimal.valueOf(30),
+                true, LocalDateTime.now(),
+                "intro", "notes", "gauge", "sizing", 1,
+                "time", "abbr", "special", "tool");
+
+        patternDao.save(pattern);
+        return pattern;
     }
 
 
@@ -143,7 +148,10 @@ public class CatalogServiceTest {
     }
 
 
-    /* PRODUCT SEARCH */
+    /**
+     *  Test for the method {@link CatalogService#findProducts(Long craftId, Long, String, String, int, int)}
+     *  to verify product search works using a {@link Craft} as a filter
+     */
     @Test
     public void testFindProductsByCraft(){
 
@@ -160,6 +168,10 @@ public class CatalogServiceTest {
 
     }
 
+    /**
+     *  Test for the method {@link CatalogService#findProducts(Long, Long subcategoryId, String, String, int, int)}
+     *  to verify product search works using a {@link Subcategory} as a filter
+     */
     @Test
     public void testFindProductsBySubcategories(){
 
@@ -178,41 +190,52 @@ public class CatalogServiceTest {
 
     }
 
+
+    /**
+     *  Test for the method {@link CatalogService#findProducts(Long, Long, String, String, int, int)}
+     *  to verify product search works using a Pattern as the Product Type
+     */
     @Test
-    public void testFindProductsByUser() throws InstanceNotFoundException, UserNotSellerException {
+    public void testFindProductsPatterns(){
 
         User user1 = createUser("user1");
-        user1.setRole(User.RoleType.SELLER);
-        User user2 = createUser("user2");
         Craft craft1 = createCraft("Crochet");
         Category category1 = createCategory("Tops");
+
         Subcategory subcategory1 = createSubcategory("Jacket", category1);
 
-        Product product1 = createProduct(user1, craft1, subcategory1, "Product1");
-        Product product2 = createProduct(user2, craft1, subcategory1, "Product2");
+        Pattern pattern1 = createPattern(user1, craft1, subcategory1, "Product1");
 
-        Block<Product> expectedBlock = new Block<>(Arrays.asList(product1), false);
-        assertEquals(expectedBlock, catalogService.findUserProducts(user1.getUsername(), 0, 1));
-
+        Block<Pattern> expectedBlock = new Block<>(Arrays.asList(pattern1), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+                "pattern", 0, 1));
     }
 
+    /**
+     *  Test for the method {@link CatalogService#findProducts(Long, Long, String, String, int, int)}
+     *  to verify product search works with all parameters
+     */
     @Test
-    public void testFindProductsByNotSellerUser(){
+    public void testFindProductsByAll(){
 
         User user1 = createUser("user1");
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
 
-        assertThrows(UserNotSellerException.class, ()->
-                catalogService.findUserProducts(user1.getUsername(), 0, 1));
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+
+        Pattern pattern1 = createPattern(user1, craft1, subcategory1, "Product1");
+
+        Block<Pattern> expectedBlock = new Block<>(Arrays.asList(pattern1), false);
+
+        assertEquals(expectedBlock, catalogService.findProducts(craft1.getId(), subcategory1.getId(),
+                "Prod", "pattern", 0, 1));
     }
 
-    @Test
-    public void testFindProductsByUnknownUser() {
-
-        assertThrows(InstanceNotFoundException.class, ()->
-                catalogService.findUserProducts("NOTUSER", 0, 1));
-
-    }
-
+    /**
+     *  Test for the method {@link CatalogService#findProducts(Long, Long, String, String, int, int)}
+     *  to verify product search only returns the products marked as active
+     */
     @Test
     public void testFindNonActiveProducts(){
 
@@ -229,6 +252,55 @@ public class CatalogServiceTest {
         assertEquals(expectedBlock, catalogService.findProducts(null, null, null, null, 0, 1));
     }
 
+
+
+    /**
+     * Test for the method {@link CatalogService#findSellerProducts(String username, int, int)}
+     * to verify the product search when given a User's username
+     *
+     * @throws InstanceNotFoundException The given username doesn't belong to an existing user
+     * @throws UserNotSellerException The searched user doesn't have the seller role
+     */
+    @Test
+    public void testFindProductsByUser() throws InstanceNotFoundException, UserNotSellerException {
+
+        User user1 = createUser("user1");
+        user1.setRole(User.RoleType.SELLER);
+        User user2 = createUser("user2");
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+
+        Product product1 = createProduct(user1, craft1, subcategory1, "Product1");
+        Product product2 = createProduct(user2, craft1, subcategory1, "Product2");
+
+        Block<Product> expectedBlock = new Block<>(Arrays.asList(product1), false);
+        assertEquals(expectedBlock, catalogService.findSellerProducts(user1.getUsername(), 0, 1));
+
+    }
+
+    @Test
+    public void testFindProductsByNotSellerUser(){
+
+        User user1 = createUser("user1");
+
+        assertThrows(UserNotSellerException.class, ()->
+                catalogService.findSellerProducts(user1.getUsername(), 0, 1));
+    }
+
+    @Test
+    public void testFindProductsByUnknownUser() {
+
+        assertThrows(InstanceNotFoundException.class, ()->
+                catalogService.findSellerProducts("NOTUSER", 0, 1));
+
+    }
+
+
+
+    /**
+     *  Test for the method {@link CatalogService#findProduct(Long)}
+     */
     @Test
     public void testFindProduct() throws InstanceNotFoundException{
 
@@ -241,6 +313,29 @@ public class CatalogServiceTest {
         Product product1 = createProduct(user1, craft1, subcategory1, "Product1");
 
         assertEquals(product1, catalogService.findProduct(product1.getId()));
+    }
+
+    @Test
+    public void testFindProductByNonExistentId(){
+        assertThrows(InstanceNotFoundException.class, ()->
+                catalogService.findProduct(NON_EXISTENT_ID));
+    }
+
+    /**
+     *  Test for the method {@link CatalogService#findSellers(String, int, int)}
+     */
+    @Test
+    public void testFindUsersByUsername(){
+
+        User user1 = createUser("seller1");
+        user1.setRole(User.RoleType.SELLER);
+
+        User user2 = createUser("seller2");
+        user2.setRole(User.RoleType.SELLER);
+
+        Block<User> expectedBlock = new Block<>(Arrays.asList(user1, user2), false);
+
+        assertEquals(expectedBlock, catalogService.findSellers("seller", 0, 2));
 
     }
 }

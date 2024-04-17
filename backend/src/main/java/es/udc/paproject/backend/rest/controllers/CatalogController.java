@@ -6,14 +6,11 @@ import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.CatalogService;
-import es.udc.paproject.backend.rest.common.ErrorsDto;
 import es.udc.paproject.backend.rest.dtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Locale;
 
 import static es.udc.paproject.backend.rest.dtos.CategoryConversor.toCategoryDtos;
 import static es.udc.paproject.backend.rest.dtos.CraftConversor.toCraftDtos;
@@ -27,24 +24,8 @@ public class CatalogController {
     @Autowired
     private CatalogService catalogService;
 
-    private final static String USER_NOT_SELLER_EXCEPTION_CODE = "project.exceptions.UserNotSellerException";
-
     @Autowired
     private MessageSource messageSource;
-
-
-    @ExceptionHandler(UserNotSellerException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ResponseBody
-    public ErrorsDto handleUserNotSellerException(UserNotSellerException exception, Locale locale) {
-
-        String errorMessage = messageSource.getMessage(USER_NOT_SELLER_EXCEPTION_CODE, null,
-                USER_NOT_SELLER_EXCEPTION_CODE, locale);
-
-        return new ErrorsDto(errorMessage);
-
-    }
-
 
     @GetMapping("/crafts")
     public List<CraftDto> findAllCrafts() {
@@ -74,11 +55,11 @@ public class CatalogController {
     }
 
     @GetMapping("/products/{id}")
-    public ProductSummaryDto findProductById(@PathVariable Long id) throws InstanceNotFoundException{
+    public ProductDto findProductById(@PathVariable Long id) throws InstanceNotFoundException{
 
         Product product = catalogService.findProduct(id);
 
-        return toProductSummaryDto(product);
+        return toProductDto2(product);
     }
 
 
@@ -89,7 +70,7 @@ public class CatalogController {
             @PathVariable String username,
             @RequestParam(defaultValue = "0") int page) throws InstanceNotFoundException, UserNotSellerException {
 
-        Block<Product> productBlock = catalogService.findUserProducts( username, page, 9);
+        Block<Product> productBlock = catalogService.findSellerProducts( username, page, 9);
 
         return new BlockDto<>(toProductSummaryDtos(productBlock.getItems()), productBlock.getExistMoreItems());
 
@@ -99,7 +80,7 @@ public class CatalogController {
     public BlockDto<UserDto> findUsers(@RequestParam(required = false) String username,
                              @RequestParam(defaultValue = "0") int page){
 
-        Block<User> userBlock = catalogService.findUsers(username, page, 10);
+        Block<User> userBlock = catalogService.findSellers(username, page, 10);
 
         return new BlockDto<>(toUserDtos(userBlock.getItems()), userBlock.getExistMoreItems());
     }

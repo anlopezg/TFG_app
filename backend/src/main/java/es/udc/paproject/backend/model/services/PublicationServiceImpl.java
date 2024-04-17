@@ -4,12 +4,7 @@ import es.udc.paproject.backend.model.daos.PatternDao;
 import es.udc.paproject.backend.model.daos.PhysicalDao;
 import es.udc.paproject.backend.model.daos.ProductDao;
 import es.udc.paproject.backend.model.daos.UserDao;
-import es.udc.paproject.backend.model.entities.Subcategory;
-import es.udc.paproject.backend.model.entities.Craft;
-import es.udc.paproject.backend.model.entities.Pattern;
-import es.udc.paproject.backend.model.entities.Physical;
-import es.udc.paproject.backend.model.entities.Product;
-import es.udc.paproject.backend.model.entities.User;
+import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserNotOwnerException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
@@ -18,9 +13,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -76,6 +73,28 @@ public class PublicationServiceImpl implements PublicationService{
 
         return patternCreated;
     }
+
+
+    /*@Override
+    public Product uploadImages(Long productId, MultipartFile imageFile) throws InstanceNotFoundException {
+
+        Optional<Product> product = productDao.findById(productId);
+
+        if(product.isEmpty()){
+            throw new InstanceNotFoundException("project.entities.product", productId);
+        }
+
+        for (String imagePath : imagePaths) {
+            ProductImages productImage = new ProductImages();
+            productImage.setProduct(product);
+            productImage.setFileName(imagePath);
+
+        }
+
+        return product.get();
+
+    }*/
+
 
     @Override
     public Physical createPhysical(Long userId, Long craftId, Long subcategoryId, String title, String description,

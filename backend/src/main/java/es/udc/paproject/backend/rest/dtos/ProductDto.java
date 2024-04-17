@@ -19,6 +19,9 @@ public class ProductDto {
     private BigDecimal price;
     private Boolean active;
 
+    private String username;
+    private String productType;
+
     public ProductDto(){}
 
     public ProductDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
@@ -32,6 +35,21 @@ public class ProductDto {
         this.description=description;
         this.price=price;
         this.active=active;
+    }
+
+    public ProductDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
+                      Boolean active, String username, String productType){
+
+        this.id=id;
+        this.userId =user;
+        this.craftId =craft;
+        this.subcategoryId = subcategory;
+        this.title=title;
+        this.description=description;
+        this.price=price;
+        this.active=active;
+        this.username = username;
+        this.productType = productType;
     }
 
     public Long getId() {
@@ -105,5 +123,21 @@ public class ProductDto {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 }

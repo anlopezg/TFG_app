@@ -86,15 +86,13 @@ public class CatalogServiceImpl implements CatalogService{
 
     @Override
     public Class<?> getProductTypeClass(String productType){
-        switch (productType){
-            case "physical":
-                return Physical.class;
-            case "pattern":
-                return Pattern.class;
-            default:
-                return null;
-        }
+        return switch (productType) {
+            case "physical" -> Physical.class;
+            case "pattern" -> Pattern.class;
+            default -> null;
+        };
     }
+
 
     @Override
     public Block<Product> findProducts(Long craftId, Long subcategoryId, String keywords, String productType, int page, int size){
@@ -116,6 +114,21 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
     @Override
+    public void getProductType(Product product){
+
+        if(product.getClass().equals(Physical.class)){
+            product.setProductType("physical");
+
+        }else if(product.getClass().equals(Pattern.class)){
+            product.setProductType("pattern");
+
+        }else{
+            product.setProductType("");
+        }
+
+    }
+
+    @Override
     public Product findProduct(Long productId) throws InstanceNotFoundException {
 
         Optional<Product> product = productDao.findByIdAndActiveOrderByCreationDateDesc(productId);
@@ -124,11 +137,13 @@ public class CatalogServiceImpl implements CatalogService{
             throw new InstanceNotFoundException("project.entities.product", productId);
         }
 
+        getProductType(product.get());
+
         return product.get();
     }
 
     @Override
-    public Block<Product> findUserProducts(String username, int page, int size) throws InstanceNotFoundException, UserNotSellerException {
+    public Block<Product> findSellerProducts(String username, int page, int size) throws InstanceNotFoundException, UserNotSellerException {
 
         User userFound = permissionChecker.checkUserName(username);
 
@@ -143,7 +158,7 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
     @Override
-    public Block<User> findUsers(String username, int page, int size){
+    public Block<User> findSellers(String username, int page, int size){
 
         Slice<User> slice = userDao.findSellers(username, page, size);
 
