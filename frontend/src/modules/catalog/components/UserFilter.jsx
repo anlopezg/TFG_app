@@ -26,22 +26,32 @@ const UserFilter = () =>{
     }
 
     return (
-        <div className="">
+        <div className="container">
+
+            <h4 className="text-left m-3 mb-4 bold font-bold text-uppercase">
+                <i className="fa-solid fa-magnifying-glass m-2 "></i>
+                <FormattedMessage id="project.catalog.Filter.Users"/>
+            </h4>
 
             <form className="form-wrapper " onSubmit={e => handleSubmit(e)}>
-                <div className="input-group rounded">
+                <div className="row input-group rounded justify-content-center align-items-end">
 
-                    <label htmlFor="username" className="search-placeholder my-1">
-                        <FormattedMessage id="project.catalog.Search.ByUsername"/>
-                    </label>
+                    <div className="col-md-5">
+                        <label htmlFor="username">
+                            <FormattedMessage id="project.catalog.Search.ByUsername"/>
+                        </label>
+                        <input id="username" type="search" className="form-control rounded"
+                               aria-label="Search" aria-describedby="search-addon"
+                               value={username} onChange={e=> setUsername(e.target.value)}/>
+                    </div>
 
-                    <input id="username" type="search" className="form-control rounded"
-                           aria-label="Search" aria-describedby="search-addon"
-                           value={username} onChange={e=> setUsername(e.target.value)}/>
-
-                    <button type="submit" className="btn btn-primary" data-mdb-ripple-init>
-                        <i className="fas fa-search"></i>
-                    </button>
+                    <div className="col-md-3">
+                        <div className="form-group">
+                            <button type="submit" className="btn button-coral">
+                                <FormattedMessage id="project.global.buttons.search"/>
+                            </button>
+                        </div>
+                    </div>
 
                 </div>
 

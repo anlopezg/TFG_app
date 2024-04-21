@@ -11,7 +11,7 @@ const AddedPatterns= ({patterns}) =>(
 
                 <div className="card-deck">
                     <div className="card">
-                        <img src="/src/crochet_default.jpg" className="card-img-top" alt="Product image"/>
+                        <img src={pattern.imagesUrl[0]} className="card-img" alt="Product image"/>
                         <div className="card-body">
                             <h5 className="card-title">
                                 <PatternLink id={pattern.id} title={pattern.title}/>

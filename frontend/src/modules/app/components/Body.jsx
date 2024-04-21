@@ -5,8 +5,22 @@ import AppGlobalComponents from './AppGlobalComponents';
 import Home from './Home';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile, BecomesSeller} from '../../users';
 import users from '../../users';
-import {CreatePattern, ViewAddedPatterns, ViewAddedPhysicals,CreatePhysical, PatternDetails
-, PhysicalDetails, EditPattern, ManagePattern, DeletePattern, EditPhysical, ManagePhysical, DeletePhysical} from "../../publications/index.js";
+import {
+    CreatePattern,
+    ViewAddedPatterns,
+    ViewAddedPhysicals,
+    CreatePhysical,
+    PatternDetails
+    ,
+    PhysicalDetails,
+    EditPattern,
+    ManagePattern,
+    DeletePattern,
+    EditPhysical,
+    ManagePhysical,
+    DeletePhysical,
+    StoreTabs
+} from "../../publications/index.js";
 
 import {FindProductsResult, ProductDetails, FindAllProducts, UserProducts, FindUsersResult} from "../../catalog/index.js";
 
@@ -41,14 +55,14 @@ const Body = () => {
 
                 {loggedIn && isSeller && <Route path="/publications/create-pattern" element={<CreatePattern/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/pattern-details/:id" element={<PatternDetails/>}/>}
-                {loggedIn && isSeller && <Route path="/publications/patterns" element={<ViewAddedPatterns/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/patterns" element={<StoreTabs initialTab="patterns"/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/edit-pattern/:id" element={<EditPattern/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/manage-pattern/:id" element={<ManagePattern/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/delete-pattern/:id" element={<DeletePattern/>}/>}
 
                 {loggedIn && isSeller && <Route path="/publications/create-physical" element={<CreatePhysical/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/physical-details/:id" element={<PhysicalDetails/>}/>}
-                {loggedIn && isSeller && <Route path="/publications/products" element={<ViewAddedPhysicals/>}/>}
+                {loggedIn && isSeller && <Route path="/publications/products" element={<StoreTabs initialTab="physicals"/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/edit-physical/:id" element={<EditPhysical/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/manage-physical/:id" element={<ManagePhysical/>}/>}
                 {loggedIn && isSeller && <Route path="/publications/delete-physical/:id" element={<DeletePhysical/>}/>}

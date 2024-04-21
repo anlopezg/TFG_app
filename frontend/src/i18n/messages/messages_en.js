@@ -4,7 +4,7 @@ export default {
     'project.app.Header.home': 'Home',
     'project.app.Header.logout': 'Logout',
     'project.app.Home.welcome': 'Welcome to Yarn Crafters!',
-    'project.app.Home.filter' : 'Filter your search',
+
 
     'project.common.ErrorDialog.title': 'Error',
 
@@ -26,8 +26,10 @@ export default {
     'project.global.fields.email': 'Email address',
     'project.global.fields.firstName': 'First name',
     'project.global.fields.language': 'Language',
+    'project.global.fields.region':'Region',
     'project.global.fields.country': 'Country',
     'project.global.fields.select.country': 'Select a country',
+    'project.global.fields.select.region': 'Select a region',
     'project.global.fields.crochetLevel': 'Crochet level',
     'project.global.fields.knitLevel': 'Knit level',
     'project.global.fields.level.none': 'No experience',
@@ -143,15 +145,19 @@ export default {
     'project.catalog.Subcategories.unknown': 'Unknown',
 
     'project.catalog.Product.type': 'Product type',
-    'project.catalog.Search.ByUsername': 'Search for a user',
-    'project.catalog.Users.visit': 'Visit',
+    'project.catalog.Search.ByUsername': 'Enter a username',
+    'project.catalog.Search.ByUser': 'User Search',
+    'project.catalog.Filter.Users' : 'Find an user',
+    'project.catalog.Search.ByProduct': 'Product Search',
+    'project.catalog.Filter.Products' : 'Filter your product search',
+    'project.catalog.Users.visit': 'Visit profile',
 
     'project.catalog.FindAllProductsResult.noProductsFound':'No products have been added yet',
     'project.catalog.FindUsersResult.noUsersFound' : 'No users match the given username',
 
     'project.catalog.FindProductsResult.noProductsFound': 'No products with those characteristics have been found',
     'project.catalog.UserProducts.noProductsFound': ' does not currently have any product available :(',
-    'project.catalog.UserProducts.All': 'All',
+    'project.catalog.UserProducts.All': 'All Products',
 
     'project.catalog.Product.AddCart': 'Add to cart'
 

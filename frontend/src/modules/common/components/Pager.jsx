@@ -9,8 +9,8 @@ const Pager = ({back, next}) => (
                 <button className="page-link"
                     onClick={back.onClick}>
                     <div className="d-flex align-items-center">
-                        <i className="fa-solid fa-arrow-left-long arrow-lime mr-1"></i>
-                        <FormattedMessage id='project.global.buttons.back'/>
+                        <i className="fa-regular fa-arrow-left-long arrow-lime"></i>
+
                     </div>
                 </button>
             </li>
@@ -19,8 +19,7 @@ const Pager = ({back, next}) => (
                     onClick={next.onClick}>
 
                     <div className="d-flex align-items-center">
-                        <FormattedMessage id='project.global.buttons.next'/>
-                        <i className="fa-solid fa-arrow-right-long arrow-lime ml-1"></i>
+                        <i className="fa-regular fa-arrow-right-long arrow-lime"></i>
                     </div>
                 </button>
             </li>

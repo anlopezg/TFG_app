@@ -30,35 +30,16 @@ const ViewAddedPhysicals = () => {
 
     return (
 
-        <div className="mt-4 mb-4 container justify-content-center align-items-center">
+        <div className="mt-4 container justify-content-center align-items-center">
 
-            <h1 className="p-4">
-                <FormattedMessage id="project.products.MyStore.heading"/>
-            </h1>
-            <ul className="nav nav-tabs nav-justified">
-                <li className="nav-item">
-                    <Link className="nav-link active nav-tab-item" to="/publications/products">
-                        <i className="fa-solid fa-shirt mr-3"></i>
-
-                        <FormattedMessage id="project.products.Product.heading"/>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link nav-tab-item" to="/publications/patterns">
-                        <i className="fa-solid fa-file-lines mr-3"></i>
-                        <FormattedMessage id="project.products.Pattern.heading"/>
-                    </Link>
-                </li>
-            </ul>
-
-            <div className="back-color-blue card-body pt-5">
+            <div className="back-color-blue card-body">
                 <div className="d-flex justify-content-between align-items-center">
                     <div>
-                        <h3 className="pt-3 pl-5">
+                        <h3 className="pt-3 ms-5">
                             <FormattedMessage id="project.products.AddedPhysical.heading"/>
                         </h3>
                     </div>
-                    <div className="col-md-4 mr-5">
+                    <div className="col-md-4 me-5">
                         <Link className="btn button-dark-blue bold-label " to="/publications/create-physical">
                             <FormattedMessage id="project.products.CreatePhysical.heading"/>
                         </Link>

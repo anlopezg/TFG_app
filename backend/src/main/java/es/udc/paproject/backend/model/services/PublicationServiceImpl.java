@@ -1,9 +1,6 @@
 package es.udc.paproject.backend.model.services;
 
-import es.udc.paproject.backend.model.daos.PatternDao;
-import es.udc.paproject.backend.model.daos.PhysicalDao;
-import es.udc.paproject.backend.model.daos.ProductDao;
-import es.udc.paproject.backend.model.daos.UserDao;
+import es.udc.paproject.backend.model.daos.*;
 import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserNotOwnerException;
@@ -13,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -38,6 +34,8 @@ public class PublicationServiceImpl implements PublicationService{
     @Autowired
     private PhysicalDao physicalDao;
 
+    @Autowired
+    private ProductImagesDao productImagesDao;
 
     @Override
     public void checkProductOwner(Long userId, Long productId) throws UserNotOwnerException {
@@ -53,7 +51,8 @@ public class PublicationServiceImpl implements PublicationService{
     @Override
     public Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                                  BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                                 String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools)
+                                 String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools,
+                                 List<String> imagesUrl)
             throws InstanceNotFoundException, UserNotSellerException{
 
         User user = permissionChecker.checkUser(userId);
@@ -71,12 +70,19 @@ public class PublicationServiceImpl implements PublicationService{
 
         productDao.save(patternCreated);
 
+        for(String imageUrl : imagesUrl){
+            ProductImages productImage = new ProductImages(patternCreated, imageUrl);
+            patternCreated.addImage(productImage);
+            productImagesDao.save(productImage);
+        }
+
+
         return patternCreated;
     }
 
 
-    /*@Override
-    public Product uploadImages(Long productId, MultipartFile imageFile) throws InstanceNotFoundException {
+    @Override
+    public void uploadImages(Long productId, List<String> fileNames) throws InstanceNotFoundException{
 
         Optional<Product> product = productDao.findById(productId);
 
@@ -84,22 +90,19 @@ public class PublicationServiceImpl implements PublicationService{
             throw new InstanceNotFoundException("project.entities.product", productId);
         }
 
-        for (String imagePath : imagePaths) {
+        for(String fileName: fileNames){
             ProductImages productImage = new ProductImages();
-            productImage.setProduct(product);
-            productImage.setFileName(imagePath);
-
+            productImage.setProduct(product.get());
+            productImage.setImageUrl(fileName);
         }
 
-        return product.get();
-
-    }*/
+    }
 
 
     @Override
     public Physical createPhysical(Long userId, Long craftId, Long subcategoryId, String title, String description,
                                    BigDecimal price, Boolean active, int amount, String size, String color,
-                                   String details) throws InstanceNotFoundException, UserNotSellerException{
+                                   String details, List<String> imagesUrl) throws InstanceNotFoundException, UserNotSellerException{
 
         User user = permissionChecker.checkUser(userId);
         if(user.getRole() != User.RoleType.SELLER){
@@ -115,6 +118,13 @@ public class PublicationServiceImpl implements PublicationService{
                 title, description, price, active, creationDate, amount, size, color, details);
 
         productDao.save(physicalCreated);
+
+
+        for(String imageUrl : imagesUrl){
+            ProductImages productImage = new ProductImages(physicalCreated, imageUrl);
+            physicalCreated.addImage(productImage);
+            productImagesDao.save(productImage);
+        }
 
         return physicalCreated;
     }
@@ -166,7 +176,7 @@ public class PublicationServiceImpl implements PublicationService{
 
 
     @Override
-    public Product findProductById(Long productId) throws InstanceNotFoundException, UserNotOwnerException{
+    public Product findProductById(Long productId) throws InstanceNotFoundException{
 
         Optional<Product> product = productDao.findById(productId);
 

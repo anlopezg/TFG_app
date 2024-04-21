@@ -7,7 +7,7 @@ const BackLink = () => {
     
     return (
 
-        <button type="button" className="btn btn-link back-link-blue"
+        <button type="button" className="btn back-link-blue"
             onClick={() => navigate(-1)}>
 
             <i className="fa-solid fa-angle-left mr-2"></i>

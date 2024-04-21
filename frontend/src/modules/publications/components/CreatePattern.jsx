@@ -8,9 +8,11 @@ import * as actions from '../actions';
 import * as userSelector from "../../users/selectors.js";
 import CraftSelector from "../../catalog/components/CraftSelector.jsx";
 import SubcategorySelector from "../../catalog/components/SubcategorySelector.jsx";
-import * as catalogSelector from "../../catalog/selectors.js";
 
-
+import uploadImages from "../../../backend/cloudinary/uploadImages.js";
+import deleteImages from "../../../backend/cloudinary/deleteImages.js";
+import {image} from "@cloudinary/url-gen/qualifiers/source";
+import imageUploader from "./imageUploader.js";
 
 const CreatePattern = () => {
 
@@ -40,6 +42,9 @@ const CreatePattern = () => {
     const[time, setTime ] = `${timeValue} ${timeUnit}`;
 
 
+    const { images, previewUrls, handleImagesChange } = imageUploader();
+
+
     const [backendErrors, setBackendErrors] = useState(null);
     let form;
 
@@ -47,32 +52,45 @@ const CreatePattern = () => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        if(form.checkValidity()){
-            dispatch(actions.createPattern(
-                {userId: user.id,
-                    craftId: toNumber(craftId),
-                    subcategoryId: toNumber(subcategoryId),
-                    title: title.trim(),
-                    description: description.trim(),
-                    price: price,
-                    active: active,
-                    introduction: introduction.trim(),
-                    notes: notes.trim(),
-                    gauge: gauge.trim(),
-                    sizing: sizing.trim(),
-                    difficultyLevel: difficultyLevel,
-                    time: time.trim(),
-                    abbreviations: abbreviations.trim(),
-                    specialAbbreviations: specialAbbreviations.trim(),
-                    tools: tools.trim()
-                },
-                () => navigate('/publications/patterns'),
-                errors => setBackendErrors(errors)
-            ));
-        } else {
-            setBackendErrors(null);
-            form.classList.add('was-validated');
-        }
+        let imageResults = [];
+
+
+        uploadImages(images).then((results) =>{
+            console.log("Resultados de la carga:", results);
+            imageResults= results;
+
+            const urlList = imageResults.map(imageResult => imageResult.url);
+            console.log("Url List: ", urlList);
+
+            if(form.checkValidity()){
+                dispatch(actions.createPattern(
+                    {userId: user.id,
+                        craftId: toNumber(craftId),
+                        subcategoryId: toNumber(subcategoryId),
+                        title: title.trim(),
+                        description: description.trim(),
+                        price: price,
+                        active: active,
+                        introduction: introduction.trim(),
+                        notes: notes.trim(),
+                        gauge: gauge.trim(),
+                        sizing: sizing.trim(),
+                        difficultyLevel: difficultyLevel,
+                        time: time.trim(),
+                        abbreviations: abbreviations.trim(),
+                        specialAbbreviations: specialAbbreviations.trim(),
+                        tools: tools.trim(),
+                        imagesUrl: urlList
+                    },
+                    () => navigate('/publications/patterns'),
+                    errors => setBackendErrors(errors)
+                ));
+            } else {
+                setBackendErrors(null);
+                form.classList.add('was-validated');
+            }
+
+    });
     }
 
     const handleCheckboxChange = (newValue) => {
@@ -94,6 +112,19 @@ const CreatePattern = () => {
                     <h2 className="retro card-header">
                         <FormattedMessage id="project.products.CreatePattern.heading"/>
                     </h2>
+
+
+                    <div>
+                        <input type="file" accept="image/*" multiple onChange={handleImagesChange}/>
+                    </div>
+                    {previewUrls.map((url, index) => (
+                        <div key={index}>
+                            <img src={url} alt="Preview" style={{ width: "200px", height: "200px" }} />
+                        </div>
+                    ))}
+
+
+
                     <div className="card-body">
                         <form ref={node => form = node}
                               className="needs-validation" noValidate

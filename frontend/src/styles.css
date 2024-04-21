@@ -74,8 +74,13 @@ body{
 
 h2.retro{
     font-family: 'BrightRetro', sans-serif;
-    font-size: 32px;
+    font-size: 42px;
     text-align: center;
+}
+
+h3.retro{
+    font-family: 'BrightRetro', sans-serif;
+    font-size: 38px;
 }
 
 h4{
@@ -96,8 +101,11 @@ h4{
     border-radius: 0 0 20px 20px ;
 }
 
-.card .card-img-top{
-    border-radius: 20px 20px 0 0
+.card .card-img{
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    height: 400px;
+    object-fit: cover
 }
 
 .user-result .card {
@@ -154,6 +162,14 @@ h4{
     justify-content: center;
 }
 
+.container.card.back-color-lilac-pink {
+    max-width: 1100px;
+}
+
+.container.filters{
+    max-width: 1200px;
+}
+
 .button-options{
     width: 100%;
     height: 100%;
@@ -183,12 +199,36 @@ h4{
     font-size: 18px;
 }
 
+.button-lime:hover{
+    background-color: var(--lime-green);
+    border: 2px solid #1F1E1E;
+}
+
 .button-coral{
     border-radius: 20px;
     background-color: var(--coral);
     font-family: 'Bold', sans-serif;
-    width: 100%
+    min-width: 200px;
+    max-width: 100%;
 }
+
+.button-coral:hover{
+    background-color: var(--coral);
+    border-color: #495057;
+}
+
+.button-lilac{
+    background-color: var(--lilac-pink);
+    border-radius: 20px;
+    font-family: 'Bold', sans-serif;
+    max-width: 100%;
+}
+
+.button-lilac:hover{
+    background-color: var(--lilac-pink);
+    border-color: #495057;
+}
+
 
 /* Specific styles */
 .logo-link{
@@ -257,10 +297,10 @@ h4{
 
 .button-light-pink{
     background-color: var(--pastel-pink);
+    border: none;
     width: 100%;
     color: var(--light-black);
     font-size: 18px;
-    border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px 20px;
     cursor: pointer;
@@ -268,8 +308,6 @@ h4{
 
 .button-light-pink:hover{
     background-color: var(--medium-pink);
-    border: 2px solid #ccc;
-    border-radius: 10px;
 }
 
 .button-dark-blue{
@@ -282,6 +320,7 @@ h4{
 }
 
 .button-dark-blue:hover{
+    background-color: var(--darker-blue);
     font-size: 18.5px;
     border: 1px solid #ffffff
 }
@@ -304,6 +343,7 @@ h4{
     padding: 10px 20px;
 }
 
+
 .back-link-blue{
     background-color: var(--pastel-blue);
     color: var(--light-black);
@@ -311,6 +351,10 @@ h4{
     font-size: 18px;
     border-radius: 20px;
     padding: 10px 20px;
+}
+
+.back-link-blue:hover{
+    background-color: var(--darker-blue);
 }
 
 .nav-tabs .nav-item .nav-link{
@@ -395,6 +439,15 @@ h4{
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px 16px;
 }
 
 .icon-edit{
@@ -405,12 +458,15 @@ h4{
 
 .arrow-lime{
     background-color: var(--lime-green);
+    font-size: 1.5em;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
     justify-content: center;
     align-items: center;
     display: flex;
+    margin: auto;
+    padding: 5px;
 }
 
 .arrow-lime:disabled{
@@ -419,11 +475,23 @@ h4{
 
 .page-link{
     color: var(--light-black);
-
+    border: none;
+    background-color: transparent;
 }
 
 .page-link:enabled{
     font-family: 'Bold', sans-serif;
+}
+
+.page-item.disabled .page-link {
+    color: grey;
+    pointer-events: none;
+    background-color: transparent;
+}
+
+.page-item:not(.disabled) .page-link:hover {
+    color: darkgreen;
+    background-color: transparent;
 }
 
 
@@ -519,14 +587,79 @@ h4{
 
 .product-type-label{
     color: var(--light-black);
-    border-radius: 10px;
-    border-color: var(--light-black);
-    border-width: 1px;
-    background-color: var(--lighter-beis);
-    margin: 1px;
     text-align: center;
-    font-family: 'Bold', sans-serif;
+    font-style: italic;
     font-size: 18px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    margin-top: 20px;
+    z-index: 1;
+    padding: 7px;
 }
+
+
+/* Filter tabs */
+.tabs button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px 20px 0 0;
+    outline: none;
+    cursor: pointer;
+    background-color: var(--light-coral);
+    transition: background-color 0.3s;
+}
+
+.tabs button:hover {
+    background-color: var(--coral);
+    opacity: 80%;
+}
+
+.tabs button.active {
+    background-color: var(--coral);
+    font-family: 'Bold', sans-serif;
+}
+
+.tab-content {
+    padding: 20px;
+    border: none;
+    background-color: var(--lilac-pink);
+    border-radius: 0 20px 20px 20px;
+}
+
+
+/* My Store tabs*/
+.tabs.my-store button{
+    font-size: 24px;
+    background-color: var(--darker-blue) ;
+    opacity: 70%;
+    width: 35%;
+}
+
+.tabs.my-store button:hover {
+    background-color: var(--darker-blue);
+    opacity: 100%;
+}
+
+.tabs.my-store button.active {
+    background-color: var(--pastel-blue);
+    font-family: 'Bold', sans-serif;
+    opacity: 100%;
+}
+
+.tab-content.my-store {
+    background-color: var(--pastel-blue);
+}
+
+.seller-info{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    margin-top: 20px;
+    z-index: 1;
+}
+
 
 

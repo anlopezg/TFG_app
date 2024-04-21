@@ -85,6 +85,18 @@ const ViewProfile = () => {
 
                     <div className="row justify-content-center">
                         <div className="col-md-4 ">
+                            <label htmlFor="region" className="bold-label col-form-label">
+                                <FormattedMessage id="project.global.fields.region"/>
+                            </label>
+                        </div>
+                        <div className="col-md-4 col-form-label">
+                            <p>{user.region}</p>
+                        </div>
+                    </div>
+
+
+                    <div className="row justify-content-center">
+                        <div className="col-md-4 ">
                             <label htmlFor="crochetlevel" className="bold-label col-form-label">
                                 <FormattedMessage id="project.global.fields.crochetLevel"/>
                             </label>

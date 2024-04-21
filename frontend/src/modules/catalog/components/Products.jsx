@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import * as selectors from '../selectors';
 import {PatternLink, ProductLink} from '../../common';
 import {UserLink} from "../../common/index.js";
+import ProductType from "./ProductType.jsx";
 
 const Products = ({products, crafts, categories}) => {
 
@@ -18,7 +19,6 @@ const Products = ({products, crafts, categories}) => {
         return <FormattedMessage id={`project.catalog.Subcategories.${subcategoryName}`}/>
     }
 
-
     return(
     <div>
         {productsChunks.map((chunk, index)  =>(
@@ -29,7 +29,7 @@ const Products = ({products, crafts, categories}) => {
 
                         <div className="card-deck">
                             <div className="card">
-                                <img src="/src/crochet_default.jpg" className="card-img-top" alt="Product image"/>
+                                <img src={product.mainImageUrl} className="card-img" alt="Product image"/>
 
                                 <div className="card-body">
                                     <h5 className="card-title">
@@ -43,6 +43,7 @@ const Products = ({products, crafts, categories}) => {
                                     <div className="d-flex">
                                         <i className="fa-solid fa-user-tag m-1"></i>
                                         <UserLink id={product.userId} username={product.username}/>
+                                        <ProductType productType={product.productType}/>
                                     </div>
 
 

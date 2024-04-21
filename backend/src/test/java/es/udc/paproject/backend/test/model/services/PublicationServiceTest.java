@@ -47,7 +47,7 @@ public class PublicationServiceTest {
 
     private User createSellerUser(String userName) throws DuplicateInstanceException, UserAlreadySellerException, InstanceNotFoundException {
         User user = new User(userName, userName + "@a.com","password", "firstName", "language",
-                "country", 1, 2, "long bio");
+                "country", "region", 1, 2, "long bio");
 
         userService.signUp(user);
 
@@ -58,7 +58,7 @@ public class PublicationServiceTest {
 
     private User createNormalUser(String userName) throws DuplicateInstanceException{
         User user = new User(userName, userName + "@a.com","password", "firstName", "language",
-                "country", 1, 2, "long bio");
+                "country", "region", 1, 2, "long bio");
 
         userService.signUp(user);
 
@@ -101,7 +101,7 @@ public class PublicationServiceTest {
         Subcategory subcategory= createSubcategory("Ring", category);
 
         return publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title", "Description",
-                BigDecimal.valueOf(20), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
+                BigDecimal.valueOf(20), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
     }
 
 
@@ -121,7 +121,7 @@ public class PublicationServiceTest {
         Pattern expectedPattern = createPattern(user, craft, subcategory, title, price, LocalDateTime.now());
 
         Pattern createdPattern = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
 
 
         assertEquals(expectedPattern.getUser(),createdPattern.getUser());
@@ -143,7 +143,7 @@ public class PublicationServiceTest {
         assertThrows(UserNotSellerException.class, ()->
                 publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "title", "Description",
                         BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook"));
+                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null));
     }
 
     @Test
@@ -151,7 +151,7 @@ public class PublicationServiceTest {
         assertThrows(InstanceNotFoundException.class, ()->
                 publicationService.createPattern(NON_EXISTENT_ID, NON_EXISTENT_ID, NON_EXISTENT_ID, "title", "Description",
                         BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook"));
+                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null));
     }
 
     @Test
@@ -167,7 +167,7 @@ public class PublicationServiceTest {
         Physical expectedPhysical = createPhysical(user, craft, subcategory, title, price, LocalDateTime.now());
 
         Physical physical = publicationService.createPhysical(user.getId(), craft.getId(),subcategory.getId(), title, "Description",
-                price, true, 3, "Size", "Color", "Details");
+                price, true, 3, "Size", "Color", "Details", null);
 
         assertEquals(expectedPhysical.getUser(),physical.getUser());
         assertEquals(expectedPhysical.getCraft(), physical.getCraft());
@@ -190,10 +190,10 @@ public class PublicationServiceTest {
         BigDecimal price = BigDecimal.valueOf(10);
 
         Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
 
         Pattern pattern2 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
 
         Block<Pattern> expectedBlock = new Block<>(Arrays.asList(pattern1, pattern2), false);
         Block<Pattern> foundPatterns = publicationService.findAddedPatterns(user.getId(), 0, 2);
@@ -216,13 +216,13 @@ public class PublicationServiceTest {
         BigDecimal price = BigDecimal.valueOf(10);
 
         Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
 
         Pattern pattern2 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
 
         Pattern pattern3 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title3, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
 
 
         Block<Pattern> firstBlock = new Block<>(Arrays.asList(pattern1, pattern2), true);
@@ -254,7 +254,7 @@ public class PublicationServiceTest {
         Subcategory subcategory= createSubcategory("Ring", category);
 
         Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
 
         assertEquals(pattern1, publicationService.findPatternById(user.getId(), pattern1.getId()));
     }
@@ -275,7 +275,7 @@ public class PublicationServiceTest {
         Subcategory subcategory= createSubcategory("Ring", category);
 
         Physical physical1 = publicationService.createPhysical(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
-                BigDecimal.valueOf(50), true, 3, "Size", "Color", "Details");
+                BigDecimal.valueOf(50), true, 3, "Size", "Color", "Details", null);
 
         assertEquals(physical1, publicationService.findPhysicalById(user.getId(), physical1.getId()));
     }

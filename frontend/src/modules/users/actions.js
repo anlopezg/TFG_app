@@ -66,14 +66,15 @@ export const changePassword = (id, oldPassword, newPassword, onSuccess, onErrors
     backend.userService.changePassword(id, oldPassword, newPassword, onSuccess, onErrors);
 
 
-const userBecomesSellerCompleted = id =>({
+const userBecomesSellerCompleted = user =>({
     type: actionTypes.USER_BECOMES_SELLER_COMPLETED,
-    id
+    user
 })
-export const userBecomesSeller = (id, onSuccess, onErrors) => () =>
+
+export const userBecomesSeller = (id, onSuccess, onErrors) => dispatch =>
     backend.userService.userBecomesSeller(id,
-        id => {
-        dispatch(userBecomesSellerCompleted(id));
+        user => {
+        dispatch(userBecomesSellerCompleted(user));
         onSuccess();
         },
         onErrors);

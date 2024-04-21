@@ -59,7 +59,7 @@ public class CatalogController {
 
         Product product = catalogService.findProduct(id);
 
-        return toProductDto2(product);
+        return toProductDto(product);
     }
 
 

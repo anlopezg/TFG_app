@@ -9,6 +9,8 @@ import * as actions from '../actions';
 import * as userSelector from "../../users/selectors.js";
 import CraftSelector from "../../catalog/components/CraftSelector.jsx";
 import SubcategorySelector from "../../catalog/components/SubcategorySelector.jsx";
+import imageUploader from "./imageUploader.js";
+import uploadImages from "../../../backend/cloudinary/uploadImages.js";
 
 const CreatePhysical = () => {
 
@@ -28,33 +30,48 @@ const CreatePhysical = () => {
     const[ color, setColor] = useState('');
     const[ details, setDetails ] = useState('');
 
+    const { images, previewUrls, handleImagesChange } = imageUploader();
+
     const [backendErrors, setBackendErrors] = useState(null);
     let form;
 
     const handleSubmit = event => {
         event.preventDefault();
 
-        if(form.checkValidity()){
-            dispatch(actions.createPhysical(
-                { userId: user.id,
-                    craftId: toNumber(craftId),
-                    subcategoryId: toNumber(subcategoryId),
-                    title: title.trim(),
-                    description: description.trim(),
-                    price: price,
-                    active: active,
-                    amount: amount,
-                    size: size.trim(),
-                    color: color.trim(),
-                    details: details.trim()
-                },
-                () => navigate('/publications/products'),
-                errors => setBackendErrors(errors)
-            ));
-        } else {
-            setBackendErrors(null);
-            form.classList.add('was-validated');
-        }
+        let imageResults = [];
+
+
+        uploadImages(images).then((results) => {
+            console.log("Resultados de la carga:", results);
+            imageResults = results;
+
+            const urlList = imageResults.map(imageResult => imageResult.url);
+            console.log("Url List: ", urlList);
+
+            if(form.checkValidity()){
+                dispatch(actions.createPhysical(
+                    { userId: user.id,
+                        craftId: toNumber(craftId),
+                        subcategoryId: toNumber(subcategoryId),
+                        title: title.trim(),
+                        description: description.trim(),
+                        price: price,
+                        active: active,
+                        amount: amount,
+                        size: size.trim(),
+                        color: color.trim(),
+                        details: details.trim(),
+                        imagesUrl: urlList
+                    },
+                    () => navigate('/publications/products'),
+                    errors => setBackendErrors(errors)
+                ));
+            } else {
+                setBackendErrors(null);
+                form.classList.add('was-validated');
+            }
+        });
+
     }
 
     const handleCheckboxChange = (newValue) => {
@@ -75,6 +92,16 @@ const CreatePhysical = () => {
                     <h2 className="retro card-header">
                         <FormattedMessage id="project.products.CreatePhysical.heading"/>
                     </h2>
+
+                    <div>
+                        <input type="file" accept="image/*" multiple onChange={handleImagesChange}/>
+                    </div>
+                    {previewUrls.map((url, index) => (
+                        <div key={index}>
+                            <img src={url} alt="Preview" style={{ width: "200px", height: "200px" }} />
+                        </div>
+                    ))}
+
                     <div className="card-body ">
                         <form ref={node => form = node}
                               className="needs-validation" noValidate

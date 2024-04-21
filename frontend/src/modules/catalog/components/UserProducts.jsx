@@ -58,9 +58,9 @@ const UserProducts = () => {
                                 </div>
 
                                 <div className="profile-header-info">
-                                    <h4 className="text-left">{username}</h4>
-                                    <p>{user.bio}</p>
-                                    <p>{user.language}/ {user.country} </p>
+                                    <h3 className="text-left retro">{username}</h3>
+                                    <p>{user.firstName}, {user.bio}</p>
+                                    <p>{user.region}/ {user.country} </p>
                                 </div>
                             </div>
 
@@ -68,16 +68,6 @@ const UserProducts = () => {
                                 <li className="nav-item text-uppercase">
                                     <a className="nav-link_ active disabled">
                                         <FormattedMessage id="project.catalog.UserProducts.All"/>
-                                    </a>
-                                </li>
-                                <li className="nav-item text-uppercase">
-                                    <a className="nav-link_ disabled">
-                                        <FormattedMessage id="project.products.Product.heading"/>
-                                    </a>
-                                </li>
-                                <li className="nav-item text-uppercase">
-                                    <a className="nav-link_  disabled">
-                                        <FormattedMessage id="project.products.Pattern.heading"/>
                                     </a>
                                 </li>
 

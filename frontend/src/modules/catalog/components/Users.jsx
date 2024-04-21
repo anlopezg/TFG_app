@@ -21,12 +21,12 @@ const Users = ({users}) => {
                                 <div className="col-md-6">
                                     <div className="card-body">
                                         <h5 className="card-header">
-                                            <i className="fa-solid fa-user-tag m-1"></i>
+                                            <i className="fa-solid fa-user-tag mx-1"></i>
                                             <UserLink id={user.id} username={user.userName}/>
                                         </h5>
                                         <p className="card-text ">
                                             <small className="text-muted">
-                                                {user.language} / {user.country}
+                                                {user.region}, {user.country}
                                             </small>
                                         </p>
                                         <p className="card-text">{user.bio}</p>

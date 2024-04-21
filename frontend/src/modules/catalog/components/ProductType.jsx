@@ -6,16 +6,16 @@ const ProductType = ({productType}) =>{
         switch (productType) {
             case 'pattern':
                 return (
-                    <label className="product-type-label btn">
+                    <label className="product-type-label">
                         <FormattedMessage id="project.product.ProductType.Pattern"/>
-                        <i className="fa-regular fa-file-lines ml-2"></i>
+
                     </label>
                 );
             case 'physical':
                 return (
-                    <label className="product-type-label btn">
+                    <label className="product-type-label">
                         <FormattedMessage id="project.product.ProductType.Physical"/>
-                        <i className="fa-solid fa-shirt ml-2"></i>
+
                     </label>
                 );
             default:

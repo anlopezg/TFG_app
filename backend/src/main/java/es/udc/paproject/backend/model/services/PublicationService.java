@@ -30,10 +30,12 @@ public interface PublicationService {
     Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                           BigDecimal price, Boolean active, String introduction, String notes, String gauge,
                           String sizing, int difficultyLevel, String time,
-                          String abbreviations, String specialAbbreviations, String tools)
+                          String abbreviations, String specialAbbreviations, String tools,
+                          List<String> imagesUrl)
             throws InstanceNotFoundException, UserNotSellerException;
 
 
+    void uploadImages(Long productId, List<String> fileNames) throws InstanceNotFoundException;
     //Product uploadImages(Long productId, List<String> imagePaths) throws InstanceNotFoundException;
 
 
@@ -44,7 +46,7 @@ public interface PublicationService {
      */
     Physical createPhysical(Long userId, Long craftId, Long subcategoryId, String title, String description,
                             BigDecimal price, Boolean active, int amount, String size, String color,
-                            String details) throws InstanceNotFoundException,  UserNotSellerException;
+                            String details, List<String> imagesUrl) throws InstanceNotFoundException,  UserNotSellerException;
 
 
 
@@ -66,7 +68,7 @@ public interface PublicationService {
 
 
     /************************ VIEW DETAILS OF PRODUCTS *************************/
-    Product findProductById(Long productId) throws InstanceNotFoundException, UserNotOwnerException;
+    Product findProductById(Long productId) throws InstanceNotFoundException;
     Pattern findPatternById(Long userId, Long productId) throws InstanceNotFoundException, UserNotOwnerException;
     Physical findPhysicalById(Long userId, Long productId) throws InstanceNotFoundException, UserNotOwnerException;
 

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -18,6 +20,9 @@ public class Product{
     private BigDecimal price;
     private Boolean active;
     private LocalDateTime creationDate;
+
+    private Set<ProductImages> images = new HashSet<>();
+
 
     @Version
     private String productType;
@@ -133,6 +138,20 @@ public class Product{
         this.creationDate = creationDate;
     }
 
+
+    @OneToMany(mappedBy="product")
+    public Set<ProductImages> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<ProductImages> images) {
+        this.images = images;
+    }
+
+    public void addImage(ProductImages image){
+        images.add(image);
+        image.setProduct(this);
+    }
 
     @Transient
     public String getProductType() {

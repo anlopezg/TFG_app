@@ -4,7 +4,6 @@ export default {
     'project.app.Header.home': 'Inicio',
     'project.app.Header.logout': 'Cerrar sesión',
     'project.app.Home.welcome': '¡Bienvenidas a Yarn Crafters!',
-    'project.app.Home.filter' : 'Filtra tu búsqueda',
     
     'project.common.ErrorDialog.title': 'Error',
 
@@ -26,15 +25,17 @@ export default {
     'project.global.fields.email': 'Correo electrónico',
     'project.global.fields.firstName': 'Nombre',
     'project.global.fields.language': 'Idioma',
+    'project.global.fields.region':'Región',
     'project.global.fields.country': 'País',
     'project.global.fields.select.country': 'Selecciona un país',
+    'project.global.fields.select.region': 'Selecciona una región',
     'project.global.fields.crochetLevel': 'Nivel de ganchillo',
     'project.global.fields.knitLevel': 'Nivel de calceta',
     'project.global.fields.level.none': 'Sin experiencia',
     'project.global.fields.level.beginner': 'Principiante',
     'project.global.fields.level.intermediate': 'Intermedio',
     'project.global.fields.level.advanced': 'Avanzado',
-    'project.global.fields.bio': 'Bio',
+    'project.global.fields.bio': 'Biografía',
     'project.global.fields.name': 'Nombre',
     'project.global.fields.password': 'Contraseña',
     'project.global.fields.postalAddress': 'Dirección postal',
@@ -129,6 +130,8 @@ export default {
     'project.products.Pattern.removeTool': 'Eliminar herramienta',
     'project.products.Pattern.tools.message': 'Añade todas las herramientas necesarias para completar el patrón',
 
+    'project.product.ProductType.Pattern':'Patrón digital',
+    'project.product.ProductType.Physical':'Producto físico',
 
     'project.catalog.Selector.all': 'Todos',
     'project.catalog.CraftSelector.allCrafts': 'Todos los tipos',
@@ -147,15 +150,19 @@ export default {
     'project.catalog.Subcategories.unknown': 'Desconocida',
 
     'project.catalog.Product.type': 'Tipo de producto',
-    'project.catalog.Search.ByUsername': 'Busca a un usuario',
-    'project.catalog.Users.visit': 'Visitar',
+    'project.catalog.Search.ByUsername': 'Introduce el nombre del usuario',
+    'project.catalog.Search.ByUser': 'Buscar Usuarios',
+    'project.catalog.Filter.Users' : 'Busca a un Usuario',
+    'project.catalog.Search.ByProduct': 'Buscar Productos',
+    'project.catalog.Filter.Products' : 'Filtra tu búsqueda de productos',
+    'project.catalog.Users.visit': 'Visitar perfil',
 
     'project.catalog.FindAllProductsResult.noProductsFound':'Ningún producto ha sido añadido aún',
     'project.catalog.FindUsersResult.noUsersFound' : 'No existe ningún usuario con ese nombre',
 
     'project.catalog.FindProductsResult.noProductsFound': 'No se ha encontrado ningún producto con esas características',
     'project.catalog.UserProducts.noProductsFound': ' actualmente no tiene nigún producto disponible :(',
-    'project.catalog.UserProducts.All': 'Todos',
+    'project.catalog.UserProducts.All': 'Todos los productos',
 
     'project.catalog.Product.AddCart': 'Añadir a la cesta'
 

@@ -3,6 +3,7 @@ package es.udc.paproject.backend.rest.dtos;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ProductDto {
 
@@ -22,6 +23,8 @@ public class ProductDto {
     private String username;
     private String productType;
 
+    private List<String> imagesUrl;
+
     public ProductDto(){}
 
     public ProductDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
@@ -38,7 +41,7 @@ public class ProductDto {
     }
 
     public ProductDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
-                      Boolean active, String username, String productType){
+                      Boolean active, String username, String productType, List<String> imagesUrl){
 
         this.id=id;
         this.userId =user;
@@ -50,6 +53,7 @@ public class ProductDto {
         this.active=active;
         this.username = username;
         this.productType = productType;
+        this.imagesUrl = imagesUrl;
     }
 
     public Long getId() {
@@ -139,5 +143,13 @@ public class ProductDto {
 
     public void setProductType(String productType) {
         this.productType = productType;
+    }
+
+    public List<String> getImagesUrl() {
+        return imagesUrl;
+    }
+
+    public void setImagesUrl(List<String> imagesUrl) {
+        this.imagesUrl = imagesUrl;
     }
 }

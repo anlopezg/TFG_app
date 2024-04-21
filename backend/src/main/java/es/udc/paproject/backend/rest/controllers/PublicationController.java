@@ -65,7 +65,8 @@ public class PublicationController {
                 patternDto.getTitle(), patternDto.getDescription(), patternDto.getPrice(), patternDto.getActive(),
                 patternDto.getIntroduction(), patternDto.getNotes(), patternDto.getGauge(), patternDto.getSizing(),
                 patternDto.getDifficultyLevel(), patternDto.getTime(),
-                patternDto.getAbbreviations(), patternDto.getSpecialAbbreviations(), patternDto.getTools());
+                patternDto.getAbbreviations(), patternDto.getSpecialAbbreviations(), patternDto.getTools(),
+                patternDto.getImagesUrl());
 
         PatternDto createdPatternDto = toPatternDto(createdPattern);
 
@@ -82,7 +83,8 @@ public class PublicationController {
 
         Physical createdPhysical = publicationService.createPhysical(physicalDto.getUserId(), physicalDto.getCraftId(), physicalDto.getSubcategoryId(),
                 physicalDto.getTitle(), physicalDto.getDescription(), physicalDto.getPrice(), physicalDto.getActive(),
-                physicalDto.getAmount(), physicalDto.getSize(), physicalDto.getColor(), physicalDto.getDetails());
+                physicalDto.getAmount(), physicalDto.getSize(), physicalDto.getColor(), physicalDto.getDetails(),
+                physicalDto.getImagesUrl());
 
         PhysicalDto createdPhysicalDto = toPhysicalDto(createdPhysical);
 

@@ -11,7 +11,7 @@ const AddedPhysicals= ({physicals}) =>(
 
                 <div className="card-deck">
                     <div className="card">
-                        <img src="/src/crochet_default.jpg" className="card-img-top" alt="Product image"/>
+                        <img src={physical.imagesUrl[0]} className="card-img" alt="Product image"/>
                         <div className="card-body">
                             <h5 className="card-title">
                                 <PhysicalLink id={physical.id} title={physical.title}/>

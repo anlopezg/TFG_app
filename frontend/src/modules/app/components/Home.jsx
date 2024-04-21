@@ -1,13 +1,10 @@
 import {FormattedMessage} from 'react-intl';
-import {useSelector} from "react-redux";
 
-import {ProductFilter, FindAllProducts} from "../../catalog/index.js";
-import * as selectors from "../../catalog/selectors.js";
+import {FindAllProducts, FilterTab} from "../../catalog/index.js";
+
 
 
 const Home = () => {
-
-    const productSearch = useSelector(selectors.getProductSearch);
 
     return (
         <div>
@@ -16,13 +13,8 @@ const Home = () => {
                     <FormattedMessage id="project.app.Home.welcome"/>
                 </h3>
             </div>
-
             <div>
-                <ul className="navbar-nav mr-auto">
-                    <li>
-                        <ProductFilter/>
-                    </li>
-                </ul>
+                <FilterTab/>
             </div>
 
             <div className="mt-5 mb-2">

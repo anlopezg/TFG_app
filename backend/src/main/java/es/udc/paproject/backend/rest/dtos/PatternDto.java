@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.NumberFormat;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class PatternDto extends ProductDto{
 
@@ -21,11 +22,15 @@ public class PatternDto extends ProductDto{
     private String specialAbbreviations;
     private String tools;
 
+    private List<String> imagesUrl;
+
+
     private PatternDto(){}
 
     public PatternDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
                       Boolean active,String introduction, String notes, String gauge, String sizing,
-                      int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools){
+                      int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools,
+                      List<String> imagesUrl){
 
         super(id, user, craft, subcategory, title, description, price, active);
 
@@ -38,8 +43,10 @@ public class PatternDto extends ProductDto{
         this.abbreviations = abbreviations;
         this.specialAbbreviations = specialAbbreviations;
         this.tools= tools;
+        this.imagesUrl = imagesUrl;
 
     }
+
 
     @NotNull(groups = {AllValidations.class})
     @Size(min=1, max=500, groups={AllValidations.class})
@@ -130,5 +137,15 @@ public class PatternDto extends ProductDto{
 
     public void setTools(String tools) {
         this.tools = tools;
+    }
+
+
+    @NotNull(groups = {AllValidations.class})
+    public List<String> getImagesUrl() {
+        return imagesUrl;
+    }
+
+    public void setImagesUrl(List<String> imagesUrl) {
+        this.imagesUrl = imagesUrl;
     }
 }

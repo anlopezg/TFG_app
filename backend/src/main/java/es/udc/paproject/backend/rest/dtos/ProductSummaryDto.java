@@ -14,9 +14,12 @@ public class ProductSummaryDto {
 
     private String username;
 
+    private String mainImageUrl;
+
     public ProductSummaryDto(){}
 
-    public ProductSummaryDto(Long id, Long userId, Long craftId, Long subcategoryId, String title, BigDecimal price, String productType, String username){
+    public ProductSummaryDto(Long id, Long userId, Long craftId, Long subcategoryId, String title, BigDecimal price,
+                             String productType, String username, String mainImageUrl){
 
         this.id=id;
         this.userId=userId;
@@ -26,6 +29,7 @@ public class ProductSummaryDto {
         this.price= price;
         this.productType=productType;
         this.username=username;
+        this.mainImageUrl= mainImageUrl;
     }
 
     public Long getId() {
@@ -90,5 +94,13 @@ public class ProductSummaryDto {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getMainImageUrl() {
+        return mainImageUrl;
+    }
+
+    public void setMainImageUrl(String mainImageUrl) {
+        this.mainImageUrl = mainImageUrl;
     }
 }

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class PhysicalDto extends ProductDto{
 
@@ -13,12 +14,14 @@ public class PhysicalDto extends ProductDto{
     private String size;
     private String color;
     private String details;
+    private List<String> imagesUrl;
 
 
     private PhysicalDto(){}
 
     public PhysicalDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
-                       Boolean active,int amount, String size, String color, String details){
+                       Boolean active,int amount, String size, String color, String details,
+                       List<String> imagesUrl){
 
         super(id, user, craft, subcategory, title, description, price, active);
 
@@ -26,6 +29,7 @@ public class PhysicalDto extends ProductDto{
         this.size=size;
         this.color=color;
         this.details=details;
+        this.imagesUrl=imagesUrl;
     }
 
     @NotNull(groups = {AllValidations.class})
@@ -66,5 +70,14 @@ public class PhysicalDto extends ProductDto{
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    @NotNull(groups = {AllValidations.class})
+    public List<String> getImagesUrl() {
+        return imagesUrl;
+    }
+
+    public void setImagesUrl(List<String> imagesUrl) {
+        this.imagesUrl = imagesUrl;
     }
 }

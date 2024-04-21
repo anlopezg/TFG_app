@@ -21,4 +21,6 @@ export {default as EditPhysical} from './components/EditPhysical.jsx';
 export {default as ManagePhysical} from './components/ManagePhysical.jsx';
 export {default as DeletePhysical} from './components/DeletePhysical.jsx';
 
+export {default as StoreTabs} from './components/StoreTabs.jsx';
+
 export default {actions, reducer, selectors};

@@ -7,107 +7,77 @@ import {UserFilter} from "../../catalog/index.js";
 import users from '../../users';
 
 const Header = () => {
-
     const userName = useSelector(users.selectors.getUserName);
     const isSeller = useSelector(users.selectors.isSeller);
 
     return (
-
-        <nav className="navbar navbar-expand-lg navbar-light back-color-blue">
-            <div className="row col-md-3">
-                <Link className="navbar-brand logo-link" to="/" >Yarn Crafters</Link>
+        <nav className="navbar navbar-expand-lg navbar-light back-color-blue ps-4">
+            <div className="row col-md-4">
+                <Link className="navbar-brand logo-link" to="/">Yarn Crafters</Link>
             </div>
 
-            <div className="row col-md-6 align-items-center">
-                <UserFilter/>
-            </div>
-
-
-
-            <button className="navbar-toggler" type="button" 
-                data-toggle="collapse" data-target="#navbarSupportedContent" 
-                aria-controls="navbarSupportedContent" aria-expanded="false" 
-                aria-label="Toggle navigation">
+            <button className="navbar-toggler" type="button"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation" onClick={() => document.getElementById("navbarSupportedContent").classList.toggle("show")}>
                 <span className="navbar-toggler-icon"></span>
             </button>
 
-
-
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
 
-                <ul className="navbar-nav mr-auto">
-                </ul>
-                
-                {userName ? 
-
-                <ul className="navbar-nav">
-
-                    {isSeller &&
-                        <li className="nav-item dropdown" style={{ marginRight: '20px' }}>
-                            <a className="dropdown-toggle nav-link" href="/"
-                               data-toggle="dropdown">
-                                <span className="fa-solid fa-store"></span>&nbsp;
-                                <FormattedMessage id="project.products.MyStore.heading"/>
+                {userName ? (
+                    <ul className="navbar-nav ms-auto">
+                        {isSeller && (
+                            <li className="nav-item dropdown" style={{ marginRight: '20px' }}>
+                                <a className="dropdown-toggle nav-link" href="#" role="button"
+                                   id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span className="fa-solid fa-store"></span>&nbsp;
+                                    <FormattedMessage id="project.products.MyStore.heading"/>
+                                </a>
+                                <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="storeDropdown">
+                                    <li><Link className="dropdown-item" to="/publications/products">
+                                        <FormattedMessage id="project.products.Product.heading"/>
+                                    </Link></li>
+                                    <li><Link className="dropdown-item" to="/publications/patterns">
+                                        <FormattedMessage id="project.products.Pattern.heading"/>
+                                    </Link></li>
+                                </ul>
+                            </li>
+                        )}
+                        <li className="nav-item dropdown">
+                            <a className="dropdown-toggle nav-link" href="#" role="button"
+                               id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span className="fa-solid fa-user"></span>&nbsp;
+                                {userName}
                             </a>
-                            <div className="dropdown-menu dropdown-menu-right back-color-grey">
-                                <Link className="dropdown-item" to="/publications/products">
-                                    <FormattedMessage id="project.products.Product.heading"/>
-                                </Link>
-
-                                <Link className="dropdown-item" to="/publications/patterns">
-                                    <FormattedMessage id="project.products.Pattern.heading"/>
-                                </Link>
-                            </div>
-
+                            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><Link className="dropdown-item" to="/users/view-profile">
+                                    <FormattedMessage id="project.users.ViewProfile.title"/>
+                                </Link></li>
+                                <li><Link className="dropdown-item" to="/users/change-password">
+                                    <FormattedMessage id="project.users.ChangePassword.title"/>
+                                </Link></li>
+                                <li><Link className="dropdown-item" to="/publications/products">
+                                    <FormattedMessage id="project.products.MyStore.heading"/>
+                                </Link></li>
+                                <li><hr className="dropdown-divider"/></li>
+                                <li><Link className="dropdown-item" to="/users/logout">
+                                    <FormattedMessage id="project.app.Header.logout"/>
+                                </Link></li>
+                            </ul>
                         </li>
-                    }
-
-                    <li className="nav-item dropdown">
-
-                        <a className="dropdown-toggle nav-link" href="/"
-                            data-toggle="dropdown">
-                            <span className="fa-solid fa-user"></span>&nbsp;
-                            {userName}
-                        </a>
-                        <div className="dropdown-menu dropdown-menu-right back-color-grey">
-                            <Link className="dropdown-item" to="/users/view-profile">
-                                <FormattedMessage id="project.users.ViewProfile.title"/>
+                    </ul>
+                ) : (
+                    <ul className="navbar-nav ms-auto">
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/users/login">
+                                <FormattedMessage id="project.users.Login.title"/>
                             </Link>
-                            <Link className="dropdown-item" to="/users/change-password">
-                                <FormattedMessage id="project.users.ChangePassword.title"/>
-                            </Link>
-
-                            <Link className="dropdown-item" to="/publications/products">
-                                <FormattedMessage id="project.products.MyStore.heading"/>
-                            </Link>
-
-                            <div className="dropdown-divider"></div>
-                            <Link className="dropdown-item" to="/users/logout">
-                                <FormattedMessage id="project.app.Header.logout"/>
-                            </Link>
-                        </div>
-
-                    </li>
-
-                </ul>
-                
-                :
-
-                <ul className="navbar-nav">
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/users/login">
-                            <FormattedMessage id="project.users.Login.title"/>
-                        </Link>
-                    </li>
-                </ul>
-                
-                }
-
+                        </li>
+                    </ul>
+                )}
             </div>
         </nav>
-
     );
-
 };
 
 export default Header;
