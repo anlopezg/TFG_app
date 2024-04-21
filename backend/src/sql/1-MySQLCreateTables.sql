@@ -1,3 +1,4 @@
+DROP TABLE ProductImages;
 DROP TABLE Favorite;
 DROP TABLE Product;
 DROP TABLE Subcategory;
@@ -13,6 +14,7 @@ CREATE TABLE User (
     firstName VARCHAR(60) NOT NULL,
     language VARCHAR(60) NOT NULL,
     country VARCHAR(60) NOT NULL,
+    region VARCHAR(60) NOT NULL,
     crochetLevel TINYINT NOT NULL,
     knitLevel TINYINT NOT NULL,
     bio VARCHAR(200),
@@ -97,12 +99,27 @@ CREATE TABLE Product (
 
 CREATE INDEX ProductIndexByTitle ON Product(title);
 
+
+CREATE TABLE ProductImages(
+
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    productId BIGINT NOT NULL,
+    imageUrl VARCHAR(255) NOT NULL,
+
+    CONSTRAINT ProductImagePK PRIMARY KEY (id),
+    CONSTRAINT ProductFK FOREIGN KEY (productId) REFERENCES Product(id)
+
+) ENGINE = InnoDB;
+
+
+
+
 CREATE TABLE Favorite (
 
     id BIGINT NOT NULL AUTO_INCREMENT,
     userId BIGINT NOT NULL,
     productId BIGINT NOT NULL,
-    isFavorite BOOLEAN NOT NULL,
+    favorite BOOLEAN NOT NULL,
 
     CONSTRAINT FavoritePK PRIMARY KEY (id),
     CONSTRAINT FavoriteUserFK FOREIGN KEY (userId) REFERENCES User(id),

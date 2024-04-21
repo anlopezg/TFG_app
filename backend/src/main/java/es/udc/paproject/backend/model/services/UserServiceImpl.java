@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateProfile(Long id, String username, String email, String firstName, String language, String country, int crochetLevel, int knitLevel, String bio) throws InstanceNotFoundException, DuplicateInstanceException {
+	public User updateProfile(Long id, String username, String email, String firstName, String language, String country, String region, int crochetLevel, int knitLevel, String bio) throws InstanceNotFoundException, DuplicateInstanceException {
 		
 		User user = permissionChecker.checkUser(id);
 
@@ -88,6 +88,7 @@ public class UserServiceImpl implements UserService {
 		user.setFirstName(firstName);
 		user.setLanguage(language);
 		user.setCountry(country);
+		user.setRegion(region);
 		user.setCrochetLevel(crochetLevel);
 		user.setKnitLevel(knitLevel);
 		user.setBio(bio);

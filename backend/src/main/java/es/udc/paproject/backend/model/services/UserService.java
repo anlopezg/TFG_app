@@ -12,7 +12,7 @@ public interface UserService {
 	
 	User loginFromId(Long id) throws InstanceNotFoundException;
 	
-	User updateProfile(Long id, String username, String email, String firstName, String language, String country,
+	User updateProfile(Long id, String username, String email, String firstName, String language, String country, String region,
 					   int crochetLevel, int knitLevel, String bio) throws InstanceNotFoundException, DuplicateInstanceException;
 	
 	void changePassword(Long id, String oldPassword, String newPassword)

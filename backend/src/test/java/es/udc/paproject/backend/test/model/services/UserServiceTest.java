@@ -23,7 +23,7 @@ public class UserServiceTest {
 	private UserService userService;
 
 	private User createUser(String userName, String email) {
-		return new User(userName, email + "@a.com","password", "firstName", "language", "country",
+		return new User(userName, email + "@a.com","password", "firstName", "language", "country", "region",
 				1, 2, "long bio");
 	}
 	
@@ -108,7 +108,7 @@ public class UserServiceTest {
 		user.setEmail('X' + user.getEmail());
 		
 		userService.updateProfile(user.getId(), user.getUsername(), 'X' + user.getEmail(),'X' + user.getFirstName(),
-				user.getLanguage(), user.getCountry(), user.getCrochetLevel(), user.getKnitLevel(), user.getBio()
+				user.getLanguage(), user.getCountry(), user.getRegion(),user.getCrochetLevel(), user.getKnitLevel(), user.getBio()
 			);
 		
 		User updatedUser = userService.loginFromId(user.getId());
@@ -118,7 +118,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void testUpdateProfileNonUniqueUserName() throws InstanceNotFoundException, DuplicateInstanceException {
+	public void testUpdateProfileNonUniqueUserName() throws DuplicateInstanceException {
 
 		User user1 = createUser("user1" ,"email");
 
@@ -129,7 +129,7 @@ public class UserServiceTest {
 		userService.signUp(user2);
 
 		assertThrows(DuplicateInstanceException.class, () -> userService.updateProfile(user2.getId(), user1.getUsername(), user2.getEmail(),
-				user2.getFirstName(), user2.getLanguage(), user2.getCountry(), user2.getCrochetLevel(),
+				user2.getFirstName(), user2.getLanguage(), user2.getCountry(),  user2.getRegion(), user2.getCrochetLevel(),
 				user2.getKnitLevel(), user2.getBio()));
 
 	}
@@ -138,7 +138,7 @@ public class UserServiceTest {
 	public void testUpdateProfileWithNonExistentId() {
 		assertThrows(InstanceNotFoundException.class, () ->
 			userService.updateProfile(NON_EXISTENT_ID, "X", "X@a.com", "X", "language",
-					"country", 1, 1, "bio"));
+					"country", "region", 1, 1, "bio"));
 	}
 	
 	@Test

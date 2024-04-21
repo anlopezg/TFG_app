@@ -16,6 +16,7 @@ public class UserDto {
 	private String firstName;
 	private String language;
 	private String country;
+	private String region;
 	private int crochetLevel;
 	private int knitLevel;
 	private String bio;
@@ -24,7 +25,7 @@ public class UserDto {
 
 	public UserDto() {}
 
-	public UserDto(Long id, String userName, String email, String firstName, String language, String country, int crochetLevel, int knitLevel, String bio, String role) {
+	public UserDto(Long id, String userName, String email, String firstName, String language, String country, String region, int crochetLevel, int knitLevel, String bio, String role) {
 
 		this.id = id;
 		this.userName = userName != null ? userName.trim() : null;
@@ -32,6 +33,7 @@ public class UserDto {
 		this.firstName = firstName.trim();
 		this.language = language.trim();
 		this.country = country.trim();
+		this.region = region.trim();
 		this.crochetLevel = crochetLevel;
 		this.knitLevel = knitLevel;
 		this.bio = bio.trim();
@@ -107,6 +109,16 @@ public class UserDto {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	@NotNull(groups={AllValidations.class, UpdateValidations.class})
+	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
 	}
 
 	@NotNull(groups={AllValidations.class, UpdateValidations.class})

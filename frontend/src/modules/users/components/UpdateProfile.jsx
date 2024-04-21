@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import {Errors} from '../../common';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
-import {CountryDropdown} from "react-country-region-selector";
+import {CountryDropdown, RegionDropdown} from "react-country-region-selector";
 import {useState} from "react";
 import BackLink from "../../common/components/BackLink.jsx";
 
@@ -20,6 +20,7 @@ const UpdateProfile = () => {
     const [firstName, setFirstName] = useState(user.firstName);
     const [language, setLanguage] = useState(user.language);
     const [country, setCountry] = useState(user.country);
+    const [region, setRegion] = useState(user.region);
     const [crochetLevel, setCrochetLevel] = useState(user.crochetLevel);
     const [knitLevel, setKnitLevel] = useState(user.knitLevel);
     const [bio, setBio] = useState(user.bio);
@@ -40,6 +41,7 @@ const UpdateProfile = () => {
                     firstName: firstName.trim(),
                     language: language.trim(),
                     country: country.trim(),
+                    region: region.trim(),
                     crochetLevel: crochetLevel,
                     knitLevel: knitLevel,
                     bio: bio.trim()
@@ -143,6 +145,26 @@ const UpdateProfile = () => {
                                         onChange={(val) => setCountry(val)}
                                         defaultOptionLabel={country}
                                         id="country" className="form-control custom-country-dropdown"/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-group row justify-content-center mt-1 mb-1">
+                                <label htmlFor="region" className="col-md-4 col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.region"/>
+                                </label>
+                                <div className="col-md-4">
+                                    <RegionDropdown
+                                        disableWhenEmpty={true}
+                                        country={country}
+                                        value={region}
+                                        onChange={(val) => setRegion(val)}
+
+                                        id="region" className="form-control custom-country-dropdown"
+                                        defaultOptionLabel={region}
+                                    />
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
                                     </div>

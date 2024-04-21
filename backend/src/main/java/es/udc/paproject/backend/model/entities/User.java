@@ -24,6 +24,7 @@ public class User {
 	private String language;
 
 	private String country;
+	private String region;
 
 	private int crochetLevel;
 
@@ -35,7 +36,7 @@ public class User {
 
 	public User(){}
 
-	public User(String username, String email, String password, String firstName, String language, String country, int crochetLevel, int knitLevel, String bio) {
+	public User(String username, String email, String password, String firstName, String language, String country, String region, int crochetLevel, int knitLevel, String bio) {
 
 		this.username = username;
 		this.email = email;
@@ -43,6 +44,7 @@ public class User {
 		this.firstName = firstName;
 		this.language = language;
 		this.country = country;
+		this.region = region;
 		this.crochetLevel = crochetLevel;
 		this.knitLevel = knitLevel;
 		this.bio = bio;
@@ -106,6 +108,13 @@ public class User {
 		this.country = country;
 	}
 
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
 
 	public int getCrochetLevel() {
 		return crochetLevel;

@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
 
-import { CountryDropdown} from 'react-country-region-selector';
+import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
 
 import {Errors} from '../../common';
 import * as actions from '../actions';
@@ -18,6 +18,7 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [language, setLanguage] = useState('');
+    const [region, setRegion] = useState(null);
     const [country, setCountry] = useState(null);
     const [crochetLevel, setCrochetLevel] = useState('');
     const [knitLevel, setKnitLevel] = useState('');
@@ -42,6 +43,7 @@ const SignUp = () => {
                     firstName: firstName.trim(),
                     language: language.trim(),
                     country: country.trim(),
+                    region: region.trim(),
                     crochetLevel: crochetLevel,
                     knitLevel: knitLevel,
                     bio: bio.trim()
@@ -182,22 +184,24 @@ const SignUp = () => {
                                 </div>
                             </div>
 
+                            <div className="form-group row">
+                                <label htmlFor="language" className="col-md-12 col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.language"/>
+                                </label>
+                                <div className="col-md-12">
+                                    <input type="text" id="language" className="form-control"
+                                           value={language}
+                                           onChange={e => setLanguage(e.target.value)}
+                                           required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div className="container m-0 p-0">
                                 <div className="form-group row ">
-                                    <div className="col-md-6">
-                                        <label htmlFor="language" className="col-form-label bold-label">
-                                            <FormattedMessage id="project.global.fields.language"/>
-                                        </label>
-
-                                        <input type="text" id="language" className="form-control"
-                                        value={language}
-                                        onChange={e => setLanguage(e.target.value)}
-                                        required/>
-                                        <div className="invalid-feedback">
-                                            <FormattedMessage id='project.global.validator.required'/>
-                                        </div>
-                                    </div>
-
                                     <div className="col-md-6">
                                         <label htmlFor="country" className="col-form-label bold-label">
                                             <FormattedMessage id="project.global.fields.country"/>
@@ -212,6 +216,27 @@ const SignUp = () => {
                                             <FormattedMessage id='project.global.validator.required'/>
                                         </div>
                                     </div>
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="region" className="col-form-label bold-label">
+                                            <FormattedMessage id="project.global.fields.region"/>
+                                        </label>
+                                        <RegionDropdown
+                                            disableWhenEmpty={true}
+                                            country={country}
+                                            value={region}
+                                            onChange={(val) => setRegion(val)}
+
+                                            id="region" className="form-control custom-country-dropdown"
+                                            defaultOptionLabel={<FormattedMessage id="project.global.fields.select.region"/>}
+                                        />
+
+                                        <div className="invalid-feedback">
+                                            <FormattedMessage id='project.global.validator.required'/>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                             </div>
 
