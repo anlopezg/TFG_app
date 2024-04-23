@@ -119,7 +119,7 @@ CREATE TABLE Favorite (
     id BIGINT NOT NULL AUTO_INCREMENT,
     userId BIGINT NOT NULL,
     productId BIGINT NOT NULL,
-    favorite BOOLEAN NOT NULL,
+    liked BOOLEAN NOT NULL,
 
     CONSTRAINT FavoritePK PRIMARY KEY (id),
     CONSTRAINT FavoriteUserFK FOREIGN KEY (userId) REFERENCES User(id),

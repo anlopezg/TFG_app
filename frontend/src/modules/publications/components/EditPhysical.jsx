@@ -167,7 +167,7 @@ const EditPhysical = () =>{
                                     <label htmlFor="craft" className="col-form-label bold-label">
                                         <FormattedMessage id="project.catalog.Craft.field"/>
                                     </label>
-                                    <CraftSelector id="craftId" className="custom-select my-1 mr-sm-2"
+                                    <CraftSelector id="craftId" className="form-select"
                                                    value={craftId} onChange={e => setCraftId(e.target.value)}/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
@@ -178,7 +178,7 @@ const EditPhysical = () =>{
                                     <label htmlFor="subcategory" className="col-form-label bold-label">
                                         <FormattedMessage id="project.catalog.Category.field"/>
                                     </label>
-                                    <SubcategorySelector id="subcategoryId" className="custom-select my-1 mr-sm-2"
+                                    <SubcategorySelector id="subcategoryId" className="form-select"
                                                          value={subcategoryId} onChange={e => setSubcategoryId(e.target.value)}/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>

@@ -7,6 +7,7 @@ import * as actions from '../actions';
 import {BackLink} from '../../common';
 import {FormattedMessage} from "react-intl";
 import * as catalogSelectors from "../../catalog/selectors.js";
+import ImagesCarousel from "../../catalog/components/ImagesCarousel.jsx";
 
 
 const PhysicalDetails = () =>{
@@ -136,6 +137,16 @@ const PhysicalDetails = () =>{
                                 </div>
                             </div>
 
+
+                            <div className="row justify-content-center">
+                                <label className="col-md-12 col-form-label bold-label">
+                                    <FormattedMessage id="project.products.Product.images"/>
+                                </label>
+                                <div style={{maxWidth: "400px", maxHeight: "100%"}}>
+                                    <ImagesCarousel images={physical.imagesUrl}/>
+                                </div>
+
+                            </div>
 
 
 

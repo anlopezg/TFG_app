@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +102,7 @@ public class PublicationServiceTest {
         Subcategory subcategory= createSubcategory("Ring", category);
 
         return publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title", "Description",
-                BigDecimal.valueOf(20), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
+                BigDecimal.valueOf(20), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
     }
 
 
@@ -121,7 +122,7 @@ public class PublicationServiceTest {
         Pattern expectedPattern = createPattern(user, craft, subcategory, title, price, LocalDateTime.now());
 
         Pattern createdPattern = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
 
 
         assertEquals(expectedPattern.getUser(),createdPattern.getUser());
@@ -143,7 +144,7 @@ public class PublicationServiceTest {
         assertThrows(UserNotSellerException.class, ()->
                 publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "title", "Description",
                         BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null));
+                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList()));
     }
 
     @Test
@@ -151,7 +152,7 @@ public class PublicationServiceTest {
         assertThrows(InstanceNotFoundException.class, ()->
                 publicationService.createPattern(NON_EXISTENT_ID, NON_EXISTENT_ID, NON_EXISTENT_ID, "title", "Description",
                         BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null));
+                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList()));
     }
 
     @Test
@@ -167,7 +168,7 @@ public class PublicationServiceTest {
         Physical expectedPhysical = createPhysical(user, craft, subcategory, title, price, LocalDateTime.now());
 
         Physical physical = publicationService.createPhysical(user.getId(), craft.getId(),subcategory.getId(), title, "Description",
-                price, true, 3, "Size", "Color", "Details", null);
+                price, true, 3, "Size", "Color", "Details", Collections.emptyList());
 
         assertEquals(expectedPhysical.getUser(),physical.getUser());
         assertEquals(expectedPhysical.getCraft(), physical.getCraft());
@@ -190,10 +191,10 @@ public class PublicationServiceTest {
         BigDecimal price = BigDecimal.valueOf(10);
 
         Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
 
         Pattern pattern2 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
 
         Block<Pattern> expectedBlock = new Block<>(Arrays.asList(pattern1, pattern2), false);
         Block<Pattern> foundPatterns = publicationService.findAddedPatterns(user.getId(), 0, 2);
@@ -216,13 +217,13 @@ public class PublicationServiceTest {
         BigDecimal price = BigDecimal.valueOf(10);
 
         Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
 
         Pattern pattern2 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
 
         Pattern pattern3 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title3, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
 
 
         Block<Pattern> firstBlock = new Block<>(Arrays.asList(pattern1, pattern2), true);
@@ -254,7 +255,7 @@ public class PublicationServiceTest {
         Subcategory subcategory= createSubcategory("Ring", category);
 
         Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", null);
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
 
         assertEquals(pattern1, publicationService.findPatternById(user.getId(), pattern1.getId()));
     }
@@ -275,7 +276,7 @@ public class PublicationServiceTest {
         Subcategory subcategory= createSubcategory("Ring", category);
 
         Physical physical1 = publicationService.createPhysical(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
-                BigDecimal.valueOf(50), true, 3, "Size", "Color", "Details", null);
+                BigDecimal.valueOf(50), true, 3, "Size", "Color", "Details", Collections.emptyList());
 
         assertEquals(physical1, publicationService.findPhysicalById(user.getId(), physical1.getId()));
     }
@@ -300,7 +301,7 @@ public class PublicationServiceTest {
         pattern1.setDescription(updatedDescr);
 
         Pattern updatedPattern = publicationService.editPattern(pattern1.getId(), pattern1.getUser().getId(), pattern1.getCraft().getId(), pattern1.getSubcategory().getId(), updatedTitle, updatedDescr,
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook");
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
 
         assertEquals(pattern1, updatedPattern);
     }
@@ -313,7 +314,7 @@ public class PublicationServiceTest {
 
         assertThrows(UserNotOwnerException.class, ()->
                 publicationService.editPattern(pattern1.getId(), notOwner.getId(), pattern1.getCraft().getId(), pattern1.getSubcategory().getId(), pattern1.getTitle(), pattern1.getDescription(),
-                        BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook"));
+                        BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList()));
     }
 
     @Test

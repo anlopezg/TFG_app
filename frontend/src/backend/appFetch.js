@@ -126,3 +126,9 @@ export const appFetch = (path, options, onSuccess, onErrors) =>
     fetch(`${import.meta.env.VITE_BACKEND_URL}${path}`, options)
         .then(response => handleResponse(response, onSuccess, onErrors))
         .catch(networkErrorCallback);
+
+
+export const deleteFromCloudinary = (path, options, onSuccess, onErrors) =>
+    fetch(path, options)
+        .then(response => handleResponse(response, onSuccess, onErrors))
+        .catch(networkErrorCallback);

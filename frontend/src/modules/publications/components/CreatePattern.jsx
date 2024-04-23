@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
@@ -10,8 +10,6 @@ import CraftSelector from "../../catalog/components/CraftSelector.jsx";
 import SubcategorySelector from "../../catalog/components/SubcategorySelector.jsx";
 
 import uploadImages from "../../../backend/cloudinary/uploadImages.js";
-import deleteImages from "../../../backend/cloudinary/deleteImages.js";
-import {image} from "@cloudinary/url-gen/qualifiers/source";
 import imageUploader from "./imageUploader.js";
 
 const CreatePattern = () => {
@@ -42,7 +40,7 @@ const CreatePattern = () => {
     const[time, setTime ] = `${timeValue} ${timeUnit}`;
 
 
-    const { images, previewUrls, handleImagesChange } = imageUploader();
+    const { images, previewUrls, handleImagesChange, handleDeleteImage } = imageUploader();
 
 
     const [backendErrors, setBackendErrors] = useState(null);
@@ -56,11 +54,10 @@ const CreatePattern = () => {
 
 
         uploadImages(images).then((results) =>{
-            console.log("Resultados de la carga:", results);
-            imageResults= results;
 
+            imageResults= results;
+            console.log("imageResults: ", imageResults)
             const urlList = imageResults.map(imageResult => imageResult.url);
-            console.log("Url List: ", urlList);
 
             if(form.checkValidity()){
                 dispatch(actions.createPattern(
@@ -93,6 +90,14 @@ const CreatePattern = () => {
     });
     }
 
+    useEffect(() => {
+        return () => {
+            previewUrls.forEach(url => {
+                if (url) URL.revokeObjectURL(url);
+            });
+        };
+    }, [previewUrls]);
+
     const handleCheckboxChange = (newValue) => {
         if(newValue==="publish"){
             setActive(true);
@@ -112,18 +117,6 @@ const CreatePattern = () => {
                     <h2 className="retro card-header">
                         <FormattedMessage id="project.products.CreatePattern.heading"/>
                     </h2>
-
-
-                    <div>
-                        <input type="file" accept="image/*" multiple onChange={handleImagesChange}/>
-                    </div>
-                    {previewUrls.map((url, index) => (
-                        <div key={index}>
-                            <img src={url} alt="Preview" style={{ width: "200px", height: "200px" }} />
-                        </div>
-                    ))}
-
-
 
                     <div className="card-body">
                         <form ref={node => form = node}
@@ -203,7 +196,7 @@ const CreatePattern = () => {
                                     <label htmlFor="craftId" className="col-form-label bold-label">
                                         <FormattedMessage id="project.catalog.Craft.field"/>
                                     </label>
-                                    <CraftSelector id="craftId" className="custom-select my-1 mr-sm-2"
+                                    <CraftSelector id="craftId" className="form-select"
                                                    value={craftId} onChange={e => setCraftId(e.target.value)}/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
@@ -214,12 +207,47 @@ const CreatePattern = () => {
                                     <label htmlFor="subcategoryId" className="col-form-label bold-label">
                                         <FormattedMessage id="project.catalog.Category.field"/>
                                     </label>
-                                    <SubcategorySelector id="subcategoryId" className="custom-select my-1 mr-sm-2"
+                                    <SubcategorySelector id="subcategoryId" className="form-select"
                                                          value={subcategoryId} onChange={e => setSubcategoryId(e.target.value)}/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
                                     </div>
                                 </div>
+                            </div>
+
+
+                            <div className="form-group row">
+                                <div className="mt-3 mb-3">
+                                    <label className="col-md-12 col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Product.images"/>
+                                    </label>
+                                    <div className="italic-message small">
+                                        <FormattedMessage id="project.products.Product.uploadImages"/>
+                                    </div>
+
+                                </div>
+                                <div className="container image-upload-container justify-content-center dashed-border">
+
+                                    {previewUrls.map((url, index) => (
+                                        <div key={index}>
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(e) => handleImagesChange(e.target.files[0], index)}
+                                                style={{ display: 'none' }}
+                                                id={`file-input-${index}`}
+                                            />
+
+                                            <label htmlFor={`file-input-${index}`} className="btn button-light-pink-images">
+                                                {url ? <img src={url} alt="Preview"  />
+                                                     :
+                                                    <i className="fa-solid fa-plus" style={{color: "#fcfcfc",}}></i>}
+                                            </label>
+                                            {url && <button type="button" onClick={() => handleDeleteImage(index)} className="btn btn-danger">Delete</button>}
+                                        </div>
+                                    ))}
+                                </div>
+
                             </div>
 
 
@@ -280,7 +308,7 @@ const CreatePattern = () => {
                                             </div>
                                         </div>
                                         <div className="col-md-6">
-                                            <select id="timeUnit" className="form-control" value={timeUnit}
+                                            <select id="timeUnit" className="form-control form-select" value={timeUnit}
                                                     onChange={e=> setTimeUnit(e.target.value)} required>
                                                 <option value="minutes"><FormattedMessage id="project.products.Pattern.time.minutes"/></option>
                                                 <option value="hours"><FormattedMessage id="project.products.Pattern.time.hours"/></option>
@@ -295,7 +323,7 @@ const CreatePattern = () => {
                                     <label htmlFor="difficultyLevel" className="col-form-label bold-label">
                                         <FormattedMessage id="project.products.Pattern.difficultyLevel"/>
                                     </label>
-                                    <select id="difficultyLevel" className="form-control" value={difficultyLevel}
+                                    <select id="difficultyLevel" className="form-select" value={difficultyLevel}
                                             onChange={e => setDifficultyLevel(e.target.value)}
                                             required>
                                         <option value="0">
@@ -317,14 +345,15 @@ const CreatePattern = () => {
                                     <label htmlFor="abbreviations" className=" col-form-label bold-label">
                                         <FormattedMessage id="project.products.Pattern.abbreviations"/>
                                     </label>
-                                    <select id="abbreviations" className="form-control" value={abbreviations}
+                                    <select id="abbreviations" className="form-select" value={abbreviations}
                                             onChange={e=> setAbbreviations(e.target.value)} required>
+                                        <option value="spanish">
+                                            <FormattedMessage id="project.products.Pattern.standard.spanish"/></option>
                                         <option value="custom">
                                             <FormattedMessage id="project.products.Pattern.standard.custom"/></option>
                                         <option value="usa">
                                             <FormattedMessage id="project.products.Pattern.standard.usa"/></option>
-                                        <option value="spanish">
-                                            <FormattedMessage id="project.products.Pattern.standard.spanish"/></option>
+
                                     </select>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
@@ -401,9 +430,6 @@ const CreatePattern = () => {
                             </div>
 
 
-
-
-
                             <div className="form-group row">
                                 <p className="col-md-12 col-form-label bold-label">
                                     <FormattedMessage id="project.products.Product.active.message"/>
@@ -412,7 +438,7 @@ const CreatePattern = () => {
                                     <input id="publish" type="radio" className="form-check-input"
                                            checked={active === true}
                                            onChange={()=> handleCheckboxChange('publish')}/>
-                                    <label htmlFor="publish" className="form-check-label">
+                                    <label htmlFor="publish" className="form-check-label ms-2">
                                         <FormattedMessage id="project.products.Product.publish"/>
                                     </label>
                                 </div>
@@ -421,7 +447,7 @@ const CreatePattern = () => {
                                     <input type="radio" id="draft" className="form-check-input"
                                            checked={active === false}
                                            onChange={()=> handleCheckboxChange('draft')}/>
-                                    <label htmlFor="draft" className="form-check-label">
+                                    <label htmlFor="draft" className="form-check-label ms-2">
                                         <FormattedMessage id="project.products.Product.draft"/>
                                     </label>
                                 </div>

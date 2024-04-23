@@ -6,6 +6,7 @@ import * as selectors from '../selectors';
 import * as catalogSelectors from '../../catalog/selectors';
 import * as actions from '../actions';
 import {FormattedMessage} from "react-intl";
+import ImagesCarousel from "../../catalog/components/ImagesCarousel.jsx";
 
 const PatternDetails = () =>{
 
@@ -83,7 +84,7 @@ const PatternDetails = () =>{
                         <h2 className="retro card-header">
                             <FormattedMessage id="project.products.ViewPattern.heading"/>
                         </h2>
-                        <div className="card-body">
+                        <div className="card-body col-md-12">
 
                             <div className="p-3 text-center">
                                 <div className="framed-title disabled bold-label">
@@ -142,6 +143,16 @@ const PatternDetails = () =>{
                                 <div className="col-md-12 col-form-label">
                                     <p>{subcategoryNameTranslation(pattern.subcategoryId, categories)} </p>
                                 </div>
+                            </div>
+
+                            <div className="row justify-content-center">
+                                <label className="col-md-12 col-form-label bold-label">
+                                    <FormattedMessage id="project.products.Product.images"/>
+                                </label>
+                                <div style={{maxWidth: "400px", maxHeight: "100%"}}>
+                                    <ImagesCarousel images={pattern.imagesUrl}/>
+                                </div>
+
                             </div>
 
                             <div className="p-3 text-center">

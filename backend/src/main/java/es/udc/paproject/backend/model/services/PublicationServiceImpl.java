@@ -13,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PublicationServiceImpl implements PublicationService{
@@ -219,7 +221,8 @@ public class PublicationServiceImpl implements PublicationService{
     @Override
     public Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
                                BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                               String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools) throws InstanceNotFoundException, UserNotOwnerException {
+                               String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools,
+                               List<String> imagesUrl) throws InstanceNotFoundException, UserNotOwnerException {
 
 
         User user = permissionChecker.checkUser(userId);
@@ -245,6 +248,15 @@ public class PublicationServiceImpl implements PublicationService{
         pattern.setSpecialAbbreviations(specialAbbreviations);
         pattern.setTools(tools);
 
+        Set<ProductImages> productImages = new HashSet<>();
+        for (String imageUrl : imagesUrl) {
+            ProductImages productImage = new ProductImages();
+            productImage.setImageUrl(imageUrl);
+            productImage.setProduct(pattern);
+            productImages.add(productImage);
+        }
+        pattern.setImages(productImages);
+
         patternDao.save(pattern);
 
         return pattern;
@@ -253,7 +265,7 @@ public class PublicationServiceImpl implements PublicationService{
     @Override
     public Physical editPhysical(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
                           BigDecimal price, Boolean active, int amount, String size, String color,
-                          String details) throws InstanceNotFoundException, UserNotOwnerException {
+                          String details, List<String> imagesUrl) throws InstanceNotFoundException, UserNotOwnerException {
 
 
         User user = permissionChecker.checkUser(userId);
@@ -274,6 +286,15 @@ public class PublicationServiceImpl implements PublicationService{
         physical.setColor(color);
         physical.setDetails(details);
 
+        Set<ProductImages> productImages = new HashSet<>();
+        for (String imageUrl : imagesUrl) {
+            ProductImages productImage = new ProductImages();
+            productImage.setImageUrl(imageUrl);
+            productImage.setProduct(physical);
+            productImages.add(productImage);
+        }
+        physical.setImages(productImages);
+
         physicalDao.save(physical);
 
         return physical;
@@ -285,6 +306,12 @@ public class PublicationServiceImpl implements PublicationService{
         Product product = findProductById(productId);
 
         checkProductOwner(userId, productId);
+
+        Set<ProductImages> images = product.getImages();
+
+        for (ProductImages image : images) {
+            productImagesDao.delete(image);
+        }
 
         productDao.delete(product);
     }

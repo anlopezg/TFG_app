@@ -4,7 +4,7 @@ import {Carousel} from "react-bootstrap";
 const ImagesCarousel = ({images}) => {
 
     return (
-        <Carousel interval={null} style={{maxWidth: "100%", maxHeight: "100%"}}>
+        <Carousel interval={null} style={{maxWidth: "500px", maxHeight: "100%"}}>
             {images.map((image, index) => (
                 <Carousel.Item key={index} style={{maxWidth: "100%", maxHeight: "100%"}}>
                     <img

@@ -22,7 +22,7 @@ const Header = () => {
                 <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <div className="collapse navbar-collapse mx-3" id="navbarSupportedContent">
 
                 {userName ? (
                     <ul className="navbar-nav ms-auto">
@@ -55,6 +55,9 @@ const Header = () => {
                                 </Link></li>
                                 <li><Link className="dropdown-item" to="/users/change-password">
                                     <FormattedMessage id="project.users.ChangePassword.title"/>
+                                </Link></li>
+                                <li><Link className="dropdown-item" to="/products/favorites">
+                                    <FormattedMessage id="project.products.Favorite.list"/>
                                 </Link></li>
                                 <li><Link className="dropdown-item" to="/publications/products">
                                     <FormattedMessage id="project.products.MyStore.heading"/>

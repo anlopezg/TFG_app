@@ -1,11 +1,12 @@
 import {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {FormattedMessage, FormattedNumber} from 'react-intl';
-import {Form, Link, useParams} from 'react-router-dom';
+import {Form, Link, useNavigate, useParams} from 'react-router-dom';
 
 import users from '../../users';
 import * as selectors from '../selectors';
 import * as actions from '../actions';
+import * as favoriteActions from '../../favorite/actions.js';
 
 import {BackLink, UserLink} from '../../common';
 import ProductType from "./ProductType.jsx";
@@ -15,11 +16,13 @@ import ImagesCarousel from "./ImagesCarousel.jsx";
 const ProductDetails = () => {
 
     const loggedIn = useSelector(users.selectors.isLoggedIn);
+    const user = useSelector(users.selectors.getUser);
     const product = useSelector(selectors.getProduct);
     const crafts = useSelector(selectors.getCrafts);
     const categories = useSelector(selectors.getCategories);
     const dispatch = useDispatch();
     const {id} = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -57,6 +60,16 @@ const ProductDetails = () => {
 
         return <FormattedMessage id={`project.catalog.Subcategories.${subcategoryName}`}/>
     }
+
+    const handleFavoriteClick = () => {
+        if (loggedIn) {
+            dispatch(favoriteActions.markAsFavorite({productId: toNumber(id)}));
+        } else {
+            navigate('/users/login');
+        }
+    };
+
+    const toNumber = value => value.length > 0 ? Number(value) : null;
 
 
     return (
@@ -97,25 +110,30 @@ const ProductDetails = () => {
                     <div className="col-md-6 mx-auto p-5">
                         <div className="text-left">
 
-                            <div className="mb-4">
+                            <div className="mb-4 d-flex justify-content-between align-items-center">
                                 <ProductType productType={product.productType}/>
+
+                                <button type="button" className="btn btn-secondary heart-button mt-3" onClick={handleFavoriteClick}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="bi bi-heart heart-icon" viewBox="0 0 16 16">
+                                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                    </svg>
+                                </button>
                             </div>
 
-                            <h3 className="retro">{product.title}</h3>
+                            <h3 className="retro mb-4">{product.title}</h3>
                             <p className="text-muted small text-uppercase">
                                 <FormattedMessage id="project.products.Product.description"/>
                             </p>
                             <h6>{product.description}</h6>
 
-                            <p className="text-muted small text-uppercase">
-                                <FormattedMessage id="project.products.Product.details"/>
-                            </p>
-                            <p>{product.details}</p>
-                            <br/>
 
-                            <p className="text-muted"> {craftNameTranslation(selectors.getCraftName(crafts, product.craftId))} </p>
-                            <p className="text-muted">{categoryNameTranslation(selectors.getCategoryNameBySubcategoryId(categories, product.subcategoryId))} -
-                                {subcategoryNameTranslation(selectors.getSubcategoryName(categories, product.subcategoryId))}</p>
+                            <p className="text-muted small text-uppercase mt-4">
+                                <FormattedMessage id="project.catalog.Category.field"/>
+                            </p>
+                            <p> {craftNameTranslation(selectors.getCraftName(crafts, product.craftId))} / {categoryNameTranslation(selectors.getCategoryNameBySubcategoryId(categories, product.subcategoryId))} -
+                                {subcategoryNameTranslation(selectors.getSubcategoryName(categories, product.subcategoryId))}
+                            </p>
+
                         </div>
 
                         <br/>

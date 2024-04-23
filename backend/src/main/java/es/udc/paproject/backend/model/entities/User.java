@@ -36,7 +36,8 @@ public class User {
 
 	public User(){}
 
-	public User(String username, String email, String password, String firstName, String language, String country, String region, int crochetLevel, int knitLevel, String bio) {
+	public User(String username, String email, String password, String firstName, String language, String country,
+				String region, int crochetLevel, int knitLevel, String bio) {
 
 		this.username = username;
 		this.email = email;

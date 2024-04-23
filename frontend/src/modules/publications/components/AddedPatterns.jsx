@@ -2,6 +2,7 @@ import {FormattedMessage} from "react-intl";
 import PropTypes from 'prop-types';
 
 import {PatternLink} from '../../common';
+import {Link} from "react-router-dom";
 
 const AddedPatterns= ({patterns}) =>(
 
@@ -22,12 +23,13 @@ const AddedPatterns= ({patterns}) =>(
                             </div>
 
                             <div className="text-center mt-3">
-                                <a href={`/publications/manage-pattern/${pattern.id}`} className="btn btn-primary mr-2">
+                                <a href={`/publications/manage-pattern/${pattern.id}`} className="btn btn-primary mx-2">
                                     <FormattedMessage id="project.global.buttons.edit"/>
                                 </a>
-                                <a href={`/publications/delete-pattern/${pattern.id}`} className="btn btn-danger">
+
+                                <Link to={`/publications/delete-pattern/${pattern.id}`} className="btn btn-danger mx-2">
                                     <FormattedMessage id="project.global.buttons.delete"/>
-                                </a>
+                                </Link>
                             </div>
 
                         </div>

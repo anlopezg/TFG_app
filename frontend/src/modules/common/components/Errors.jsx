@@ -29,20 +29,15 @@ const Errors = ({errors, onClose}) => {
 
             {globalError ? globalError : ''}
 
-            {fieldErrors ?
+            {fieldErrors &&
                 <ul>
                     {fieldErrors.map((fieldError, index) =>
                         <li key={index}>{fieldError}</li>
                     )}
                 </ul>
-                : 
-                ''
             }
 
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close" 
-                onClick={() => onClose()}>
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" className="btn-close" aria-label="Close" onClick={() => onClose()}></button>
 
         </div>
 

@@ -49,7 +49,7 @@ public class CatalogServiceTest {
 
     private User createUser(String username){
         User user = new User(username, username + "@a.com","password", "firstName", "language",
-                "country", 1, 2, "long bio");
+                "country", "region", 1, 2, "long bio");
 
         user.setRole(User.RoleType.USER);
 

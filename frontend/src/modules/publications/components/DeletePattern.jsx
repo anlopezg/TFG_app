@@ -1,10 +1,11 @@
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate, useParams} from "react-router-dom";
 
 import * as actions from "../actions.js";
 import {FormattedMessage} from "react-intl";
+import {useEffect} from "react";
 
-const DeletePattern= () =>{
+const DeletePattern = ({pattern}) =>{
 
     const {id} = useParams();
     const dispatch = useDispatch();

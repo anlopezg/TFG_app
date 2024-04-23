@@ -77,10 +77,10 @@ public interface PublicationService {
     Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
                         BigDecimal price, Boolean active, String introduction, String notes, String gauge,
                         String sizing, int difficultyLevel, String time,
-                        String abbreviations, String specialAbbreviations, String tools) throws InstanceNotFoundException, UserNotOwnerException;
+                        String abbreviations, String specialAbbreviations, String tools, List<String> imagesUrl) throws InstanceNotFoundException, UserNotOwnerException;
 
     Physical editPhysical(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
-                        BigDecimal price, Boolean active, int amount, String size, String color, String details) throws InstanceNotFoundException, UserNotOwnerException;
+                        BigDecimal price, Boolean active, int amount, String size, String color, String details, List<String> imagesUrl) throws InstanceNotFoundException, UserNotOwnerException;
 
 
     /**

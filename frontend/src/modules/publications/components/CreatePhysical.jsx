@@ -1,7 +1,7 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
-import {useNavigate} from 'react-router-dom';
+import {Form, useNavigate} from 'react-router-dom';
 
 
 import {Errors} from '../../common';
@@ -30,7 +30,7 @@ const CreatePhysical = () => {
     const[ color, setColor] = useState('');
     const[ details, setDetails ] = useState('');
 
-    const { images, previewUrls, handleImagesChange } = imageUploader();
+    const { images, previewUrls, handleImagesChange, handleDeleteImage } = imageUploader();
 
     const [backendErrors, setBackendErrors] = useState(null);
     let form;
@@ -42,11 +42,9 @@ const CreatePhysical = () => {
 
 
         uploadImages(images).then((results) => {
-            console.log("Resultados de la carga:", results);
-            imageResults = results;
 
+            imageResults = results;
             const urlList = imageResults.map(imageResult => imageResult.url);
-            console.log("Url List: ", urlList);
 
             if(form.checkValidity()){
                 dispatch(actions.createPhysical(
@@ -74,6 +72,15 @@ const CreatePhysical = () => {
 
     }
 
+    //Handle images changes
+    useEffect(() => {
+        return () => {
+            previewUrls.forEach(url => {
+                if (url) URL.revokeObjectURL(url);
+            });
+        };
+    }, [previewUrls]);
+
     const handleCheckboxChange = (newValue) => {
         if(newValue==="publish"){
             setActive(true);
@@ -92,15 +99,6 @@ const CreatePhysical = () => {
                     <h2 className="retro card-header">
                         <FormattedMessage id="project.products.CreatePhysical.heading"/>
                     </h2>
-
-                    <div>
-                        <input type="file" accept="image/*" multiple onChange={handleImagesChange}/>
-                    </div>
-                    {previewUrls.map((url, index) => (
-                        <div key={index}>
-                            <img src={url} alt="Preview" style={{ width: "200px", height: "200px" }} />
-                        </div>
-                    ))}
 
                     <div className="card-body ">
                         <form ref={node => form = node}
@@ -186,10 +184,10 @@ const CreatePhysical = () => {
 
                             <div className="form-group row">
                                 <div className="col-md-6">
-                                    <label htmlFor="craft" className="col-form-label bold-label">
+                                    <label htmlFor="craftId" className="col-form-label bold-label">
                                         <FormattedMessage id="project.catalog.Craft.field"/>
                                     </label>
-                                    <CraftSelector id="craftId" className="custom-select my-1 mr-sm-2"
+                                    <CraftSelector id="craftId" className="form-select"
                                                    value={craftId} onChange={e => setCraftId(e.target.value)}/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
@@ -197,15 +195,59 @@ const CreatePhysical = () => {
                                 </div>
 
                                 <div className="col-md-6">
-                                    <label htmlFor="subcategory" className="col-form-label bold-label">
+                                    <label htmlFor="subcategoryId" className="col-form-label bold-label">
                                         <FormattedMessage id="project.catalog.Category.field"/>
                                     </label>
-                                    <SubcategorySelector id="subcategoryId" className="custom-select my-1 mr-sm-2"
+                                    <SubcategorySelector id="subcategoryId" className="form-select"
                                                          value={subcategoryId} onChange={e => setSubcategoryId(e.target.value)}/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div className="form-group row">
+                                <div className="mt-3 mb-3">
+                                    <label className="col-md-12 col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Product.images"/>
+                                    </label>
+                                    <div className="italic-message small">
+                                        <FormattedMessage id="project.products.Product.uploadImages"/>
+                                    </div>
+
+                                </div>
+                                <div className="container image-upload-container justify-content-center dashed-border">
+
+                                    {previewUrls.map((url, index) => (
+                                        <div key={index} className="row text-center">
+                                            <div className="col">
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={(e) => handleImagesChange(e.target.files[0], index)}
+                                                    style={{ display: 'none' }}
+                                                    id={`file-input-${index}`}
+                                                />
+
+                                                <label htmlFor={`file-input-${index}`} className="btn button-light-pink-images">
+                                                    {url ? <img src={url} alt="Preview"  />
+                                                        :
+                                                        <i className="fa-solid fa-plus" style={{color: "#fcfcfc",}}></i>}
+                                                </label>
+                                            </div>
+
+                                            <div key={index} className="row">
+                                                <div className="col ">
+                                                    {url && (
+                                                        <button type="button" onClick={() => handleDeleteImage(index)} className="btn btn-danger">
+                                                            <FormattedMessage id="project.global.buttons.delete"/></button>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
                             </div>
 
                             <div className="form-group row">

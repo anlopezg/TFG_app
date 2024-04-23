@@ -141,6 +141,7 @@ public class PatternDto extends ProductDto{
 
 
     @NotNull(groups = {AllValidations.class})
+    @Size(max = 5, message = "The maximum number of images is 5", groups = {AllValidations.class})
     public List<String> getImagesUrl() {
         return imagesUrl;
     }

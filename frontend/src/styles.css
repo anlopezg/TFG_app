@@ -310,6 +310,17 @@ h4{
     background-color: var(--medium-pink);
 }
 
+.button-light-pink-images{
+    background-color: var(--pastel-pink);
+    border-radius: 10px;
+    margin: 7px;
+    font-size: 18px;
+}
+
+.button-light-pink-images:hover{
+    background-color: var(--medium-pink);
+}
+
 .button-dark-blue{
     background-color: var(--darker-blue);
     width: 100%;
@@ -424,6 +435,10 @@ h4{
 
 .product-link-light{
     color: var(--darker-blue);
+}
+
+.product-link-light:hover{
+    color: black;
 }
 
 .italic-message{
@@ -659,6 +674,52 @@ h4{
     box-shadow: 0 2px 4px rgba(0,0,0,.1);
     margin-top: 20px;
     z-index: 1;
+}
+
+.heart-button{
+    background-color: var(--coral);
+    border: none;
+}
+
+.heart-icon{
+    fill: white;
+}
+
+.dashed-border{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border: 2px dashed #ccc;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+}
+
+.image-upload-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+/* For big screens */
+.image-upload-container img {
+    max-width: 200px;
+    max-height: 200px;
+    padding:4px;
+}
+
+
+@media (max-width: 576px) {
+    .image-upload-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .image-upload-container img {
+        max-width: 150%;
+        max-height: 150px;
+        margin-bottom: 10px;
+    }
 }
 
 

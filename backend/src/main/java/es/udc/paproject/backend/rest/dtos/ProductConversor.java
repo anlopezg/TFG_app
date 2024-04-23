@@ -67,8 +67,6 @@ public class ProductConversor {
         return patterns.stream().map(o-> toPatternDto(o)).collect(Collectors.toList());
     }
 
-
-
     /* Physical Conversor */
     public final static PhysicalDto toPhysicalDto(Physical physical){
 

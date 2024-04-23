@@ -7,11 +7,8 @@ import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile, Becom
 import users from '../../users';
 import {
     CreatePattern,
-    ViewAddedPatterns,
-    ViewAddedPhysicals,
     CreatePhysical,
-    PatternDetails
-    ,
+    PatternDetails,
     PhysicalDetails,
     EditPattern,
     ManagePattern,
@@ -23,6 +20,7 @@ import {
 } from "../../publications/index.js";
 
 import {FindProductsResult, ProductDetails, FindAllProducts, UserProducts, FindUsersResult} from "../../catalog/index.js";
+import {FavoriteList} from "../../favorite/index.js";
 
 const Body = () => {
 
@@ -51,6 +49,8 @@ const Body = () => {
                 {!loggedIn && <Route path="/users/signup" element={<SignUp/>}/>}
 
                 {loggedIn && isNormalUser && <Route path="/publications/products" element={<BecomesSeller/>}/>}
+
+                {loggedIn && <Route path="/products/favorites" element={<FavoriteList/>}/>}
 
 
                 {loggedIn && isSeller && <Route path="/publications/create-pattern" element={<CreatePattern/>}/>}

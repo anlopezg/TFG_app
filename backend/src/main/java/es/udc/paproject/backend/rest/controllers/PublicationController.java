@@ -128,10 +128,11 @@ public class PublicationController {
     @PutMapping("/patterns/{id}")
     public PatternDto editPattern(@RequestAttribute Long userId,  @PathVariable Long id,  @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto) throws InstanceNotFoundException, UserNotOwnerException {
 
+
         return toPatternDto(publicationService.editPattern(id, userId, patternDto.getCraftId(), patternDto.getSubcategoryId(),
                 patternDto.getTitle(), patternDto.getDescription(), patternDto.getPrice(), patternDto.getActive(),
                 patternDto.getIntroduction(), patternDto.getNotes(), patternDto.getGauge(), patternDto.getSizing(),
-                patternDto.getDifficultyLevel(), patternDto.getTime(), patternDto.getAbbreviations(), patternDto.getSpecialAbbreviations(), patternDto.getTools()));
+                patternDto.getDifficultyLevel(), patternDto.getTime(), patternDto.getAbbreviations(), patternDto.getSpecialAbbreviations(), patternDto.getTools(), patternDto.getImagesUrl()));
     }
 
     @PutMapping("/physicals/{id}")
@@ -139,7 +140,7 @@ public class PublicationController {
 
         return toPhysicalDto(publicationService.editPhysical(id, userId, physicalDto.getCraftId(), physicalDto.getSubcategoryId(),
                 physicalDto.getTitle(), physicalDto.getDescription(), physicalDto.getPrice(), physicalDto.getActive(),
-                physicalDto.getAmount(), physicalDto.getSize(), physicalDto.getColor(), physicalDto.getDetails()));
+                physicalDto.getAmount(), physicalDto.getSize(), physicalDto.getColor(), physicalDto.getDetails(), physicalDto.getImagesUrl()));
     }
 
 

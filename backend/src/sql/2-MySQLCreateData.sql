@@ -57,7 +57,7 @@ INSERT INTO Product (userId, craftId, subcategoryId, title, description, price, 
              '3mm Crochet Hook x1, Needle x1, Markers x5');
 
 
-INSERT INTO Favorite (userId, productId, favorite) VALUES
+INSERT INTO Favorite (userId, productId, liked) VALUES
       -- Physical product id=1 marked as fav
             (1, 1, TRUE),
       -- Pattern id=3 marked as fav

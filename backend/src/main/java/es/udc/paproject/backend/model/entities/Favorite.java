@@ -6,17 +6,16 @@ import jakarta.persistence.*;
 public class Favorite {
 
     private Long id;
-
     private User user;
     private Product product;
-    private Boolean isFavorite;
+    private Boolean liked;
 
     public Favorite(){}
 
-    public Favorite(User user, Product product, Boolean isFavorite){
+    public Favorite(User user, Product product, Boolean liked){
         this.user=user;
         this.product=product;
-        this.isFavorite=isFavorite;
+        this.liked = liked;
     }
 
     @Id
@@ -50,11 +49,11 @@ public class Favorite {
         this.product = product;
     }
 
-    public Boolean getFavorite() {
-        return isFavorite;
+    public Boolean getLiked() {
+        return liked;
     }
 
-    public void setFavorite(Boolean favorite) {
-        isFavorite = favorite;
+    public void setLiked(Boolean liked) {
+        this.liked = liked;
     }
 }

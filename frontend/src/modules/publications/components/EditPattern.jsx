@@ -158,7 +158,7 @@ const EditPattern = ()=>{
                                     <label htmlFor="craft" className="col-form-label bold-label">
                                         <FormattedMessage id="project.catalog.Craft.field"/>
                                     </label>
-                                    <CraftSelector id="craftId" className="custom-select my-1 mr-sm-2"
+                                    <CraftSelector id="craftId" className="form-select"
                                                    value={craftId} onChange={e => setCraftId(e.target.value)}/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
@@ -169,7 +169,7 @@ const EditPattern = ()=>{
                                     <label htmlFor="subcategory" className="col-form-label bold-label">
                                         <FormattedMessage id="project.catalog.Category.field"/>
                                     </label>
-                                    <SubcategorySelector id="subcategoryId" className="custom-select my-1 mr-sm-2"
+                                    <SubcategorySelector id="subcategoryId" className="form-select"
                                                          value={subcategoryId} onChange={e => setSubcategoryId(e.target.value)}/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
@@ -267,7 +267,7 @@ const EditPattern = ()=>{
                                     <label htmlFor="difficultyLevel" className="col-form-label bold-label">
                                         <FormattedMessage id="project.products.Pattern.difficultyLevel"/>
                                     </label>
-                                    <select id="difficultyLevel" className="form-control" value={difficultyLevel}
+                                    <select id="difficultyLevel" className="form-select" value={difficultyLevel}
                                             onChange={e => setDifficultyLevel(e.target.value)}
                                             required>
                                         <option value="0">
@@ -292,7 +292,7 @@ const EditPattern = ()=>{
                                            checked={active}
                                            onChange={()=> handleCheckboxChange('publish')}
                                     />
-                                    <label htmlFor="publish" className="form-check-label">
+                                    <label htmlFor="publish" className="form-check-label mx-2">
                                         <FormattedMessage id="project.products.Product.publish"/>
                                     </label>
                                 </div>
@@ -302,7 +302,7 @@ const EditPattern = ()=>{
                                            checked={!active}
                                            onChange={()=> handleCheckboxChange('draft')}
                                     />
-                                    <label htmlFor="draft" className="form-check-label">
+                                    <label htmlFor="draft" className="form-check-label mx-2">
                                         <FormattedMessage id="project.products.Product.draft"/>
                                     </label>
                                 </div>

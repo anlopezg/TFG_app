@@ -25,10 +25,10 @@ const AddedPhysicals= ({physicals}) =>(
                             </div>
 
                             <div className="text-center mt-3">
-                                <a href={`/publications/manage-physical/${physical.id}`} className="btn btn-primary mr-2">
+                                <a href={`/publications/manage-physical/${physical.id}`} className="btn btn-primary mx-2">
                                     <FormattedMessage id="project.global.buttons.edit"/>
                                 </a>
-                                <a href={`/publications/delete-physical/${physical.id}`} className="btn btn-danger">
+                                <a href={`/publications/delete-physical/${physical.id}`} className="btn btn-danger mx-2">
                                     <FormattedMessage id="project.global.buttons.delete"/>
                                 </a>
                             </div>
