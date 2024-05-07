@@ -5,6 +5,8 @@ import es.udc.paproject.backend.model.entities.User;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static es.udc.paproject.backend.rest.dtos.ShoppingCartConversor.toShoppingCartDto;
+
 public class UserConversor {
 	
 	private UserConversor() {}
@@ -23,7 +25,7 @@ public class UserConversor {
 	
 	public final static AuthenticatedUserDto toAuthenticatedUserDto(String serviceToken, User user) {
 		
-		return new AuthenticatedUserDto(serviceToken, toUserDto(user));
+		return new AuthenticatedUserDto(serviceToken, toUserDto(user), toShoppingCartDto(user.getShoppingCart()));
 		
 	}
 

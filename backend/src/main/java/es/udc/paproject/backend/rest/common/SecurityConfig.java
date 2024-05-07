@@ -60,6 +60,11 @@ public class SecurityConfig {
 					/********************* FAVORITE CONTROLLER *********************/
 					.requestMatchers(HttpMethod.GET, "/products/**").hasAnyRole("USER", "SELLER")
 					.requestMatchers(HttpMethod.POST, "/products/**").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.DELETE, "/products/**").hasAnyRole("USER", "SELLER")
+
+					/********************* SHOPPING CONTROLLER *********************/
+					.requestMatchers(HttpMethod.GET, "/shopping/**").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.POST, "/shopping/**").hasAnyRole("USER", "SELLER")
 
 
 				.anyRequest().denyAll());

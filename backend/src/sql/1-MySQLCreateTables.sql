@@ -1,3 +1,7 @@
+DROP TABLE PurchaseItem;
+DROP TABLE Purchase;
+DROP TABLE ShoppingCartItem;
+DROP TABLE ShoppingCart;
 DROP TABLE ProductImages;
 DROP TABLE Favorite;
 DROP TABLE Product;
@@ -124,5 +128,53 @@ CREATE TABLE Favorite (
     CONSTRAINT FavoritePK PRIMARY KEY (id),
     CONSTRAINT FavoriteUserFK FOREIGN KEY (userId) REFERENCES User(id),
     CONSTRAINT FavoriteProductFK FOREIGN KEY (productId) REFERENCES Product(id)
+
+) ENGINE = InnoDB;
+
+
+
+CREATE TABLE ShoppingCart (
+
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    userId BIGINT NOT NULL,
+    CONSTRAINT ShoppingCartPK PRIMARY KEY (id),
+    CONSTRAINT ShoppingCartUserIdFK FOREIGN KEY (userId) REFERENCES User(id)
+
+) ENGINE = InnoDB;
+
+
+CREATE TABLE ShoppingCartItem(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    productId BIGINT NOT NULL,
+    quantity SMALLINT NOT NULL,
+    shoppingCartId BIGINT NOT NULL,
+    CONSTRAINT ShoppingCartItemPK PRIMARY KEY (id),
+    CONSTRAINT ShoppingCartItemProductIdFK FOREIGN KEY (productId) REFERENCES Product (id),
+    CONSTRAINT ShoppingCartItemShoppingCartIdFK FOREIGN KEY (shoppingCartId) REFERENCES ShoppingCart (id)
+
+) ENGINE = InnoDB;
+
+CREATE TABLE Purchase (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    userId BIGINT NOT NULL,
+    date DATETIME NOT NULL,
+    postalAddress VARCHAR(200) NOT NULL,
+    postalCode VARCHAR(20) NOT NULL,
+
+    CONSTRAINT PurchasePK PRIMARY KEY (id),
+    CONSTRAINT PurchaseUserIdFK FOREIGN KEY(userId) REFERENCES User (id)
+
+) ENGINE = InnoDB;
+
+CREATE TABLE PurchaseItem (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    productId BIGINT NOT NULL,
+    productPrice DECIMAL(11, 2) NOT NULL,
+    quantity SMALLINT NOT NULL,
+    purchaseId BIGINT NOT NULL,
+
+    CONSTRAINT PurchaseItemPK PRIMARY KEY (id),
+    CONSTRAINT PurchaseItemProductIdFK FOREIGN KEY(productId) REFERENCES Product (id),
+    CONSTRAINT PurchaseItemPurchaseIdFK FOREIGN KEY(purchaseId) REFERENCES Purchase (id)
 
 ) ENGINE = InnoDB;

@@ -1,38 +1,26 @@
 package es.udc.paproject.backend.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 
 @Entity
 public class User {
 	
 	public enum RoleType {USER, SELLER}
-
 	private Long id;
-
 	private String username;
-
 	private String email;
-
 	private String password;
-
 	private String firstName;
-
 	private String language;
-
 	private String country;
 	private String region;
-
 	private int crochetLevel;
-
 	private int knitLevel;
-
 	private String bio;
-
 	private RoleType role;
+
+	private ShoppingCart shoppingCart;
 
 	public User(){}
 
@@ -149,5 +137,14 @@ public class User {
 		this.role = role;
 	}
 
+
+	@OneToOne(mappedBy="user", optional=false, fetch=FetchType.LAZY)
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
 
 }

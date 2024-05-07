@@ -3,6 +3,8 @@ package es.udc.paproject.backend.model.services;
 import java.util.Objects;
 import java.util.Optional;
 
+import es.udc.paproject.backend.model.daos.ShoppingCartDao;
+import es.udc.paproject.backend.model.entities.ShoppingCart;
 import es.udc.paproject.backend.model.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +26,10 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private ShoppingCartDao shoppingCartDao;
+
 	
 	@Override
 	public void signUp(User user) throws DuplicateInstanceException {
@@ -35,13 +41,17 @@ public class UserServiceImpl implements UserService {
 		if (userDao.existsByEmail(user.getEmail())){
 			throw new DuplicateInstanceException("project.entities.user", user.getEmail());
 		}
-			
+
+		ShoppingCart shoppingCart = new ShoppingCart(user);
+
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setRole(User.RoleType.USER);
+		user.setShoppingCart(shoppingCart);
 		
 		userDao.save(user);
-		
+		shoppingCartDao.save(shoppingCart);
 	}
+
 
 	@Override
 	@Transactional(readOnly=true)

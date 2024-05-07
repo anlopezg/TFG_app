@@ -12,6 +12,10 @@ INSERT INTO User (userName, email, password, firstName, language, country, regio
        -- User para probar a borrar, perfil buyer, contra seller
        ('buyer3', 'buyer3@a.com','$2y$10$XlNfLZgdFFrHivw7XZM3nugEnlAb6d6O9fexozZWrswrmkwBNmKQ2', 'Warn', 'French', 'Canada', 'Vancouver', 1, 0, 'Hellow', 0);
 
+
+
+
+
 INSERT INTO Craft (craftName) VALUES
         -- id: 1
              ('crochet'),
@@ -72,3 +76,13 @@ INSERT INTO ProductImages (productId, imageUrl) VALUES
             (4, "https://res.cloudinary.com/dhj64eq7m/image/upload/v1713639494/tfg/yevn2muo0alh47ytqygi.jpg"),
             (4, "https://res.cloudinary.com/dhj64eq7m/image/upload/v1713639494/tfg/jbsfohay7hg5lpg1wph4.jpg"),
             (4, "https://res.cloudinary.com/dhj64eq7m/image/upload/v1713639494/tfg/pflndu5cr3dwmu523luz.jpg");
+
+
+INSERT INTO ShoppingCart (userId) VALUES
+            (1),
+            (2),
+            (3);
+
+INSERT INTO ShoppingCartItem (productId, quantity, shoppingCartId) VALUES
+            (1, 1, 1),
+            (2, 2, 2);
