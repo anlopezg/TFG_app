@@ -18,10 +18,6 @@ const imageUploader = () => {
             setPreviewUrls(newPreviewUrls);
         }
 
-        /*const selectedFiles = Array.from(e.target.files).slice(0,5);
-        setImages(selectedFiles);
-        const newPreviewUrls = selectedFiles.map(file => URL.createObjectURL(file));
-        setPreviewUrls(newPreviewUrls);*/
     };
 
     const handleDeleteImage = (index) => {

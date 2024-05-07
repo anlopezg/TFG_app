@@ -21,7 +21,26 @@ const markAsFavoriteCompleted = favorite => ({
     favorite
 })
 
-export const markAsFavorite = (productId, onSuccess) => dispatch =>{
-    backend.favoriteService.markAsFavorite(productId,
-        favorite => dispatch(markAsFavoriteCompleted(favorite)));
+export const markAsFavorite = (favorite, onSuccess, onErrors) => dispatch =>{
+    backend.favoriteService.markAsFavorite(favorite,
+
+        favorite => {dispatch(markAsFavoriteCompleted(favorite));
+            onSuccess()
+        },
+        onErrors);
+}
+
+const findFavoriteCompleted = favorite => ({
+    type: actionTypes.FIND_FAVORITE_COMPLETED,
+    favorite
+})
+
+export const findFavorite = (productId, onSuccess, onErrors) => dispatch =>{
+    backend.favoriteService.findFavorite(productId,
+        favorite => {
+            dispatch(findFavoriteCompleted(favorite));
+            onSuccess();
+        },
+        onErrors
+        );
 }

@@ -240,7 +240,7 @@ const CreatePhysical = () => {
                                                 <div className="col ">
                                                     {url && (
                                                         <button type="button" onClick={() => handleDeleteImage(index)} className="btn btn-danger">
-                                                            <FormattedMessage id="project.global.buttons.delete"/></button>
+                                                            <i className="fa-solid fa-trash"></i></button>
                                                     )}
                                                 </div>
                                             </div>
@@ -305,7 +305,7 @@ const CreatePhysical = () => {
                                     <input type="radio" id="publish" className="form-check-input"
                                            checked={active}
                                            onChange={()=> handleCheckboxChange('publish')}/>
-                                    <label htmlFor="publish" className="form-check-label">
+                                    <label htmlFor="publish" className="form-check-label mx-2">
                                         <FormattedMessage id="project.products.Product.publish"/>
                                     </label>
                                 </div>
@@ -314,7 +314,7 @@ const CreatePhysical = () => {
                                     <input type="radio" id="draft" className="form-check-input"
                                            checked={!active}
                                            onChange={()=> handleCheckboxChange('draft')}/>
-                                    <label htmlFor="draft" className="form-check-label">
+                                    <label htmlFor="draft" className="form-check-label mx-2">
                                         <FormattedMessage id="project.products.Product.draft"/>
                                     </label>
                                 </div>

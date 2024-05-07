@@ -5,13 +5,15 @@ import users from '../modules/users';
 import publications from '../modules/publications';
 import catalog from '../modules/catalog';
 import favorite from "../modules/favorite";
+import purchases from '../modules/purchases';
 
 const rootReducer = combineReducers({
     app: app.reducer,
     users: users.reducer,
     publications: publications.reducer,
     catalog: catalog.reducer,
-    favorite: favorite.reducer
+    favorite: favorite.reducer,
+    purchases: purchases.reducer
 });
 
 export default rootReducer;

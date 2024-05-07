@@ -65,7 +65,7 @@ public class CatalogController {
 
     /****************************** USER PRODUCT SEARCH ******************************/
 
-    @GetMapping("/{username}/products")
+    @GetMapping("/users/{username}/products")
     public BlockDto<ProductSummaryDto> findUserProducts(
             @PathVariable String username,
             @RequestParam(defaultValue = "0") int page) throws InstanceNotFoundException, UserNotSellerException {

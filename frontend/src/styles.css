@@ -92,6 +92,33 @@ h4{
     border-radius: 20px !important;
 }
 
+.shopping-card {
+    border: 1px solid var(--lilac-pink);
+}
+
+.shopping-card .card-body{
+    border-radius: 20px;
+}
+
+.success-card{
+    background-color: var(--lime-green);
+    border:none;
+    border-color:var(--lime-green);
+    max-width: 400px;
+}
+
+.success-card .card-header{
+    background-color: var(--lime-green);
+    font-family: 'Bold', sans-serif;
+    text-align: center;
+}
+
+.success-card .card-body{
+    background-color: var(--lime-green);
+    text-align: center;
+}
+
+
 .card-header{
     background-color: var(--pastel-pink);
     border-radius: 20px 20px 0 0 !important;
@@ -204,6 +231,7 @@ h4{
     border: 2px solid #1F1E1E;
 }
 
+
 .button-coral{
     border-radius: 20px;
     background-color: var(--coral);
@@ -222,6 +250,10 @@ h4{
     border-radius: 20px;
     font-family: 'Bold', sans-serif;
     max-width: 100%;
+}
+
+.button-lilac.bigger{
+    width: 30%
 }
 
 .button-lilac:hover{
@@ -677,12 +709,12 @@ h4{
 }
 
 .heart-button{
-    background-color: var(--coral);
-    border: none;
+    background-color: white;
+    border: 1px black;
 }
 
 .heart-icon{
-    fill: white;
+    fill: var(--coral);
 }
 
 .dashed-border{
@@ -721,6 +753,23 @@ h4{
         margin-bottom: 10px;
     }
 }
+
+.table{
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table th {
+    background-color: var(--lilac-pink); /* Light grey background */
+}
+
+.table td, .table th {
+    vertical-align: middle;
+    align-content: center;
+    justify-content: center;
+}
+
 
 
 

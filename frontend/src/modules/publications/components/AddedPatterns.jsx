@@ -17,6 +17,15 @@ const AddedPatterns= ({patterns}) =>(
                             <h5 className="card-title">
                                 <PatternLink id={pattern.id} title={pattern.title}/>
                             </h5>
+
+                            <div className="d-flex justify-content-start mb-2">
+                                <span className={`badge ${pattern.active ? 'bg-success' : 'bg-warning'}`}>
+                                  <FormattedMessage
+                                      id={pattern.active ? 'project.products.Product.published' : 'project.products.Product.draft.label'}
+                                  />
+                                </span>
+                            </div>
+
                             <div className="d-flex justify-content-end">
                                 <p className="card-text bold-label">{pattern.price} €</p>
 

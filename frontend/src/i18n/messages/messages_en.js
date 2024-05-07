@@ -14,6 +14,7 @@ export default {
     'project.global.buttons.ok': 'OK',
     'project.global.buttons.back': 'Back',
     'project.global.buttons.save': 'Save',
+    'project.global.buttons.update': 'Update',
     'project.global.buttons.search': 'Search',
     'project.global.buttons.submit': 'Submit',
     'project.global.buttons.edit': 'Edit',
@@ -43,6 +44,7 @@ export default {
     'project.global.fields.postalCode': 'Postal code',
     'project.global.fields.userName': 'Username',
     'project.global.fields.abbreviations': 'Abbreviations',
+    'project.global.fields.view-details': 'View details',
     'project.global.form.introduction': 'Fill in all the following inputs',
     'project.global.validator.email': 'Provide a correct e-mail address',
     'project.global.validator.passwordsDoNotMatch': 'Passwords do not match',
@@ -82,6 +84,7 @@ export default {
     'project.products.EditPhysical.heading': 'Edit your Product',
     'project.products.EditPattern.heading': 'Edit your Pattern',
     'project.products.CreatePhysical.heading' : 'Create a Product',
+    'project.products.Product.product' : 'Product',
     'project.products.Product.title' : 'Title',
     'project.products.Product.images': 'Images',
     'project.products.Product.uploadImages': 'Upload images of your product',
@@ -96,8 +99,10 @@ export default {
     'project.products.Product.active' : 'Current state',
     'project.products.Product.publish' : 'Publish it',
     'project.products.Product.isPublished' : 'The product is Published',
+    'project.products.Product.published': 'Published',
     'project.products.Product.draft' : 'Keep it as a draft',
     'project.products.Product.isDraft' : 'The product is saved as a Draft',
+    'project.products.Product.draft.label': 'Draft',
     'project.products.Physical.delete.title':'Remove product',
     'project.products.Physical.delete.msg':'Are you sure you want to delete this product?',
     'project.products.Pattern.introduction' : 'Introduction',
@@ -165,6 +170,27 @@ export default {
     'project.catalog.UserProducts.noProductsFound': ' does not currently have any product available :(',
     'project.catalog.UserProducts.All': 'All Products',
 
-    'project.catalog.Product.AddCart': 'Add to cart'
+    'project.catalog.Product.AddCart': 'Add to cart',
+    'project.shopping.AddToCart.add': 'Add to cart',
+    'project.shopping.Cart.title': 'Shopping cart',
+    'project.shopping.BuyForm.title': 'Buy',
+    'project.shopping.FindOrdersResult.noOrders': 'No orders found',
+    'project.shopping.PurchaseCompleted.purchaseOrderGenerated': 'Purchase order generated',
+    'project.shopping.ShoppingCart.empty': 'Cart is empty',
+
+    'project.shopping.ShoppingCart.totalPrice': 'Total',
+    'project.shopping.ShoppingCart.totalQuantity': 'Total quantity',
+    'project.shopping.ShoppingCart.proceed': 'Proceed to the purchase',
+    'project.shopping.Purchase.review': 'Review of your order',
+    'project.shopping.Purchase.address': 'Order address',
+    'project.shopping.Purchase.address.complete': 'Complete your order adding your address',
+    'project.shopping.Purchases.header': 'My purchases',
+    'project.shopping.Purchases.order':'Order number',
+    'project.shopping.Purchases.number':'Purchase',
+    'project.shopping.Purchases.notFound':'No purchases have been made yet',
+    'project.shopping.Purchases.completed': 'Your purchase has been completed!',
+    'project.shopping.Purchases.completed.message': 'Click to see the full details of the purchase: ',
+
+
 
 }

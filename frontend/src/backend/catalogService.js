@@ -27,7 +27,7 @@ export const findProductById = (id, onSuccess) =>
     appFetch(`/catalog/products/${id}`, config('GET'), onSuccess);
 
 export const findUserProducts = (username,{page}, onSuccess, onErrors) => {
-    appFetch(`/catalog/${username}/products?page=${page}`, config('GET'), onSuccess, onErrors);
+    appFetch(`/catalog/users/${username}/products?page=${page}`, config('GET'), onSuccess, onErrors);
 }
 
 export const findUsers = ({username, page}, onSuccess) =>{

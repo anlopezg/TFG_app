@@ -16,9 +16,6 @@ const favoriteList = (state = initialState.favoriteList, action)=>{
         case actionTypes.CLEAR_FAVORITES:
             return initialState.favoriteList;
 
-        case actionTypes.MARK_AS_FAVORITE_COMPLETED:
-            return
-
         default:
             return state;
     }
@@ -29,6 +26,9 @@ const favorite = (state = initialState.favorite, action) =>{
     switch (action.type) {
 
         case actionTypes.MARK_AS_FAVORITE_COMPLETED:
+            return action.favorite;
+
+        case actionTypes.FIND_FAVORITE_COMPLETED:
             return action.favorite;
 
         default:

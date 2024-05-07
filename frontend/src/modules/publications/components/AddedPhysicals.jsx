@@ -16,6 +16,15 @@ const AddedPhysicals= ({physicals}) =>(
                             <h5 className="card-title">
                                 <PhysicalLink id={physical.id} title={physical.title}/>
                             </h5>
+
+                            <div className="d-flex justify-content-start mb-2">
+                                <span className={`badge ${physical.active ? 'bg-success' : 'bg-warning'}`}>
+                                  <FormattedMessage
+                                      id={physical.active ? 'project.products.Product.published' : 'project.products.Product.draft.label'}
+                                  />
+                                </span>
+                            </div>
+
                             <div className="d-flex justify-content-between">
                                 <p className="card-text"><small className="text-muted">{physical.amount}
                                     <FormattedMessage id="project.products.Product.amount.left"/>

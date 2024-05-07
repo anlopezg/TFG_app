@@ -47,9 +47,9 @@ public class FavoriteController {
     }
 
     @PostMapping("/favorites")
-    public ResponseEntity<FavoriteDto> markAsFavorite(@RequestAttribute Long userId, @RequestBody Long productId) throws OwnerOfProductException, InstanceNotFoundException, DuplicateInstanceException {
+    public ResponseEntity<FavoriteDto> markAsFavorite(@RequestAttribute Long userId, @RequestBody FavoriteDto favoriteDto) throws OwnerOfProductException, InstanceNotFoundException, DuplicateInstanceException {
 
-        Favorite favorite = favoriteService.markAsFavoriteProduct(userId, productId);
+        Favorite favorite = favoriteService.markAsFavoriteProduct(userId, favoriteDto.getProductId());
 
         FavoriteDto created = toFavoriteDto(favorite);
 
@@ -63,6 +63,14 @@ public class FavoriteController {
 
         return toProductSummaryDtos(products);
 
+    }
+
+    @GetMapping("/favorites/{productId}")
+    public FavoriteDto findFavoriteByUserAndProduct(@RequestAttribute Long userId, @PathVariable Long productId) throws InstanceNotFoundException {
+
+        Favorite favorite = favoriteService.findFavoriteByUserAndProduct(userId, productId);
+
+        return toFavoriteDto(favorite);
     }
 
 

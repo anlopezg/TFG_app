@@ -5,6 +5,7 @@ import '../../../styles.css';
 
 import {UserFilter} from "../../catalog/index.js";
 import users from '../../users';
+import {ShoppingCartIcon} from "../../purchases/index.js";
 
 const Header = () => {
     const userName = useSelector(users.selectors.getUserName);
@@ -26,6 +27,15 @@ const Header = () => {
 
                 {userName ? (
                     <ul className="navbar-nav ms-auto">
+
+                        <li className="nav-item">
+
+                            <Link className="nav-link me-3" to="/shopping/find-purchases-result">
+                                <i className="fa-solid fa-bag-shopping me-1"></i>
+                                <FormattedMessage id="project.shopping.Purchases.header"/>
+                            </Link>
+                        </li>
+
                         {isSeller && (
                             <li className="nav-item dropdown" style={{ marginRight: '20px' }}>
                                 <a className="dropdown-toggle nav-link" href="#" role="button"
@@ -43,6 +53,7 @@ const Header = () => {
                                 </ul>
                             </li>
                         )}
+
                         <li className="nav-item dropdown">
                             <a className="dropdown-toggle nav-link" href="#" role="button"
                                id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -68,6 +79,14 @@ const Header = () => {
                                 </Link></li>
                             </ul>
                         </li>
+
+                        <li className="nav-item">
+                            <Link className="nav-link mx-1" to="/shopping/cart">
+                                <ShoppingCartIcon/>
+                            </Link>
+                        </li>
+
+
                     </ul>
                 ) : (
                     <ul className="navbar-nav ms-auto">

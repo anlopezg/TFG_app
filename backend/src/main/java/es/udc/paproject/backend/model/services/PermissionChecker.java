@@ -1,7 +1,11 @@
 package es.udc.paproject.backend.model.services;
 
+import es.udc.paproject.backend.model.entities.Purchase;
+import es.udc.paproject.backend.model.entities.Product;
+import es.udc.paproject.backend.model.entities.ShoppingCart;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.entities.User;
+import es.udc.paproject.backend.model.exceptions.PermissionException;
 
 public interface PermissionChecker {
 	
@@ -19,14 +23,12 @@ public interface PermissionChecker {
 	User checkUserName(String userName) throws InstanceNotFoundException;
 
 
-	/**
-	 * Checks if a given username is associated to a user id
-	 * @param userId the user id
-	 * @param userName the username
-	 * @return  True if the userName matches the stored user's username
-	 * 			False if they don't match
-	 * @throws InstanceNotFoundException There is no user with that userId
-	 */
-	boolean checkUserByName(Long userId, String userName) throws InstanceNotFoundException;
+	Product checkProductExistsAndBelongsTo(Long productId, Long userId) throws PermissionException, InstanceNotFoundException;
+
+	ShoppingCart checkCartExistsAndBelongsTo(Long shoppingCartId, Long userId) throws PermissionException, InstanceNotFoundException;
+
+	Purchase checkPurchaseExistsAndBelongsTo(Long purchaseId, Long userId) throws PermissionException, InstanceNotFoundException;
+
+
 	
 }
