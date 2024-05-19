@@ -7,6 +7,7 @@ import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.OwnerOfProductException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FavoriteService {
 
@@ -25,9 +26,9 @@ public interface FavoriteService {
 
     List<Product> getFavoriteProducts(Long userId) throws InstanceNotFoundException;
 
-    Favorite findFavoriteByUserAndProduct(Long userId, Long productId) throws InstanceNotFoundException;
+    Optional<Favorite> findFavoriteByUserAndProduct(Long userId, Long productId) throws InstanceNotFoundException;
 
     Favorite findFavoriteById(Long favoriteId) throws InstanceNotFoundException;
 
-    void removeFavoriteProduct(Long favoriteId) throws InstanceNotFoundException;
+    void removeFavoriteProduct(Long userId, Long productId) throws InstanceNotFoundException;
 }

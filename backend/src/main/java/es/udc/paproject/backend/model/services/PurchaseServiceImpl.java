@@ -89,7 +89,8 @@ public class PurchaseServiceImpl implements PurchaseService{
     }
 
     @Override
-    public Purchase purchaseCart(Long userId, Long shoppingCartId, String postalAddress, String postalCode) throws InstanceNotFoundException, PermissionException, EmptyShoppingCartException {
+    public Purchase purchaseCart(Long userId, Long shoppingCartId, String locality,
+                                 String region, String country, String postalAddress, String postalCode) throws InstanceNotFoundException, PermissionException, EmptyShoppingCartException {
 
         ShoppingCart shoppingCart = permissionChecker.checkCartExistsAndBelongsTo(shoppingCartId, userId);
 
@@ -97,17 +98,30 @@ public class PurchaseServiceImpl implements PurchaseService{
             throw new EmptyShoppingCartException();
         }
 
-        Purchase purchase = new Purchase(shoppingCart.getUser(), LocalDateTime.now(), postalAddress, postalCode);
+        Purchase purchase = new Purchase(shoppingCart.getUser(), LocalDateTime.now(), postalAddress, locality, region, country ,postalCode);
 
         purchaseDao.save(purchase);
 
         for (ShoppingCartItem shoppingCartItem : shoppingCart.getItems()) {
+
+            Product boughtProduct = shoppingCartItem.getProduct();
+            int boughtQuantity = shoppingCartItem.getQuantity();
 
             PurchaseItem purchaseItem = new PurchaseItem(shoppingCartItem.getProduct(),
                     shoppingCartItem.getProduct().getPrice(), shoppingCartItem.getQuantity());
 
             purchase.addItem(purchaseItem);
             purchaseItemDao.save(purchaseItem);
+
+
+            //Update product amount when is a physical product
+            if(boughtProduct instanceof Physical){
+                Physical physical = (Physical) boughtProduct;
+                int currentAmount = physical.getAmount();
+                physical.setAmount(currentAmount-boughtQuantity);
+                productDao.save(physical);
+            }
+
             shoppingCartItemDao.delete(shoppingCartItem);
 
         }

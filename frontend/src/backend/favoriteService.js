@@ -8,3 +8,7 @@ export const markAsFavorite = (favorite, onSuccess, onErrors) =>
 
 export const findFavorite = (productId, onSuccess, onErrors) =>
     appFetch(`/products/favorites/${productId}`, config('GET'), onSuccess, onErrors);
+
+
+export const unmarkAsFavorite = (productId, onSuccess) =>
+    appFetch(`/products/favorites/${productId}`, config('DELETE'), onSuccess);

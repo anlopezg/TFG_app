@@ -30,6 +30,19 @@ export const markAsFavorite = (favorite, onSuccess, onErrors) => dispatch =>{
         onErrors);
 }
 
+const unmarkAsFavoriteCompleted = productId =>({
+    type: actionTypes.UNMARK_AS_FAVORITE_COMPLETED,
+    productId
+})
+
+export const unmarkAsFavorite = (productId, onSuccess) => dispatch =>{
+    backend.favoriteService.unmarkAsFavorite(productId,
+        productId => {
+            dispatch(unmarkAsFavoriteCompleted(productId));
+            onSuccess()
+        });
+}
+
 const findFavoriteCompleted = favorite => ({
     type: actionTypes.FIND_FAVORITE_COMPLETED,
     favorite

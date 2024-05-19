@@ -22,6 +22,7 @@ import {
 import {FindProductsResult, ProductDetails, FindAllProducts, UserProducts, FindUsersResult} from "../../catalog/index.js";
 import {FavoriteList} from "../../favorite/index.js";
 import {Buy, ShoppingCart, PurchaseCompleted, FindPurchasesResult, PurchaseDetails} from "../../purchases/index.js";
+import {FindUserReviews, DeleteReview} from "../../reviews/index.js";
 
 const Body = () => {
 
@@ -58,6 +59,9 @@ const Body = () => {
                 {loggedIn && <Route path="/shopping/purchase-completed" element={<PurchaseCompleted/>}/> }
                 {loggedIn && <Route path="/shopping/find-purchases-result" element={<FindPurchasesResult/>}/> }
                 {loggedIn && <Route path="/shopping/purchase-details/:id" element={<PurchaseDetails/>}/>}
+
+                {loggedIn && <Route path="/reviews/find-user-reviews" element={<FindUserReviews/>}/>}
+                {loggedIn && <Route path="/reviews/delete-review/:id" element={<DeleteReview/>}/>}
 
 
                 {loggedIn && isSeller && <Route path="/publications/create-pattern" element={<CreatePattern/>}/>}

@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface FavoriteDao extends CrudRepository<Favorite, Long> {
 
     List<Favorite> findByUserAndLiked(User user, Boolean liked);
-
     Optional<Favorite> findByUserAndProduct(User user, Product product);
+
 }

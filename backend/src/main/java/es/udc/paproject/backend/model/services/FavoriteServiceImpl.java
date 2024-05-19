@@ -33,10 +33,6 @@ public class FavoriteServiceImpl implements FavoriteService{
         User user = permissionChecker.checkUser(userId);
         Product product = publicationService.findProductById(productId);
 
-        if(user.equals(product.getUser())){
-            throw new OwnerOfProductException();
-        }
-
         //Check if the product is already mark as favorite
         Optional<Favorite> alreadyFav = favoriteDao.findByUserAndProduct(user, product);
 
@@ -62,7 +58,7 @@ public class FavoriteServiceImpl implements FavoriteService{
 
 
     @Override
-    public Favorite findFavoriteByUserAndProduct(Long userId, Long productId) throws InstanceNotFoundException{
+    public Optional<Favorite> findFavoriteByUserAndProduct(Long userId, Long productId) throws InstanceNotFoundException{
 
         User user = permissionChecker.checkUser(userId);
 
@@ -74,7 +70,7 @@ public class FavoriteServiceImpl implements FavoriteService{
             throw new InstanceNotFoundException("project.entities.favorite", favorite);
         }
 
-        return favorite.get();
+        return Optional.of(favorite.get());
     }
 
     @Override
@@ -91,14 +87,18 @@ public class FavoriteServiceImpl implements FavoriteService{
 
 
     @Override
-    public void removeFavoriteProduct(Long favoriteId) throws InstanceNotFoundException {
+    public void removeFavoriteProduct(Long userId, Long productId) throws InstanceNotFoundException {
 
-        Optional<Favorite> favorite = favoriteDao.findById(favoriteId);
+        User user = permissionChecker.checkUser(userId);
+
+        Product product = publicationService.findProductById(productId);
+
+        Optional<Favorite> favorite = favoriteDao.findByUserAndProduct(user, product);
 
         if(favorite.isEmpty()){
-            throw new InstanceNotFoundException("project.entities.favorite", favoriteId);
+            throw new InstanceNotFoundException("project.entities.favorite", product.getId());
         }
 
-        favoriteDao.deleteById(favoriteId);
+        favoriteDao.deleteById(favorite.get().getId());
     }
 }

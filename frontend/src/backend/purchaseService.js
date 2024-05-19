@@ -13,9 +13,9 @@ export const removeCartItem = (shoppingCartId, productId, onSuccess, onErrors) =
     appFetch(`/shopping/carts/${shoppingCartId}/removeItem`,
         config('POST', {productId}), onSuccess, onErrors);
 
-export const purchaseCart = (shoppingCartId, postalAddress, postalCode, onSuccess, onErrors) =>
+export const purchaseCart = (shoppingCartId, postalAddress, locality, region, country, postalCode, onSuccess, onErrors) =>
     appFetch(`/shopping/carts/${shoppingCartId}/purchase`,
-        config('POST', {postalAddress, postalCode}), onSuccess, onErrors);
+        config('POST', {postalAddress, locality, region, country, postalCode}), onSuccess, onErrors);
 
 export const findPurchase = (purchaseId, onSuccess) =>
     appFetch(`/shopping/purchases/${purchaseId}`, config('GET'), onSuccess);

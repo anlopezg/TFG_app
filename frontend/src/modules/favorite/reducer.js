@@ -31,6 +31,9 @@ const favorite = (state = initialState.favorite, action) =>{
         case actionTypes.FIND_FAVORITE_COMPLETED:
             return action.favorite;
 
+        case actionTypes.UNMARK_AS_FAVORITE_COMPLETED:
+            return initialState.favorite;
+
         default:
             return state;
     }

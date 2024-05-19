@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import static es.udc.paproject.backend.rest.dtos.FavoriteDto.toFavoriteDto;
+import static es.udc.paproject.backend.rest.dtos.FavoriteDto.toOptionalFavoriteDto;
 import static es.udc.paproject.backend.rest.dtos.ProductConversor.toProductDtos;
 import static es.udc.paproject.backend.rest.dtos.ProductConversor.toProductSummaryDtos;
 
@@ -68,18 +70,23 @@ public class FavoriteController {
     @GetMapping("/favorites/{productId}")
     public FavoriteDto findFavoriteByUserAndProduct(@RequestAttribute Long userId, @PathVariable Long productId) throws InstanceNotFoundException {
 
-        Favorite favorite = favoriteService.findFavoriteByUserAndProduct(userId, productId);
+        Optional<Favorite> favorite = favoriteService.findFavoriteByUserAndProduct(userId, productId);
 
-        return toFavoriteDto(favorite);
+        if(!favorite.isPresent()){
+
+            return new FavoriteDto(userId, productId, false);
+        }
+
+        return toOptionalFavoriteDto(favorite);
     }
 
 
     // Añadir que se comprueba que el userId, es el que le dio like en una primera instancia
-    @DeleteMapping("/favorites/{id}")
+    @DeleteMapping("/favorites/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeFavorite(@RequestAttribute Long userId, @PathVariable Long id) throws InstanceNotFoundException {
+    public void removeFavorite(@RequestAttribute Long userId, @PathVariable Long productId) throws InstanceNotFoundException {
 
-        favoriteService.removeFavoriteProduct(id);
+        favoriteService.removeFavoriteProduct(userId, productId);
     }
 
 }
