@@ -49,9 +49,12 @@ const FindUserReviews = ({productId}) => {
                     </div>
 
                 ):(
-                    <div className="alert alert-info" role="alert">
-                        <FormattedMessage id='project.reviews.product.NotFound'/>
+                    <div>
+                        <div className="alert alert-secondary text-center italic-message back-color-lilac-pink" role="alert">
+                            <FormattedMessage id='project.reviews.product.NotFound'/>
+                        </div>
                     </div>
+
 
                 )}
 
