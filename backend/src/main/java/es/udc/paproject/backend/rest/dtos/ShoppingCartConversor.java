@@ -1,5 +1,6 @@
 package es.udc.paproject.backend.rest.dtos;
 
+import es.udc.paproject.backend.model.entities.Physical;
 import es.udc.paproject.backend.model.entities.ProductImages;
 import es.udc.paproject.backend.model.entities.ShoppingCart;
 import es.udc.paproject.backend.model.entities.ShoppingCartItem;
@@ -30,8 +31,10 @@ public class ShoppingCartConversor {
         Set<ProductImages> images = item.getProduct().getImages();
         String mainImageUrl  = images.iterator().next().getImageUrl();
 
+
         return new ShoppingCartItemDto(item.getProduct().getId(), item.getProduct().getTitle(),
-                item.getProduct().getSubcategory().getId(), item.getProduct().getPrice(), item.getQuantity(), mainImageUrl);
+                item.getProduct().getSubcategory().getId(), item.getProduct().getPrice(), item.getQuantity(),
+                mainImageUrl);
 
     }
 

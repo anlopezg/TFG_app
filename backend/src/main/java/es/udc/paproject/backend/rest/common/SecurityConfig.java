@@ -60,12 +60,18 @@ public class SecurityConfig {
 					/********************* FAVORITE CONTROLLER *********************/
 					.requestMatchers(HttpMethod.GET, "/products/**").hasAnyRole("USER", "SELLER")
 					.requestMatchers(HttpMethod.POST, "/products/**").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.POST, "/products/favorites").hasAnyRole("USER", "SELLER")
 					.requestMatchers(HttpMethod.DELETE, "/products/**").hasAnyRole("USER", "SELLER")
 
 					/********************* SHOPPING CONTROLLER *********************/
 					.requestMatchers(HttpMethod.GET, "/shopping/**").hasAnyRole("USER", "SELLER")
 					.requestMatchers(HttpMethod.POST, "/shopping/**").hasAnyRole("USER", "SELLER")
 
+					/********************* REVIEW CONTROLLER *********************/
+					.requestMatchers(HttpMethod.GET, "/reviews/**").permitAll()
+					.requestMatchers(HttpMethod.POST, "/reviews/**").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.PUT, "/reviews/**").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.DELETE, "/reviews/**").hasAnyRole("USER", "SELLER")
 
 				.anyRequest().denyAll());
 

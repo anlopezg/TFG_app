@@ -129,7 +129,7 @@ public class PublicationServiceTest {
         assertEquals(expectedPattern.getCraft(), createdPattern.getCraft());
         assertEquals(expectedPattern.getSubcategory(), createdPattern.getSubcategory());
         assertEquals(expectedPattern.getTitle(), createdPattern.getTitle());
-        assertEquals(expectedPattern.getPrice(), createdPattern.getPrice());
+        assertTrue(expectedPattern.getPrice().compareTo(createdPattern.getPrice()) == 0);
     }
 
     @Test
@@ -174,7 +174,7 @@ public class PublicationServiceTest {
         assertEquals(expectedPhysical.getCraft(), physical.getCraft());
         assertEquals(expectedPhysical.getSubcategory(), physical.getSubcategory());
         assertEquals(expectedPhysical.getTitle(), physical.getTitle());
-        assertEquals(expectedPhysical.getPrice(), physical.getPrice());
+        assertTrue(expectedPhysical.getPrice().compareTo(physical.getPrice()) == 0);
     }
 
     @Test

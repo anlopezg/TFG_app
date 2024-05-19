@@ -47,6 +47,7 @@ public class CatalogServiceImpl implements CatalogService{
     private PermissionChecker permissionChecker;
 
 
+
     @Override
     public Craft checkCraft(Long craftId) throws InstanceNotFoundException {
 
@@ -131,7 +132,7 @@ public class CatalogServiceImpl implements CatalogService{
     @Override
     public Product findProduct(Long productId) throws InstanceNotFoundException {
 
-        Optional<Product> product = productDao.findByIdAndActiveOrderByCreationDateDesc(productId);
+        Optional<Product> product = productDao.findByIdAndActive(productId, true);
 
         if(!product.isPresent()){
             throw new InstanceNotFoundException("project.entities.product", productId);
@@ -145,13 +146,9 @@ public class CatalogServiceImpl implements CatalogService{
     @Override
     public Block<Product> findSellerProducts(String username, int page, int size) throws InstanceNotFoundException, UserNotSellerException {
 
-        User userFound = permissionChecker.checkUserName(username);
+        User userFound = permissionChecker.checkSellerUser(username);
 
-        if(!userFound.getRole().equals(User.RoleType.SELLER)){
-            throw new UserNotSellerException();
-        }
-
-        Slice<Product> slice = productDao.findAllByUserIdAndActiveOrderByCreationDateDesc(userFound.getId(), PageRequest.of(page, size));
+        Slice<Product> slice = productDao.findByUserIdAndActiveTrueOrderByCreationDateDesc(userFound.getId(), PageRequest.of(page, size));
 
         return new Block<>(slice.getContent(), slice.hasNext());
 

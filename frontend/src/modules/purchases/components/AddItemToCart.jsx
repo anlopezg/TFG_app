@@ -10,7 +10,7 @@ import * as selectors from '../selectors';
 
 
 
-const AddItemToCart = ({productId}) =>{
+const AddItemToCart = ({productId, maxAmount}) => {
 
     const shoppingCart = useSelector(selectors.getShoppingCart);
     const dispatch = useDispatch();
@@ -44,11 +44,11 @@ const AddItemToCart = ({productId}) =>{
             <form ref={node => form = node}
                   className="needs-validation" noValidate
                   onSubmit={e => handleSubmit(e)}>
-                <div className="form-group row col-md-4">
+                <div className="form-group row col-md-12">
                     <label className="small text-muted mb-2 text-uppercase" htmlFor="quantity">
                         <FormattedMessage id="project.products.Product.amount"/>
                     </label>
-                    <div className="input-group">
+                    <div className="input-group ">
                         <button className="btn" type="button"
                                 onClick={() => setQuantity(Math.max(1, quantity - 1))}>
                             <i className="fas fa-minus"></i>
@@ -57,9 +57,12 @@ const AddItemToCart = ({productId}) =>{
                                value={quantity}
                                onChange={e => setQuantity(Number(e.target.value))}
                                autoFocus
-                               min="1" />
+                               min="1"
+                               max={maxAmount}
+                               style={{minWidth: "90px", maxWidth:"100px"}}
+                              />
                         <button className="btn  button-plus" type="button"
-                                onClick={() => setQuantity(quantity + 1)}>
+                                onClick={() => setQuantity(Math.min(maxAmount, quantity + 1))}>
                             <i className="fas fa-plus "></i>
                         </button>
                         <div className="invalid-feedback">

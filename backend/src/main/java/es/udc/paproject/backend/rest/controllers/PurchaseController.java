@@ -96,7 +96,8 @@ public class PurchaseController {
     public Long purchaseCart(@RequestAttribute Long userId, @PathVariable Long shoppingCartId,
                              @Validated @RequestBody PurchaseParamsDto params) throws PermissionException, EmptyShoppingCartException, InstanceNotFoundException {
 
-        return purchaseService.purchaseCart(userId, shoppingCartId, params.getPostalAddress(), params.getPostalCode()).getId();
+        return purchaseService.purchaseCart(userId, shoppingCartId, params.getPostalAddress(), params.getLocality(),
+                params.getRegion(), params.getCountry(), params.getPostalCode()).getId();
 
     }
 

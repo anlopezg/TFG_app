@@ -19,10 +19,18 @@ public class ProductConversor {
     }
 
     public final static ProductDto toProductDto(Product product){
+
+        int amount = 1;
+
+        if(product instanceof Physical){
+            Physical physical = (Physical) product;
+            amount = physical.getAmount();
+        }
+
         return new ProductDto(product.getId(), product.getUser().getId(),  product.getCraft().getId(),
                 product.getSubcategory().getId(),
                 product.getTitle(), product.getDescription(), product.getPrice(), product.getActive(),
-                product.getUser().getUsername(), product.getProductType(), productImagesToStringList(product));
+                product.getUser().getUsername(), product.getProductType(), amount ,productImagesToStringList(product), product.getAvgRating());
     }
 
 

@@ -40,9 +40,9 @@ const purchaseCompleted = (purchaseId) => ({
 });
 
 
-export const purchase = (shoppingCartId, postalAddress, postalCode, onSuccess,
+export const purchase = (shoppingCartId, postalAddress,locality, region, country, postalCode, onSuccess,
                     onErrors) => dispatch =>
-    backend.purchaseService.purchaseCart(shoppingCartId, postalAddress, postalCode, id => {
+    backend.purchaseService.purchaseCart(shoppingCartId, postalAddress, locality, region, country, postalCode, id => {
             dispatch(purchaseCompleted(id));
             onSuccess();
         },

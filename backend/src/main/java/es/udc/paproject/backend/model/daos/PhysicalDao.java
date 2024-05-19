@@ -9,6 +9,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface PhysicalDao extends CrudRepository<Physical, Long>, PagingAndSortingRepository<Physical, Long> {
 
-    @Query("SELECT p FROM Physical p WHERE p.user.id = :userId ORDER BY p.creationDate DESC")
-    Slice<Physical> findAllByUserIdOrderByCreationDateDesc(Long userId, Pageable pageable);
+    //@Query("SELECT p FROM Physical p WHERE p.user.id = :userId ORDER BY p.creationDate DESC")
+    Slice<Physical> findByUser_IdOrderByCreationDateDesc(Long userId, Pageable pageable);
 }

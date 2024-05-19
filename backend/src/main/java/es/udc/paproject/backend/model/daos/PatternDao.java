@@ -1,7 +1,5 @@
 package es.udc.paproject.backend.model.daos;
 
-import java.util.Optional;
-
 import es.udc.paproject.backend.model.entities.Pattern;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -12,8 +10,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface PatternDao extends CrudRepository<Pattern, Long>, PagingAndSortingRepository<Pattern, Long> {
 
-    Optional<Pattern> findByTitle(String title);
-
-    @Query("SELECT p FROM Pattern p WHERE p.user.id = :userId ORDER BY p.creationDate DESC")
-    Slice<Pattern> findAllByUserIdOrderByCreationDateDesc(Long userId, Pageable pageable);
+    //@Query("SELECT p FROM Pattern p WHERE p.user.id = :userId ORDER BY p.creationDate DESC")
+    Slice<Pattern> findByUser_IdOrderByCreationDateDesc(Long userId, Pageable pageable);
 }

@@ -2,20 +2,15 @@ package es.udc.paproject.backend.model.services;
 
 import java.util.Optional;
 
-import es.udc.paproject.backend.model.daos.PurchaseDao;
-import es.udc.paproject.backend.model.daos.ProductDao;
-import es.udc.paproject.backend.model.daos.ShoppingCartDao;
-import es.udc.paproject.backend.model.entities.Purchase;
-import es.udc.paproject.backend.model.entities.Product;
-import es.udc.paproject.backend.model.entities.ShoppingCart;
+import es.udc.paproject.backend.model.daos.*;
+import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.model.exceptions.PermissionException;
+import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
-import es.udc.paproject.backend.model.entities.User;
-import es.udc.paproject.backend.model.daos.UserDao;
 
 @Service
 @Transactional(readOnly=true)
@@ -32,6 +27,9 @@ public class PermissionCheckerImpl implements PermissionChecker {
 
 	@Autowired
 	private PurchaseDao purchaseDao;
+
+	@Autowired
+	private ReviewDao reviewDao;
 	
 	@Override
 	public void checkUserExists(Long userId) throws InstanceNotFoundException {
@@ -55,6 +53,26 @@ public class PermissionCheckerImpl implements PermissionChecker {
 		
 	}
 
+
+
+	@Override
+	public User checkSellerUser(Long userId) throws InstanceNotFoundException, UserNotSellerException {
+
+		Optional<User> user = userDao.findById(userId);
+
+		if (!user.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.user", userId);
+		}
+
+		if(!user.get().getRole().equals(User.RoleType.SELLER)){
+			throw new UserNotSellerException();
+		}
+
+		return user.get();
+	}
+
+
+
 	@Override
 	public User checkUserName(String username) throws InstanceNotFoundException{
 
@@ -69,6 +87,36 @@ public class PermissionCheckerImpl implements PermissionChecker {
 	}
 
 	@Override
+	public User checkSellerUser(String username) throws InstanceNotFoundException, UserNotSellerException {
+
+		Optional<User> user = userDao.findByUsername(username);
+
+		if (!user.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.user", username);
+		}
+
+		if (!user.get().getRole().equals(User.RoleType.SELLER)) {
+			throw new UserNotSellerException();
+		}
+		return user.get();
+	}
+
+
+	@Override
+	public Product checkActiveProduct(Long productId) throws InstanceNotFoundException {
+
+		Optional<Product> product = productDao.findByIdAndActive(productId, true);
+
+		if (!product.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.product", productId);
+		}
+
+		return product.get();
+	}
+
+
+	@Override
+
 	public Product checkProductExistsAndBelongsTo(Long productId, Long userId) throws PermissionException, InstanceNotFoundException {
 
 		Optional<Product> product = productDao.findById(productId);
@@ -83,6 +131,7 @@ public class PermissionCheckerImpl implements PermissionChecker {
 
 		return product.get();
 	}
+
 
 	@Override
 	public ShoppingCart checkCartExistsAndBelongsTo(Long shoppingCartId, Long userId) throws PermissionException, InstanceNotFoundException {
@@ -114,6 +163,22 @@ public class PermissionCheckerImpl implements PermissionChecker {
 		}
 
 		return purchase.get();
+	}
+
+	@Override
+	public Review checkReviewExistsAndBelongsTo(Long reviewId, Long userId) throws PermissionException, InstanceNotFoundException{
+
+		Optional<Review> review = reviewDao.findById(reviewId);
+
+		if (!review.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.review", reviewId);
+		}
+
+		if(!review.get().getUser().getId().equals(userId)){
+			throw new PermissionException();
+		}
+
+		return review.get();
 	}
 
 

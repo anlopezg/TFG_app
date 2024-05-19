@@ -21,11 +21,17 @@ public class Product{
     private Boolean active;
     private LocalDateTime creationDate;
 
+
+    // Images
     private Set<ProductImages> images = new HashSet<>();
 
+    // Reviews
+    private Set<Review> reviews = new HashSet<>();
+    private double avgRating;
+    private Integer version;
 
-    @Version
     private String productType;
+
 
     public Product(){}
 
@@ -152,6 +158,41 @@ public class Product{
         images.add(image);
         image.setProduct(this);
     }
+
+    @OneToMany(mappedBy="product")
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public double getAvgRating(){return avgRating;}
+
+    public void setAvgRating(double rating) {
+        this.avgRating = rating;
+    }
+
+    public void calculateAvgRating() {
+        if (reviews.isEmpty()) {
+            this.avgRating= 0.0;
+        }
+        this.avgRating= reviews.stream()
+                .mapToInt(Review::getRating)
+                .average()
+                .orElse(0.0);
+    }
+
+    @Version
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
 
     @Transient
     public String getProductType() {

@@ -1,11 +1,9 @@
 package es.udc.paproject.backend.model.services;
 
-import es.udc.paproject.backend.model.entities.Purchase;
-import es.udc.paproject.backend.model.entities.Product;
-import es.udc.paproject.backend.model.entities.ShoppingCart;
+import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
-import es.udc.paproject.backend.model.entities.User;
 import es.udc.paproject.backend.model.exceptions.PermissionException;
+import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 
 public interface PermissionChecker {
 	
@@ -22,6 +20,11 @@ public interface PermissionChecker {
 	 */
 	User checkUserName(String userName) throws InstanceNotFoundException;
 
+	User checkSellerUser(String userName) throws InstanceNotFoundException, UserNotSellerException;
+	User checkSellerUser(Long userId) throws InstanceNotFoundException, UserNotSellerException;
+
+
+	Product checkActiveProduct(Long productId) throws InstanceNotFoundException;
 
 	Product checkProductExistsAndBelongsTo(Long productId, Long userId) throws PermissionException, InstanceNotFoundException;
 
@@ -29,6 +32,6 @@ public interface PermissionChecker {
 
 	Purchase checkPurchaseExistsAndBelongsTo(Long purchaseId, Long userId) throws PermissionException, InstanceNotFoundException;
 
-
+	Review checkReviewExistsAndBelongsTo(Long reviewId, Long userId) throws PermissionException, InstanceNotFoundException;
 	
 }

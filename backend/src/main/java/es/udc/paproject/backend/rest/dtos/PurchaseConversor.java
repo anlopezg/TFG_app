@@ -27,7 +27,7 @@ public class PurchaseConversor {
         items.sort(Comparator.comparing(PurchaseItemDto::getProductName));
 
         return new PurchaseDto(purchase.getId(), items, toMillis(purchase.getDate()), purchase.getTotalPrice(),
-                purchase.getPostalAddress(), purchase.getPostalCode());
+                purchase.getPostalAddress(), purchase.getLocality(), purchase.getRegion(), purchase.getCountry(), purchase.getPostalCode());
 
     }
 
@@ -47,7 +47,7 @@ public class PurchaseConversor {
 
     }
 
-    private final static long toMillis(LocalDateTime date) {
+    public final static long toMillis(LocalDateTime date) {
         return date.truncatedTo(ChronoUnit.MINUTES).atZone(ZoneOffset.systemDefault()).toInstant().toEpochMilli();
     }
 }

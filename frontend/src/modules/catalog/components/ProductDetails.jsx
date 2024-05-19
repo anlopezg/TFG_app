@@ -15,6 +15,7 @@ import ProductType from "./ProductType.jsx";
 import ImagesCarousel from "./ImagesCarousel.jsx";
 import Heart from "react-heart";
 import {AddItemToCart} from "../../purchases/index.js";
+import FavoriteHeart from "../../favorite/components/FavoriteHeart.jsx";
 
 const ProductDetails = () => {
 
@@ -69,9 +70,6 @@ const ProductDetails = () => {
         return <FormattedMessage id={`project.catalog.Subcategories.${subcategoryName}`}/>
     }
 
-    const toNumber = value => value.length > 0 ? Number(value) : null;
-
-
     return (
 
         <div>
@@ -96,9 +94,7 @@ const ProductDetails = () => {
 
                             </div>
                             <div className="align-items-center">
-                                <div>
-                                    <span className="mr-2 mt-2">Total Rating</span>
-                                </div>
+
                                 <Link to={`/catalog/${product.username}/products`} className="btn button-lilac mt-2">
                                     <FormattedMessage id="project.catalog.Users.visit"/>
                                 </Link>
@@ -115,11 +111,13 @@ const ProductDetails = () => {
                                 <ProductType productType={product.productType}/>
 
                                 {loggedIn ? (
+                                        <div>
+                                            <div className="mt-3" style={{ width: "2rem" }}>
+                                                <FavoriteHeart productId={product.id}/>
+                                            </div>
 
-                                        <div className="mt-3" style={{ width: "2rem" }}>
-                                            <Heart isActive={active} onClick={ () => setActive(!active)}
-                                                   activeColor="#DE7C7C"/>
                                         </div>
+
 
                                     ) : null}
 
@@ -150,7 +148,7 @@ const ProductDetails = () => {
                         {loggedIn &&
                             <div>
                                 <br/>
-                                <AddItemToCart productId={product.id}/>
+                                <AddItemToCart productId={product.id} maxAmount={product.amount}/>
 
                             </div>
                         }

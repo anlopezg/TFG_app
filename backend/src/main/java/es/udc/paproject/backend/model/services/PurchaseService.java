@@ -15,7 +15,8 @@ public interface PurchaseService {
     ShoppingCart removeCartItem(Long userId, Long shoppingCartId, Long productId)
         throws InstanceNotFoundException, PermissionException;
 
-    Purchase purchaseCart(Long userId, Long shoppingCartId, String postalAddress, String postalCode)
+    Purchase purchaseCart(Long userId, Long shoppingCartId, String postalAddress, String locality,
+                          String region, String country, String postalCode)
             throws InstanceNotFoundException, PermissionException, EmptyShoppingCartException;
 
     Purchase findPurchase(Long userId, Long orderId) throws InstanceNotFoundException, PermissionException;

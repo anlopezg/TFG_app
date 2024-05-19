@@ -42,6 +42,7 @@ export default {
     'project.global.fields.password': 'Password',
     'project.global.fields.postalAddress': 'Postal address',
     'project.global.fields.postalCode': 'Postal code',
+    'project.global.fields.locality': 'Locality',
     'project.global.fields.userName': 'Username',
     'project.global.fields.abbreviations': 'Abbreviations',
     'project.global.fields.view-details': 'View details',
@@ -49,6 +50,7 @@ export default {
     'project.global.validator.email': 'Provide a correct e-mail address',
     'project.global.validator.passwordsDoNotMatch': 'Passwords do not match',
     'project.global.validator.required': 'Required field',
+    'project.global.validator.incorrectQuantity': 'Invalid product quantity',
 
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirm new password',
     'project.users.ChangePassword.fields.newPassword': 'New password',
@@ -135,7 +137,7 @@ export default {
     'project.products.Pattern.tools.message': 'Add all the tools that are necessary to complete pattern',
     'project.product.ProductType.Pattern':'Digital pattern',
     'project.product.ProductType.Physical':'Physical product',
-    'project.products.Favorite.list': 'Favorite products',
+    'project.products.Favorite.list': 'Favorites',
     'project.products.Favorite.list.empty': 'You have not liked any products yet',
     'project.products.Favorite.total': 'You have liked a total of ',
     'project.products.Favorite.product': ' products',
@@ -190,6 +192,13 @@ export default {
     'project.shopping.Purchases.notFound':'No purchases have been made yet',
     'project.shopping.Purchases.completed': 'Your purchase has been completed!',
     'project.shopping.Purchases.completed.message': 'Click to see the full details of the purchase: ',
+
+    'project.reviews.User.header': 'Reviews you have published',
+    'project.reviews.User.seeReviews':'Show all the reviews made',
+    'project.reviews.User.NotFound': 'No reviews have been published yet',
+    'project.reviews.review.madeBy': 'By ',
+    'project.reviews.delete.title': 'Remove review',
+    'project.reviews.delete.sure': 'Are you sure you want to delete this review?',
 
 
 

@@ -36,6 +36,14 @@ const Header = () => {
                             </Link>
                         </li>
 
+                        <li className="nav-item">
+
+                            <Link className="nav-link me-3" to="/products/favorites">
+                                <i className="fa-solid fa-heart me-1"></i>
+                                <FormattedMessage id="project.products.Favorite.list"/>
+                            </Link>
+                        </li>
+
                         {isSeller && (
                             <li className="nav-item dropdown" style={{ marginRight: '20px' }}>
                                 <a className="dropdown-toggle nav-link" href="#" role="button"
@@ -66,9 +74,6 @@ const Header = () => {
                                 </Link></li>
                                 <li><Link className="dropdown-item" to="/users/change-password">
                                     <FormattedMessage id="project.users.ChangePassword.title"/>
-                                </Link></li>
-                                <li><Link className="dropdown-item" to="/products/favorites">
-                                    <FormattedMessage id="project.products.Favorite.list"/>
                                 </Link></li>
                                 <li><Link className="dropdown-item" to="/publications/products">
                                     <FormattedMessage id="project.products.MyStore.heading"/>

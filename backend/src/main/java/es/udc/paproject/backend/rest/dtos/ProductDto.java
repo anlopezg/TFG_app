@@ -23,7 +23,10 @@ public class ProductDto {
     private String username;
     private String productType;
 
+    private int amount;
+
     private List<String> imagesUrl;
+    private double avgRating;
 
     public ProductDto(){}
 
@@ -41,7 +44,7 @@ public class ProductDto {
     }
 
     public ProductDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
-                      Boolean active, String username, String productType, List<String> imagesUrl){
+                      Boolean active, String username, String productType, int amount,List<String> imagesUrl, double avgRating){
 
         this.id=id;
         this.userId =user;
@@ -54,6 +57,8 @@ public class ProductDto {
         this.username = username;
         this.productType = productType;
         this.imagesUrl = imagesUrl;
+        this.amount = amount;
+        this.avgRating = avgRating;
     }
 
     public Long getId() {
@@ -151,5 +156,21 @@ public class ProductDto {
 
     public void setImagesUrl(List<String> imagesUrl) {
         this.imagesUrl = imagesUrl;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public double getAvgRating() {
+        return avgRating;
+    }
+
+    public void setAvgRating(double avgRating) {
+        this.avgRating = avgRating;
     }
 }

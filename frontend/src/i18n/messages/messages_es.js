@@ -28,6 +28,7 @@ export default {
     'project.global.fields.language': 'Idioma',
     'project.global.fields.region':'Región',
     'project.global.fields.country': 'País',
+    'project.global.fields.locality': 'Localidad',
     'project.global.fields.select.country': 'Selecciona un país',
     'project.global.fields.select.region': 'Selecciona una región',
     'project.global.fields.crochetLevel': 'Nivel de ganchillo',
@@ -48,6 +49,7 @@ export default {
     'project.global.validator.email': 'Introduzca una dirección de correo electrónico correcta',
     'project.global.validator.passwordsDoNotMatch': 'Las contraseñas no coinciden',
     'project.global.validator.required': 'Campo obligatorio',
+    'project.global.validator.incorrectQuantity': 'Cantidad no válida',
 
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirmar contraseña nueva',
     'project.users.ChangePassword.fields.newPassword': 'Contraseña nueva',
@@ -136,7 +138,7 @@ export default {
     'project.products.Pattern.addTool': 'Añadir herramienta',
     'project.products.Pattern.removeTool': 'Eliminar herramienta',
     'project.products.Pattern.tools.message': 'Añade todas las herramientas necesarias para completar el patrón',
-    'project.products.Favorite.list': 'Lista de favoritos',
+    'project.products.Favorite.list': 'Favoritos',
     'project.products.Favorite.list.empty': 'Aún no has marcado ningún producto como favorito',
     'project.products.Favorite.total': 'Has marcado ',
     'project.products.Favorite.product': ' productos como favoritos',
@@ -195,6 +197,13 @@ export default {
     'project.shopping.Purchases.notFound':'No se ha realizado ninguna compra',
     'project.shopping.Purchases.completed': '¡Tu compra se ha realizado con éxito!',
     'project.shopping.Purchases.completed.message': 'Haz click para ver los detalles concretos de la compra: ',
+
+    'project.reviews.User.header': 'Reseñas que has realizado',
+    'project.reviews.User.seeReviews':'Ver todas las reseñas hechas',
+    'project.reviews.User.NotFound': 'No se ha publicado ninguna reseña aún',
+    'project.reviews.review.madeBy': 'Por ',
+    'project.reviews.delete.title': 'Eliminar reseña',
+    'project.reviews.delete.sure': '¿Estás seguro de querer eliminar esta reseña?',
 
 
 }

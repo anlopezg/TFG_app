@@ -142,7 +142,7 @@ public class PublicationServiceImpl implements PublicationService{
             throw new UserNotSellerException();
         }
 
-        Slice<Product> slice = productDao.findAllByUserIdOrderByCreationDateDesc(userId, PageRequest.of(page, size));
+        Slice<Product> slice = productDao.findByUserIdOrderByCreationDateDesc(userId, PageRequest.of(page, size));
 
         return new Block<>(slice.getContent(), slice.hasNext());
     }
@@ -156,7 +156,7 @@ public class PublicationServiceImpl implements PublicationService{
             throw new UserNotSellerException();
         }
 
-        Slice<Pattern> slice = patternDao.findAllByUserIdOrderByCreationDateDesc(userId,  PageRequest.of(page, size));
+        Slice<Pattern> slice = patternDao.findByUser_IdOrderByCreationDateDesc(userId,  PageRequest.of(page, size));
 
         return new Block<>(slice.getContent(), slice.hasNext());
     }
@@ -170,7 +170,7 @@ public class PublicationServiceImpl implements PublicationService{
             throw new UserNotSellerException();
         }
 
-        Slice<Physical> slice = physicalDao.findAllByUserIdOrderByCreationDateDesc(userId, PageRequest.of(page, size) );
+        Slice<Physical> slice = physicalDao.findByUser_IdOrderByCreationDateDesc(userId, PageRequest.of(page, size) );
 
         return new Block<>(slice.getContent(), slice.hasNext());
     }

@@ -11,19 +11,27 @@ public class PurchaseDto {
     private BigDecimal totalPrice;
 
     private String postalAddress;
+
+    private String locality;
+    private String region;
+    private String country;
     private String postalCode;
 
 
 
     public PurchaseDto() {}
 
-    public PurchaseDto(Long id, List<PurchaseItemDto> items, long date, BigDecimal totalPrice, String postalAddress, String postalCode) {
+    public PurchaseDto(Long id, List<PurchaseItemDto> items, long date, BigDecimal totalPrice, String postalAddress,
+                       String locality, String region, String country, String postalCode) {
 
         this.id = id;
         this.items = items;
         this.date = date;
         this.totalPrice = totalPrice;
         this.postalAddress = postalAddress;
+        this.locality = locality;
+        this.region = region;
+        this.country = country;
         this.postalCode = postalCode;
 
     }
@@ -66,6 +74,30 @@ public class PurchaseDto {
 
     public void setPostalAddress(String postalAddress) {
         this.postalAddress = postalAddress;
+    }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getPostalCode() {

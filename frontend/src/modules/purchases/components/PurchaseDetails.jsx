@@ -44,11 +44,14 @@ const PurchaseDetails = () => {
                     <h5 className="card-title mb-3">
                         <FormattedMessage id='project.shopping.Purchases.order'/>: {purchase.id}
                     </h5>
-                    <h6 className="card-subtitle text-muted">
+                    <h6 className="card-subtitle text-muted mb-2">
                         <FormattedDate value={new Date(purchase.date)}/> - <FormattedTime value={new Date(purchase.date)}/>
                     </h6>
+                    <p className="card-text mt-3">
+                        {purchase.postalAddress}, {purchase.locality} {purchase.postalCode}
+                    </p>
                     <p className="card-text">
-                        {purchase.postalAddress} - {purchase.postalCode}
+                        {purchase.region}, {purchase.country}
                     </p>
                 </div>
             </div>

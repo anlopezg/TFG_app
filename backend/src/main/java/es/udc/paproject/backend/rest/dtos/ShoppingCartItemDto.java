@@ -11,6 +11,9 @@ public class ShoppingCartItemDto {
     private int quantity;
     private String mainImageUrl;
 
+    // Add physicals maxAmount
+    private int maxAmount;
+
 
     public ShoppingCartItemDto() {}
 
@@ -72,5 +75,13 @@ public class ShoppingCartItemDto {
 
     public void setMainImageUrl(String mainImageUrl) {
         this.mainImageUrl = mainImageUrl;
+    }
+
+    public int getMaxAmount() {
+        return maxAmount;
+    }
+
+    public void setMaxAmount(int maxAmount) {
+        this.maxAmount = maxAmount;
     }
 }

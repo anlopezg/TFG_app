@@ -10,7 +10,4 @@ import java.util.Set;
 
 
 public interface CategoryDao extends CrudRepository<Category, Long>, ListPagingAndSortingRepository<Category, Long> {
-
-    @Query("SELECT c.subcategories FROM Category c WHERE c.id = ?1")
-    Set<Subcategory> findSubcategoriesByCategoryId(Long categoryId);
 }

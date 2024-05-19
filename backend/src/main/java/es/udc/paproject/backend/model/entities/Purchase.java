@@ -18,15 +18,22 @@ public class Purchase {
     private User user;
     private LocalDateTime date;
     private String postalAddress;
+    private String locality;
+    private String region;
+    private String country;
     private String postalCode;
 
     public Purchase() {}
 
-    public Purchase(User user, LocalDateTime date, String postalAddress, String postalCode) {
+    public Purchase(User user, LocalDateTime date, String postalAddress, String locality,
+                    String region, String country, String postalCode) {
 
         this.user = user;
         this.date = date;
         this.postalAddress = postalAddress;
+        this.locality = locality;
+        this.region = region;
+        this.country = country;
         this.postalCode = postalCode;
 
     }
@@ -74,6 +81,30 @@ public class Purchase {
 
     public void setPostalAddress(String postalAddress) {
         this.postalAddress = postalAddress;
+    }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getPostalCode() {

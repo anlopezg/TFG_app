@@ -7,6 +7,7 @@ import {Pager} from '../../common';
 import {useEffect} from "react";
 import Purchases from "./Purchases.jsx";
 import PurchaseLink from "./PurchaseLink.jsx";
+import {Link} from "react-router-dom";
 
 const FindPurchasesResult = () => {
 
@@ -36,6 +37,15 @@ const FindPurchasesResult = () => {
     return (
 
         <div>
+
+            <div className="d-flex justify-content-end my-1">
+                <Link to={`/reviews/find-user-reviews`} className="btn button-coral">
+                    <FormattedMessage id="project.reviews.User.seeReviews"/>
+                    <i className="fa-solid fa-arrow-right mx-2"></i>
+                </Link>
+            </div>
+
+
             <div className="mt-2 mb-3">
                 <h2 className="retro">
                     <FormattedMessage id="project.shopping.Purchases.header"/>
@@ -50,6 +60,10 @@ const FindPurchasesResult = () => {
                 next={{
                     enabled: purchaseSearch.result.existMoreItems,
                     onClick: () => dispatch(actions.nextFindPurchasesResultPage(purchaseSearch.criteria))}}/>
+
+
+
+
         </div>
 
     );
