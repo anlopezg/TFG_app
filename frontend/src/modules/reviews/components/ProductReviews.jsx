@@ -27,7 +27,7 @@ const ProductReviews = ({ productReviews }) => {
                                             edit={false}
                                             size={24}
                                             color1={"#f6f6ee"}
-                                            color2={"#DE7C7C"}/>
+                                            color2={"#E6895C"}/>
                             </div>
 
                             <p>{productReview.comment}</p>

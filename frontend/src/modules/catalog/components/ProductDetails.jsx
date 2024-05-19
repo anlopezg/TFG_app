@@ -157,7 +157,7 @@ const ProductDetails = () => {
 
                     <div className="col-md-12 mt-3">
                         <hr/>
-                        <FindProductReviews productId={product.id}/>
+                        <FindProductReviews productId={product.id} avgRating={product.avgRating}/>
                     </div>
                 </div>
 

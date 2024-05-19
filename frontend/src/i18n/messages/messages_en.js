@@ -21,6 +21,7 @@ export default {
     'project.global.buttons.delete': 'Delete',
     'project.global.exceptions.NetworkError': 'Network error',
     'project.global.selectors.default': 'Select an option',
+    'project.global.fields.of': ' out of ',
     'project.global.fields.keywords': 'Keywords',
     'project.global.fields.active': 'Active',
     'project.global.fields.date': 'Date',
@@ -199,6 +200,7 @@ export default {
 
     'project.reviews.product.header': 'Reviews',
     'project.reviews.product.NotFound': 'This product has no reviews yet',
+    'project.reviews.product.avgrating': 'Average rating ',
     'project.reviews.review.madeBy': 'By ',
     'project.reviews.review.onDate': 'on ',
     'project.reviews.edit.title': 'Edit your review',

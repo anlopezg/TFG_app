@@ -20,6 +20,7 @@ export default {
     'project.global.buttons.delete': 'Borrar',
     'project.global.exceptions.NetworkError': 'Fallo de comunicación',
     'project.global.selectors.default': 'Selecciona una opción',
+    'project.global.fields.of': ' de ',
     'project.global.fields.keywords': 'Palabras clave',
     'project.global.fields.active': 'Activo',
     'project.global.fields.date': 'Fecha',
@@ -204,6 +205,7 @@ export default {
 
     'project.reviews.product.header': 'Reseñas',
     'project.reviews.product.NotFound': 'Este producto aún no tiene reseñas',
+    'project.reviews.product.avgrating': 'Puntuación media ',
     'project.reviews.review.madeBy': 'Escrita por ',
     'project.reviews.review.onDate': 'en el día ',
     'project.reviews.edit.title': 'Edita tu reseña',
