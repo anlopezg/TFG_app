@@ -1,3 +1,5 @@
+DROP TABLE Orders;
+DROP TABLE Review;
 DROP TABLE PurchaseItem;
 DROP TABLE Purchase;
 DROP TABLE ShoppingCartItem;
@@ -75,6 +77,8 @@ CREATE TABLE Product (
     active BOOLEAN NOT NULL,
     creationDate DATETIME NOT NULL,
     productType VARCHAR(20) NOT NULL,
+    version BIGINT NOT NULL,
+    avgRating DECIMAL(3,2),
 
     -- Physical products attributes
     amount INT,
@@ -159,6 +163,9 @@ CREATE TABLE Purchase (
     userId BIGINT NOT NULL,
     date DATETIME NOT NULL,
     postalAddress VARCHAR(200) NOT NULL,
+    locality VARCHAR(60) NOT NULL,
+    region VARCHAR(60) NOT NULL,
+    country VARCHAR(60) NOT NULL,
     postalCode VARCHAR(20) NOT NULL,
 
     CONSTRAINT PurchasePK PRIMARY KEY (id),
@@ -178,3 +185,28 @@ CREATE TABLE PurchaseItem (
     CONSTRAINT PurchaseItemPurchaseIdFK FOREIGN KEY(purchaseId) REFERENCES Purchase (id)
 
 ) ENGINE = InnoDB;
+
+
+CREATE TABLE Review(
+
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    userId BIGINT NOT NULL,
+    productId BIGINT NOT NULL,
+    rating SMALLINT NOT NULL,
+    comment VARCHAR(200) NOT NULL,
+    date DATETIME NOT NULL,
+
+    CONSTRAINT ReviewPK PRIMARY KEY (id),
+    CONSTRAINT ReviewUserIdFK FOREIGN KEY (userId) REFERENCES User (id),
+    CONSTRAINT ReviewProductIdFK FOREIGN KEY (productId) REFERENCES Product (id)
+) ENGINE = InnoDB;
+
+
+CREATE TABLE Orders(
+
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    paypalOrderId VARCHAR(32),
+    paypalOrderStatus VARCHAR(32),
+
+    CONSTRAINT OrdersPK PRIMARY KEY (id)
+)

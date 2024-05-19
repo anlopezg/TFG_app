@@ -14,8 +14,6 @@ INSERT INTO User (userName, email, password, firstName, language, country, regio
 
 
 
-
-
 INSERT INTO Craft (craftName) VALUES
         -- id: 1
              ('crochet'),
@@ -36,26 +34,26 @@ INSERT INTO Subcategory (subcategoryName, categoryId) VALUES
       -- In Clothing
             ('Sweater', 1);
 
-INSERT INTO Product (userId, craftId, subcategoryId, title, description, price, active, creationDate, productType,
+INSERT INTO Product (userId, craftId, subcategoryId, title, description, price, active, creationDate, productType, version, avgRating,
                      amount, size, color, details,
                      introduction, notes, time, difficultyLevel, abbreviations, specialAbbreviations, gauge, sizing, tools) VALUES
       -- Physical Product
-            (2, 1, 1, 'Floral Crochet Top', 'Top with floral pattern', 25.00, TRUE, '2024-01-20 12:30:00', 'PHYSICAL',
+            (2, 1, 1, 'Floral Crochet Top', 'Top with floral pattern', 25.00, TRUE, '2024-01-20 12:30:00', 'PHYSICAL', 0, 4.0,
              5, 'EU M', 'Light green', 'Made with acrylic yarn',
              NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 
       -- Physical Product
-            (2, 2, 2, 'Long Knit Scarf', 'Wool scarf', 14.00, TRUE, '2024-02-02 16:00:00', 'PHYSICAL',
+            (2, 2, 2, 'Long Knit Scarf', 'Wool scarf', 14.00, TRUE, '2024-02-02 16:00:00', 'PHYSICAL', 0, 0.0,
              10, 'Only size', 'Pastel pink', 'Made with wool',
              NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 
       -- Pattern
-            (2, 1, 3, 'Off shoulder sweater', 'Wool sweater', 10.00, TRUE, '2024-02-05 18:15:00','PATTERN',
+            (2, 1, 3, 'Off shoulder sweater', 'Wool sweater', 10.00, TRUE, '2024-02-05 18:15:00','PATTERN', 0,0.0,
              NULL, NULL, NULL, NULL,
              'How to crochet the sweater',  'Crochet loosely', '25 hours', 2 ,'US Standard', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S',
              '3mm Crochet Hook x1, Needle x1, Markers x5'),
       -- Pattern
-            (2, 1, 2, 'Crochet bag', 'This is a pattern to make a crochet bag', 20.00, TRUE, '2024-03-05 18:15:00', 'PATTERN',
+            (2, 1, 2, 'Crochet bag', 'This is a pattern to make a crochet bag', 20.00, TRUE, '2024-03-05 18:15:00', 'PATTERN',0, 0.0,
              NULL, NULL, NULL, NULL,
              'How to crochet a bag', 'Crochet loosely', '25 hours', 2 ,'US Standard', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S',
              '3mm Crochet Hook x1, Needle x1, Markers x5');
@@ -86,3 +84,13 @@ INSERT INTO ShoppingCart (userId) VALUES
 INSERT INTO ShoppingCartItem (productId, quantity, shoppingCartId) VALUES
             (1, 1, 1),
             (2, 2, 2);
+
+INSERT INTO Purchase (userId, date, postalAddress, locality, region, country, postalCode) VALUES
+            (1, '2024-02-02 16:00:00', 'Calle Alfonso 3', 'A Coruña', 'A Coruña', 'España', '15003');
+
+INSERT INTO PurchaseItem(productId, productPrice, quantity, purchaseId) VALUES
+            (1, 20.0, 2, 1);
+
+
+INSERT INTO Review(userId, productId, rating, comment, date) VALUES
+            (1, 1, 4, "Very well made product", '2024-04-22 12:00:00' );
