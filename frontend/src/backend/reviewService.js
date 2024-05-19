@@ -10,7 +10,7 @@ export const findProductReviews = ({productId, page}, onSuccess)=>
 export const findUserReviews = ({page}, onSuccess) =>
     appFetch(`/reviews/users?page=${page}`, config('GET'), onSuccess);
 
-export const editReview = ({review}, onSuccess, onErrors) =>
+export const editReview = (review, onSuccess, onErrors) =>
     appFetch(`/reviews/edit/${review.id}`, config('PUT', review), onSuccess, onErrors);
 
 export const deleteReview = (reviewId, onSuccess) =>

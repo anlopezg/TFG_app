@@ -196,7 +196,14 @@ export default {
     'project.reviews.User.header': 'Reviews you have published',
     'project.reviews.User.seeReviews':'Show all the reviews made',
     'project.reviews.User.NotFound': 'No reviews have been published yet',
+
+    'project.reviews.product.header': 'Reviews',
+    'project.reviews.product.NotFound': 'This product has no reviews yet',
     'project.reviews.review.madeBy': 'By ',
+    'project.reviews.review.onDate': 'on ',
+    'project.reviews.edit.title': 'Edit your review',
+    'project.reviews.edit.rating': 'Rating',
+    'project.reviews.edit.comment': 'Comment',
     'project.reviews.delete.title': 'Remove review',
     'project.reviews.delete.sure': 'Are you sure you want to delete this review?',
 

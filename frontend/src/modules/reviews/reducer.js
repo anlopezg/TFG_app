@@ -3,7 +3,8 @@ import * as actionTypes from './actionTypes';
 
 const initialState = {
     review: null,
-    userReviewSearch: null
+    userReviewSearch: null,
+    productReviewSearch: null
 };
 
 const review = (state = initialState.review, action) => {
@@ -27,9 +28,23 @@ const userReviewSearch = (state = initialState.userReviewSearch, action) => {
     }
 };
 
+const productReviewSearch = (state = initialState.productReviewSearch, action) => {
+    switch (action.type) {
+        case actionTypes.FIND_PRODUCT_REVIEWS_COMPLETED:
+            return action.productReviewSearch;
+
+        case actionTypes.CLEAR_PRODUCT_REVIEW_SEARCH:
+            return initialState.productReviewSearch;
+
+        default:
+            return state;
+    }
+};
+
 const reducer = combineReducers({
     review,
-    userReviewSearch
+    userReviewSearch,
+    productReviewSearch
 });
 
 export default reducer;

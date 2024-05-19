@@ -5,5 +5,6 @@ import * as selectors from "./selectors.js";
 
 export {default as FindUserReviews} from './components/FindUserReviews.jsx';
 export {default as DeleteReview} from './components/DeleteReview.jsx';
+export {default as EditReview} from './components/EditReview.jsx';
 
 export default {actions, actionTypes, reducer, selectors};

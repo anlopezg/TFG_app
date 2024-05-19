@@ -16,6 +16,7 @@ import ImagesCarousel from "./ImagesCarousel.jsx";
 import Heart from "react-heart";
 import {AddItemToCart} from "../../purchases/index.js";
 import FavoriteHeart from "../../favorite/components/FavoriteHeart.jsx";
+import FindProductReviews from "../../reviews/components/FindProductReviews.jsx";
 
 const ProductDetails = () => {
 
@@ -152,6 +153,11 @@ const ProductDetails = () => {
 
                             </div>
                         }
+                    </div>
+
+                    <div className="col-md-12 mt-3">
+                        <hr/>
+                        <FindProductReviews productId={product.id}/>
                     </div>
                 </div>
 

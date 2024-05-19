@@ -1,10 +1,15 @@
 import {FormattedDate, FormattedMessage, FormattedTime} from "react-intl";
 import PropTypes from "prop-types";
 import ReactStars from 'react-stars';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const UserReviews = ({ userReviews }) => {
 
+    const navigate = useNavigate();
+
+    const handleEditButton = (userReview) =>{
+        navigate(`/reviews/edit-review/${userReview.id}`, { state: { userReview } });
+    }
 
     return(
         <div className="row justify-content-center">
@@ -37,10 +42,11 @@ const UserReviews = ({ userReviews }) => {
                                     <i className="fa-solid fa-trash-can mx-1"></i>
                                 </Link>
 
-                                <Link to={`/reviews/edit-review/${userReview.id}`} className="btn btn-primary">
+                                <button onClick={() => handleEditButton(userReview)} className="btn btn-primary">
                                     <FormattedMessage id="project.global.buttons.edit"/>
                                     <i className="fa-solid fa-pen mx-1"></i>
-                                </Link>
+                                </button>
+
                             </div>
                         </div>
                     </div>

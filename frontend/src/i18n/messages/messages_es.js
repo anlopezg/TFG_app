@@ -201,9 +201,18 @@ export default {
     'project.reviews.User.header': 'Reseñas que has realizado',
     'project.reviews.User.seeReviews':'Ver todas las reseñas hechas',
     'project.reviews.User.NotFound': 'No se ha publicado ninguna reseña aún',
-    'project.reviews.review.madeBy': 'Por ',
+
+    'project.reviews.product.header': 'Reseñas',
+    'project.reviews.product.NotFound': 'Este producto aún no tiene reseñas',
+    'project.reviews.review.madeBy': 'Escrita por ',
+    'project.reviews.review.onDate': 'en el día ',
+    'project.reviews.edit.title': 'Edita tu reseña',
+    'project.reviews.edit.rating': 'Puntuación',
+    'project.reviews.edit.comment': 'Comentario',
     'project.reviews.delete.title': 'Eliminar reseña',
     'project.reviews.delete.sure': '¿Estás seguro de querer eliminar esta reseña?',
+
+
 
 
 }
