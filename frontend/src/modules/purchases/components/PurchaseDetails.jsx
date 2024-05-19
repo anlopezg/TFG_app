@@ -57,7 +57,7 @@ const PurchaseDetails = () => {
             </div>
 
             <div className="mt-4">
-                <ShoppingItemList list={purchase}/>
+                <ShoppingItemList list={purchase} addReview={true}/>
             </div>
 
 

@@ -94,6 +94,7 @@ public class ReviewServiceImpl implements ReviewService{
 
         review.setRating(newRating);
         review.setComment(newComment);
+        review.setDate(LocalDateTime.now());
 
         review.getProduct().calculateAvgRating();
 

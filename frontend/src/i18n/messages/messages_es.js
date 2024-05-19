@@ -213,8 +213,9 @@ export default {
     'project.reviews.edit.comment': 'Comentario',
     'project.reviews.delete.title': 'Eliminar reseña',
     'project.reviews.delete.sure': '¿Estás seguro de querer eliminar esta reseña?',
-
-
-
+    'project.reviews.purchase.add': 'Califica este producto',
+    'project.reviews.add.header': 'Escribe una reseña',
+    'project.reviews.add.product': 'sobre el producto:  ',
+    'project.reviews.add.publish': 'Publicar reseña',
 
 }

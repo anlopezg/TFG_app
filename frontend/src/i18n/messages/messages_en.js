@@ -208,7 +208,9 @@ export default {
     'project.reviews.edit.comment': 'Comment',
     'project.reviews.delete.title': 'Remove review',
     'project.reviews.delete.sure': 'Are you sure you want to delete this review?',
-
-
+    'project.reviews.purchase.add': 'Review this product',
+    'project.reviews.add.header': 'Write a review',
+    'project.reviews.add.product': 'about the product: ',
+    'project.reviews.add.publish': 'Publish review',
 
 }

@@ -1,32 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import {useNavigate, useLocation} from 'react-router-dom';
+import {useParams, useNavigate, useLocation} from 'react-router-dom';
 import ReactStars from 'react-stars';
 import * as actions from '../actions.js';
 import {useDispatch} from "react-redux";
 import Errors from "../../common/components/Errors.jsx";
 import {FormattedMessage} from "react-intl";
-import PropTypes from "prop-types";
+import {BackLink, ProductLink} from "../../common/index.js";
 
-const EditReview = () => {
+
+const AddReview = () => {
 
     const location = useLocation();
-    const review = location.state?.userReview;
+    const productId = location.state?.productId;
+    const productName = location.state?.productName;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [backendErrors, setBackendErrors] = useState("");
     let form;
 
-    const [rating, setRating] = useState(review.rating);
-    const [comment, setComment] = useState(review.comment);
+    const [rating, setRating] = useState("");
+    const [comment, setComment] = useState("");
 
-    console.log("Review", review);
     const handleSubmit = event => {
         event.preventDefault();
 
         if(form.checkValidity()) {
-            dispatch(actions.editReview({
-                id: review.id,
+            dispatch(actions.publishReview({
+                    productId:productId,
                     rating: rating,
                     comment: comment
 
@@ -45,17 +46,25 @@ const EditReview = () => {
         <div className="row justify-content-center m-3">
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
 
+            <div className="mb-3">
+                <BackLink/>
+            </div>
+
             <div className="card shopping-card col-md-6">
                 <h2 className="mt-3 retro card-title">
-                    <FormattedMessage id="project.reviews.edit.title"/>
+                    <FormattedMessage id="project.reviews.add.header"/>
                 </h2>
+                <p className="text-muted text-center">
+                    <FormattedMessage id="project.reviews.add.product"/>
+                    <ProductLink id={productId} title={productName}/>
+                </p>
 
                 <div className="card-body">
                     <form ref={node => form = node}
                           className="needs-validation" noValidate
                           onSubmit={(e)=> handleSubmit(e)}>
 
-                        <div className="form-group row my-2">
+                        <div className="form-group row my-1">
                             <label htmlFor="rating" className="col-md-12 col-form-label text-muted">
                                 <FormattedMessage id="project.reviews.edit.rating"/>
                             </label>
@@ -67,7 +76,7 @@ const EditReview = () => {
                                     half={false}
                                     onChange={newRating => setRating(newRating)}
                                     size={24}
-                                    color1={"#f6f6ee"}
+                                    color1={"#D2d2d2"}
                                     color2={"#E6895C"}
                                 />
                             </div>
@@ -96,7 +105,8 @@ const EditReview = () => {
                         <div className="form-group row justify-content-center">
                             <div className="col-md-6 mt-4">
                                 <button type="submit" className="btn button-coral bold-label">
-                                    <FormattedMessage id="project.global.buttons.save"/>
+                                    <FormattedMessage id="project.reviews.add.publish"/>
+                                    <i className="fa-solid fa-upload mx-2"></i>
                                 </button>
                             </div>
                         </div>
@@ -110,8 +120,5 @@ const EditReview = () => {
     );
 };
 
-EditReview.propTypes ={
-    userReview: PropTypes.array.isRequired
-};
 
-export default EditReview;
+export default AddReview;

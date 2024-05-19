@@ -5,7 +5,7 @@ import {FormattedMessage, FormattedNumber} from 'react-intl';
 import ShoppingItem from './ShoppingItem.jsx';
 import {Errors} from '../../common';
 
-const ShoppingItemList = ({list, edit, onUpdateQuantity, onRemoveItem}) => {
+const ShoppingItemList = ({list, edit, onUpdateQuantity, onRemoveItem, addReview}) => {
 
     const [backendErrors, setBackendErrors] = useState(null);
 
@@ -30,6 +30,7 @@ const ShoppingItemList = ({list, edit, onUpdateQuantity, onRemoveItem}) => {
                                 onUpdateQuantity={onUpdateQuantity}
                                 onRemoveItem={onRemoveItem}
                                 onBackendErrors={setBackendErrors}
+                                addReview={addReview}
                             />
                         ))}
                     </div>

@@ -5,13 +5,15 @@ import {FormattedMessage, FormattedNumber} from 'react-intl';
 import {ProductLink} from '../../common';
 import {useSelector} from "react-redux";
 import * as selectors from "../../catalog/selectors.js";
-import {Form} from "react-router-dom";
+import {Form, Link, useNavigate} from "react-router-dom";
 
 const ShoppingItem = ({shoppingItemListId, item, edit, onUpdateQuantity,
-    onRemoveItem, onBackendErrors}) => {
+    onRemoveItem, onBackendErrors, addReview}) => {
 
+    const navigate = useNavigate();
     const [quantity, setQuantity] = useState(item.quantity);
     let form;
+
 
     const categories = useSelector(selectors.getCategories);
 
@@ -45,6 +47,11 @@ const ShoppingItem = ({shoppingItemListId, item, edit, onUpdateQuantity,
             () => onBackendErrors(null),
             backendErrors => onBackendErrors(backendErrors));
 
+    }
+
+    const handleReviewProduct = () => {
+        navigate('/reviews/add-review', {state: {productId: item.productId,
+                productName: item.productName}});
     }
 
     return (
@@ -139,6 +146,18 @@ const ShoppingItem = ({shoppingItemListId, item, edit, onUpdateQuantity,
                                 </p>
                             </div>
                         )}
+
+                        {addReview && (
+                            <div className="row justify-content-center">
+                                <div className="col-md-6 mt-3 d-flex flex-column ">
+                                    <button className="btn button-coral" onClick={handleReviewProduct}>
+                                        <i className="fa-solid fa-star mx-1"></i>
+                                        <FormattedMessage id="project.reviews.purchase.add"/>
+                                    </button>
+                                </div>
+                            </div>
+
+                        )}
                     </div>
                 </div>
             </div>
@@ -154,7 +173,8 @@ ShoppingItem.propTypes = {
     edit: PropTypes.bool,
     onUpdateQuantity: PropTypes.func,
     onRemoveItem: PropTypes.func,
-    onBackendErrors: PropTypes.func
+    onBackendErrors: PropTypes.func,
+    addReview: PropTypes.bool
 }
 
 export default ShoppingItem;

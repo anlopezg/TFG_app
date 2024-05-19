@@ -34,12 +34,6 @@ const Purchases = ({purchases}) => (
                         <FormattedMessage id="project.global.fields.view-details"/>
                     </Link>
                 </td>
-
-                <td className="text-center">
-                    <Link to={`/shopping/purchase-details/${purchase.id}`} className="btn button-lilac mt-2">
-                        <FormattedMessage id="project.global.fields.view-details"/>
-                    </Link>
-                </td>
             </tr>
         )}
         </tbody>
