@@ -4,7 +4,6 @@ import * as actions from '../actions.js';
 import Heart from "react-heart";
 import users from "../../users/index.js";
 import * as selectors from '../selectors.js';
-import {Errors} from "../../common/index.js";
 
 const FavoriteHeart = ({ productId }) => {
 

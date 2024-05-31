@@ -38,3 +38,16 @@ export const findUsers = ({username, page}, onSuccess) =>{
 
     appFetch(path, config('GET'), onSuccess);
 }
+
+export const getFavorites = (onSuccess)=>
+    appFetch('/catalog/favorites', config('GET'), onSuccess);
+
+export const markAsFavorite = (favorite, onSuccess, onErrors) =>
+    appFetch('/catalog/favorites', config('POST', favorite), onSuccess, onErrors);
+
+export const findFavorite = (productId, onSuccess, onErrors) =>
+    appFetch(`/catalog/favorites/${productId}`, config('GET'), onSuccess, onErrors);
+
+
+export const unmarkAsFavorite = (productId, onSuccess) =>
+    appFetch(`/catalog/favorites/${productId}`, config('DELETE'), onSuccess);

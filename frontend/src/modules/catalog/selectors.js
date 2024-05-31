@@ -1,4 +1,4 @@
-import {FormattedMessage} from "react-intl";
+
 
 const getModuleState = state => state.catalog;
 
@@ -37,6 +37,12 @@ export const getCategoryNameBySubcategoryId = (categories, subcategoryId) => {
 
     return 'unknown';
 };
+
+export const getFavorites = state =>
+    getModuleState(state).favoriteList;
+
+export const getFavorite = state =>
+    getModuleState(state).favorite;
 
 export const getSubcategoryName = (categories, subcategoryId) => {
     if (!categories || !subcategoryId) {

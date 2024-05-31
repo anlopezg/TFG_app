@@ -10,7 +10,6 @@ import es.udc.paproject.backend.rest.dtos.ReviewDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,13 +82,13 @@ public class ReviewController {
 
     }
 
-    @PutMapping("/edit/{reviewId}")
+    @PutMapping("/{reviewId}")
     public ReviewDto editReview(@RequestAttribute Long userId, @PathVariable Long reviewId, @RequestBody ReviewDto reviewDto) throws PermissionException, InstanceNotFoundException {
 
         return toReviewDto(reviewService.editReview(userId, reviewId, reviewDto.getRating(), reviewDto.getComment()));
     }
 
-    @DeleteMapping("/delete/{reviewId}")
+    @DeleteMapping("/{reviewId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteReview(@RequestAttribute Long userId, @PathVariable Long reviewId) throws PermissionException, InstanceNotFoundException {
 

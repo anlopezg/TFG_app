@@ -7,7 +7,9 @@ const initialState = {
     crafts: null,
     productSearch: null,
     product: null,
-    userSearch: null
+    userSearch: null,
+    favoriteList: null,
+    favorite: null
 };
 
 
@@ -81,12 +83,47 @@ const userSearch = (state = initialState.userSearch, action) => {
 
 }
 
+/*********************** FAVORITES ***********************/
+const favoriteList = (state = initialState.favoriteList, action)=>{
+    switch (action.type){
+
+        case actionTypes.FIND_FAVORITES_COMPLETED:
+            return action.favoriteList;
+
+        case actionTypes.CLEAR_FAVORITES:
+            return initialState.favoriteList;
+
+        default:
+            return state;
+    }
+}
+
+const favorite = (state = initialState.favorite, action) =>{
+
+    switch (action.type) {
+
+        case actionTypes.MARK_AS_FAVORITE_COMPLETED:
+            return action.favorite;
+
+        case actionTypes.FIND_FAVORITE_COMPLETED:
+            return action.favorite;
+
+        case actionTypes.UNMARK_AS_FAVORITE_COMPLETED:
+            return initialState.favorite;
+
+        default:
+            return state;
+    }
+}
+
 const reducer = combineReducers({
     categories,
     crafts,
     productSearch,
     product,
-    userSearch
+    userSearch,
+    favoriteList,
+    favorite
 });
 
 export default reducer;

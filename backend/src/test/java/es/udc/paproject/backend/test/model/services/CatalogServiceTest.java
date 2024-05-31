@@ -7,6 +7,7 @@ import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.CatalogService;
+import es.udc.paproject.backend.model.services.PermissionChecker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +31,9 @@ public class CatalogServiceTest {
 
     @Autowired
     private CatalogService catalogService;
+
+    @Autowired
+    private PermissionChecker permissionChecker;
 
     @Autowired
     private UserDao userDao;
@@ -89,7 +93,7 @@ public class CatalogServiceTest {
         Pattern pattern = new Pattern(user, craft, subcategory, title, "descrip", BigDecimal.valueOf(30),
                 true, LocalDateTime.now(),
                 "intro", "notes", "gauge", "sizing", 1,
-                "time", "abbr", "special", "tool");
+                "time", "abbr", "special");
 
         patternDao.save(pattern);
         return pattern;
@@ -103,7 +107,7 @@ public class CatalogServiceTest {
 
         Craft craft = createCraft("Crochet");
 
-        assertEquals(craft,  catalogService.checkCraft(craft.getId()));
+        assertEquals(craft,  permissionChecker.checkCraft(craft.getId()));
     }
 
     @Test
@@ -119,7 +123,7 @@ public class CatalogServiceTest {
     public void testCheckNonExistentCraft(){
 
         assertThrows(InstanceNotFoundException.class, () ->
-                catalogService.checkCraft(NON_EXISTENT_ID));
+                permissionChecker.checkCraft(NON_EXISTENT_ID));
     }
 
     @Test
@@ -138,13 +142,13 @@ public class CatalogServiceTest {
 
         Subcategory subcategory = createSubcategory("Jacket", category);
 
-        assertEquals(subcategory,  catalogService.checkSubcategory(subcategory.getId()));
+        assertEquals(subcategory,  permissionChecker.checkSubcategory(subcategory.getId()));
     }
 
     @Test
     public void testCheckNonExistentSubcategory(){
         assertThrows(InstanceNotFoundException.class, ()->
-                catalogService.checkSubcategory(NON_EXISTENT_ID));
+                permissionChecker.checkSubcategory(NON_EXISTENT_ID));
     }
 
 

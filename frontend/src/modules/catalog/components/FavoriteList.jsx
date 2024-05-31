@@ -6,15 +6,13 @@ import * as actions from '../actions.js';
 import {FormattedMessage} from "react-intl";
 import Products from "../../catalog/components/Products.jsx";
 
-import * as catalogSelectors from '../../catalog/selectors.js';
-
 
 const FavoriteList = () =>{
 
     const favoriteList = useSelector(selectors.getFavorites);
     const dispatch = useDispatch();
-    const crafts = useSelector(catalogSelectors.getCrafts);
-    const categories = useSelector(catalogSelectors.getCategories);
+    const crafts = useSelector(selectors.getCrafts);
+    const categories = useSelector(selectors.getCategories);
 
 
     useEffect(() => {

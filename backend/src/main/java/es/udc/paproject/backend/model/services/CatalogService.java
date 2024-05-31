@@ -1,32 +1,16 @@
 package es.udc.paproject.backend.model.services;
 
-import es.udc.paproject.backend.model.entities.Category;
-import es.udc.paproject.backend.model.entities.Subcategory;
-import es.udc.paproject.backend.model.entities.Craft;
-import es.udc.paproject.backend.model.entities.Product;
-import es.udc.paproject.backend.model.entities.User;
+import es.udc.paproject.backend.model.entities.*;
+import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
+import es.udc.paproject.backend.model.exceptions.OwnerOfProductException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CatalogService {
 
-    /**
-     * Checks a craft exists by its id
-     * @param craftId The craft id
-     * @return The craft
-     * @throws InstanceNotFoundException Craft not found
-     */
-    Craft checkCraft(Long craftId) throws InstanceNotFoundException;
-
-    /**
-     * Checks a category exists by its id
-     * @param categoryId The category id
-     * @return The category
-     * @throws InstanceNotFoundException Category not found
-     */
-    Subcategory checkSubcategory(Long categoryId) throws InstanceNotFoundException;
 
     /**
      *
@@ -70,5 +54,16 @@ public interface CatalogService {
      * Return all users with the seller role, whose username matches the given one.
      */
     Block<User> findSellers(String username, int page, int size);
+
+
+    Favorite markAsFavoriteProduct(Long userId, Long productId) throws InstanceNotFoundException, DuplicateInstanceException, OwnerOfProductException;
+
+    List<Product> getFavoriteProducts(Long userId) throws InstanceNotFoundException;
+
+    Optional<Favorite> findFavoriteByUserAndProduct(Long userId, Long productId) throws InstanceNotFoundException;
+
+    Favorite findFavoriteById(Long favoriteId) throws InstanceNotFoundException;
+
+    void removeFavoriteProduct(Long userId, Long productId) throws InstanceNotFoundException;
 
 }

@@ -89,6 +89,12 @@ h4{
     text-align: center;
 }
 
+h4.retro{
+    font-family: 'BrightRetro', sans-serif;
+    font-size: 32px;
+    text-align: left;
+}
+
 .card {
     border-radius: 20px !important;
 }
@@ -100,6 +106,70 @@ h4{
 .shopping-card .card-body{
     border-radius: 20px;
 }
+
+.pattern-card{
+    border:none;
+    width:80%;
+}
+
+@media (min-width: 1200px) {
+    .pattern-card {
+        min-width: 1000px;
+    }
+}
+
+.pattern-card .card-body{
+    border: none;
+    border-radius: 0 20px 20px 0;
+}
+
+@media (min-width: 1200px) {
+    .pattern-card {
+        min-width: 250px;
+    }
+}
+
+
+.pattern-side-bar{
+    border: none;
+    border-radius:  20px 0 0 20px;
+    background-color: var(--light-blue);
+    width: 50%;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+@media (min-width: 1200px) {
+    .pattern-side-bar {
+        width:20%
+    }
+}
+
+
+@media (max-width: 1199px) {
+    .pattern-side-bar {
+        width: 150px;
+    }
+}
+.pattern-side-bar .nav-item .nav-link.active{
+    background-color: var(--darker-blue);
+    font-family: 'Bold', sans-serif;
+    color: #1F1E1E;
+}
+
+.materials-card {
+    border: 1px solid;
+    border-color: var(--pastel-pink);
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.materials-card .card-body {
+    border: none;
+    border-radius: 5px;
+}
+
 
 .success-card{
     background-color: var(--lime-green);
@@ -385,6 +455,34 @@ h4{
     font-size: 18px;
     border-radius: 20px;
     padding: 10px 20px;
+}
+
+.button-light-blue{
+    background-color: var(--pastel-blue);
+    width: auto;
+    min-width: 15%;
+    font-size: 15px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+}
+
+.button-light-blue:hover{
+    background-color: var(--darker-blue);
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-light-blue.next {
+    margin-left: auto;
+}
+
+.button-light-blue.previous {
+    margin-right: auto;
 }
 
 
@@ -775,6 +873,29 @@ h4{
     pointer-events: none;
 }
 
+.paypal-button{
+    background-color: #ffc439;
+    border: none;
+    border-radius: 20px;
+    color: #003087;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+}
 
+.paypal-button img {
+    margin-right: 10px;
+}
+
+.paypal-button:hover {
+    background-color: #e0ac21;
+}
 
 
