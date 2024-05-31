@@ -30,6 +30,12 @@ public class PermissionCheckerImpl implements PermissionChecker {
 
 	@Autowired
 	private ReviewDao reviewDao;
+
+	@Autowired
+	private CraftDao craftDao;
+
+	@Autowired
+	private SubcategoryDao subcategoryDao;
 	
 	@Override
 	public void checkUserExists(Long userId) throws InstanceNotFoundException {
@@ -99,6 +105,18 @@ public class PermissionCheckerImpl implements PermissionChecker {
 			throw new UserNotSellerException();
 		}
 		return user.get();
+	}
+
+	@Override
+	public Product checkProduct(Long productId) throws InstanceNotFoundException {
+
+		Optional<Product> product = productDao.findById(productId);
+
+		if (!product.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.product", productId);
+		}
+
+		return product.get();
 	}
 
 
@@ -180,6 +198,31 @@ public class PermissionCheckerImpl implements PermissionChecker {
 
 		return review.get();
 	}
+
+	@Override
+	public Craft checkCraft(Long craftId) throws InstanceNotFoundException {
+
+		Optional<Craft> craft = craftDao.findById(craftId);
+
+		if(!craft.isPresent()){
+			throw new InstanceNotFoundException("project.entities.craft", craftId);
+		}
+
+		return craft.get();
+	}
+
+	@Override
+	public Subcategory checkSubcategory(Long subcategoryId) throws InstanceNotFoundException{
+
+		Optional<Subcategory> subcategory = subcategoryDao.findById(subcategoryId);
+
+		if(!subcategory.isPresent()){
+			throw new InstanceNotFoundException("project.entities.subcategory", subcategoryId);
+		}
+
+		return subcategory.get();
+	}
+
 
 
 }

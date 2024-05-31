@@ -1,4 +1,10 @@
 DROP TABLE Orders;
+DROP TABLE SectionImages;
+DROP TABLE Step;
+DROP TABLE Section;
+DROP TABLE Yarn;
+DROP TABLE Tool;
+DROP TABLE PaypalAccount;
 DROP TABLE Review;
 DROP TABLE PurchaseItem;
 DROP TABLE Purchase;
@@ -199,6 +205,82 @@ CREATE TABLE Review(
     CONSTRAINT ReviewPK PRIMARY KEY (id),
     CONSTRAINT ReviewUserIdFK FOREIGN KEY (userId) REFERENCES User (id),
     CONSTRAINT ReviewProductIdFK FOREIGN KEY (productId) REFERENCES Product (id)
+) ENGINE = InnoDB;
+
+
+CREATE TABLE PaypalAccount(
+    userId BIGINT NOT NULL,
+    paypalEmail VARCHAR(100) NOT NULL,
+
+    CONSTRAINT PaypalAccountPK PRIMARY KEY (userId),
+    CONSTRAINT PaypalUserFK FOREIGN KEY (userId) REFERENCES User (id),
+    CONSTRAINT PaypalEmailUniqueKey UNIQUE (paypalEmail)
+) ENGINE = InnoDB;
+
+
+CREATE TABLE Tool(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    productId BIGINT NOT NULL,
+    toolName VARCHAR(60) NOT NULL,
+    amount INTEGER NOT NULL,
+
+    CONSTRAINT ToolPK PRIMARY KEY (id),
+    CONSTRAINT ToolProductFK FOREIGN KEY (productId) REFERENCES Product (id)
+
+)ENGINE = InnoDB;
+
+
+
+CREATE TABLE Yarn(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    productId BIGINT NOT NULL,
+    brand VARCHAR(60) NOT NULL,
+    name VARCHAR(60) NOT NULL,
+    color VARCHAR(60) NOT NULL,
+    amount VARCHAR(60) NOT NULL,
+    fiberContent VARCHAR(60) NOT NULL,
+    weight VARCHAR(60) NOT NULL,
+    length VARCHAR(60) NOT NULL,
+
+    CONSTRAINT YarnPK PRIMARY KEY (id),
+    CONSTRAINT YarnProductFK FOREIGN KEY(productId) REFERENCES Product (id)
+
+) ENGINE = InnoDB;
+
+
+CREATE TABLE Section(
+
+   id BIGINT NOT NULL AUTO_INCREMENT,
+   productId BIGINT NOT NULL,
+   title VARCHAR(32) NOT NULL,
+   description VARCHAR(400) NOT NULL,
+
+   CONSTRAINT SectionPK PRIMARY KEY (id),
+   CONSTRAINT SectionProductFK FOREIGN KEY(productId) REFERENCES Product (id)
+
+) ENGINE = InnoDB;
+
+
+CREATE TABLE Step(
+
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    sectionId BIGINT NOT NULL,
+    rowNumber VARCHAR(32) NOT NULL,
+    instructions VARCHAR(400) NOT NULL,
+
+    CONSTRAINT StepPK PRIMARY KEY (id),
+    CONSTRAINT StepSectionFK FOREIGN KEY(sectionId) REFERENCES Section (id)
+) ENGINE = InnoDB;
+
+CREATE TABLE SectionImages(
+
+     id BIGINT NOT NULL AUTO_INCREMENT,
+     sectionId BIGINT NOT NULL,
+     imageUrl VARCHAR(255) NOT NULL,
+
+     CONSTRAINT SectionImagesPK PRIMARY KEY (id),
+     CONSTRAINT SectionImageFK FOREIGN KEY (sectionId) REFERENCES Section(id)
+
 ) ENGINE = InnoDB;
 
 

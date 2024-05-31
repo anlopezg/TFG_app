@@ -24,6 +24,7 @@ public interface PermissionChecker {
 	User checkSellerUser(Long userId) throws InstanceNotFoundException, UserNotSellerException;
 
 
+	Product checkProduct(Long productId) throws InstanceNotFoundException;
 	Product checkActiveProduct(Long productId) throws InstanceNotFoundException;
 
 	Product checkProductExistsAndBelongsTo(Long productId, Long userId) throws PermissionException, InstanceNotFoundException;
@@ -33,5 +34,21 @@ public interface PermissionChecker {
 	Purchase checkPurchaseExistsAndBelongsTo(Long purchaseId, Long userId) throws PermissionException, InstanceNotFoundException;
 
 	Review checkReviewExistsAndBelongsTo(Long reviewId, Long userId) throws PermissionException, InstanceNotFoundException;
-	
+
+
+	/**
+	 * Checks a craft exists by its id
+	 * @param craftId The craft id
+	 * @return The craft
+	 * @throws InstanceNotFoundException Craft not found
+	 */
+	Craft checkCraft(Long craftId) throws InstanceNotFoundException;
+
+	/**
+	 * Checks a category exists by its id
+	 * @param categoryId The category id
+	 * @return The category
+	 * @throws InstanceNotFoundException Category not found
+	 */
+	Subcategory checkSubcategory(Long categoryId) throws InstanceNotFoundException;
 }

@@ -9,8 +9,6 @@ import es.udc.paproject.backend.model.services.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
@@ -31,8 +29,6 @@ public class PublicationServiceTest {
     @Autowired
     private PublicationService publicationService;
 
-    @Autowired
-    private CatalogService catalogService;
 
     @Autowired
     private UserService userService;
@@ -84,77 +80,25 @@ public class PublicationServiceTest {
         return subcategory;
     }
 
-    private Pattern createPattern(User user, Craft craft, Subcategory subcategory, String title, BigDecimal price, LocalDateTime creationDate){
-        return new Pattern(user, craft, subcategory, title, "Description", price,true, creationDate,
-                "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "5mm Crochet Hook x1");
-    }
-
     private Physical createPhysical(User user, Craft craft, Subcategory subcategory, String title, BigDecimal price, LocalDateTime creationDate){
         return new Physical(user, craft, subcategory, title, "Description", price,true, creationDate,
                 3, "Size", "Color", "Details");
     }
 
-    private Pattern createFullPattern() throws UserAlreadySellerException, InstanceNotFoundException, DuplicateInstanceException, UserNotSellerException {
+    private Physical createFullPhysical() throws UserAlreadySellerException, InstanceNotFoundException, DuplicateInstanceException, UserNotSellerException {
 
         User user = createSellerUser("username");
         Craft craft = createCraft("Crochet");
         Category category = createCategory("Accesories");
         Subcategory subcategory= createSubcategory("Ring", category);
 
-        return publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title", "Description",
-                BigDecimal.valueOf(20), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
+        return publicationService.createPhysical(user.getId(), craft.getId(), subcategory.getId(), "Title", "Description",
+                BigDecimal.valueOf(20), true, 5, "Size", "Color", "Details", Collections.emptyList());
     }
 
 
 
     /*   SERVICE'S TESTS  */
-
-    @Test
-    public void testCreatePattern() throws InstanceNotFoundException, UserNotSellerException, DuplicateInstanceException, UserAlreadySellerException {
-
-        User user = createSellerUser("username");
-        Craft craft = createCraft("Crochet");
-        Category category = createCategory("Accesories");
-        Subcategory subcategory= createSubcategory("Ring", category);
-
-        String title = "title";
-        BigDecimal price = BigDecimal.valueOf(10);
-        Pattern expectedPattern = createPattern(user, craft, subcategory, title, price, LocalDateTime.now());
-
-        Pattern createdPattern = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
-
-
-        assertEquals(expectedPattern.getUser(),createdPattern.getUser());
-        assertEquals(expectedPattern.getCraft(), createdPattern.getCraft());
-        assertEquals(expectedPattern.getSubcategory(), createdPattern.getSubcategory());
-        assertEquals(expectedPattern.getTitle(), createdPattern.getTitle());
-        assertTrue(expectedPattern.getPrice().compareTo(createdPattern.getPrice()) == 0);
-    }
-
-    @Test
-    public void testNonSellerCreatesPattern() throws DuplicateInstanceException{
-
-        //Non seller user
-        User user = createNormalUser("username");
-        Craft craft = createCraft("Crochet");
-        Category category = createCategory("Accesories");
-        Subcategory subcategory= createSubcategory("Ring", category);
-
-        assertThrows(UserNotSellerException.class, ()->
-                publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "title", "Description",
-                        BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList()));
-    }
-
-    @Test
-    public void testNonExistentUserCreatesPattern() {
-        assertThrows(InstanceNotFoundException.class, ()->
-                publicationService.createPattern(NON_EXISTENT_ID, NON_EXISTENT_ID, NON_EXISTENT_ID, "title", "Description",
-                        BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList()));
-    }
-
     @Test
     public void testCreatePhysical() throws InstanceNotFoundException, UserNotSellerException, DuplicateInstanceException, UserAlreadySellerException{
 
@@ -177,97 +121,10 @@ public class PublicationServiceTest {
         assertTrue(expectedPhysical.getPrice().compareTo(physical.getPrice()) == 0);
     }
 
-    @Test
-    public void testFindAddedPatterns() throws DuplicateInstanceException, UserAlreadySellerException, InstanceNotFoundException, UserNotSellerException{
 
-        User user = createSellerUser("username");
-
-        Craft craft = createCraft("Crochet");
-        Category category = createCategory("Accesories");
-        Subcategory subcategory= createSubcategory("Ring", category);
-
-        String title1 = "pattern1";
-        String title2 = "pattern2";
-        BigDecimal price = BigDecimal.valueOf(10);
-
-        Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
-
-        Pattern pattern2 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
-
-        Block<Pattern> expectedBlock = new Block<>(Arrays.asList(pattern1, pattern2), false);
-        Block<Pattern> foundPatterns = publicationService.findAddedPatterns(user.getId(), 0, 2);
-
-        assertEquals(expectedBlock, foundPatterns);
-    }
 
     @Test
-    public void testFindAddedPatternsByPages() throws DuplicateInstanceException, UserAlreadySellerException, InstanceNotFoundException, UserNotSellerException{
-
-        User user = createSellerUser("username");
-
-        Craft craft = createCraft("Crochet");
-        Category category = createCategory("Accesories");
-        Subcategory subcategory= createSubcategory("Ring", category);
-
-        String title1 = "pattern1";
-        String title2 = "pattern2";
-        String title3 = "pattern3";
-        BigDecimal price = BigDecimal.valueOf(10);
-
-        Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
-
-        Pattern pattern2 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
-
-        Pattern pattern3 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title3, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
-
-
-        Block<Pattern> firstBlock = new Block<>(Arrays.asList(pattern1, pattern2), true);
-        assertEquals(firstBlock, publicationService.findAddedPatterns(user.getId(), 0,2));
-
-        Block<Pattern> secondBlock = new Block<>(Arrays.asList(pattern3), false);
-        assertEquals(secondBlock, publicationService.findAddedPatterns(user.getId(), 1,2));
-    }
-
-    @Test
-    public void testFindAddedPatternsEmpty() throws DuplicateInstanceException, UserAlreadySellerException, InstanceNotFoundException, UserNotSellerException{
-
-        User user = createSellerUser("username");
-
-        //Empty block
-        Block<Pattern> expectedBlock = new Block<>(new ArrayList<>(), false);
-        Block<Pattern> foundPatterns = publicationService.findAddedPatterns(user.getId(), 0, 1);
-
-        assertEquals(expectedBlock, foundPatterns);
-    }
-
-    @Test
-    public void testFindPatternById() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException, UserNotSellerException, UserNotOwnerException {
-
-        User user = createSellerUser("username");
-
-        Craft craft = createCraft("Crochet");
-        Category category = createCategory("Accesories");
-        Subcategory subcategory= createSubcategory("Ring", category);
-
-        Pattern pattern1 = publicationService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
-
-        assertEquals(pattern1, publicationService.findPatternById(user.getId(), pattern1.getId()));
-    }
-
-    @Test
-    public void testFindPatternByNonExistentId(){
-        assertThrows(InstanceNotFoundException.class, ()->
-                publicationService.findPatternById(NON_EXISTENT_ID, NON_EXISTENT_ID));
-    }
-
-    @Test
-    public void testFindPhysicalById() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException, UserNotSellerException, UserNotOwnerException {
+    public void testFindPhysicalById() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException, UserNotSellerException, UserNotOwnerException, PermissionException {
 
         User user = createSellerUser("username");
 
@@ -288,60 +145,31 @@ public class PublicationServiceTest {
                 publicationService.findPhysicalById(NON_EXISTENT_ID, NON_EXISTENT_ID));
     }
 
-
-    @Test
-    public void testEditPattern() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException, UserNotSellerException, UserNotOwnerException {
-
-        Pattern pattern1 = createFullPattern();
-
-        String updatedTitle = "titleUpdated";
-        String updatedDescr = "descripUpdated";
-
-        pattern1.setTitle(updatedTitle);
-        pattern1.setDescription(updatedDescr);
-
-        Pattern updatedPattern = publicationService.editPattern(pattern1.getId(), pattern1.getUser().getId(), pattern1.getCraft().getId(), pattern1.getSubcategory().getId(), updatedTitle, updatedDescr,
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList());
-
-        assertEquals(pattern1, updatedPattern);
-    }
-
-    @Test
-    public void testEditPatternNotOwner() throws UserAlreadySellerException, InstanceNotFoundException, DuplicateInstanceException, UserNotSellerException {
-
-        User notOwner = createSellerUser("notOwner");
-        Pattern pattern1 = createFullPattern();
-
-        assertThrows(UserNotOwnerException.class, ()->
-                publicationService.editPattern(pattern1.getId(), notOwner.getId(), pattern1.getCraft().getId(), pattern1.getSubcategory().getId(), pattern1.getTitle(), pattern1.getDescription(),
-                        BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "Hook", Collections.emptyList()));
-    }
-
     @Test
     public void testDeleteNonExistentProduct(){
         assertThrows(InstanceNotFoundException.class, ()->
-                publicationService.deleteProduct(NON_EXISTENT_ID, NON_EXISTENT_ID));
+                publicationService.deletePhysicalProduct(NON_EXISTENT_ID, NON_EXISTENT_ID));
     }
 
     @Test
     public void testDeleteProductNotOwner() throws UserAlreadySellerException, InstanceNotFoundException, DuplicateInstanceException, UserNotSellerException {
 
-        Pattern pattern = createFullPattern();
+        Physical physical = createFullPhysical();
 
-        assertThrows(UserNotOwnerException.class, ()->
-                publicationService.deleteProduct(NON_EXISTENT_ID, pattern.getId()));
+        assertThrows(PermissionException.class, ()->
+                publicationService.deletePhysicalProduct(NON_EXISTENT_ID, physical.getId()));
 
     }
 
     @Test
-    public void testDeleteProduct() throws UserAlreadySellerException, InstanceNotFoundException, DuplicateInstanceException, UserNotSellerException, UserNotOwnerException {
+    public void testDeleteProduct() throws UserAlreadySellerException, InstanceNotFoundException, DuplicateInstanceException, UserNotSellerException, UserNotOwnerException, PermissionException {
 
-        Pattern pattern = createFullPattern();
+        Physical physical = createFullPhysical();
 
-        publicationService.deleteProduct(pattern.getUser().getId(), pattern.getId());
+        publicationService.deletePhysicalProduct(physical.getUser().getId(), physical.getId());
 
         assertThrows(InstanceNotFoundException.class, ()->
-                publicationService.findProductById(pattern.getId()));
+                publicationService.findProductById(physical.getId()));
 
     }
 

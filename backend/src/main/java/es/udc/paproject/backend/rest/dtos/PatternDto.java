@@ -20,16 +20,18 @@ public class PatternDto extends ProductDto{
     private String time;
     private String abbreviations;
     private String specialAbbreviations;
-    private String tools;
+    private List<ToolDto> tools;
 
     private List<String> imagesUrl;
+    private List<YarnDto> yarns;
+    private List<SectionDto> sections;
 
 
-    private PatternDto(){}
+    public PatternDto(){}
 
     public PatternDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
                       Boolean active,String introduction, String notes, String gauge, String sizing,
-                      int difficultyLevel, String time, String abbreviations, String specialAbbreviations, String tools,
+                      int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
                       List<String> imagesUrl){
 
         super(id, user, craft, subcategory, title, description, price, active);
@@ -42,11 +44,29 @@ public class PatternDto extends ProductDto{
         this.time=time;
         this.abbreviations = abbreviations;
         this.specialAbbreviations = specialAbbreviations;
-        this.tools= tools;
         this.imagesUrl = imagesUrl;
-
     }
 
+    public PatternDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
+                      Boolean active, String introduction, String notes, String gauge, String sizing, int difficultyLevel,
+                      String time, String abbreviations, String specialAbbreviations, List<String> imagesUrl,
+                      List<ToolDto> tools, List<YarnDto> yarns, List<SectionDto> sections) {
+
+        super(id, user, craft, subcategory, title, description, price, active);
+        this.introduction = introduction;
+        this.notes = notes;
+        this.gauge = gauge;
+        this.sizing = sizing;
+        this.difficultyLevel = difficultyLevel;
+        this.time = time;
+        this.abbreviations = abbreviations;
+        this.specialAbbreviations = specialAbbreviations;
+
+        this.imagesUrl = imagesUrl;
+        this.tools = tools;
+        this.yarns = yarns;
+        this.sections = sections;
+    }
 
     @NotNull(groups = {AllValidations.class})
     @Size(min=1, max=500, groups={AllValidations.class})
@@ -119,8 +139,6 @@ public class PatternDto extends ProductDto{
         this.abbreviations = abbreviations;
     }
 
-    @Nullable
-    @Size(min=1, max=500, groups={AllValidations.class})
     public String getSpecialAbbreviations() {
         return specialAbbreviations;
     }
@@ -129,16 +147,13 @@ public class PatternDto extends ProductDto{
         this.specialAbbreviations = specialAbbreviations;
     }
 
-    @NotNull(groups = {AllValidations.class})
-    @Size(min=1, max=500, groups={AllValidations.class})
-    public String getTools() {
+    public List<ToolDto> getTools() {
         return tools;
     }
 
-    public void setTools(String tools) {
+    public void setTools(List<ToolDto> tools) {
         this.tools = tools;
     }
-
 
     @NotNull(groups = {AllValidations.class})
     @Size(max = 5, message = "The maximum number of images is 5", groups = {AllValidations.class})
@@ -148,5 +163,21 @@ public class PatternDto extends ProductDto{
 
     public void setImagesUrl(List<String> imagesUrl) {
         this.imagesUrl = imagesUrl;
+    }
+
+    public List<YarnDto> getYarns() {
+        return yarns;
+    }
+
+    public void setYarns(List<YarnDto> yarns) {
+        this.yarns = yarns;
+    }
+
+    public List<SectionDto> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<SectionDto> sections) {
+        this.sections = sections;
     }
 }

@@ -47,31 +47,46 @@ public class SecurityConfig {
 					/********************* CATALOG CONTROLLER *********************/
 					.requestMatchers(HttpMethod.GET, "/catalog/**").permitAll()
 
+					.requestMatchers(HttpMethod.POST, "/catalog/favorites").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.GET, "/catalog/favorites").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.GET, "/catalog/favorites/*").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.DELETE, "/catalog/favorites/*").hasAnyRole("USER", "SELLER")
+
+
+
 					/********************* PUBLICATION CONTROLLER *********************/
-					.requestMatchers(HttpMethod.POST, "/publications/patterns").hasRole("SELLER")
-					.requestMatchers(HttpMethod.POST, "/publications/physicals").hasRole("SELLER")
+					.requestMatchers(HttpMethod.POST, "/publications/physicals/create").hasRole("SELLER")
 
 					.requestMatchers(HttpMethod.GET, "/publications/**").hasRole("SELLER")
 
-					.requestMatchers(HttpMethod.PUT, "/publications/patterns/*").hasRole("SELLER")
-					.requestMatchers(HttpMethod.PUT, "/publications/physicals/*").hasRole("SELLER")
-					.requestMatchers(HttpMethod.DELETE, "/publications/products/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.PUT, "/publications/physicals/edit/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.DELETE, "/publications/physicals/delete/*").hasRole("SELLER")
 
-					/********************* FAVORITE CONTROLLER *********************/
-					.requestMatchers(HttpMethod.GET, "/products/**").hasAnyRole("USER", "SELLER")
-					.requestMatchers(HttpMethod.POST, "/products/**").hasAnyRole("USER", "SELLER")
-					.requestMatchers(HttpMethod.POST, "/products/favorites").hasAnyRole("USER", "SELLER")
-					.requestMatchers(HttpMethod.DELETE, "/products/**").hasAnyRole("USER", "SELLER")
+					/********************* PATTERN CONTROLLER *********************/
+					.requestMatchers(HttpMethod.POST, "/patterns/create").hasRole("SELLER")
+
+					.requestMatchers(HttpMethod.GET, "/patterns/**").hasRole("SELLER")
+
+					.requestMatchers(HttpMethod.PUT, "/patterns/edit/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.DELETE, "/patterns/delete/*").hasRole("SELLER")
+
 
 					/********************* SHOPPING CONTROLLER *********************/
 					.requestMatchers(HttpMethod.GET, "/shopping/**").hasAnyRole("USER", "SELLER")
 					.requestMatchers(HttpMethod.POST, "/shopping/**").hasAnyRole("USER", "SELLER")
 
 					/********************* REVIEW CONTROLLER *********************/
-					.requestMatchers(HttpMethod.GET, "/reviews/**").permitAll()
-					.requestMatchers(HttpMethod.POST, "/reviews/**").hasAnyRole("USER", "SELLER")
-					.requestMatchers(HttpMethod.PUT, "/reviews/**").hasAnyRole("USER", "SELLER")
-					.requestMatchers(HttpMethod.DELETE, "/reviews/**").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.GET, "/reviews/products/*").permitAll()
+					.requestMatchers(HttpMethod.POST, "/reviews/publish").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.GET, "/reviews/users").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.PUT, "/reviews/*").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.DELETE, "/reviews/*").hasAnyRole("USER", "SELLER")
+
+					/********************* PAYPAL CONTROLLER *********************/
+					.requestMatchers(HttpMethod.POST, "/api/paypal/pay").permitAll()
+					.requestMatchers(HttpMethod.GET, "/api/paypal/cancel").permitAll()
+					.requestMatchers(HttpMethod.GET, "/api/paypal/success").permitAll()
+					.requestMatchers("/api/paypal/**").permitAll()
 
 				.anyRequest().denyAll());
 

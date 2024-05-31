@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @DiscriminatorValue("PATTERN")
@@ -16,7 +18,12 @@ public class Pattern extends Product {
     private String time;
     private String abbreviations;
     private String specialAbbreviations;
-    private String tools;
+
+    private Set<Tool> tools = new HashSet<>();
+    private Set<Yarn> yarns = new HashSet<>();
+
+    private Set<Section> sections = new HashSet<>();
+
 
     public Pattern(){
         super();
@@ -25,7 +32,7 @@ public class Pattern extends Product {
     public Pattern(User user, Craft craft, Subcategory subcategory, String title, String description, BigDecimal price,
                    Boolean active, LocalDateTime creationDate,
                    String introduction, String notes, String gauge, String sizing, int difficultyLevel, String time,
-                   String abbreviations, String specialAbbreviations, String tools){
+                   String abbreviations, String specialAbbreviations){
 
         super(user, craft, subcategory, title, description, price, active, creationDate);
 
@@ -37,7 +44,6 @@ public class Pattern extends Product {
         this.time=time;
         this.abbreviations = abbreviations;
         this.specialAbbreviations = specialAbbreviations;
-        this.tools= tools;
     }
 
 
@@ -106,11 +112,30 @@ public class Pattern extends Product {
         this.specialAbbreviations = specialAbbreviations;
     }
 
-    public String getTools() {
+    @OneToMany(mappedBy = "pattern")
+    public Set<Tool> getTools() {
         return tools;
     }
 
-    public void setTools(String tools) {
+    public void setTools(Set<Tool> tools) {
         this.tools = tools;
+    }
+
+    @OneToMany(mappedBy = "pattern")
+    public Set<Yarn> getYarns() {
+        return yarns;
+    }
+
+    public void setYarns(Set<Yarn> yarns) {
+        this.yarns = yarns;
+    }
+
+    @OneToMany(mappedBy = "pattern")
+    public Set<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(Set<Section> sections) {
+        this.sections = sections;
     }
 }
