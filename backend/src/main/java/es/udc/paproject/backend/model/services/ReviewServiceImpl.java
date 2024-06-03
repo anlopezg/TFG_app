@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
@@ -66,6 +67,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
+    @Transactional(readOnly=true)
     public Block<Review> findProductReviews(Long productId, int page, int size) throws InstanceNotFoundException {
 
         permissionChecker.checkActiveProduct(productId);
@@ -76,6 +78,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
+    @Transactional(readOnly=true)
     public Block<Review> findUserReviews(Long userId, int page, int size) throws InstanceNotFoundException {
 
         User user = permissionChecker.checkUser(userId);

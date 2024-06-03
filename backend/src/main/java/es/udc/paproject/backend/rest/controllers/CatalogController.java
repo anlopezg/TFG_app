@@ -1,6 +1,7 @@
 package es.udc.paproject.backend.rest.controllers;
 
 import es.udc.paproject.backend.model.entities.Favorite;
+import es.udc.paproject.backend.model.entities.Physical;
 import es.udc.paproject.backend.model.entities.Product;
 import es.udc.paproject.backend.model.entities.User;
 import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
@@ -83,7 +84,13 @@ public class CatalogController {
 
         Product product = catalogService.findProduct(id);
 
-        return toProductDto(product);
+        System.out.println("**********************Average rating" + product.getAvgRating());
+
+        if(product instanceof Physical){
+            return toPhysicalDto((Physical) product);
+        } else{
+            return toProductDto(product);
+        }
     }
 
 

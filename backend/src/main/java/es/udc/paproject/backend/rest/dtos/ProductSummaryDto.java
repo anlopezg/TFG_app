@@ -11,9 +11,7 @@ public class ProductSummaryDto {
     private String title;
     private BigDecimal price;
     private String productType;
-
     private String username;
-
     private String mainImageUrl;
 
     public ProductSummaryDto(){}

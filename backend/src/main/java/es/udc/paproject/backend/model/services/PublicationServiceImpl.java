@@ -77,6 +77,7 @@ public class PublicationServiceImpl implements PublicationService{
 
 
     @Override
+    @Transactional(readOnly=true)
     public Product findProductById(Long productId) throws InstanceNotFoundException{
 
         Optional<Product> product = productDao.findById(productId);
@@ -90,6 +91,7 @@ public class PublicationServiceImpl implements PublicationService{
 
 
     @Override
+    @Transactional(readOnly=true)
     public Physical findPhysicalById(Long userId, Long productId) throws InstanceNotFoundException, PermissionException {
 
         Optional<Physical> physical = physicalDao.findById(productId);

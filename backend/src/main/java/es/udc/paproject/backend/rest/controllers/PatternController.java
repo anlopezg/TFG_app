@@ -4,10 +4,7 @@ import es.udc.paproject.backend.model.entities.Pattern;
 import es.udc.paproject.backend.model.entities.Section;
 import es.udc.paproject.backend.model.entities.Tool;
 import es.udc.paproject.backend.model.entities.Yarn;
-import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
-import es.udc.paproject.backend.model.exceptions.PermissionException;
-import es.udc.paproject.backend.model.exceptions.UserNotOwnerException;
-import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
+import es.udc.paproject.backend.model.exceptions.*;
 import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.PatternService;
 import es.udc.paproject.backend.rest.dtos.BlockDto;
@@ -20,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static es.udc.paproject.backend.rest.dtos.ProductConversor.*;
+import static es.udc.paproject.backend.rest.dtos.PatternConversor.*;
 import static es.udc.paproject.backend.rest.dtos.SectionDto.toSections;
 import static es.udc.paproject.backend.rest.dtos.ToolDto.toTools;
 import static es.udc.paproject.backend.rest.dtos.YarnDto.toYarns;
@@ -35,7 +32,7 @@ public class PatternController {
 
     @PostMapping("/create")
     public ResponseEntity<PatternDto> createPattern(@RequestAttribute Long userId,
-                                                    @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto) throws InstanceNotFoundException, PermissionException, UserNotSellerException {
+                                                    @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto) throws InstanceNotFoundException, PermissionException, UserNotSellerException, MaxItemsExceededException {
 
         if(!userId.equals(patternDto.getUserId())){
             throw new PermissionException();
@@ -72,13 +69,23 @@ public class PatternController {
     }
 
     @PutMapping("/edit/{id}")
-    public PatternDto editPattern(@RequestAttribute Long userId,  @PathVariable Long id,  @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto) throws InstanceNotFoundException, UserNotOwnerException, PermissionException {
+    public PatternDto editPattern(@RequestAttribute Long userId,  @PathVariable Long id,  @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto) throws InstanceNotFoundException, UserNotOwnerException, PermissionException, MaxItemsExceededException {
 
+        if (!userId.equals(patternDto.getUserId())) {
+            throw new PermissionException();
+        }
 
-        return toPatternDto(patternService.editPattern(id, userId, patternDto.getCraftId(), patternDto.getSubcategoryId(),
+        List<Tool> tools = toTools(patternDto.getTools());
+        List<Yarn> yarns = toYarns(patternDto.getYarns());
+        List<Section> sections = toSections(patternDto.getSections());
+
+        Pattern updatedPattern = patternService.editPattern(id, userId, patternDto.getCraftId(), patternDto.getSubcategoryId(),
                 patternDto.getTitle(), patternDto.getDescription(), patternDto.getPrice(), patternDto.getActive(),
                 patternDto.getIntroduction(), patternDto.getNotes(), patternDto.getGauge(), patternDto.getSizing(),
-                patternDto.getDifficultyLevel(), patternDto.getTime(), patternDto.getAbbreviations(), patternDto.getSpecialAbbreviations(), patternDto.getImagesUrl()));
+                patternDto.getDifficultyLevel(), patternDto.getTime(), patternDto.getAbbreviations(), patternDto.getSpecialAbbreviations(),
+                patternDto.getImagesUrl(), tools, yarns, sections);
+
+        return toPatternDtoFull(updatedPattern);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -87,6 +94,18 @@ public class PatternController {
 
         patternService.deletePattern(userId, id);
 
+    }
+
+    @GetMapping("/purchased/{id}")
+    public PatternDto getPurchasedPatternById(@RequestAttribute Long userId, @PathVariable Long id) throws InstanceNotFoundException, PermissionException {
+        Pattern pattern = patternService.findPurchasedPatternById(userId, id);
+        return toPatternDtoFull(pattern);
+    }
+
+    @GetMapping("/purchased")
+    public List<PatternDto> getPurchasedPatterns(@RequestAttribute Long userId) throws InstanceNotFoundException {
+        List<Pattern> patterns = patternService.findPurchasedPatterns(userId);
+        return toPatternDtos(patterns);
     }
 
 }

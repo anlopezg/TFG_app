@@ -28,8 +28,6 @@ public class ProductDto {
     private List<String> imagesUrl;
     private double avgRating;
 
-    private String userStripeAccountId;
-
     public ProductDto(){}
 
     public ProductDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
@@ -46,8 +44,7 @@ public class ProductDto {
     }
 
     public ProductDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
-                      Boolean active, String username, String productType, int amount,List<String> imagesUrl, double avgRating,
-                      String userStripeAccountId){
+                      Boolean active, String username, String productType, int amount,List<String> imagesUrl, double avgRating){
 
         this.id=id;
         this.userId =user;
@@ -62,7 +59,6 @@ public class ProductDto {
         this.imagesUrl = imagesUrl;
         this.amount = amount;
         this.avgRating = avgRating;
-        this.userStripeAccountId = userStripeAccountId;
     }
 
     public Long getId() {
@@ -176,13 +172,5 @@ public class ProductDto {
 
     public void setAvgRating(double avgRating) {
         this.avgRating = avgRating;
-    }
-
-    public String getUserStripeAccountId() {
-        return userStripeAccountId;
-    }
-
-    public void setUserStripeAccountId(String userStripeAccountId) {
-        this.userStripeAccountId = userStripeAccountId;
     }
 }

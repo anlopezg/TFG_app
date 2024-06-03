@@ -16,6 +16,12 @@ public class Review {
 
     public Review(){}
 
+    public Review(int rating, String comment, LocalDateTime date) {
+        this.rating = rating;
+        this.comment = comment;
+        this.date = date;
+    }
+
     public Review(User user, Product product, int rating, String comment, LocalDateTime date){
 
         this.user = user;

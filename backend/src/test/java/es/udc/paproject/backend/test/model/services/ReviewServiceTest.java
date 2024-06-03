@@ -3,10 +3,7 @@ package es.udc.paproject.backend.test.model.services;
 
 import es.udc.paproject.backend.model.daos.*;
 import es.udc.paproject.backend.model.entities.*;
-import es.udc.paproject.backend.model.exceptions.CantReviewTwiceException;
-import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
-import es.udc.paproject.backend.model.exceptions.NotPurchasedProductException;
-import es.udc.paproject.backend.model.exceptions.PermissionException;
+import es.udc.paproject.backend.model.exceptions.*;
 import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.PermissionChecker;
 import es.udc.paproject.backend.model.services.ReviewService;
@@ -96,7 +93,7 @@ public class ReviewServiceTest {
         return product;
     }
 
-    private Purchase createPurchase(User user, Product product, LocalDateTime date) {
+    private Purchase createPurchase(User user, Product product, LocalDateTime date) throws MaxItemsExceededException {
 
         String postalAddress = "Postal Address";
         String postalCode = "12345";
@@ -115,7 +112,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testPublishReview() throws NotPurchasedProductException, CantReviewTwiceException, InstanceNotFoundException {
+    public void testPublishReview() throws NotPurchasedProductException, CantReviewTwiceException, InstanceNotFoundException, MaxItemsExceededException {
 
         User user = createUser("username");
         Craft craft1 = createCraft("Crochet");
@@ -140,7 +137,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testPublishDoubleReview() throws NotPurchasedProductException, CantReviewTwiceException, InstanceNotFoundException {
+    public void testPublishDoubleReview() throws NotPurchasedProductException, CantReviewTwiceException, InstanceNotFoundException, MaxItemsExceededException {
 
         User user = createUser("username");
         Craft craft1 = createCraft("Crochet");
@@ -170,7 +167,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testFindProductReviews() throws InstanceNotFoundException, NotPurchasedProductException, CantReviewTwiceException {
+    public void testFindProductReviews() throws InstanceNotFoundException, NotPurchasedProductException, CantReviewTwiceException, MaxItemsExceededException {
 
         User user = createUser("username");
         Craft craft1 = createCraft("Crochet");
@@ -188,7 +185,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testFindUserReviews() throws InstanceNotFoundException, NotPurchasedProductException, CantReviewTwiceException {
+    public void testFindUserReviews() throws InstanceNotFoundException, NotPurchasedProductException, CantReviewTwiceException, MaxItemsExceededException {
 
         User user = createUser("username");
         Craft craft1 = createCraft("Crochet");
@@ -206,7 +203,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testEditReview() throws InstanceNotFoundException, PermissionException, NotPurchasedProductException, CantReviewTwiceException {
+    public void testEditReview() throws InstanceNotFoundException, PermissionException, NotPurchasedProductException, CantReviewTwiceException, MaxItemsExceededException {
 
         User user = createUser("user");
         Craft craft1 = createCraft("Crochet");
@@ -230,7 +227,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testDeleteReview() throws InstanceNotFoundException, PermissionException, NotPurchasedProductException, CantReviewTwiceException {
+    public void testDeleteReview() throws InstanceNotFoundException, PermissionException, NotPurchasedProductException, CantReviewTwiceException, MaxItemsExceededException {
 
         User user = createUser("user");
         Craft craft1 = createCraft("Crochet");
@@ -253,6 +250,15 @@ public class ReviewServiceTest {
             permissionChecker.checkReviewExistsAndBelongsTo(review.getId(), user.getId());
         });
 
+    }
+
+    @Test
+    public void testCalculateAvgRatingWithDecimalValues() {
+        Product product = new Product();
+        product.addReview(new Review(4, "Comment 1", LocalDateTime.of(2017, 10, 1, 10, 2, 3)));
+        product.addReview(new Review(3, "Comment 2", LocalDateTime.of(2017, 10, 1, 10, 2, 3)));
+        product.calculateAvgRating();
+        assertEquals(3.5, product.getAvgRating(), 0.01);
     }
 
 }

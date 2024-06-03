@@ -98,7 +98,7 @@ public class PurchaseServiceTest {
         return product;
     }
 
-    private Purchase createPurchase(User user, Product product, LocalDateTime date) {
+    private Purchase createPurchase(User user, Product product, LocalDateTime date) throws MaxItemsExceededException {
 
         String postalAddress = "Postal Address";
         String postalCode = "12345";
@@ -635,7 +635,7 @@ public class PurchaseServiceTest {
     }
 
     @Test
-    public void testFindPurchases() {
+    public void testFindPurchases() throws MaxItemsExceededException {
 
         User user = signUpUser("user");
         Craft craft1 = createCraft("Crochet");

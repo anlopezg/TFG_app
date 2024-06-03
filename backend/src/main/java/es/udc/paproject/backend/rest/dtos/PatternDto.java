@@ -147,6 +147,8 @@ public class PatternDto extends ProductDto{
         this.specialAbbreviations = specialAbbreviations;
     }
 
+    @NotNull(groups = {AllValidations.class})
+    @Size(max = 100, message = "The maximum number of tools is 100", groups = {AllValidations.class})
     public List<ToolDto> getTools() {
         return tools;
     }
@@ -165,6 +167,8 @@ public class PatternDto extends ProductDto{
         this.imagesUrl = imagesUrl;
     }
 
+    @NotNull(groups = {AllValidations.class})
+    @Size(max = 100, message = "The maximum number of yarns is 100", groups = {AllValidations.class})
     public List<YarnDto> getYarns() {
         return yarns;
     }
@@ -173,6 +177,8 @@ public class PatternDto extends ProductDto{
         this.yarns = yarns;
     }
 
+    @NotNull(groups = {AllValidations.class})
+    @Size(max = 100, message = "The maximum number of sections is 100", groups = {AllValidations.class})
     public List<SectionDto> getSections() {
         return sections;
     }

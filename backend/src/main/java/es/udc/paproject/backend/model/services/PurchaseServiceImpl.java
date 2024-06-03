@@ -102,7 +102,7 @@ public class PurchaseServiceImpl implements PurchaseService{
     @Override
     public Purchase createPurchase(Long userId, Long shoppingCartId, String locality,
                                    String region, String country, String postalAddress, String postalCode)
-            throws InstanceNotFoundException, PermissionException, EmptyShoppingCartException{
+            throws InstanceNotFoundException, PermissionException, EmptyShoppingCartException, MaxItemsExceededException {
 
         ShoppingCart shoppingCart = permissionChecker.checkCartExistsAndBelongsTo(shoppingCartId, userId);
 

@@ -25,64 +25,6 @@ public class CustomizedProductDaoImpl implements CustomizedProductDao {
 
     }
 
-    /**   ELIMINAR ESTA **/
-
-    @SuppressWarnings("unchecked")
-    /*
-    @Override
-    public Slice<Product> find(Long categoryId, String keywords, int page, int size) {
-
-        String[] tokens = getTokens(keywords);
-        String queryString = "SELECT p FROM Product p";
-
-        if (categoryId != null || tokens.length > 0) {
-            queryString += " WHERE ";
-        }
-
-        if (categoryId != null) {
-            queryString += "p.category.id = :categoryId";
-        }
-
-        if (tokens.length != 0) {
-
-            if (categoryId != null) {
-                queryString += " AND ";
-            }
-
-            for (int i = 0; i<tokens.length-1; i++) {
-                queryString += "LOWER(p.title) LIKE LOWER(:token" + i + ") AND ";
-            }
-
-            queryString += "LOWER(p.title) LIKE LOWER(:token" + (tokens.length-1) + ")";
-
-        }
-
-        queryString += " ORDER BY p.title";
-
-        Query query = entityManager.createQuery(queryString).setFirstResult(page*size).setMaxResults(size+1);
-
-        if (categoryId != null) {
-            query.setParameter("categoryId", categoryId);
-        }
-
-        if (tokens.length != 0) {
-            for (int i = 0; i<tokens.length; i++) {
-                query.setParameter("token" + i, '%' + tokens[i] + '%');
-            }
-
-        }
-
-        List<Product> products = query.getResultList();
-        boolean hasNext = products.size() == (size+1);
-
-        if (hasNext) {
-            products.remove(products.size()-1);
-        }
-
-        return new SliceImpl<>(products, PageRequest.of(page, size), hasNext);
-
-    }*/
-
 
     @Override
     public Slice<Product> find(Long craftId, Long subcategoryId, String keywords, Class<?> productType, int page, int size){

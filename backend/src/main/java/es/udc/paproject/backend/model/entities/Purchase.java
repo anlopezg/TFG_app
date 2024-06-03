@@ -1,5 +1,6 @@
 package es.udc.paproject.backend.model.entities;
 
+import es.udc.paproject.backend.model.exceptions.MaxItemsExceededException;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -120,7 +121,11 @@ public class Purchase {
         return items.stream().filter(item -> item.getProduct().getId().equals(productId)).findFirst();
     }
 
-    public void addItem(PurchaseItem item) {
+    public void addItem(PurchaseItem item) throws MaxItemsExceededException {
+
+        if (items.size() == MAX_ITEMS) {
+            throw new MaxItemsExceededException();
+        }
 
         items.add(item);
         item.setPurchase(this);

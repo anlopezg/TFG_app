@@ -142,7 +142,6 @@ public class UserServiceImpl implements UserService {
 			throw new UserAlreadySellerException();
 		}
 
-
 		// Create Stripe Account with user's email
 		Account account = stripeService.createFullConnectedAccount(user);
 		StripeAccount stripeAccount = new StripeAccount(user, account.getId(), account.getEmail());
@@ -164,24 +163,6 @@ public class UserServiceImpl implements UserService {
         return permissionChecker.checkUserName(username);
 
 	}
-
-	/*
-	@Override
-	public void updatePaypalAccount(Long userId, String paypalEmail) throws InstanceNotFoundException, UserNotSellerException {
-
-		User user = permissionChecker.checkSellerUser(userId);
-
-		PaypalAccount paypalAccount= user.getPaypalAccount();
-
-		if(paypalAccount == null){
-			paypalAccount = new PaypalAccount();
-			paypalAccount.setUser(user);
-		}
-
-		paypalAccount.setPaypalEmail(paypalEmail);
-		paypalAccountDao.save(paypalAccount);
-
-	}*/
 
 
 }

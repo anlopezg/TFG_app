@@ -18,7 +18,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(readOnly=true)
 public class CatalogServiceImpl implements CatalogService{
 
     @Autowired
@@ -44,11 +43,13 @@ public class CatalogServiceImpl implements CatalogService{
 
 
     @Override
+    @Transactional(readOnly=true)
     public List<Craft> findAllCrafts(){
         return craftDao.findAll(Sort.by(Sort.Direction.ASC, "craftName"));
     }
 
     @Override
+    @Transactional(readOnly=true)
     public List<Category> findAllCategories(){
         return categoryDao.findAll(Sort.by(Sort.Direction.ASC, "categoryName"));
 
@@ -56,6 +57,7 @@ public class CatalogServiceImpl implements CatalogService{
 
 
     @Override
+    @Transactional(readOnly=true)
     public Class<?> getProductTypeClass(String productType){
         return switch (productType) {
             case "physical" -> Physical.class;
@@ -66,6 +68,7 @@ public class CatalogServiceImpl implements CatalogService{
 
 
     @Override
+    @Transactional(readOnly=true)
     public Block<Product> findProducts(Long craftId, Long subcategoryId, String keywords, String productType, int page, int size){
 
         Class<?> productTypeClass = null;
@@ -85,6 +88,7 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
     @Override
+    @Transactional(readOnly=true)
     public void getProductType(Product product){
 
         if(product.getClass().equals(Physical.class)){
@@ -100,6 +104,7 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
     @Override
+    @Transactional(readOnly=true)
     public Product findProduct(Long productId) throws InstanceNotFoundException {
 
         Optional<Product> product = productDao.findByIdAndActive(productId, true);
@@ -109,11 +114,13 @@ public class CatalogServiceImpl implements CatalogService{
         }
 
         getProductType(product.get());
+        product.get().calculateAvgRating();
 
         return product.get();
     }
 
     @Override
+    @Transactional(readOnly=true)
     public Block<Product> findSellerProducts(String username, int page, int size) throws InstanceNotFoundException, UserNotSellerException {
 
         User userFound = permissionChecker.checkSellerUser(username);
@@ -125,6 +132,7 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
     @Override
+    @Transactional(readOnly=true)
     public Block<User> findSellers(String username, int page, int size){
 
         Slice<User> slice = userDao.findSellers(username, page, size);
@@ -152,6 +160,7 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
     @Override
+    @Transactional(readOnly=true)
     public List<Product> getFavoriteProducts(Long userId) throws InstanceNotFoundException {
 
         User user = permissionChecker.checkUser(userId);
@@ -163,6 +172,7 @@ public class CatalogServiceImpl implements CatalogService{
 
 
     @Override
+    @Transactional(readOnly=true)
     public Optional<Favorite> findFavoriteByUserAndProduct(Long userId, Long productId) throws InstanceNotFoundException{
 
         User user = permissionChecker.checkUser(userId);
@@ -173,6 +183,7 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
     @Override
+    @Transactional(readOnly=true)
     public Favorite findFavoriteById(Long favoriteId) throws InstanceNotFoundException{
 
         Optional<Favorite> favorite = favoriteDao.findById(favoriteId);

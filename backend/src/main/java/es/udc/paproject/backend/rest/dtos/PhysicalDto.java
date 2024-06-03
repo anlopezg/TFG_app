@@ -20,10 +20,10 @@ public class PhysicalDto extends ProductDto{
     private PhysicalDto(){}
 
     public PhysicalDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
-                       Boolean active,int amount, String size, String color, String details,
-                       List<String> imagesUrl){
+                       Boolean active, String username, String productType, int amount, List<String> imagesUrl, double avgRating,
+                       String size, String color, String details){
 
-        super(id, user, craft, subcategory, title, description, price, active);
+        super(id, user, craft, subcategory, title, description, price, active, username, productType, amount, imagesUrl, avgRating);
 
         this.amount=amount;
         this.size=size;

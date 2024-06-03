@@ -36,7 +36,7 @@ public class ProductConversor {
                 product.getSubcategory().getId(),
                 product.getTitle(), product.getDescription(), product.getPrice(), product.getActive(),
                 product.getUser().getUsername(), product.getProductType(), amount ,productImagesToStringList(product),
-                product.getAvgRating(), product.getUser().getStripeAccount().getStripeAccountId());
+                product.getAvgRating());
     }
 
 
@@ -46,9 +46,10 @@ public class ProductConversor {
 
     public final static ProductSummaryDto toProductSummaryDto(Product product){
         return new ProductSummaryDto(product.getId(), product.getUser().getId(), product.getCraft().getId(),
-                product.getSubcategory().getId(), product.getTitle(), product.getPrice(), product.getProductType(),
+                product.getSubcategory().getId(), product.getTitle(), product.getPrice(), product.getClass().getSimpleName(),
                 product.getUser().getUsername(), product.getImages().iterator().next().getImageUrl());
     }
+
 
     /* Product Image Conversor */
     public final static ProductImagesDto toProductImagesDto(ProductImages image){
@@ -65,102 +66,30 @@ public class ProductConversor {
     }
 
 
-    /* Pattern Conversor */
-    public final static PatternDto toPatternDto(Pattern pattern){
 
-        return new PatternDto(pattern.getId(), pattern.getUser().getId(),  pattern.getCraft().getId(),
-                pattern.getSubcategory().getId(),
-                pattern.getTitle(), pattern.getDescription(), pattern.getPrice(), pattern.getActive(),
-                pattern.getIntroduction(), pattern.getNotes(),
-                pattern.getGauge(), pattern.getSizing(), pattern.getDifficultyLevel(), pattern.getTime(),
-                pattern.getAbbreviations(), pattern.getSpecialAbbreviations(),
-                productImagesToStringList(pattern));
-    }
-
-    public static PatternDto toPatternDtoFull(Pattern pattern){
-
-        List<ToolDto> tools = pattern.getTools().stream().map(i-> toToolDto(i)).collect(Collectors.toList());
-        List<YarnDto> yarns = pattern.getYarns().stream().map(i-> toYarnDto(i)).collect(Collectors.toList());
-        List<SectionDto> sections = pattern.getSections().stream().map(i-> toSectionDto(i)).collect(Collectors.toList());
-
-        return new PatternDto(pattern.getId(), pattern.getUser().getId(),  pattern.getCraft().getId(),
-                pattern.getSubcategory().getId(),
-                pattern.getTitle(), pattern.getDescription(), pattern.getPrice(), pattern.getActive(),
-                pattern.getIntroduction(), pattern.getNotes(),
-                pattern.getGauge(), pattern.getSizing(), pattern.getDifficultyLevel(), pattern.getTime(),
-                pattern.getAbbreviations(), pattern.getSpecialAbbreviations(),
-                productImagesToStringList(pattern), tools, yarns, sections);
-    }
-
-    public static PatternDto toFullPatternDto(Pattern pattern) {
-        PatternDto dto = new PatternDto();
-        dto.setId(pattern.getId());
-        dto.setUserId(pattern.getUser().getId());
-        dto.setCraftId(pattern.getCraft().getId());
-        dto.setSubcategoryId(pattern.getSubcategory().getId());
-        dto.setTitle(pattern.getTitle());
-        dto.setDescription(pattern.getDescription());
-        dto.setPrice(pattern.getPrice());
-        dto.setActive(pattern.getActive());
-        dto.setIntroduction(pattern.getIntroduction());
-        dto.setNotes(pattern.getNotes());
-        dto.setGauge(pattern.getGauge());
-        dto.setSizing(pattern.getSizing());
-        dto.setDifficultyLevel(pattern.getDifficultyLevel());
-        dto.setTime(pattern.getTime());
-        dto.setAbbreviations(pattern.getAbbreviations());
-        dto.setSpecialAbbreviations(pattern.getSpecialAbbreviations());
-        dto.setImagesUrl(productImagesToStringList(pattern));
-
-        dto.setTools(pattern.getTools().stream().map(ToolDto::toToolDto).collect(Collectors.toList()));
-        dto.setYarns(pattern.getYarns().stream().map(YarnDto::toYarnDto).collect(Collectors.toList()));
-        dto.setSections(pattern.getSections().stream().map(SectionDto::toSectionDto).collect(Collectors.toList()));
-
-        return dto;
-    }
-
-    public final static List<PatternDto> toPatternDtos(List<Pattern> patterns){
-        return patterns.stream().map(o-> toPatternDto(o)).collect(Collectors.toList());
-    }
 
     /* Physical Conversor */
     public final static PhysicalDto toPhysicalDto(Physical physical){
 
-        return new PhysicalDto(physical.getId(), physical.getUser().getId(),  physical.getCraft().getId(),
+        return new PhysicalDto(physical.getId(),
+                physical.getUser().getId(),
+                physical.getCraft().getId(),
                 physical.getSubcategory().getId(),
-                physical.getTitle(), physical.getDescription(), physical.getPrice(), physical.getActive(),
-                physical.getAmount(), physical.getSize(), physical.getColor(), physical.getDetails(),
-                productImagesToStringList(physical));
+                physical.getTitle(),
+                physical.getDescription(),
+                physical.getPrice(),
+                physical.getActive(),
+                physical.getUser().getUsername(),
+                physical.getProductType(),
+                physical.getAmount(),
+                productImagesToStringList(physical),
+                physical.getAvgRating(),
+                physical.getSize(),
+                physical.getColor(),
+                physical.getDetails());
     }
 
     public final static List<PhysicalDto> toPhysicalDtos(List<Physical> physicals){
         return physicals.stream().map(o-> toPhysicalDto(o)).collect(Collectors.toList());
     }
-
-
-
-    /* Convert DTOs to their Entities */
-
-    /*
-    public final static Pattern toPattern(PatternDto patternDto){
-        return new Pattern(toUser(patternDto.getUserId()), toCraft(patternDto.getCraftId()),
-                toSubcategory(patternDto.getSubcategoryId()),
-                patternDto.getTitle(), patternDto.getDescription(), patternDto.getPrice(), patternDto.getActive(),
-                null, patternDto.getIntroduction(), patternDto.getNotes(), patternDto.getGauge(),
-                patternDto.getSizing(), patternDto.getDifficultyLevel(), patternDto.getTime());
-    }
-
-    public final static PhysicalDto toPhysicalDto(Physical physical){
-        return new PhysicalDto(physical.getId(), toUserDto(physical.getUser()),  toCraftDto(physical.getCraft()),
-                toSubcategoryDto(physical.getSubcategory()),
-                physical.getTitle(), physical.getDescription(), physical.getPrice(), physical.getActive(),
-                physical.getAmount(), physical.getSize(), physical.getColor(), physical.getDetails());
-    }
-
-    public final static Physical toPhysical(PhysicalDto physicalDto){
-        return new Physical(physicalDto.getUserId(), toCraft(physicalDto.getCraftId()),
-                toSubcategory(physicalDto.getSubcategoryId()),
-                physicalDto.getTitle(), physicalDto.getDescription(), physicalDto.getPrice(), physicalDto.getActive(),
-                null, physicalDto.getAmount(), physicalDto.getSize(), physicalDto.getColor(), physicalDto.getDetails());
-    }*/
 }

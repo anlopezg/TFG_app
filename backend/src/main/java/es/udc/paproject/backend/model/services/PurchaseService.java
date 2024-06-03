@@ -18,7 +18,7 @@ public interface PurchaseService {
 
     Purchase createPurchase(Long userId, Long shoppingCartId, String postalAddress, String locality,
                             String region, String country, String postalCode)
-            throws InstanceNotFoundException, PermissionException, EmptyShoppingCartException, StripeException;
+            throws InstanceNotFoundException, PermissionException, EmptyShoppingCartException, StripeException, MaxItemsExceededException;
 
     void processPaymentForPurchase(String paymentMethodId, Purchase purchase) throws StripeException, PaymentProcessingException, InstanceNotFoundException;
 

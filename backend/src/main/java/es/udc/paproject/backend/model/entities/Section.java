@@ -1,5 +1,6 @@
 package es.udc.paproject.backend.model.entities;
 
+import es.udc.paproject.backend.model.exceptions.MaxItemsExceededException;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -8,6 +9,8 @@ import java.util.Set;
 @Entity
 public class Section {
 
+    public static final int MAX_STEPS = 100;
+    public static final int MAX_IMAGES = 5;
     private Long id;
     private Pattern pattern;
     private String title;
@@ -26,6 +29,10 @@ public class Section {
         this.description = description;
     }
 
+    public Section(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,6 +79,15 @@ public class Section {
         this.steps = steps;
     }
 
+    public void addStep(Step step) throws MaxItemsExceededException{
+        if(steps.size() == MAX_STEPS){
+            throw new MaxItemsExceededException();
+        }
+
+        steps.add(step);
+        step.setSection(this);
+    }
+
     @OneToMany(mappedBy="section")
     public Set<SectionImages> getImages() {
         return images;
@@ -79,5 +95,14 @@ public class Section {
 
     public void setImages(Set<SectionImages> images) {
         this.images = images;
+    }
+
+    public void addSectionImage(SectionImages sectionImage) throws MaxItemsExceededException{
+        if(images.size() == MAX_IMAGES){
+            throw new MaxItemsExceededException();
+        }
+
+        images.add(sectionImage);
+        sectionImage.setSection(this);
     }
 }

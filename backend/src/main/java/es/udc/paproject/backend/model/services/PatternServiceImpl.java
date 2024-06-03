@@ -4,6 +4,7 @@ import es.udc.paproject.backend.model.daos.*;
 import es.udc.paproject.backend.model.daos.SectionImagesDao;
 import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
+import es.udc.paproject.backend.model.exceptions.MaxItemsExceededException;
 import es.udc.paproject.backend.model.exceptions.PermissionException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PatternServiceImpl implements PatternService{
@@ -48,6 +50,9 @@ public class PatternServiceImpl implements PatternService{
 
     @Autowired
     private SectionImagesDao sectionImagesDao;
+
+    @Autowired
+    private PurchaseItemDao purchaseItemDao;
 
 
 
@@ -84,7 +89,7 @@ public class PatternServiceImpl implements PatternService{
                                  BigDecimal price, Boolean active, String introduction, String notes, String gauge,
                                  String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
                                  List<String> imagesUrl, List<Tool> tools, List<Yarn> yarns, List<Section> sections)
-            throws InstanceNotFoundException, UserNotSellerException {
+            throws InstanceNotFoundException, UserNotSellerException, MaxItemsExceededException {
 
         User user = permissionChecker.checkSellerUser(userId);
         Craft craft = permissionChecker.checkCraft(craftId);
@@ -105,31 +110,28 @@ public class PatternServiceImpl implements PatternService{
         }
 
         for(Tool tool : tools){
-            tool.setPattern(patternCreated);
+            patternCreated.addTool(tool);
             toolDao.save(tool);  // Save each tool
-            patternCreated.getTools().add(tool);
         }
 
         // Add yarns
         for (Yarn yarn : yarns) {
-            yarn.setPattern(patternCreated);
+            patternCreated.addYarn(yarn);
             yarnDao.save(yarn);  // Save each yarn
-            patternCreated.getYarns().add(yarn);
         }
 
         // Add sections, and their steps and images
         for (Section section : sections) {
-            section.setPattern(patternCreated);
+            patternCreated.addSection(section);
             sectionDao.save(section);  // Save section first to generate its ID
             for (Step step : section.getSteps()) {
-                step.setSection(section);
+                section.addStep(step);
                 stepDao.save(step);  // Save each step
             }
             for(SectionImages sectionImages : section.getImages()){
-                sectionImages.setSection(section);
+                section.addSectionImage(sectionImages);
                 sectionImagesDao.save(sectionImages);  // Save each section image
             }
-            patternCreated.getSections().add(section);
         }
 
         return patternCreated;
@@ -148,6 +150,7 @@ public class PatternServiceImpl implements PatternService{
 
 
     @Override
+    @Transactional(readOnly=true)
     public Pattern findPatternById(Long userId, Long patternId) throws InstanceNotFoundException, PermissionException {
 
         Optional<Pattern> pattern = patternDao.findByIdWithDetails(patternId);
@@ -205,6 +208,86 @@ public class PatternServiceImpl implements PatternService{
     }
 
     @Override
+    public Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
+                               BigDecimal price, Boolean active, String introduction, String notes, String gauge,
+                               String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
+                               List<String> imagesUrl, List<Tool> tools, List<Yarn> yarns, List<Section> sections)
+            throws InstanceNotFoundException, PermissionException, MaxItemsExceededException {
+
+
+        User user = permissionChecker.checkUser(userId);
+        Craft craft  = permissionChecker.checkCraft(craftId);
+        Subcategory subcategory= permissionChecker.checkSubcategory(subcategoryId);
+
+        Pattern pattern = findPatternById(userId, productId);
+
+        pattern.setUser(user);
+        pattern.setCraft(craft);
+        pattern.setSubcategory(subcategory);
+        pattern.setTitle(title);
+        pattern.setDescription(description);
+        pattern.setPrice(price);
+        pattern.setActive(active);
+        pattern.setIntroduction(introduction);
+        pattern.setNotes(notes);
+        pattern.setGauge(gauge);
+        pattern.setSizing(sizing);
+        pattern.setDifficultyLevel(difficultyLevel);
+        pattern.setTime(time);
+        pattern.setAbbreviations(abbreviations);
+        pattern.setSpecialAbbreviations(specialAbbreviations);
+
+        // Update images
+        Set<ProductImages> productImages = new HashSet<>();
+        for (String imageUrl : imagesUrl) {
+            ProductImages productImage = new ProductImages();
+            productImage.setImageUrl(imageUrl);
+            productImage.setProduct(pattern);
+            productImages.add(productImage);
+        }
+        pattern.setImages(productImages);
+
+        // Update tools
+        Set<Tool> updatedTools = new HashSet<>(tools);
+        for (Tool tool : updatedTools) {
+            pattern.addTool(tool);
+            toolDao.save(tool);  // Save each tool
+        }
+        pattern.setTools(updatedTools);
+
+        // Update yarns
+        Set<Yarn> updatedYarns = new HashSet<>(yarns);
+        for (Yarn yarn : updatedYarns) {
+            pattern.addYarn(yarn);
+            yarnDao.save(yarn);  // Save each yarn
+
+        }
+        pattern.setYarns(updatedYarns);
+
+        // Update sections
+        Set<Section> updatedSections = new HashSet<>(sections);
+        for (Section section : updatedSections) {
+            pattern.addSection(section);
+            sectionDao.save(section);
+            // Update steps for the section
+            for (Step step : section.getSteps()) {
+                section.addStep(step);
+                stepDao.save(step);
+            }
+            // Update section images
+            for (SectionImages sectionImage : section.getImages()) {
+                section.addSectionImage(sectionImage);
+                sectionImagesDao.save(sectionImage);
+            }
+        }
+        pattern.setSections(updatedSections);
+
+        patternDao.save(pattern);
+
+        return pattern;
+    }
+
+    @Override
     public void deletePattern(Long userId, Long productId) throws InstanceNotFoundException, PermissionException {
 
         Product product = permissionChecker.checkProduct(productId);
@@ -240,6 +323,50 @@ public class PatternServiceImpl implements PatternService{
 
         productDao.delete(product);
     }
+
+
+    @Transactional(readOnly = true)
+    @Override
+    public Pattern findPurchasedPatternById(Long userId, Long patternId) throws InstanceNotFoundException, PermissionException {
+
+        permissionChecker.checkUser(userId);
+        permissionChecker.checkProduct(patternId);
+
+        Optional<Pattern> pattern = patternDao.findByIdWithDetails(patternId);
+
+        if (!pattern.isPresent()) {
+            throw new InstanceNotFoundException("project.entities.product", patternId);
+        }
+
+        // Verify the user has bought the pattern and that the payment has succeeded
+        List<PurchaseItem> purchaseItems = purchaseItemDao.findByUserIdAndPatternId(userId, patternId);
+
+        boolean hasBoughtPattern = purchaseItems.stream()
+                .anyMatch(item -> item.getPayment().getPaymentStatus().equals("succeeded"));
+
+        if (!hasBoughtPattern) {
+            throw new PermissionException();
+        }
+
+        return pattern.get();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Pattern> findPurchasedPatterns(Long userId) throws InstanceNotFoundException {
+
+        permissionChecker.checkUser(userId);
+
+        List<PurchaseItem> purchaseItems = purchaseItemDao.findByUserId(userId);
+
+        return purchaseItems.stream()
+                .filter(item -> item.getPayment().getPaymentStatus().equals("succeeded"))
+                .map(item -> (Pattern) item.getProduct())
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+
 
 
 }

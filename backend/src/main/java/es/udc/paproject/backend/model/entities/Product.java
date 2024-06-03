@@ -168,6 +168,11 @@ public class Product{
         this.reviews = reviews;
     }
 
+    public void addReview(Review review){
+        reviews.add(review);
+        review.setProduct(this);
+    }
+
     public double getAvgRating(){return avgRating;}
 
     public void setAvgRating(double rating) {
@@ -179,7 +184,7 @@ public class Product{
             this.avgRating= 0.0;
         }
         this.avgRating= reviews.stream()
-                .mapToInt(Review::getRating)
+                .mapToDouble(Review::getRating)
                 .average()
                 .orElse(0.0);
     }

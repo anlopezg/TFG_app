@@ -101,7 +101,6 @@ CREATE TABLE Product (
     specialAbbreviations VARCHAR(500),
     gauge VARCHAR(200),
     sizing VARCHAR(200),
-    tools VARCHAR(500),
 
 
     CONSTRAINT ProductPK PRIMARY KEY (id),

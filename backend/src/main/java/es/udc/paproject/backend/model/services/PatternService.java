@@ -4,10 +4,7 @@ import es.udc.paproject.backend.model.entities.Pattern;
 import es.udc.paproject.backend.model.entities.Section;
 import es.udc.paproject.backend.model.entities.Tool;
 import es.udc.paproject.backend.model.entities.Yarn;
-import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
-import es.udc.paproject.backend.model.exceptions.PermissionException;
-import es.udc.paproject.backend.model.exceptions.UserNotOwnerException;
-import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
+import es.udc.paproject.backend.model.exceptions.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,7 +28,7 @@ public interface PatternService {
                           BigDecimal price, Boolean active, String introduction, String notes, String gauge,
                           String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
                           List<String> imagesUrl, List<Tool> tools, List<Yarn> yarns, List<Section> sections)
-            throws InstanceNotFoundException, UserNotSellerException;
+            throws InstanceNotFoundException, UserNotSellerException, MaxItemsExceededException;
 
 
     /**
@@ -49,6 +46,16 @@ public interface PatternService {
                         String abbreviations, String specialAbbreviations, List<String> imagesUrl) throws InstanceNotFoundException, UserNotOwnerException, PermissionException;
 
 
+    Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
+                        BigDecimal price, Boolean active, String introduction, String notes, String gauge,
+                        String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
+                        List<String> imagesUrl, List<Tool> tools, List<Yarn> yarns, List<Section> sections)
+            throws InstanceNotFoundException, PermissionException, MaxItemsExceededException;
+
     void deletePattern(Long userId, Long productId) throws InstanceNotFoundException, PermissionException;
+
+    Pattern findPurchasedPatternById(Long userId, Long patternId) throws InstanceNotFoundException, PermissionException;
+
+    List<Pattern> findPurchasedPatterns(Long userId) throws InstanceNotFoundException;
 
 }

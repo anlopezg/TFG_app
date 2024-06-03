@@ -14,13 +14,12 @@ public class ShoppingCartItemDto {
     // Add physicals maxAmount
     private int maxAmount;
 
-    private String userStripeAccountId;
 
 
     public ShoppingCartItemDto() {}
 
     public ShoppingCartItemDto(Long productId, String productName, Long categoryId, BigDecimal productPrice,
-                               int quantity, String mainImageUrl, String userStripeAccountId) {
+                               int quantity, String mainImageUrl) {
 
         this.productId = productId;
         this.productName = productName;
@@ -28,7 +27,6 @@ public class ShoppingCartItemDto {
         this.productPrice = productPrice;
         this.quantity = quantity;
         this.mainImageUrl = mainImageUrl;
-        this.userStripeAccountId = userStripeAccountId;
 
     }
 
@@ -88,11 +86,4 @@ public class ShoppingCartItemDto {
         this.maxAmount = maxAmount;
     }
 
-    public String getUserStripeAccountId() {
-        return userStripeAccountId;
-    }
-
-    public void setUserStripeAccountId(String userStripeAccountId) {
-        this.userStripeAccountId = userStripeAccountId;
-    }
 }
