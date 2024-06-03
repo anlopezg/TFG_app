@@ -1,10 +1,10 @@
-DROP TABLE Orders;
+DROP TABLE Payment;
 DROP TABLE SectionImages;
 DROP TABLE Step;
 DROP TABLE Section;
 DROP TABLE Yarn;
 DROP TABLE Tool;
-DROP TABLE PaypalAccount;
+DROP TABLE StripeAccount;
 DROP TABLE Review;
 DROP TABLE PurchaseItem;
 DROP TABLE Purchase;
@@ -208,13 +208,16 @@ CREATE TABLE Review(
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE PaypalAccount(
+CREATE TABLE StripeAccount(
+    id BIGINT NOT NULL AUTO_INCREMENT,
     userId BIGINT NOT NULL,
-    paypalEmail VARCHAR(100) NOT NULL,
+    stripeAccountId VARCHAR(200) NOT NULL,
+    stripeEmail VARCHAR(200),
+    accountStatus VARCHAR(200),
 
-    CONSTRAINT PaypalAccountPK PRIMARY KEY (userId),
-    CONSTRAINT PaypalUserFK FOREIGN KEY (userId) REFERENCES User (id),
-    CONSTRAINT PaypalEmailUniqueKey UNIQUE (paypalEmail)
+    CONSTRAINT StripeAccountPK PRIMARY KEY (id),
+    CONSTRAINT StripeAccountUserFK FOREIGN KEY (userId) REFERENCES User (id)
+
 ) ENGINE = InnoDB;
 
 
@@ -284,11 +287,24 @@ CREATE TABLE SectionImages(
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE Orders(
+CREATE TABLE Payment(
 
     id BIGINT NOT NULL AUTO_INCREMENT,
-    paypalOrderId VARCHAR(32),
-    paypalOrderStatus VARCHAR(32),
 
-    CONSTRAINT OrdersPK PRIMARY KEY (id)
-)
+    paymentId VARCHAR(255),
+    paymentMethod VARCHAR(255),
+    paymentStatus VARCHAR(255) NOT NULL,
+    amount DECIMAL(10, 2),
+    currency VARCHAR(10),
+    paymentDate DATETIME,
+    stripeAccountId VARCHAR(255) ,
+    stripeTransactionId VARCHAR(255) ,
+
+    purchaseItemId BIGINT NOT NULL,
+
+    CONSTRAINT PaymentPK PRIMARY KEY (id),
+    CONSTRAINT PaymentPurchaseItemFK FOREIGN KEY (purchaseItemId) REFERENCES PurchaseItem(id)
+
+) ENGINE = InnoDB;
+
+

@@ -1,10 +1,15 @@
 package es.udc.paproject.backend.model.services;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.stripe.exception.StripeException;
+import com.stripe.model.Account;
 import es.udc.paproject.backend.model.daos.ShoppingCartDao;
+import es.udc.paproject.backend.model.daos.StripeAccountDao;
 import es.udc.paproject.backend.model.entities.ShoppingCart;
+import es.udc.paproject.backend.model.entities.StripeAccount;
 import es.udc.paproject.backend.model.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,7 +33,14 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Autowired
+	private StripeAccountDao stripeAccountDao;
+
+
+	@Autowired
 	private ShoppingCartDao shoppingCartDao;
+
+	@Autowired
+	private StripeService stripeService;
 
 	
 	@Override
@@ -122,7 +134,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void userBecomesSeller(Long id) throws InstanceNotFoundException, UserAlreadySellerException {
+	public String userBecomesSeller(Long id) throws UserAlreadySellerException, InstanceNotFoundException, StripeException, IOException {
 
 		User user = permissionChecker.checkUser(id);
 
@@ -130,7 +142,19 @@ public class UserServiceImpl implements UserService {
 			throw new UserAlreadySellerException();
 		}
 
+
+		// Create Stripe Account with user's email
+		Account account = stripeService.createFullConnectedAccount(user);
+		StripeAccount stripeAccount = new StripeAccount(user, account.getId(), account.getEmail());
+
+		stripeAccount = stripeAccountDao.save(stripeAccount);
+
+		user.setStripeAccount(stripeAccount);
 		user.setRole(User.RoleType.SELLER);
+
+		userDao.save(user);
+
+		return account.getId();
 	}
 
 	@Override
@@ -140,5 +164,24 @@ public class UserServiceImpl implements UserService {
         return permissionChecker.checkUserName(username);
 
 	}
+
+	/*
+	@Override
+	public void updatePaypalAccount(Long userId, String paypalEmail) throws InstanceNotFoundException, UserNotSellerException {
+
+		User user = permissionChecker.checkSellerUser(userId);
+
+		PaypalAccount paypalAccount= user.getPaypalAccount();
+
+		if(paypalAccount == null){
+			paypalAccount = new PaypalAccount();
+			paypalAccount.setUser(user);
+		}
+
+		paypalAccount.setPaypalEmail(paypalEmail);
+		paypalAccountDao.save(paypalAccount);
+
+	}*/
+
 
 }

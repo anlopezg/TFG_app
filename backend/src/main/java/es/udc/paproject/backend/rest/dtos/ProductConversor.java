@@ -35,7 +35,8 @@ public class ProductConversor {
         return new ProductDto(product.getId(), product.getUser().getId(),  product.getCraft().getId(),
                 product.getSubcategory().getId(),
                 product.getTitle(), product.getDescription(), product.getPrice(), product.getActive(),
-                product.getUser().getUsername(), product.getProductType(), amount ,productImagesToStringList(product), product.getAvgRating());
+                product.getUser().getUsername(), product.getProductType(), amount ,productImagesToStringList(product),
+                product.getAvgRating(), product.getUser().getStripeAccount().getStripeAccountId());
     }
 
 

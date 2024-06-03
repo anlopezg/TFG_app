@@ -13,10 +13,6 @@ import java.util.List;
 public interface PublicationService {
 
 
-    void uploadImages(Long productId, List<String> fileNames) throws InstanceNotFoundException;
-    //Product uploadImages(Long productId, List<String> imagePaths) throws InstanceNotFoundException;
-
-
     /**
      * Creates a new Product of type Physical given the following params
      * @throws InstanceNotFoundException User, Craft or Subcategory not found
@@ -27,9 +23,6 @@ public interface PublicationService {
                             String details, List<String> imagesUrl) throws InstanceNotFoundException,  UserNotSellerException;
 
 
-
-
-    Block<Product> findAddedProducts(Long userId, int page, int size) throws InstanceNotFoundException, UserNotSellerException;
 
 
     /**

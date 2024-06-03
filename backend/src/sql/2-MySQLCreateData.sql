@@ -96,5 +96,6 @@ INSERT INTO Review(userId, productId, rating, comment, date) VALUES
             (1, 1, 4, "Very well made product", '2024-04-22 12:00:00' );
 
 
-INSERT INTO PaypalAccount(userId, paypalEmail) VALUES
-            (2, "seller_yarn_crafters@business.example.com")
+INSERT INTO StripeAccount(userId, stripeAccountId, stripeEmail, accountStatus) VALUES
+            (2, "acct_1PMy8yPC211iYDLj", "seller@a.com", "new");
+

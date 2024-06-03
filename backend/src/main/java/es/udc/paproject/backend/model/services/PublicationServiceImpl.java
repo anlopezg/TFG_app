@@ -36,24 +36,6 @@ public class PublicationServiceImpl implements PublicationService{
 
 
     @Override
-    public void uploadImages(Long productId, List<String> fileNames) throws InstanceNotFoundException{
-
-        Optional<Product> product = productDao.findById(productId);
-
-        if(product.isEmpty()){
-            throw new InstanceNotFoundException("project.entities.product", productId);
-        }
-
-        for(String fileName: fileNames){
-            ProductImages productImage = new ProductImages();
-            productImage.setProduct(product.get());
-            productImage.setImageUrl(fileName);
-        }
-
-    }
-
-
-    @Override
     public Physical createPhysical(Long userId, Long craftId, Long subcategoryId, String title, String description,
                                    BigDecimal price, Boolean active, int amount, String size, String color,
                                    String details, List<String> imagesUrl) throws InstanceNotFoundException, UserNotSellerException{
@@ -78,19 +60,6 @@ public class PublicationServiceImpl implements PublicationService{
         }
 
         return physicalCreated;
-    }
-
-
-
-    @Override
-    @Transactional(readOnly = true)
-    public Block<Product> findAddedProducts(Long userId, int page, int size) throws InstanceNotFoundException, UserNotSellerException {
-
-        User user = permissionChecker.checkSellerUser(userId);
-
-        Slice<Product> slice = productDao.findByUserIdOrderByCreationDateDesc(userId, PageRequest.of(page, size));
-
-        return new Block<>(slice.getContent(), slice.hasNext());
     }
 
 

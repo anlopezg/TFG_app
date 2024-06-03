@@ -130,16 +130,16 @@ public class CatalogController {
     }
 
     @GetMapping("/favorites/{productId}")
-    public FavoriteDto findFavoriteByUserAndProduct(@RequestAttribute Long userId, @PathVariable Long productId) throws InstanceNotFoundException {
+    public ResponseEntity<FavoriteDto> findFavoriteByUserAndProduct(@RequestAttribute Long userId, @PathVariable Long productId) throws InstanceNotFoundException {
 
         Optional<Favorite> favorite = catalogService.findFavoriteByUserAndProduct(userId, productId);
 
-        if(!favorite.isPresent()){
+        if(favorite.isPresent()){
 
-            return new FavoriteDto(userId, productId, false);
+            return ResponseEntity.ok(toFavoriteDto(favorite.get()));
         }
 
-        return toOptionalFavoriteDto(favorite);
+        return ResponseEntity.ok(null);
     }
 
 

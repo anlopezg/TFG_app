@@ -31,7 +31,13 @@ spring:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  profiles:
+    active: dev
 project:
   jwt:
     signKey: W27sJe29ATI7dR3juV5lWkT9WgS2C8RT
     expirationMinutes: 1440
+stripe:
+  key:
+    secret: sk_test_51PMuwQAurJ6JByYJD4nDhMU7r1Yh0EUhRLnxQYn9vEClvImLevgTopEMxRN5CfDSBD1dkYoVeRGfGwQiOa0Imumq00ottw3da3
+    public: pk_test_51PMuwQAurJ6JByYJsjn74RcLRCS2FjCbRtFJpphu4LRvlD0tJ0ZU4gVhGeLyVuw8wdKAjqKEjf1R7A4ROLm1xEfF00e8fX87eM

@@ -150,15 +150,12 @@ public class UserController {
 		
 	}
 
-	@PutMapping("/{id}/becomeSeller")
-	public void userBecomesSeller(@RequestAttribute Long userId, @PathVariable Long id)throws PermissionException, InstanceNotFoundException,
-			UserAlreadySellerException {
+	@PutMapping("/becomeSeller")
+	public ResponseEntity<String> userBecomesSeller(@RequestAttribute Long userId) throws Exception {
 
-		if(!id.equals(userId)){
-			throw new PermissionException();
-		}
+		String accountId = userService.userBecomesSeller(userId);
 
-		userService.userBecomesSeller(id);
+		return ResponseEntity.ok(accountId);
 	}
 
 	@GetMapping("/{username}")
@@ -166,6 +163,14 @@ public class UserController {
 
 		return toUserDto(userService.findUserByUsername(username));
 	}
+
+	/*@PutMapping("/updatePaypalAccount")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void updatePaypalAccount(@RequestAttribute Long userId, @RequestParam String paypalEmail) throws InstanceNotFoundException, UserNotSellerException {
+
+		userService.updatePaypalAccount(userId, paypalEmail);
+
+	}*/
 
 	
 }

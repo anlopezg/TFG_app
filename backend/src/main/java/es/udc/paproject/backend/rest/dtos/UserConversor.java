@@ -10,13 +10,22 @@ import static es.udc.paproject.backend.rest.dtos.ShoppingCartConversor.toShoppin
 public class UserConversor {
 	
 	private UserConversor() {}
-	
+
+
 	public final static UserDto toUserDto(User user) {
+
+		String accountId = null;
+		if (user.getStripeAccount() != null) {
+			accountId = user.getStripeAccount().getStripeAccountId();
+		}
+
+
 		return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFirstName(), user.getLanguage(),
 				user.getCountry(), user.getRegion(), user.getCrochetLevel(), user.getKnitLevel(), user.getBio(),
-				user.getRole().toString());
+				user.getRole().toString(), accountId);
 	}
-	
+
+
 	public final static User toUser(UserDto userDto) {
 		
 		return new User(userDto.getUserName(), userDto.getEmail(), userDto.getPassword(), userDto.getFirstName(),

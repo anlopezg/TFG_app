@@ -6,3 +6,6 @@ spring:
     dbcp2:
       max-total: 1
       max-idle: 1
+  jpa:
+    hibernate:
+      ddl-auto: none

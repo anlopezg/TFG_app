@@ -15,7 +15,7 @@ public class ShoppingCartConversor {
     private ShoppingCartConversor() {
     }
 
-    public final static ShoppingCartDto toShoppingCartDto(ShoppingCart cart) {
+    public static ShoppingCartDto toShoppingCartDto(ShoppingCart cart) {
 
         List<ShoppingCartItemDto> items =
                 cart.getItems().stream().map(i -> toShoppingCartItemDto(i)).collect(Collectors.toList());
@@ -26,7 +26,7 @@ public class ShoppingCartConversor {
 
     }
 
-    private final static ShoppingCartItemDto toShoppingCartItemDto(ShoppingCartItem item) {
+    private static ShoppingCartItemDto toShoppingCartItemDto(ShoppingCartItem item) {
 
         Set<ProductImages> images = item.getProduct().getImages();
         String mainImageUrl  = images.iterator().next().getImageUrl();
@@ -34,7 +34,7 @@ public class ShoppingCartConversor {
 
         return new ShoppingCartItemDto(item.getProduct().getId(), item.getProduct().getTitle(),
                 item.getProduct().getSubcategory().getId(), item.getProduct().getPrice(), item.getQuantity(),
-                mainImageUrl);
+                mainImageUrl, item.getProduct().getUser().getStripeAccount().getStripeAccountId());
 
     }
 

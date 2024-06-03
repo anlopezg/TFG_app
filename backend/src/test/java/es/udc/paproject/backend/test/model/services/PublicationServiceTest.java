@@ -42,7 +42,7 @@ public class PublicationServiceTest {
 
     /*   ENTITY CREATION  */
 
-    private User createSellerUser(String userName) throws DuplicateInstanceException, UserAlreadySellerException, InstanceNotFoundException {
+    private User createSellerUser(String userName) throws Exception {
         User user = new User(userName, userName + "@a.com","password", "firstName", "language",
                 "country", "region", 1, 2, "long bio");
 
@@ -85,7 +85,7 @@ public class PublicationServiceTest {
                 3, "Size", "Color", "Details");
     }
 
-    private Physical createFullPhysical() throws UserAlreadySellerException, InstanceNotFoundException, DuplicateInstanceException, UserNotSellerException {
+    private Physical createFullPhysical() throws Exception {
 
         User user = createSellerUser("username");
         Craft craft = createCraft("Crochet");
@@ -100,7 +100,7 @@ public class PublicationServiceTest {
 
     /*   SERVICE'S TESTS  */
     @Test
-    public void testCreatePhysical() throws InstanceNotFoundException, UserNotSellerException, DuplicateInstanceException, UserAlreadySellerException{
+    public void testCreatePhysical() throws Exception {
 
         User user = createSellerUser("username");
         Craft craft = createCraft("Crochet");
@@ -124,7 +124,7 @@ public class PublicationServiceTest {
 
 
     @Test
-    public void testFindPhysicalById() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException, UserNotSellerException, UserNotOwnerException, PermissionException {
+    public void testFindPhysicalById() throws Exception {
 
         User user = createSellerUser("username");
 
@@ -152,7 +152,7 @@ public class PublicationServiceTest {
     }
 
     @Test
-    public void testDeleteProductNotOwner() throws UserAlreadySellerException, InstanceNotFoundException, DuplicateInstanceException, UserNotSellerException {
+    public void testDeleteProductNotOwner() throws Exception {
 
         Physical physical = createFullPhysical();
 
@@ -162,7 +162,7 @@ public class PublicationServiceTest {
     }
 
     @Test
-    public void testDeleteProduct() throws UserAlreadySellerException, InstanceNotFoundException, DuplicateInstanceException, UserNotSellerException, UserNotOwnerException, PermissionException {
+    public void testDeleteProduct() throws Exception {
 
         Physical physical = createFullPhysical();
 

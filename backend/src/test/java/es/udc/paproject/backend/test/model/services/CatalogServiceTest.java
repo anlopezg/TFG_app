@@ -3,7 +3,9 @@ package es.udc.paproject.backend.test.model.services;
 
 import es.udc.paproject.backend.model.daos.*;
 import es.udc.paproject.backend.model.entities.*;
+import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
+import es.udc.paproject.backend.model.exceptions.OwnerOfProductException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
 import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.CatalogService;
@@ -18,9 +20,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -341,5 +345,90 @@ public class CatalogServiceTest {
 
         assertEquals(expectedBlock, catalogService.findSellers("seller", 0, 2));
 
+    }
+
+    @Test
+    public void testMarkAsFavoriteProduct() throws InstanceNotFoundException, DuplicateInstanceException, OwnerOfProductException {
+
+        User user1 = createUser("user1");
+        User user2 = createUser("user2");
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+        Product product1 = createProduct(user1, craft1, subcategory1, "Product1");
+
+        catalogService.markAsFavoriteProduct(user2.getId(), product1.getId());
+
+        Optional<Favorite> favorite = catalogService.findFavoriteByUserAndProduct(user2.getId(), product1.getId());
+
+        assertNotNull(favorite);
+        assertEquals(user2.getId(), favorite.get().getUser().getId());
+        assertEquals(product1.getId(), favorite.get().getProduct().getId());
+        assertTrue(favorite.get().getLiked());
+    }
+
+    @Test
+    public void testGetFavoriteProducts() throws InstanceNotFoundException, DuplicateInstanceException, OwnerOfProductException {
+
+        User user1 = createUser("user1");
+        User user2 = createUser("user2");
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+        Product product1 = createProduct(user1, craft1, subcategory1, "Product1");
+        Product product2 = createProduct(user1, craft1, subcategory1, "Product2");
+
+        catalogService.markAsFavoriteProduct(user2.getId(), product1.getId());
+        catalogService.markAsFavoriteProduct(user2.getId(), product2.getId());
+
+        List<Product> favoriteProducts = catalogService.getFavoriteProducts(user2.getId());
+
+        assertNotNull(favoriteProducts);
+        assertEquals(2, favoriteProducts.size());
+        assertTrue(favoriteProducts.contains(product1));
+        assertTrue(favoriteProducts.contains(product2));
+    }
+
+    @Test
+    public void testFindFavorite() throws InstanceNotFoundException, DuplicateInstanceException, OwnerOfProductException {
+
+        User user1 = createUser("user1");
+        User user2 = createUser("user2");
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+        Product product1 = createProduct(user1, craft1, subcategory1, "Product1");
+
+        catalogService.markAsFavoriteProduct(user2.getId(), product1.getId());
+
+        Optional<Favorite> resultFav = catalogService.findFavoriteByUserAndProduct(user2.getId(), product1.getId());
+
+        assertTrue(resultFav.get().getLiked());
+    }
+
+    @Test
+    public void testRemoveFavoriteProduct() throws InstanceNotFoundException, OwnerOfProductException, DuplicateInstanceException {
+
+        User user1 = createUser("user1");
+        User user2 = createUser("user2");
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+        Product product1 = createProduct(user1, craft1, subcategory1, "Product1");
+
+        catalogService.markAsFavoriteProduct(user2.getId(), product1.getId());
+        Optional<Favorite> foundFavorite = catalogService.findFavoriteByUserAndProduct(user2.getId(), product1.getId());
+
+        catalogService.removeFavoriteProduct(foundFavorite.get().getUser().getId(),foundFavorite.get().getProduct().getId());
+
+        assertThrows(InstanceNotFoundException.class, () ->
+                catalogService.findFavoriteById(foundFavorite.get().getId()));
+    }
+
+    @Test
+    public void testRemoveNonExistentFavoriteProduct(){
+
+        assertThrows(InstanceNotFoundException.class, () ->
+                catalogService.removeFavoriteProduct(NON_EXISTENT_ID, NON_EXISTENT_ID));
     }
 }

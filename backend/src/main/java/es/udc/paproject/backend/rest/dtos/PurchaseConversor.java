@@ -50,4 +50,8 @@ public class PurchaseConversor {
     public final static long toMillis(LocalDateTime date) {
         return date.truncatedTo(ChronoUnit.MINUTES).atZone(ZoneOffset.systemDefault()).toInstant().toEpochMilli();
     }
+
+    public final static PurchasePaymentDto toPurchasePaymentDto(Purchase purchase){
+        return new PurchasePaymentDto(purchase.getId(), purchase.getTotalPrice());
+    }
 }

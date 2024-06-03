@@ -175,7 +175,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void testUserBecomesSeller() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException {
+	public void testUserBecomesSeller() throws Exception {
 
 		User user = createUser("user" ,"email");
 
@@ -187,7 +187,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void testUserAlreadySeller() throws DuplicateInstanceException, InstanceNotFoundException, UserAlreadySellerException {
+	public void testUserAlreadySeller() throws Exception {
 
 		User user = createUser("user" ,"email");
 

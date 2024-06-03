@@ -11,6 +11,8 @@ public class PurchaseParamsDto {
     private String country;
     private String postalCode;
 
+
+
     @NotNull
     @Size(min=1, max=200)
     public String getPostalAddress() {
@@ -61,4 +63,6 @@ public class PurchaseParamsDto {
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode.trim();
     }
+
+
 }

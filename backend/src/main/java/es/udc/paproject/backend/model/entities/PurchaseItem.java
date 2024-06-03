@@ -3,14 +3,7 @@ package es.udc.paproject.backend.model.entities;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 
 @Entity
 public class PurchaseItem {
@@ -20,6 +13,8 @@ public class PurchaseItem {
     private Purchase purchase;
     private BigDecimal productPrice;
     private int quantity;
+    private Payment payment;
+
 
     public PurchaseItem() {}
 
@@ -82,4 +77,12 @@ public class PurchaseItem {
         return productPrice.multiply(new BigDecimal(quantity));
     }
 
+    @OneToOne(mappedBy="purchaseItem", optional=false, fetch=FetchType.LAZY)
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
 }

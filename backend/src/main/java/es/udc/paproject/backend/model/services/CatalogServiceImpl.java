@@ -169,13 +169,7 @@ public class CatalogServiceImpl implements CatalogService{
 
         Product product = permissionChecker.checkProduct(productId);
 
-        Optional<Favorite> favorite = favoriteDao.findByUserAndProduct(user, product);
-
-        if(!favorite.isPresent()){
-            throw new InstanceNotFoundException("project.entities.favorite", favorite);
-        }
-
-        return Optional.of(favorite.get());
+        return favoriteDao.findByUserAndProduct(user, product);
     }
 
     @Override

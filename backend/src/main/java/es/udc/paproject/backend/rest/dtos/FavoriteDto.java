@@ -27,8 +27,6 @@ public class FavoriteDto {
     }
 
 
-
-
     public Long getUserId() {
         return userId;
     }

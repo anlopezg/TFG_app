@@ -39,7 +39,7 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.POST, "/users/*/changePassword").hasAnyRole("USER", "SELLER")
 
 					.requestMatchers(HttpMethod.PUT, "/users/*").hasAnyRole("USER", "SELLER")
-					.requestMatchers(HttpMethod.PUT, "/users/*/becomeSeller").hasRole("USER")
+					.requestMatchers(HttpMethod.PUT, "/users/becomeSeller").hasRole("USER")
 
 					.requestMatchers(HttpMethod.DELETE, "/users/*").hasAnyRole("USER", "SELLER")
 					.requestMatchers(HttpMethod.GET, "/users/*").permitAll()
@@ -87,6 +87,11 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.GET, "/api/paypal/cancel").permitAll()
 					.requestMatchers(HttpMethod.GET, "/api/paypal/success").permitAll()
 					.requestMatchers("/api/paypal/**").permitAll()
+
+					/********************* PAYMENTS CONTROLLER *********************/
+					.requestMatchers(HttpMethod.GET, "/api/payments/accounts/*").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.POST, "/api/payments/create").hasAnyRole("USER", "SELLER")
+
 
 				.anyRequest().denyAll());
 

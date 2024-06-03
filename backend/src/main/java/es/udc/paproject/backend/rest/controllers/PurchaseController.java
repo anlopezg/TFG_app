@@ -1,7 +1,7 @@
 package es.udc.paproject.backend.rest.controllers;
 
+import com.stripe.exception.StripeException;
 import es.udc.paproject.backend.model.entities.Purchase;
-import es.udc.paproject.backend.model.entities.ShoppingCart;
 import es.udc.paproject.backend.model.exceptions.*;
 import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.PurchaseService;
@@ -10,13 +10,13 @@ import es.udc.paproject.backend.rest.dtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
 
-import static es.udc.paproject.backend.rest.dtos.PurchaseConversor.toPurchaseDto;
-import static es.udc.paproject.backend.rest.dtos.PurchaseConversor.toPurchaseSummaryDtos;
+import static es.udc.paproject.backend.rest.dtos.PurchaseConversor.*;
 import static es.udc.paproject.backend.rest.dtos.ShoppingCartConversor.toShoppingCartDto;
 
 @RestController
@@ -93,13 +93,28 @@ public class PurchaseController {
     }
 
     @PostMapping ("/carts/{shoppingCartId}/purchase")
-    public Long purchaseCart(@RequestAttribute Long userId, @PathVariable Long shoppingCartId,
-                             @Validated @RequestBody PurchaseParamsDto params) throws PermissionException, EmptyShoppingCartException, InstanceNotFoundException {
+    public PurchasePaymentDto purchaseCart(@RequestAttribute Long userId, @PathVariable Long shoppingCartId,
+                             @Validated @RequestBody PurchaseParamsDto params) throws PermissionException, EmptyShoppingCartException, InstanceNotFoundException, StripeException {
 
-        return purchaseService.purchaseCart(userId, shoppingCartId, params.getPostalAddress(), params.getLocality(),
-                params.getRegion(), params.getCountry(), params.getPostalCode()).getId();
+        Purchase purchaseCreated = purchaseService.createPurchase(userId, shoppingCartId, params.getPostalAddress(), params.getLocality(),
+                params.getRegion(), params.getCountry(), params.getPostalCode());
+
+        return toPurchasePaymentDto(purchaseCreated);
 
     }
+
+
+    @PostMapping("/purchases/{purchaseId}/processPayment")
+    public ResponseEntity<Void> processPaymentForPurchase(@RequestAttribute Long userId, @PathVariable Long purchaseId,
+                                                          @Validated @RequestBody PaymentParamsDto paymentParams)
+            throws InstanceNotFoundException, StripeException, PaymentProcessingException, PermissionException {
+
+        Purchase purchase = purchaseService.findPurchase(userId, purchaseId);
+        purchaseService.processPaymentForPurchase(paymentParams.getPaymentMethodId(), purchase);
+
+        return ResponseEntity.ok().build();
+    }
+
 
     @GetMapping("/purchases/{purchaseId}")
     public PurchaseDto findPurchase(@RequestAttribute Long userId, @PathVariable Long purchaseId) throws InstanceNotFoundException, PermissionException{
@@ -114,4 +129,29 @@ public class PurchaseController {
 
         return new BlockDto<>(toPurchaseSummaryDtos(purchaseBlock.getItems()), purchaseBlock.getExistMoreItems());
     }
+
+    /*
+    @PostMapping("/create")
+    public ResponseEntity<Purchase> createPurchase(@RequestBody PurchaseDto purchaseRequest) {
+        Purchase purchase = new Purchase();
+        // Configurar otros campos de Purchase desde purchaseRequest
+        purchase.setPaymentStatus(PaymentStatus.PENDING);
+
+        purchase = purchaseService.save(purchase); // Guardar la compra en la base de datos
+        return ResponseEntity.ok(purchase);
+    }
+
+    @PostMapping("/updatePaymentStatus")
+    public ResponseEntity<Purchase> updatePaymentStatus(@RequestParam Long purchaseId, @RequestParam PaymentStatus status) {
+        Purchase purchase = purchaseService.findById(purchaseId);
+        if (purchase != null) {
+            purchase.setPaymentStatus(status);
+            purchaseService.save(purchase);
+            return ResponseEntity.ok(purchase);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }/*
+
+     */
 }

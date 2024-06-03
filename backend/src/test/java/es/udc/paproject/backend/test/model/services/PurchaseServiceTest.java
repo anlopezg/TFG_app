@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
+import com.stripe.exception.StripeException;
 import es.udc.paproject.backend.model.daos.*;
 import es.udc.paproject.backend.model.entities.*;
+import es.udc.paproject.backend.model.exceptions.*;
 import es.udc.paproject.backend.model.services.PurchaseService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
-import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
-import es.udc.paproject.backend.model.exceptions.MaxItemsExceededException;
-import es.udc.paproject.backend.model.exceptions.MaxQuantityExceededException;
 import es.udc.paproject.backend.model.services.Block;
-import es.udc.paproject.backend.model.exceptions.EmptyShoppingCartException;
-import es.udc.paproject.backend.model.exceptions.PermissionException;
 import es.udc.paproject.backend.model.services.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -118,6 +114,13 @@ public class PurchaseServiceTest {
 
         return purchase;
 
+    }
+
+    private StripeAccount createStripeAccount(User user) {
+        StripeAccount stripeAccount = new StripeAccount();
+        stripeAccount.setStripeAccountId("acct_1PMy8yPC211iYDLj");
+        user.setStripeAccount(stripeAccount);
+        return stripeAccount;
     }
 
     @Test
@@ -479,9 +482,11 @@ public class PurchaseServiceTest {
 
     @Test
     public void testBuyAndFindPurchase() throws InstanceNotFoundException, PermissionException, MaxQuantityExceededException,
-            MaxItemsExceededException, EmptyShoppingCartException {
+            MaxItemsExceededException, EmptyShoppingCartException, StripeException {
 
+        // Crear usuario y cuenta de Stripe
         User user = signUpUser("user");
+        StripeAccount stripeAccount = createStripeAccount(user);
         Craft craft1 = createCraft("Crochet");
         Category category1 = createCategory("Tops");
         Subcategory subcategory1 = createSubcategory("Jacket", category1);
@@ -495,18 +500,22 @@ public class PurchaseServiceTest {
         String country = "Country";
         String postalCode = "12345";
 
+        // Agregar productos al carrito
         purchaseService.addToCart(user.getId(), user.getShoppingCart().getId(), product1.getId(), quantity1);
         purchaseService.addToCart(user.getId(), user.getShoppingCart().getId(), product2.getId(), quantity2);
 
-        Purchase purchase = purchaseService.purchaseCart(user.getId(), user.getShoppingCart().getId(), locality, region, country, postalAddress, postalCode);
+        // Realizar la compra con un método de pago de prueba válido
+        Purchase purchase = purchaseService.createPurchase(user.getId(), user.getShoppingCart().getId(), locality, region, country, postalAddress, postalCode);
         Purchase foundPurchase = purchaseService.findPurchase(user.getId(), purchase.getId());
 
+        // Verificar la compra
         assertEquals(purchase, foundPurchase);
         assertEquals(user, purchase.getUser());
         assertEquals(postalAddress, purchase.getPostalAddress());
         assertEquals(postalCode, purchase.getPostalCode());
         assertEquals(2, purchase.getItems().size());
 
+        // Verificar los items de la compra
         Optional<PurchaseItem> item1 = purchase.getItem(product1.getId());
         Optional<PurchaseItem> item2 = purchase.getItem(product2.getId());
 
@@ -526,7 +535,8 @@ public class PurchaseServiceTest {
         User user = signUpUser("user");
 
         assertThrows(InstanceNotFoundException.class, () ->
-                purchaseService.purchaseCart(user.getId(), NON_EXISTENT_ID, "Postal Address", "Locality", "Region", "Country", "12345"));
+                purchaseService.createPurchase(user.getId(), NON_EXISTENT_ID, "Postal Address", "Locality",
+                        "Region", "Country", "12345"));
 
     }
 
@@ -537,7 +547,8 @@ public class PurchaseServiceTest {
         User user2 = signUpUser("user2");
 
         assertThrows(PermissionException.class, () ->
-                purchaseService.purchaseCart(user1.getId(), user2.getShoppingCart().getId(), "Postal Address", "Locality", "Region", "Country","12345"));
+                purchaseService.createPurchase(user1.getId(), user2.getShoppingCart().getId(),
+                        "Postal Address", "Locality", "Region", "Country","12345"));
 
     }
 
@@ -547,7 +558,8 @@ public class PurchaseServiceTest {
         User user = signUpUser("user");
 
         assertThrows(PermissionException.class, () ->
-                purchaseService.purchaseCart(NON_EXISTENT_ID, user.getShoppingCart().getId(), "Postal Address", "Locality", "Region", "Country","12345"));
+                purchaseService.createPurchase(NON_EXISTENT_ID, user.getShoppingCart().getId(), "Postal Address",
+                        "Locality", "Region", "Country","12345"));
 
     }
 
@@ -557,7 +569,8 @@ public class PurchaseServiceTest {
         User user = signUpUser("user");
 
         assertThrows(EmptyShoppingCartException.class, () ->
-                purchaseService.purchaseCart(user.getId(), user.getShoppingCart().getId(), "Postal Address", "Locality", "Region", "Country","12345"));
+                purchaseService.createPurchase(user.getId(), user.getShoppingCart().getId(), "Postal Address",
+                        "Locality", "Region", "Country","12345"));
 
     }
 
@@ -572,10 +585,11 @@ public class PurchaseServiceTest {
 
     @Test
     public void testFindPurchaseOfAnotherUser() throws InstanceNotFoundException, PermissionException,
-            MaxQuantityExceededException, MaxItemsExceededException, EmptyShoppingCartException {
+            MaxQuantityExceededException, MaxItemsExceededException, EmptyShoppingCartException, StripeException {
 
         User user1 = signUpUser("user1");
         User user2 = signUpUser("user2");
+        StripeAccount stripeAccount = createStripeAccount(user1);
         Craft craft1 = createCraft("Crochet");
         Category category1 = createCategory("Tops");
         Subcategory subcategory1 = createSubcategory("Jacket", category1);
@@ -583,7 +597,8 @@ public class PurchaseServiceTest {
 
         purchaseService.addToCart(user1.getId(), user1.getShoppingCart().getId(), product.getId(), 1);
 
-        Purchase order = purchaseService.purchaseCart(user1.getId(), user1.getShoppingCart().getId(), "Postal Address", "Locality", "Region", "Country","12345");
+        Purchase order = purchaseService.createPurchase(user1.getId(), user1.getShoppingCart().getId(), "Postal Address",
+                "Locality", "Region", "Country","12345");
 
         assertThrows(PermissionException.class, () -> purchaseService.findPurchase(user2.getId(), order.getId()));
 
@@ -591,9 +606,10 @@ public class PurchaseServiceTest {
 
     @Test
     public void testFindPurchaseWithNonExistingUserId() throws InstanceNotFoundException, PermissionException,
-            MaxQuantityExceededException, MaxItemsExceededException, EmptyShoppingCartException {
+            MaxQuantityExceededException, MaxItemsExceededException, EmptyShoppingCartException, StripeException {
 
         User user = signUpUser("user");
+        StripeAccount stripeAccount = createStripeAccount(user);
         Craft craft1 = createCraft("Crochet");
         Category category1 = createCategory("Tops");
         Subcategory subcategory1 = createSubcategory("Jacket", category1);
@@ -601,7 +617,8 @@ public class PurchaseServiceTest {
 
         purchaseService.addToCart(user.getId(), user.getShoppingCart().getId(), product.getId(), 1);
 
-        Purchase order = purchaseService.purchaseCart(user.getId(), user.getShoppingCart().getId(), "Postal Address", "Locality", "Region", "Country","12345");
+        Purchase order = purchaseService.createPurchase(user.getId(), user.getShoppingCart().getId(),
+                "Postal Address", "Locality", "Region", "Country","12345");
 
         assertThrows(PermissionException.class, () -> purchaseService.findPurchase(NON_EXISTENT_ID, order.getId()));
 
@@ -637,5 +654,52 @@ public class PurchaseServiceTest {
         assertEquals(expectedBlock, purchaseService.findPurchases(user.getId(), 1, 2));
 
     }
+
+
+    @Test
+    public void testProcessPaymentForPurchase() throws InstanceNotFoundException, PermissionException, MaxQuantityExceededException,
+            MaxItemsExceededException, EmptyShoppingCartException, StripeException, PaymentProcessingException {
+
+        User user = signUpUser("user");
+        StripeAccount stripeAccount = createStripeAccount(user);
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+        Product product1 = createProduct(user, craft1, subcategory1, "Product1");
+        Product product2 = createProduct(user, craft1, subcategory1, "Product2");
+        int quantity1 = 1;
+        int quantity2 = 2;
+        String postalAddress = "Postal Address";
+        String locality = "Locality";
+        String region = "Region";
+        String country = "Country";
+        String postalCode = "12345";
+
+        purchaseService.addToCart(user.getId(), user.getShoppingCart().getId(), product1.getId(), quantity1);
+        purchaseService.addToCart(user.getId(), user.getShoppingCart().getId(), product2.getId(), quantity2);
+
+        Purchase purchase = purchaseService.createPurchase(user.getId(), user.getShoppingCart().getId(), locality, region, country, postalAddress, postalCode);
+
+        // Process the Payment for the purchase made
+        purchaseService.processPaymentForPurchase( "pm_card_visa", purchase);
+
+        Purchase foundPurchase = purchaseService.findPurchase(user.getId(), purchase.getId());
+
+        for (PurchaseItem purchaseItem : foundPurchase.getItems()) {
+            assertNotNull(purchaseItem.getPayment());
+            assertEquals("pm_card_visa", purchaseItem.getPayment().getPaymentMethod());
+            assertEquals("eur", purchaseItem.getPayment().getCurrency());
+            assertNotNull(purchaseItem.getPayment().getPaymentDate());
+            assertEquals(purchaseItem.getProduct().getUser().getStripeAccount().getStripeAccountId(), purchaseItem.getPayment().getStripeAccountId());
+            assertEquals(purchaseItem.getTotalPrice().multiply(new BigDecimal(100)), purchaseItem.getPayment().getAmount());
+        }
+
+        // Verify the sum of totalAmount of each Item, is the same as the total Price of the Purchase
+        BigDecimal totalAmount = foundPurchase.getItems().stream()
+                .map(item -> item.getPayment().getAmount())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        assertEquals(foundPurchase.getTotalPrice().multiply(new BigDecimal(100)), totalAmount);
+    }
+
 
 }

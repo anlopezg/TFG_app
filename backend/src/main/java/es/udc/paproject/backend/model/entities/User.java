@@ -22,6 +22,10 @@ public class User {
 
 	private ShoppingCart shoppingCart;
 
+	private StripeAccount stripeAccount;
+
+
+
 	public User(){}
 
 	public User(String username, String email, String password, String firstName, String language, String country,
@@ -138,6 +142,7 @@ public class User {
 	}
 
 
+
 	@OneToOne(mappedBy="user", optional=false, fetch=FetchType.LAZY)
 	public ShoppingCart getShoppingCart() {
 		return shoppingCart;
@@ -147,4 +152,13 @@ public class User {
 		this.shoppingCart = shoppingCart;
 	}
 
+
+	@OneToOne(mappedBy="user", optional=false, fetch=FetchType.LAZY)
+	public StripeAccount getStripeAccount() {
+		return stripeAccount;
+	}
+
+	public void setStripeAccount(StripeAccount stripeAccount) {
+		this.stripeAccount = stripeAccount;
+	}
 }

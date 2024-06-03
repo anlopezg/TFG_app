@@ -23,9 +23,12 @@ public class UserDto {
 
 	private String role;
 
+	private String accountId;
+
 	public UserDto() {}
 
-	public UserDto(Long id, String userName, String email, String firstName, String language, String country, String region, int crochetLevel, int knitLevel, String bio, String role) {
+	public UserDto(Long id, String userName, String email, String firstName, String language, String country, String region,
+				   int crochetLevel, int knitLevel, String bio, String role, String accountId) {
 
 		this.id = id;
 		this.userName = userName != null ? userName.trim() : null;
@@ -39,6 +42,8 @@ public class UserDto {
 		this.bio = bio.trim();
 
 		this.role = role;
+
+		this.accountId = accountId != null ? accountId.trim() : null;
 
 	}
 
@@ -160,4 +165,12 @@ public class UserDto {
 		this.role = role;
 	}
 
+
+	public String getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
+	}
 }
