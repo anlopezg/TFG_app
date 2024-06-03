@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -31,9 +32,6 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Autowired
     private PurchaseItemDao purchaseItemDao;
-
-    @Autowired
-    private CatalogService catalogService;
 
     @Autowired
     private PermissionChecker permissionChecker;
@@ -96,9 +94,10 @@ public class ReviewServiceImpl implements ReviewService{
         review.setComment(newComment);
         review.setDate(LocalDateTime.now());
 
+        Review updatedReview = reviewDao.save(review);
         review.getProduct().calculateAvgRating();
 
-        return reviewDao.save(review);
+        return updatedReview;
     }
 
     @Override
@@ -112,6 +111,5 @@ public class ReviewServiceImpl implements ReviewService{
 
         product.calculateAvgRating();
     }
-
 
 }

@@ -6,7 +6,9 @@ import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.model.exceptions.CantReviewTwiceException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.NotPurchasedProductException;
+import es.udc.paproject.backend.model.exceptions.PermissionException;
 import es.udc.paproject.backend.model.services.Block;
+import es.udc.paproject.backend.model.services.PermissionChecker;
 import es.udc.paproject.backend.model.services.ReviewService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,9 @@ public class ReviewServiceTest {
 
     @Autowired
     private ReviewDao reviewDao;
+
+    @Autowired
+    private PermissionChecker permissionChecker;
 
     private User createUser(String username){
         User user = new User(username, username + "@a.com","password", "firstName", "language",
@@ -198,6 +203,56 @@ public class ReviewServiceTest {
         Block<Review> expectedBlock = new Block<>(Arrays.asList(createdReview1), false);
 
         assertEquals(expectedBlock, reviewService.findUserReviews(user.getId(), 0, 1));
+    }
+
+    @Test
+    public void testEditReview() throws InstanceNotFoundException, PermissionException, NotPurchasedProductException, CantReviewTwiceException {
+
+        User user = createUser("user");
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+        Product product = createProduct(user, craft1, subcategory1, "Product1");
+
+        Purchase purchase = createPurchase(user, product, LocalDateTime.of(2017, 10, 1, 10, 2, 3));
+        Review review = reviewService.publishReview(user.getId(), product.getId(), 5, "Initial comment");
+
+        System.out.println("Avg rating before edit: " + product.getAvgRating());
+        // Edit the published review
+        int newRating = 4;
+        String newComment = "Updated comment";
+        Review updatedReview = reviewService.editReview(user.getId(), review.getId(), newRating, newComment);
+
+        // Check edit changes
+        assertEquals(newRating, updatedReview.getRating());
+        assertEquals(newComment, updatedReview.getComment());
+        assertEquals(product.getId(), updatedReview.getProduct().getId());
+    }
+
+    @Test
+    public void testDeleteReview() throws InstanceNotFoundException, PermissionException, NotPurchasedProductException, CantReviewTwiceException {
+
+        User user = createUser("user");
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+        Product product = createProduct(user, craft1, subcategory1, "Product1");
+
+        Purchase purchase = createPurchase(user, product, LocalDateTime.of(2017, 10, 1, 10, 2, 3));
+        Review review = reviewService.publishReview(user.getId(), product.getId(), 5, "Initial comment");
+
+        // Check the average rating before removing the review
+         product.calculateAvgRating();
+         Double avgRatingBefore  = product.getAvgRating();
+
+        // Delete Review
+        reviewService.deleteReview(user.getId(), review.getId());
+
+        // Check review was deleted
+        assertThrows(InstanceNotFoundException.class, () -> {
+            permissionChecker.checkReviewExistsAndBelongsTo(review.getId(), user.getId());
+        });
+
     }
 
 }
