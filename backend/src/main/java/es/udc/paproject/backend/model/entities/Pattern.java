@@ -1,5 +1,6 @@
 package es.udc.paproject.backend.model.entities;
 
+import es.udc.paproject.backend.model.exceptions.MaxItemsExceededException;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -10,6 +11,8 @@ import java.util.Set;
 @Entity
 @DiscriminatorValue("PATTERN")
 public class Pattern extends Product {
+
+    public static final int MAX_ITEMS = 100;
     private String introduction;
     private String notes;
     private String gauge;
@@ -18,6 +21,8 @@ public class Pattern extends Product {
     private String time;
     private String abbreviations;
     private String specialAbbreviations;
+
+    private String language;
 
     private Set<Tool> tools = new HashSet<>();
     private Set<Yarn> yarns = new HashSet<>();
@@ -32,7 +37,7 @@ public class Pattern extends Product {
     public Pattern(User user, Craft craft, Subcategory subcategory, String title, String description, BigDecimal price,
                    Boolean active, LocalDateTime creationDate,
                    String introduction, String notes, String gauge, String sizing, int difficultyLevel, String time,
-                   String abbreviations, String specialAbbreviations){
+                   String abbreviations, String specialAbbreviations, String language){
 
         super(user, craft, subcategory, title, description, price, active, creationDate);
 
@@ -44,6 +49,7 @@ public class Pattern extends Product {
         this.time=time;
         this.abbreviations = abbreviations;
         this.specialAbbreviations = specialAbbreviations;
+        this.language = language;
     }
 
 
@@ -112,6 +118,14 @@ public class Pattern extends Product {
         this.specialAbbreviations = specialAbbreviations;
     }
 
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     @OneToMany(mappedBy = "pattern")
     public Set<Tool> getTools() {
         return tools;
@@ -119,6 +133,15 @@ public class Pattern extends Product {
 
     public void setTools(Set<Tool> tools) {
         this.tools = tools;
+    }
+
+    public void addTool(Tool tool) throws MaxItemsExceededException {
+        if(tools.size() == MAX_ITEMS){
+            throw new MaxItemsExceededException();
+        }
+
+        tools.add(tool);
+        tool.setPattern(this);
     }
 
     @OneToMany(mappedBy = "pattern")
@@ -130,6 +153,15 @@ public class Pattern extends Product {
         this.yarns = yarns;
     }
 
+    public void addYarn(Yarn yarn) throws MaxItemsExceededException {
+        if(yarns.size() == MAX_ITEMS){
+            throw new MaxItemsExceededException();
+        }
+
+        yarns.add(yarn);
+        yarn.setPattern(this);
+    }
+
     @OneToMany(mappedBy = "pattern")
     public Set<Section> getSections() {
         return sections;
@@ -137,5 +169,14 @@ public class Pattern extends Product {
 
     public void setSections(Set<Section> sections) {
         this.sections = sections;
+    }
+
+    public void addSection(Section section) throws MaxItemsExceededException {
+        if(sections.size() == MAX_ITEMS){
+            throw new MaxItemsExceededException();
+        }
+
+        sections.add(section);
+        section.setPattern(this);
     }
 }

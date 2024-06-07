@@ -102,7 +102,7 @@ public class PatternServiceTest {
 
     private Pattern createPattern(User user, Craft craft, Subcategory subcategory, String title, BigDecimal price, LocalDateTime creationDate){
         return new Pattern(user, craft, subcategory, title, "Description", price,true, creationDate,
-                "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None");
+                "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "ES");
     }
 
     private Pattern createPatternExtended() throws StripeException, UserAlreadySellerException, InstanceNotFoundException, IOException, DuplicateInstanceException, UserNotSellerException, MaxItemsExceededException {
@@ -123,6 +123,7 @@ public class PatternServiceTest {
         String time = "2 hours";
         String abbreviations = "abbrev";
         String specialAbbreviations = "specialAbbrev";
+        String language = "es";
         List<String> imagesUrl = Arrays.asList("image1.jpg", "image2.jpg");
 
         Tool tool1 = new Tool("Tool 1", 1);
@@ -133,12 +134,12 @@ public class PatternServiceTest {
         Yarn yarn2 = new Yarn("Brand", "Yarn 2", "Color", "Amount", "fiber content", "weight", "length");
         List<Yarn> yarns = Arrays.asList(yarn1, yarn2);
 
-        Section section1 = new Section("Section 1", "Content 1");
-        Section section2 = new Section("Section 2", "Content 2");
+        Section section1 = new Section("Section 1", "Content 1", 1);
+        Section section2 = new Section("Section 2", "Content 2", 2);
 
-        Step step1 = new Step("Row 1 ","Step 1");
+        Step step1 = new Step("Row 1 ","Step 1", 1);
         step1.setSection(section1);
-        Step step2 = new Step("Row 2 ","Step 2");
+        Step step2 = new Step("Row 2 ","Step 2", 2);
         step2.setSection(section2);
 
         SectionImages sectionImage1 = new SectionImages("sectionImage1.jpg");
@@ -150,7 +151,7 @@ public class PatternServiceTest {
         List<Section> sections = Arrays.asList(section1, section2);
 
         return patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title, description,
-                price, active, introduction, notes, gauge, sizing, difficultyLevel, time, abbreviations, specialAbbreviations,
+                price, active, introduction, notes, gauge, sizing, difficultyLevel, time, abbreviations, specialAbbreviations, language,
                 imagesUrl, tools, yarns, sections);
     }
 
@@ -172,7 +173,7 @@ public class PatternServiceTest {
         Pattern expectedPattern = createPattern(user, craft, subcategory, title, price, LocalDateTime.now());
 
         Pattern createdPattern = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None",  Collections.emptyList());
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "ES" , Collections.emptyList());
 
 
         assertEquals(expectedPattern.getUser(),createdPattern.getUser());
@@ -202,6 +203,7 @@ public class PatternServiceTest {
         String time = "2 hours";
         String abbreviations = "abbrev";
         String specialAbbreviations = "specialAbbrev";
+        String language = "ES";
         List<String> imagesUrl = Arrays.asList("image1.jpg", "image2.jpg");
 
         Tool tool1 = new Tool("Tool 1", 1);
@@ -212,12 +214,12 @@ public class PatternServiceTest {
         Yarn yarn2 = new Yarn("Brand", "Yarn 2", "Color", "Amount", "fiber content", "weight", "length");
         List<Yarn> yarns = Arrays.asList(yarn1, yarn2);
 
-        Section section1 = new Section("Section 1", "Content 1");
-        Section section2 = new Section("Section 2", "Content 2");
+        Section section1 = new Section("Section 1", "Content 1", 1);
+        Section section2 = new Section("Section 2", "Content 2", 2);
 
-        Step step1 = new Step("Row 1 ","Step 1");
+        Step step1 = new Step("Row 1 ","Step 1", 1);
         step1.setSection(section1);
-        Step step2 = new Step("Row 2 ","Step 2");
+        Step step2 = new Step("Row 2 ","Step 2", 2);
         step2.setSection(section2);
 
         SectionImages sectionImage1 = new SectionImages("sectionImage1.jpg");
@@ -229,7 +231,7 @@ public class PatternServiceTest {
         List<Section> sections = Arrays.asList(section1, section2);
 
         Pattern pattern = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title, description,
-                price, active, introduction, notes, gauge, sizing, difficultyLevel, time, abbreviations, specialAbbreviations,
+                price, active, introduction, notes, gauge, sizing, difficultyLevel, time, abbreviations, specialAbbreviations, language,
                 imagesUrl, tools, yarns, sections);
 
         assertNotNull(pattern);
@@ -265,7 +267,7 @@ public class PatternServiceTest {
         assertThrows(UserNotSellerException.class, ()->
                 patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "title", "Description",
                         BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours", "US Standard", "None", Collections.emptyList()));
+                        "Sizing", 1, "10 hours", "US Standard", "None", "US", Collections.emptyList()));
     }
 
     @Test
@@ -273,7 +275,7 @@ public class PatternServiceTest {
         assertThrows(InstanceNotFoundException.class, ()->
                 patternService.createPattern(NON_EXISTENT_ID, NON_EXISTENT_ID, NON_EXISTENT_ID, "title", "Description",
                         BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours", "US Standard", "None", Collections.emptyList()));
+                        "Sizing", 1, "10 hours", "US Standard", "None", "US", Collections.emptyList()));
     }
 
     @Test
@@ -290,10 +292,10 @@ public class PatternServiceTest {
         BigDecimal price = BigDecimal.valueOf(10);
 
         Pattern pattern1 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", Collections.emptyList());
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
 
         Pattern pattern2 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", Collections.emptyList());
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
 
         Block<Pattern> expectedBlock = new Block<>(Arrays.asList(pattern1, pattern2), false);
         Block<Pattern> foundPatterns = patternService.findAddedPatterns(user.getId(), 0, 2);
@@ -316,13 +318,13 @@ public class PatternServiceTest {
         BigDecimal price = BigDecimal.valueOf(10);
 
         Pattern pattern1 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", Collections.emptyList());
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
 
         Pattern pattern2 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", Collections.emptyList());
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
 
         Pattern pattern3 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title3, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", Collections.emptyList());
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
 
 
         Block<Pattern> firstBlock = new Block<>(Arrays.asList(pattern1, pattern2), true);
@@ -354,7 +356,7 @@ public class PatternServiceTest {
         Subcategory subcategory= createSubcategory("Ring", category);
 
         Pattern pattern1 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", Collections.emptyList());
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
 
         assertEquals(pattern1, patternService.findPatternById(user.getId(), pattern1.getId()));
     }
@@ -379,7 +381,7 @@ public class PatternServiceTest {
         pattern1.setDescription(updatedDescr);
 
         Pattern updatedPattern = patternService.editPattern(pattern1.getId(), pattern1.getUser().getId(), pattern1.getCraft().getId(), pattern1.getSubcategory().getId(), updatedTitle, updatedDescr,
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None",  Collections.emptyList());
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None",  "US", Collections.emptyList());
 
         assertEquals(pattern1, updatedPattern);
     }
@@ -393,7 +395,7 @@ public class PatternServiceTest {
         assertThrows(PermissionException.class, ()->
                 patternService.editPattern(pattern1.getId(), notOwner.getId(), pattern1.getCraft().getId(), pattern1.getSubcategory().getId(), pattern1.getTitle(), pattern1.getDescription(),
                         BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1,
-                        "10 hours", "US Standard", "None", Collections.emptyList()));
+                        "10 hours", "US Standard", "None", "US", Collections.emptyList()));
     }
 
 
@@ -416,6 +418,7 @@ public class PatternServiceTest {
         String newTime = "3 hours";
         String newAbbreviations = "updatedAbbrev";
         String newSpecialAbbreviations = "updatedSpecialAbbrev";
+        String newLanguage = "CAN";
         List<String> newImagesUrl = Arrays.asList("newImage1.jpg", "newImage2.jpg");
 
         Tool newTool1 = new Tool("Updated Tool 1", 1);
@@ -426,12 +429,12 @@ public class PatternServiceTest {
         Yarn newYarn2 = new Yarn("Updated Brand", "Updated Yarn 2", "Updated Color", "Updated Amount", "updated fiber content", "updated weight", "updated length");
         List<Yarn> newYarns = Arrays.asList(newYarn1, newYarn2);
 
-        Section newSection1 = new Section("Updated Section 1", "Updated Content 1");
-        Section newSection2 = new Section("Updated Section 2", "Updated Content 2");
+        Section newSection1 = new Section("Updated Section 1", "Updated Content 1", 1);
+        Section newSection2 = new Section("Updated Section 2", "Updated Content 2", 2);
 
-        Step newStep1 = new Step("Updated Row 1 ", "Updated Step 1");
+        Step newStep1 = new Step("Updated Row 1 ", "Updated Step 1", 1);
         newStep1.setSection(newSection1);
-        Step newStep2 = new Step("Updated Row 2 ", "Updated Step 2");
+        Step newStep2 = new Step("Updated Row 2 ", "Updated Step 2", 2);
         newStep2.setSection(newSection2);
 
         SectionImages newSectionImage1 = new SectionImages("updatedSectionImage1.jpg");
@@ -443,7 +446,7 @@ public class PatternServiceTest {
 
         // Edit pattern
         Pattern updatedPattern = patternService.editPattern(pattern.getId(), pattern.getUser().getId(), pattern.getCraft().getId(), pattern.getSubcategory().getId(), newTitle, newDescription,
-                newPrice, newActive, newIntroduction, newNotes, newGauge, newSizing, newDifficultyLevel, newTime, newAbbreviations, newSpecialAbbreviations,
+                newPrice, newActive, newIntroduction, newNotes, newGauge, newSizing, newDifficultyLevel, newTime, newAbbreviations, newSpecialAbbreviations, newLanguage,
                 newImagesUrl, newTools, newYarns, newSections);
 
         // Verify changes
@@ -505,7 +508,7 @@ public class PatternServiceTest {
         purchaseDao.save(purchase);
 
 
-        PurchaseItem purchaseItem = new PurchaseItem(pattern, pattern.getPrice(), 1);
+        PurchaseItem purchaseItem = new PurchaseItem(pattern, pattern.getPrice(), 1 );
         purchaseItem.setPurchase(purchase);
 
         purchaseItemDao.save(purchaseItem);
@@ -533,6 +536,58 @@ public class PatternServiceTest {
 
         assertNotNull(boughtPattern);
         assertEquals(pattern.getId(), boughtPattern.getId());
+    }
+
+    @Test
+    public void testFindPurchasedPatterns() throws InstanceNotFoundException, UserNotSellerException, StripeException, UserAlreadySellerException, IOException, NotPurchasedProductException, DuplicateInstanceException, MaxItemsExceededException {
+
+        User buyer = createNormalUser("buyer");
+        Pattern pattern = createPatternExtended();
+
+        assertNotNull(pattern);
+
+        // Simulate a purchase
+        Purchase purchase = new Purchase();
+        purchase.setUser(buyer);
+        purchase.setDate(LocalDateTime.now());
+        purchase.setPostalAddress("Postal Address");
+        purchase.setLocality("Locality");
+        purchase.setRegion("Region");
+        purchase.setCountry("Country");
+        purchase.setPostalCode("12345");
+
+        purchaseDao.save(purchase);
+
+
+        PurchaseItem purchaseItem = new PurchaseItem(pattern, pattern.getPrice(), 1);
+        purchaseItem.setPurchase(purchase);
+
+        purchaseItemDao.save(purchaseItem);
+
+        // Create Payment
+        Payment payment = new Payment();
+        payment.setPaymentId("paymentId");
+        payment.setPaymentMethod("pm_card_visa");
+        payment.setPaymentStatus("succeeded");
+        payment.setAmount(pattern.getPrice().multiply(new BigDecimal(100)));
+        payment.setCurrency("eur");
+        payment.setPaymentDate(LocalDateTime.now());
+        payment.setStripeAccountId(pattern.getUser().getStripeAccount().getStripeAccountId());
+        payment.setStripeTransactionId("transactionId");
+
+        payment.setPurchaseItem(purchaseItem);
+        paymentDao.save(payment);
+
+        // Asociate Payment to PurchaseItem
+        purchaseItem.setPayment(payment);
+        purchaseItemDao.save(purchaseItem);
+
+        // Test  method
+        List<Pattern> boughtPattern = patternService.findPurchasedPatterns(buyer.getId());
+
+        assertNotNull(boughtPattern);
+        assertEquals(1, boughtPattern.size());
+        assertTrue(boughtPattern.contains(pattern));
     }
 
 

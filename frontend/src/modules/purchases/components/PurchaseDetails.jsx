@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {FormattedMessage, FormattedDate, FormattedTime} from 'react-intl';
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 
 import * as actions from '../actions';
 import * as selectors from '../selectors';
@@ -31,6 +31,8 @@ const PurchaseDetails = () => {
 
     console.log("Purchase: ", purchase);
 
+    console.log("ProductId: ", purchase.items[0].productId);
+
     return (
 
         <div>
@@ -59,6 +61,7 @@ const PurchaseDetails = () => {
             <div className="mt-4">
                 <ShoppingItemList list={purchase} addReview={true}/>
             </div>
+
 
 
         </div>

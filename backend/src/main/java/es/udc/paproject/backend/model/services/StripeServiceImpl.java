@@ -42,6 +42,10 @@ public class StripeServiceImpl implements StripeService{
     }
 
 
+    /*
+    * Al utilizar setOnBehalfOf(stripeAccountId), estás indicando a Stripe que el pago debe ser transferido a la cuenta de
+    *  Stripe del propietario del producto, en lugar de la cuenta predeterminada de tu aplicación.
+    *  De esta manera, el dinero se transfiere automáticamente al propietario correcto.*/
     @Override
     public PaymentIntent createPaymentIntent(Long amount, String currency, String stripeAccountId, String paymentMethodId) throws StripeException {
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()

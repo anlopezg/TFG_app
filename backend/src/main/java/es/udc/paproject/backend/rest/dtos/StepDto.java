@@ -8,13 +8,16 @@ public class StepDto {
     private String rowNumber;
     private String instructions;
 
+    private int stepOrder;
+
     public StepDto() {
     }
 
-    public StepDto(String rowNumber, String instructions) {
+    public StepDto(String rowNumber, String instructions, int stepOrder) {
 
         this.rowNumber = rowNumber;
         this.instructions = instructions;
+        this.stepOrder = stepOrder;
     }
 
     /**
@@ -23,7 +26,7 @@ public class StepDto {
      * @return StepDto
      */
     public static StepDto toStepDto(Step step){
-        return new StepDto(step.getRowNumber(), step.getInstructions());
+        return new StepDto(step.getRowNumber(), step.getInstructions(), step.getStepOrder());
     }
 
 
@@ -43,5 +46,14 @@ public class StepDto {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
+    }
+
+    @NotNull
+    public int getStepOrder() {
+        return stepOrder;
+    }
+
+    public void setStepOrder(int stepOrder) {
+        this.stepOrder = stepOrder;
     }
 }

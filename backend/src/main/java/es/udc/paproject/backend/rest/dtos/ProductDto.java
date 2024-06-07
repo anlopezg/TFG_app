@@ -31,7 +31,7 @@ public class ProductDto {
     public ProductDto(){}
 
     public ProductDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
-                      Boolean active){
+                      Boolean active, String username){
 
         this.id=id;
         this.userId =user;
@@ -41,6 +41,7 @@ public class ProductDto {
         this.description=description;
         this.price=price;
         this.active=active;
+        this.username = username;
     }
 
     public ProductDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,

@@ -20,6 +20,10 @@ public class PatternDto extends ProductDto{
     private String time;
     private String abbreviations;
     private String specialAbbreviations;
+
+    private String language;
+
+    private String username;
     private List<ToolDto> tools;
 
     private List<String> imagesUrl;
@@ -30,11 +34,11 @@ public class PatternDto extends ProductDto{
     public PatternDto(){}
 
     public PatternDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
-                      Boolean active,String introduction, String notes, String gauge, String sizing,
+                      Boolean active, String username, String introduction, String notes, String gauge, String sizing,
                       int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
                       List<String> imagesUrl){
 
-        super(id, user, craft, subcategory, title, description, price, active);
+        super(id, user, craft, subcategory, title, description, price, active, username);
 
         this.introduction=introduction;
         this.notes=notes;
@@ -48,11 +52,11 @@ public class PatternDto extends ProductDto{
     }
 
     public PatternDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
-                      Boolean active, String introduction, String notes, String gauge, String sizing, int difficultyLevel,
-                      String time, String abbreviations, String specialAbbreviations, List<String> imagesUrl,
-                      List<ToolDto> tools, List<YarnDto> yarns, List<SectionDto> sections) {
+                      Boolean active, String username, String introduction, String notes, String gauge, String sizing, int difficultyLevel,
+                      String time, String abbreviations, String specialAbbreviations, String language,
+                      List<String> imagesUrl, List<ToolDto> tools, List<YarnDto> yarns, List<SectionDto> sections) {
 
-        super(id, user, craft, subcategory, title, description, price, active);
+        super(id, user, craft, subcategory, title, description, price, active, username);
         this.introduction = introduction;
         this.notes = notes;
         this.gauge = gauge;
@@ -61,6 +65,7 @@ public class PatternDto extends ProductDto{
         this.time = time;
         this.abbreviations = abbreviations;
         this.specialAbbreviations = specialAbbreviations;
+        this.language = language;
 
         this.imagesUrl = imagesUrl;
         this.tools = tools;
@@ -145,6 +150,16 @@ public class PatternDto extends ProductDto{
 
     public void setSpecialAbbreviations(String specialAbbreviations) {
         this.specialAbbreviations = specialAbbreviations;
+    }
+
+    @NotNull(groups = {AllValidations.class})
+    @Size(min=1, max=60, groups={AllValidations.class})
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     @NotNull(groups = {AllValidations.class})

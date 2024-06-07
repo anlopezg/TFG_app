@@ -43,7 +43,6 @@ const Products = ({products, crafts, categories}) => {
                                     <div className="d-flex">
                                         <i className="fa-solid fa-user-tag m-1"></i>
                                         <UserLink id={product.userId} username={product.username}/>
-                                        <ProductType productType={product.productType}/>
                                     </div>
 
 

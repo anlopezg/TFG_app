@@ -65,10 +65,14 @@ public class SecurityConfig {
 					/********************* PATTERN CONTROLLER *********************/
 					.requestMatchers(HttpMethod.POST, "/patterns/create").hasRole("SELLER")
 
-					.requestMatchers(HttpMethod.GET, "/patterns/**").hasRole("SELLER")
+					.requestMatchers(HttpMethod.GET, "/patterns/uploaded").hasRole("SELLER")
+					.requestMatchers(HttpMethod.GET, "/patterns/uploaded/*").hasRole("SELLER")
 
 					.requestMatchers(HttpMethod.PUT, "/patterns/edit/*").hasRole("SELLER")
 					.requestMatchers(HttpMethod.DELETE, "/patterns/delete/*").hasRole("SELLER")
+
+					.requestMatchers(HttpMethod.GET, "/patterns/purchased").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.GET, "/patterns/purchased/*").hasAnyRole("USER", "SELLER")
 
 
 					/********************* SHOPPING CONTROLLER *********************/
@@ -89,8 +93,10 @@ public class SecurityConfig {
 					.requestMatchers("/api/paypal/**").permitAll()
 
 					/********************* PAYMENTS CONTROLLER *********************/
-					.requestMatchers(HttpMethod.GET, "/api/payments/accounts/*").hasAnyRole("USER", "SELLER")
-					.requestMatchers(HttpMethod.POST, "/api/payments/create").hasAnyRole("USER", "SELLER")
+					.requestMatchers(HttpMethod.GET, "/api/payments/accounts/*").permitAll()
+					.requestMatchers(HttpMethod.GET, "/api/payments/**").permitAll()
+					.requestMatchers(HttpMethod.POST, "/api/payments/create").permitAll()
+					.requestMatchers(HttpMethod.POST, "/api/payments/**").permitAll()
 
 
 				.anyRequest().denyAll());

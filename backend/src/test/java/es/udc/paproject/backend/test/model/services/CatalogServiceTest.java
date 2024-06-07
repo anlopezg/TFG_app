@@ -97,7 +97,7 @@ public class CatalogServiceTest {
         Pattern pattern = new Pattern(user, craft, subcategory, title, "descrip", BigDecimal.valueOf(30),
                 true, LocalDateTime.now(),
                 "intro", "notes", "gauge", "sizing", 1,
-                "time", "abbr", "special");
+                "time", "abbr", "special", "US");
 
         patternDao.save(pattern);
         return pattern;

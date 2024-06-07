@@ -15,6 +15,7 @@ export {default as UserFilter} from './components/UserFilter.jsx';
 export {default as Users} from './components/Users.jsx';
 export {default as FindUsersResult} from './components/FindUsersResult.jsx';
 export {default as FilterTab} from './components/FilterTab.jsx';
+export {default as FavoriteList} from './components/FavoriteList.jsx';
 
 
 export default {actions, actionTypes, reducer, selectors};

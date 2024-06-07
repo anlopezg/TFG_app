@@ -20,7 +20,6 @@ const EditReview = () => {
     const [rating, setRating] = useState(review.rating);
     const [comment, setComment] = useState(review.comment);
 
-    console.log("Review", review);
     const handleSubmit = event => {
         event.preventDefault();
 
@@ -110,8 +109,8 @@ const EditReview = () => {
     );
 };
 
-EditReview.propTypes ={
+/*EditReview.propTypes ={
     userReview: PropTypes.array.isRequired
-};
+};*/
 
 export default EditReview;

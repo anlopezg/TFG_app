@@ -873,29 +873,20 @@ h4.retro{
     pointer-events: none;
 }
 
-.paypal-button{
-    background-color: #ffc439;
-    border: none;
-    border-radius: 20px;
-    color: #003087;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 10px 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-    margin: auto;
+
+.section-title {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-family: 'Bold', sans-serif;
+    color: var(--darker-blue);
+    margin-top: 20px;
+}
+.notes-section {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 
-.paypal-button img {
-    margin-right: 10px;
-}
-
-.paypal-button:hover {
-    background-color: #e0ac21;
-}
 
 

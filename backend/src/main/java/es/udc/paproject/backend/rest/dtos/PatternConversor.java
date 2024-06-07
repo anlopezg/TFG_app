@@ -17,7 +17,7 @@ public class PatternConversor {
 
         return new PatternDto(pattern.getId(), pattern.getUser().getId(),  pattern.getCraft().getId(),
                 pattern.getSubcategory().getId(),
-                pattern.getTitle(), pattern.getDescription(), pattern.getPrice(), pattern.getActive(),
+                pattern.getTitle(), pattern.getDescription(), pattern.getPrice(), pattern.getActive(), pattern.getUser().getUsername(),
                 pattern.getIntroduction(), pattern.getNotes(),
                 pattern.getGauge(), pattern.getSizing(), pattern.getDifficultyLevel(), pattern.getTime(),
                 pattern.getAbbreviations(), pattern.getSpecialAbbreviations(),
@@ -32,10 +32,10 @@ public class PatternConversor {
 
         return new PatternDto(pattern.getId(), pattern.getUser().getId(),  pattern.getCraft().getId(),
                 pattern.getSubcategory().getId(),
-                pattern.getTitle(), pattern.getDescription(), pattern.getPrice(), pattern.getActive(),
+                pattern.getTitle(), pattern.getDescription(), pattern.getPrice(), pattern.getActive(), pattern.getUser().getUsername(),
                 pattern.getIntroduction(), pattern.getNotes(),
                 pattern.getGauge(), pattern.getSizing(), pattern.getDifficultyLevel(), pattern.getTime(),
-                pattern.getAbbreviations(), pattern.getSpecialAbbreviations(),
+                pattern.getAbbreviations(), pattern.getSpecialAbbreviations(), pattern.getLanguage(),
                 productImagesToStringList(pattern), tools, yarns, sections);
     }
 
@@ -58,6 +58,7 @@ public class PatternConversor {
         dto.setTime(pattern.getTime());
         dto.setAbbreviations(pattern.getAbbreviations());
         dto.setSpecialAbbreviations(pattern.getSpecialAbbreviations());
+        dto.setLanguage(pattern.getLanguage());
         dto.setImagesUrl(productImagesToStringList(pattern));
 
         dto.setTools(pattern.getTools().stream().map(ToolDto::toToolDto).collect(Collectors.toList()));

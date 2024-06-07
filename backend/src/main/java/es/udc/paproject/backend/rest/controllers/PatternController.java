@@ -9,6 +9,7 @@ import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.PatternService;
 import es.udc.paproject.backend.rest.dtos.BlockDto;
 import es.udc.paproject.backend.rest.dtos.PatternDto;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static es.udc.paproject.backend.rest.dtos.PatternConversor.*;
 import static es.udc.paproject.backend.rest.dtos.SectionDto.toSections;
@@ -46,7 +48,7 @@ public class PatternController {
                 patternDto.getTitle(), patternDto.getDescription(), patternDto.getPrice(), patternDto.getActive(),
                 patternDto.getIntroduction(), patternDto.getNotes(), patternDto.getGauge(), patternDto.getSizing(),
                 patternDto.getDifficultyLevel(), patternDto.getTime(),
-                patternDto.getAbbreviations(), patternDto.getSpecialAbbreviations(),
+                patternDto.getAbbreviations(), patternDto.getSpecialAbbreviations(), patternDto.getLanguage(),
                 patternDto.getImagesUrl(), tools, yarns, sections);
 
         PatternDto createdPatternDto = toPatternDtoFull(createdPattern);
@@ -54,7 +56,7 @@ public class PatternController {
         return new ResponseEntity<>(createdPatternDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/find")
+    @GetMapping("/uploaded")
     public BlockDto<PatternDto> findAddedPatterns(@RequestAttribute Long userId, @RequestParam(defaultValue = "0") int page) throws InstanceNotFoundException, UserNotSellerException {
 
         Block<Pattern> patternBlock = patternService.findAddedPatterns(userId, page,6 );
@@ -62,7 +64,7 @@ public class PatternController {
         return new BlockDto<>(toPatternDtos(patternBlock.getItems()), patternBlock.getExistMoreItems());
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/uploaded/{id}")
     public PatternDto findPatternById(@RequestAttribute Long userId, @PathVariable Long id) throws InstanceNotFoundException, UserNotOwnerException, PermissionException {
 
         return toFullPatternDto(patternService.findPatternById(userId, id));
@@ -83,7 +85,7 @@ public class PatternController {
                 patternDto.getTitle(), patternDto.getDescription(), patternDto.getPrice(), patternDto.getActive(),
                 patternDto.getIntroduction(), patternDto.getNotes(), patternDto.getGauge(), patternDto.getSizing(),
                 patternDto.getDifficultyLevel(), patternDto.getTime(), patternDto.getAbbreviations(), patternDto.getSpecialAbbreviations(),
-                patternDto.getImagesUrl(), tools, yarns, sections);
+                patternDto.getLanguage(), patternDto.getImagesUrl(), tools, yarns, sections);
 
         return toPatternDtoFull(updatedPattern);
     }
@@ -104,7 +106,9 @@ public class PatternController {
 
     @GetMapping("/purchased")
     public List<PatternDto> getPurchasedPatterns(@RequestAttribute Long userId) throws InstanceNotFoundException {
+
         List<Pattern> patterns = patternService.findPurchasedPatterns(userId);
+
         return toPatternDtos(patterns);
     }
 

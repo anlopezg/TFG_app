@@ -15,6 +15,7 @@ public class Section {
     private Pattern pattern;
     private String title;
     private String description;
+    private int sectionOrder;
 
     private Set<Step> steps = new HashSet<>();
 
@@ -29,9 +30,10 @@ public class Section {
         this.description = description;
     }
 
-    public Section(String title, String description) {
+    public Section(String title, String description, int sectionOrder) {
         this.title = title;
         this.description = description;
+        this.sectionOrder = sectionOrder;
     }
 
     @Id
@@ -68,6 +70,14 @@ public class Section {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getSectionOrder() {
+        return sectionOrder;
+    }
+
+    public void setSectionOrder(int sectionOrder) {
+        this.sectionOrder = sectionOrder;
     }
 
     @OneToMany(mappedBy = "section")

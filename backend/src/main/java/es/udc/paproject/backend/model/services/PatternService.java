@@ -19,14 +19,15 @@ public interface PatternService {
     Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                           BigDecimal price, Boolean active, String introduction, String notes, String gauge,
                           String sizing, int difficultyLevel, String time,
-                          String abbreviations, String specialAbbreviations,
+                          String abbreviations, String specialAbbreviations, String language,
                           List<String> imagesUrl)
             throws InstanceNotFoundException, UserNotSellerException;
 
 
     Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                           BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                          String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
+                          String sizing, int difficultyLevel, String time, String abbreviations,
+                          String specialAbbreviations, String language,
                           List<String> imagesUrl, List<Tool> tools, List<Yarn> yarns, List<Section> sections)
             throws InstanceNotFoundException, UserNotSellerException, MaxItemsExceededException;
 
@@ -43,12 +44,13 @@ public interface PatternService {
     Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
                         BigDecimal price, Boolean active, String introduction, String notes, String gauge,
                         String sizing, int difficultyLevel, String time,
-                        String abbreviations, String specialAbbreviations, List<String> imagesUrl) throws InstanceNotFoundException, UserNotOwnerException, PermissionException;
+                        String abbreviations, String specialAbbreviations, String language, List<String> imagesUrl) throws InstanceNotFoundException, UserNotOwnerException, PermissionException;
 
 
     Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
                         BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                        String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
+                        String sizing, int difficultyLevel, String time, String abbreviations,
+                        String specialAbbreviations, String language,
                         List<String> imagesUrl, List<Tool> tools, List<Yarn> yarns, List<Section> sections)
             throws InstanceNotFoundException, PermissionException, MaxItemsExceededException;
 

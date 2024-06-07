@@ -8,7 +8,7 @@ import ProductReviews from "./ProductReviews.jsx";
 import ReactStars from "react-stars";
 
 
-const FindUserReviews = ({productId, avgRating}) => {
+const FindProductReviews = ({productId, avgRating}) => {
 
 
     const productReviewSearch = useSelector(selectors.getProductReviewSearch);
@@ -26,6 +26,8 @@ const FindUserReviews = ({productId, avgRating}) => {
     if(!productReviewSearch){
         return null;
     }
+
+    console.log("Average rating", avgRating);
 
 
     return(
@@ -90,4 +92,4 @@ const FindUserReviews = ({productId, avgRating}) => {
     )
 }
 
-export default FindUserReviews;
+export default FindProductReviews;

@@ -46,25 +46,25 @@ INSERT INTO Subcategory (subcategoryName, categoryId) VALUES
 
 INSERT INTO Product (userId, craftId, subcategoryId, title, description, price, active, creationDate, productType, version, avgRating,
                      amount, size, color, details,
-                     introduction, notes, time, difficultyLevel, abbreviations, specialAbbreviations, gauge, sizing) VALUES
+                     introduction, notes, time, difficultyLevel, abbreviations, specialAbbreviations, gauge, sizing, language) VALUES
       -- Physical Product
             (2, 1, 1, 'Floral Crochet Top', 'Top with floral pattern', 25.00, TRUE, '2024-01-20 12:30:00', 'PHYSICAL', 0, 4.0,
              5, 'EU M', 'Light green', 'Made with acrylic yarn',
-             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 
       -- Physical Product
             (2, 2, 4, 'Long Knit Scarf', 'Wool scarf', 14.00, TRUE, '2024-02-02 16:00:00', 'PHYSICAL', 0, 0.0,
              10, 'Only size', 'Pastel pink', 'Made with wool',
-             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 
       -- Pattern id = 3
             (2, 1, 2, 'Off shoulder sweater', 'Wool sweater', 10.00, TRUE, '2024-02-05 18:15:00','PATTERN', 0,0.0,
              NULL, NULL, NULL, NULL,
-             'How to crochet the sweater',  'Crochet loosely', '25 hours', 2 ,'US Standard', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S'),
+             'How to crochet the sweater',  'Crochet loosely', '25 hours', 2 ,'US', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S', 'en'),
       -- Pattern
             (2, 1, 6, 'Crochet bag', 'This is a pattern to make a crochet bag', 20.00, TRUE, '2024-03-05 18:15:00', 'PATTERN',0, 0.0,
              NULL, NULL, NULL, NULL,
-             'How to crochet a bag', 'Crochet loosely', '25 hours', 2 ,'US Standard', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S');
+             'How to crochet a bag', 'Crochet loosely', '25 hours', 2 ,'US', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S', 'en');
 
 
 INSERT INTO Favorite (userId, productId, liked) VALUES
@@ -99,13 +99,13 @@ INSERT INTO Purchase (userId, date, postalAddress, locality, region, country, po
             (4, '2024-04-06 12:00:00', 'Avenida Montserrat', 'Madrid', 'Madrid', 'España', '52000');
 
 INSERT INTO PurchaseItem(productId, productPrice, quantity, purchaseId) VALUES
-            (1, 20.0, 2, 1),
-            (1, 22.0, 1, 2);
+            (3, 20.0, 2, 1),
+            (3, 22.0, 1, 2);
 
 
 INSERT INTO Review(userId, productId, rating, comment, date) VALUES
-            (1, 1, 4, "Very well made product", '2024-04-22 12:00:00' ),
-            (4, 1, 3, "I expected to be better because of its price", '2024-05-01 19:00:00');
+            (1, 3, 4, "Very well made product", '2024-04-22 12:00:00' ),
+            (4, 3, 3, "I expected to be better because of its price", '2024-05-01 19:00:00');
 
 
 INSERT INTO StripeAccount(userId, stripeAccountId, stripeEmail, accountStatus) VALUES
@@ -113,26 +113,30 @@ INSERT INTO StripeAccount(userId, stripeAccountId, stripeEmail, accountStatus) V
 
 
 INSERT INTO Yarn (productId, brand, name, color, amount, fiberContent, weight, length) VALUES
-    (3, 'Stylecraft', 'Special Chunky', 'Red', '100g', 'Wool', '500g', '200m'),
-    (3, 'Stylecraft', 'Special DK', 'Blue', '200g', 'Cotton', '100g', '300m');
+    (3, 'Stylecraft', 'Special Chunky', 'Red', '2', 'Wool', '500g', '200m'),
+    (3, 'Stylecraft', 'Special DK', 'Blue', '5', 'Cotton', '100g', '300m');
 
 INSERT INTO Tool (productId, toolName, amount) VALUES
     (3, '5mm Hook',  1),
     (3, 'Needle', 1),
     (4, '10mm Hook', 1);
 
-INSERT INTO Section (productId, title, description) VALUES
-    (3, 'Front Section', 'This sections describes the process of hwo to do the front part of the sweater'),
-    (3, 'Back Section', 'This sections describes the process of how to do the back part of the sweater');
+INSERT INTO Section (productId, title, description, sectionOrder) VALUES
+    (3, 'Front Section', 'This sections describes the process of how to do the front part of the sweater', 1),
+    (3, 'Back Section', 'This sections describes the process of how to do the back part of the sweater', 2),
+    (3, 'Final Section', 'This sections describes the process of how to do the end of the sweater', 3);
 
-INSERT INTO Step (sectionId, rowNumber, instructions) VALUES
-    (1, 'Row 1', 'Ch 100'),
-    (1, 'Row 2', 'Sc 100'),
-    (2, 'Row 1', 'Ch 4'),
-    (2, 'Rows 2 to 50', 'Hdc 4');
+INSERT INTO Step (sectionId, rowNumber, instructions, stepOrder) VALUES
+    (1, 'Row 1', 'Ch 100', 1),
+    (1, 'Row 2', 'Sc 100', 2),
+    (2, 'Row 1', 'Ch 4', 1),
+    (2, 'Rows 2 to 50', 'Hdc 4', 2);
 
 INSERT INTO Payment (paymentId, paymentMethod, paymentStatus, amount, currency, paymentDate, stripeAccountId, stripeTransactionId, purchaseItemId)
 VALUES
     ('pi_3PNYi8AurJ6JByYJ1h9BR7Mu', 'pm_card_visa', 'succeeded', 9.00, 'eur', NOW(), 'acct_1PMy8yPC211iYDLj',
-     'req_ZoDS0pI4yAYiLg', 1);
+     'req_ZoDS0pI4yAYiLg', 1),
+    ('pi_3PNYi8AurJ6JByYJ1h9BR7Mu', 'pm_card_visa', 'succeeded', 10.00, 'eur', NOW(), 'acct_1PMy8yPC211iYDLj',
+     'req_ZoDS0pI4yAYiLg', 2);
+
 

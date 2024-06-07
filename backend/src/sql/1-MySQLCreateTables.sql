@@ -101,6 +101,7 @@ CREATE TABLE Product (
     specialAbbreviations VARCHAR(500),
     gauge VARCHAR(200),
     sizing VARCHAR(200),
+    language VARCHAR (60),
 
 
     CONSTRAINT ProductPK PRIMARY KEY (id),
@@ -256,6 +257,7 @@ CREATE TABLE Section(
    productId BIGINT NOT NULL,
    title VARCHAR(32) NOT NULL,
    description VARCHAR(400) NOT NULL,
+    sectionOrder SMALLINT NOT NULL,
 
    CONSTRAINT SectionPK PRIMARY KEY (id),
    CONSTRAINT SectionProductFK FOREIGN KEY(productId) REFERENCES Product (id)
@@ -269,6 +271,7 @@ CREATE TABLE Step(
     sectionId BIGINT NOT NULL,
     rowNumber VARCHAR(32) NOT NULL,
     instructions VARCHAR(400) NOT NULL,
+    stepOrder SMALLINT NOT NULL,
 
     CONSTRAINT StepPK PRIMARY KEY (id),
     CONSTRAINT StepSectionFK FOREIGN KEY(sectionId) REFERENCES Section (id)

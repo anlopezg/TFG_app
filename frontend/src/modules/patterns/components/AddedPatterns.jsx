@@ -1,7 +1,7 @@
 import {FormattedMessage} from "react-intl";
 import PropTypes from 'prop-types';
 
-import {PatternLink} from '../../common';
+import {PatternLink} from '../../common/index.js';
 import {Link} from "react-router-dom";
 
 const AddedPatterns= ({patterns}) =>(

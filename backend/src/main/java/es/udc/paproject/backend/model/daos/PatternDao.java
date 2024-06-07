@@ -25,6 +25,7 @@ public interface PatternDao extends CrudRepository<Pattern, Long>, PagingAndSort
             "LEFT JOIN FETCH p.sections s " +
             "LEFT JOIN FETCH s.steps st " +
             "LEFT JOIN FETCH s.images si " +
-            "WHERE p.id = :patternId")
+            "WHERE p.id = :patternId " +
+            "ORDER BY s.sectionOrder, st.stepOrder")
     Optional<Pattern> findByIdWithDetails(@Param("patternId") Long patternId);
 }

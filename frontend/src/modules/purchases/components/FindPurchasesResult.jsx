@@ -61,9 +61,6 @@ const FindPurchasesResult = () => {
                     enabled: purchaseSearch.result.existMoreItems,
                     onClick: () => dispatch(actions.nextFindPurchasesResultPage(purchaseSearch.criteria))}}/>
 
-
-
-
         </div>
 
     );

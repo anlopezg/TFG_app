@@ -16,16 +16,19 @@ public class SectionDto {
 
     private String title;
     private String description;
+
+    private int sectionOrder;
     private List<StepDto> steps;
     private List<SectionImagesDto> imagesUrl;
 
 
     public SectionDto() {}
 
-    public SectionDto(String title, String description, List<StepDto> steps, List<SectionImagesDto> imagesUrl) {
+    public SectionDto(String title, String description, int sectionOrder, List<StepDto> steps, List<SectionImagesDto> imagesUrl) {
 
         this.title = title;
         this.description = description;
+        this.sectionOrder = sectionOrder;
         this.steps = steps;
         this.imagesUrl = imagesUrl;
     }
@@ -41,7 +44,7 @@ public class SectionDto {
 
         List<SectionImagesDto> images = section.getImages().stream().map(i -> toSectionImagesDto(i)).collect(Collectors.toList());
 
-        return new SectionDto(section.getTitle(), section.getDescription(), steps, images);
+        return new SectionDto(section.getTitle(), section.getDescription(), section.getSectionOrder(), steps, images);
     }
 
     public static List<Section> toSections(List<SectionDto> sectionDtos) {
@@ -51,7 +54,7 @@ public class SectionDto {
             section.setTitle(dto.getTitle());
             section.setDescription(dto.getDescription());
             section.setSteps(dto.getSteps().stream()
-                    .map(stepDto -> new Step(stepDto.getRowNumber(), stepDto.getInstructions()))
+                    .map(stepDto -> new Step(stepDto.getRowNumber(), stepDto.getInstructions(), stepDto.getStepOrder()))
                     .collect(Collectors.toSet()));
             return section;
         }).collect(Collectors.toList());
@@ -76,6 +79,16 @@ public class SectionDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @NotNull(groups = {ProductDto.AllValidations.class})
+    @Size(min = 1, max = 100)
+    public int getSectionOrder() {
+        return sectionOrder;
+    }
+
+    public void setSectionOrder(int sectionOrder) {
+        this.sectionOrder = sectionOrder;
     }
 
     @NotNull(groups = {ProductDto.AllValidations.class})

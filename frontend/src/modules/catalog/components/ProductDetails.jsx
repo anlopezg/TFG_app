@@ -6,33 +6,24 @@ import {Form, Link, useNavigate, useParams} from 'react-router-dom';
 import users from '../../users';
 import * as selectors from '../selectors';
 import * as actions from '../actions';
-import * as favoriteActions from '../../favorite/actions.js';
-import * as favoriteSelectors from '../../favorite/selectors.js';
-import {IsFavorite} from "../../favorite/index.js";
 
 import {BackLink, Errors, UserLink} from '../../common';
 import ProductType from "./ProductType.jsx";
 import ImagesCarousel from "./ImagesCarousel.jsx";
-import Heart from "react-heart";
 import {AddItemToCart} from "../../purchases/index.js";
-import FavoriteHeart from "../../favorite/components/FavoriteHeart.jsx";
+import FavoriteHeart from "./FavoriteHeart.jsx";
 import FindProductReviews from "../../reviews/components/FindProductReviews.jsx";
 
 const ProductDetails = () => {
 
     const loggedIn = useSelector(users.selectors.isLoggedIn);
-    const user = useSelector(users.selectors.getUser);
     const product = useSelector(selectors.getProduct);
     const crafts = useSelector(selectors.getCrafts);
     const categories = useSelector(selectors.getCategories);
     const dispatch = useDispatch();
     const {id} = useParams();
-    const navigate = useNavigate();
     const [backendErrors, setBackendErrors] = useState(null);
 
-    // Heart state
-    const [active, setActive] = useState(false);
-    const favorite = useSelector(favoriteSelectors.getFavorite);
 
     useEffect(() => {
 
@@ -57,6 +48,8 @@ const ProductDetails = () => {
     if(!crafts){
         return null;
     }
+
+    console.log("Product", product);
 
     const craftNameTranslation = (craftName) =>{
         return <FormattedMessage id={`project.catalog.Crafts.${craftName}`}/>

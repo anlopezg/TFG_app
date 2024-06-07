@@ -3,26 +3,23 @@ import {Route, Routes} from 'react-router-dom';
 
 import AppGlobalComponents from './AppGlobalComponents';
 import Home from './Home';
-import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile, BecomesSeller} from '../../users';
+import {Login, SignUp, UpdateProfile, ChangePassword, Logout, ViewProfile, BecomesSeller, BecomesSellerStripe} from '../../users';
 import users from '../../users';
 import {
-    CreatePattern,
     CreatePhysical,
-    PatternDetails,
     PhysicalDetails,
-    EditPattern,
-    ManagePattern,
-    DeletePattern,
     EditPhysical,
     ManagePhysical,
     DeletePhysical,
     StoreTabs
 } from "../../publications/index.js";
 
-import {FindProductsResult, ProductDetails, FindAllProducts, UserProducts, FindUsersResult} from "../../catalog/index.js";
-import {FavoriteList} from "../../favorite/index.js";
-import {Buy, ShoppingCart, PurchaseCompleted, FindPurchasesResult, PurchaseDetails} from "../../purchases/index.js";
+import { CreatePattern,PatternDetails,EditPattern,  ManagePattern, DeletePattern} from "../../patterns/index.js";
+
+import {FindProductsResult, ProductDetails, FindAllProducts, UserProducts, FindUsersResult, FavoriteList} from "../../catalog/index.js";
+import {Buy, ShoppingCart, PurchaseCompleted, FindPurchasesResult, PurchaseDetails, Payment} from "../../purchases/index.js";
 import {FindUserReviews, AddReview, EditReview, DeleteReview} from "../../reviews/index.js";
+import {GetPurchasedPatterns, PurchasedPatternDetails} from "../../patterns/index.js";
 
 const Body = () => {
 
@@ -50,15 +47,23 @@ const Body = () => {
                 {!loggedIn && <Route path="/users/login" element={<Login/>}/>}
                 {!loggedIn && <Route path="/users/signup" element={<SignUp/>}/>}
 
-                {loggedIn && isNormalUser && <Route path="/publications/products" element={<BecomesSeller/>}/>}
 
-                {loggedIn && <Route path="/products/favorites" element={<FavoriteList/>}/>}
+                {loggedIn && isNormalUser && <Route path="/publications/products" element={<BecomesSeller/>}/>}
+                {loggedIn && isNormalUser && <Route path="/users/becomeSellerStripe" element={<BecomesSeller/>}/>}
+
+                {loggedIn && <Route path="/catalog/favorites" element={<FavoriteList/>}/>}
 
                 {loggedIn && <Route path="/shopping/cart" element={<ShoppingCart/>}/>}
                 {loggedIn && <Route path="/shopping/purchase" element={<Buy/>}/> }
                 {loggedIn && <Route path="/shopping/purchase-completed" element={<PurchaseCompleted/>}/> }
                 {loggedIn && <Route path="/shopping/find-purchases-result" element={<FindPurchasesResult/>}/> }
                 {loggedIn && <Route path="/shopping/purchase-details/:id" element={<PurchaseDetails/>}/>}
+                {loggedIn && <Route path="/shopping/purchase/payment" element={<Payment/>}/> }
+
+
+                {loggedIn && <Route path="/shopping/patterns" element={<GetPurchasedPatterns/>}/>}
+                {loggedIn && <Route path="/shopping/pattern-details/:id" element={<PurchasedPatternDetails/>}/>}
+
 
                 {loggedIn && <Route path="/reviews/find-user-reviews" element={<FindUserReviews/>}/>}
                 {loggedIn && <Route path="/reviews/add-review" element={<AddReview/>}/>}

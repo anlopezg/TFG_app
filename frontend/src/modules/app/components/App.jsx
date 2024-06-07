@@ -5,8 +5,13 @@ import Header from './Header';
 import Body from './Body';
 import Footer from './Footer';
 import users from '../../users';
-import publications from "../../publications";
 import catalog from "../../catalog";
+
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe('pk_test_51PMuwQAurJ6JByYJsjn74RcLRCS2FjCbRtFJpphu4LRvlD0tJ0ZU4gVhGeLyVuw8wdKAjqKEjf1R7A4ROLm1xEfF00e8fX87eM');
+
 
 const App = () => {
 
@@ -23,11 +28,14 @@ const App = () => {
     }, [dispatch]);
 
     return (
-        <div>
-            <Header/>
-            <Body/>
-            <Footer/>
-        </div>
+            <div>
+                <Header/>
+                <Elements stripe={stripePromise}>
+                    <Body/>
+                </Elements>
+
+                <Footer/>
+            </div>
     );
 
 }

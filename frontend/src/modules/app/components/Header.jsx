@@ -28,17 +28,25 @@ const Header = () => {
                 {userName ? (
                     <ul className="navbar-nav ms-auto">
 
-                        <li className="nav-item">
-
-                            <Link className="nav-link me-3" to="/shopping/find-purchases-result">
-                                <i className="fa-solid fa-bag-shopping me-1"></i>
+                        <li className="nav-item dropdown" style={{ marginRight: '20px' }}>
+                            <a className="dropdown-toggle nav-link" href="#" role="button"
+                               id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span className="fa-solid fa-bag-shopping me-1"></span>&nbsp;
                                 <FormattedMessage id="project.shopping.Purchases.header"/>
-                            </Link>
+                            </a>
+                            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="storeDropdown">
+                                <li><Link className="dropdown-item" to="/shopping/patterns">
+                                    <FormattedMessage id="project.pattern.purchased.heading"/>
+                                </Link></li>
+                                <li><Link className="dropdown-item" to="/shopping/find-purchases-result">
+                                    <FormattedMessage id="project.shopping.Purchases.orders.header"/>
+                                </Link></li>
+                            </ul>
                         </li>
 
                         <li className="nav-item">
 
-                            <Link className="nav-link me-3" to="/products/favorites">
+                            <Link className="nav-link me-3" to="/catalog/favorites">
                                 <i className="fa-solid fa-heart me-1"></i>
                                 <FormattedMessage id="project.products.Favorite.list"/>
                             </Link>

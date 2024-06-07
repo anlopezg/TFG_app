@@ -2,7 +2,8 @@ import React, {useState} from "react";
 import {FormattedMessage} from "react-intl";
 import ProductFilter from "../../catalog/components/ProductFilter.jsx";
 import UserFilter from "../../catalog/components/UserFilter.jsx";
-import {ViewAddedPatterns, ViewAddedPhysicals} from "../index.js";
+import {ViewAddedPhysicals} from "../index.js";
+import {ViewAddedPatterns} from "../../patterns/index.js";
 
 const StoreTabs = ({ initialTab }) =>{
 

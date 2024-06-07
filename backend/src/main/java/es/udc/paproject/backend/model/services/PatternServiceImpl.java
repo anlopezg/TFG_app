@@ -7,6 +7,9 @@ import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.MaxItemsExceededException;
 import es.udc.paproject.backend.model.exceptions.PermissionException;
 import es.udc.paproject.backend.model.exceptions.UserNotSellerException;
+import es.udc.paproject.backend.rest.dtos.ProductDto;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -15,11 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class PatternServiceImpl implements PatternService{
@@ -59,8 +58,8 @@ public class PatternServiceImpl implements PatternService{
     @Override
     public Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                                  BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                                 String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
-                                 List<String> imagesUrl)
+                                 String sizing, int difficultyLevel, String time, String abbreviations,
+                                 String specialAbbreviations, String language, List<String> imagesUrl)
             throws InstanceNotFoundException, UserNotSellerException {
 
         User user = permissionChecker.checkSellerUser(userId);
@@ -70,7 +69,7 @@ public class PatternServiceImpl implements PatternService{
         LocalDateTime creationDate = LocalDateTime.now();
 
         Pattern patternCreated = new Pattern(user, craft, subcategory,
-                title, description, price, active, creationDate,introduction, notes, gauge, sizing, difficultyLevel, time, abbreviations, specialAbbreviations);
+                title, description, price, active, creationDate,introduction, notes, gauge, sizing, difficultyLevel, time, abbreviations, specialAbbreviations, language);
 
         productDao.save(patternCreated);
 
@@ -87,7 +86,8 @@ public class PatternServiceImpl implements PatternService{
     @Override
     public Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                                  BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                                 String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
+                                 String sizing, int difficultyLevel, String time, String abbreviations,
+                                 String specialAbbreviations, String language,
                                  List<String> imagesUrl, List<Tool> tools, List<Yarn> yarns, List<Section> sections)
             throws InstanceNotFoundException, UserNotSellerException, MaxItemsExceededException {
 
@@ -98,7 +98,7 @@ public class PatternServiceImpl implements PatternService{
         LocalDateTime creationDate = LocalDateTime.now();
 
         Pattern patternCreated = new Pattern(user, craft, subcategory,
-                title, description, price, active, creationDate,introduction, notes, gauge, sizing, difficultyLevel, time, abbreviations, specialAbbreviations);
+                title, description, price, active, creationDate,introduction, notes, gauge, sizing, difficultyLevel, time, abbreviations, specialAbbreviations, language);
 
         productDao.save(patternCreated);
 
@@ -167,7 +167,8 @@ public class PatternServiceImpl implements PatternService{
     @Override
     public Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
                                BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                               String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
+                               String sizing, int difficultyLevel, String time, String abbreviations,
+                               String specialAbbreviations, String language,
                                List<String> imagesUrl) throws InstanceNotFoundException, PermissionException {
 
 
@@ -192,6 +193,7 @@ public class PatternServiceImpl implements PatternService{
         pattern.setTime(time);
         pattern.setAbbreviations(abbreviations);
         pattern.setSpecialAbbreviations(specialAbbreviations);
+        pattern.setLanguage(language);
 
         Set<ProductImages> productImages = new HashSet<>();
         for (String imageUrl : imagesUrl) {
@@ -211,6 +213,7 @@ public class PatternServiceImpl implements PatternService{
     public Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
                                BigDecimal price, Boolean active, String introduction, String notes, String gauge,
                                String sizing, int difficultyLevel, String time, String abbreviations, String specialAbbreviations,
+                               String language,
                                List<String> imagesUrl, List<Tool> tools, List<Yarn> yarns, List<Section> sections)
             throws InstanceNotFoundException, PermissionException, MaxItemsExceededException {
 
@@ -236,6 +239,7 @@ public class PatternServiceImpl implements PatternService{
         pattern.setTime(time);
         pattern.setAbbreviations(abbreviations);
         pattern.setSpecialAbbreviations(specialAbbreviations);
+        pattern.setLanguage(language);
 
         // Update images
         Set<ProductImages> productImages = new HashSet<>();
@@ -359,11 +363,17 @@ public class PatternServiceImpl implements PatternService{
 
         List<PurchaseItem> purchaseItems = purchaseItemDao.findByUserId(userId);
 
-        return purchaseItems.stream()
-                .filter(item -> item.getPayment().getPaymentStatus().equals("succeeded"))
-                .map(item -> (Pattern) item.getProduct())
-                .distinct()
-                .collect(Collectors.toList());
+        List<Pattern> patterns = new ArrayList<>();
+        for (PurchaseItem purchaseItem : purchaseItems) {
+            Product product = purchaseItem.getProduct();
+
+            Optional<Pattern> pattern = patternDao.findById(product.getId());
+            if(pattern.isPresent() && purchaseItem.getPayment().getPaymentStatus().equals("succeeded")){
+                patterns.add(pattern.get());
+            }
+        }
+
+        return patterns;
     }
 
 

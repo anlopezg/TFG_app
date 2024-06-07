@@ -69,7 +69,16 @@ export default {
     'project.users.BecomeSeller.title' : 'Conviértete en Vendedor',
     'project.users.BecomeSeller.intro' : 'Actualmente no estás registrado como vendedor,' +
         ' para poder empezar a vender tus creaciones necesitas ser vendedor.',
-    'project.users.paypalAccount.add': 'Enlazar cuenta de PayPal',
+
+    'project.users.BecomeSeller.account' : 'Se creará una cuenta de stripe que quedará asociada a este perfil, ' +
+        'para poder recibir pagos',
+    'project.users.StripeAccount.title': 'Cuenta de Stripe',
+    'project.users.StripeAccount.accountId': 'Id de la cuenta',
+    'project.users.StripeAccount.email': 'Email de la cuenta',
+    'project.users.StripeAccount.country': 'País de la cuenta',
+    'project.users.StripeAccount.charges': 'Cargos',
+    'project.users.StripeAccount.notFound': 'No se ha encontrado ninguna cuenta de Stripe asociada',
+
 
 
     'project.products.MyStore.heading' : 'Mi tienda',
@@ -143,14 +152,17 @@ export default {
     'project.products.Pattern.standard.spanish': 'Estándar español',
     'project.products.Pattern.materials': 'Materiales necesarios',
     'project.products.Pattern.tools': 'Herramientas',
+    'project.products.Pattern.toolsRequired': 'Herramientas requeridas',
     'project.products.Pattern.toolName': 'Nombre',
     'project.products.Pattern.toolQuantity': 'Cantidad',
     'project.products.Pattern.addTool': 'Añadir herramienta',
     'project.products.Pattern.removeTool': 'Eliminar herramienta',
     'project.products.Pattern.tools.message': 'Añade todas las herramientas necesarias para completar el patrón',
     'project.products.Pattern.yarns': 'Hilos',
+    'project.products.Pattern.yarnsRecommended': 'Hilos recomendados',
     'project.products.Pattern.yarns.brand': 'Marca',
     'project.products.Pattern.yarns.name': 'Nombre',
+    'project.products.Pattern.yarns.inColor':'en',
     'project.products.Pattern.yarns.color':'Color',
     'project.products.Pattern.yarns.amount': 'Cantidad',
     'project.products.Pattern.yarns.weight': 'Peso',
@@ -181,10 +193,16 @@ export default {
     'project.catalog.Category.field': 'Categoría',
     'project.catalog.Categories.Clothing' : 'Prendas de ropa',
     'project.catalog.Categories.Accessory' : 'Accesorios',
+    'project.catalog.Categories.HomeDecor' : 'Decoración del Hogar',
 
-    'project.catalog.Subcategories.Tops': 'Camiseta',
-    'project.catalog.Subcategories.Scarf': 'Bufanda',
-    'project.catalog.Subcategories.Sweater': 'Jersey',
+    'project.catalog.Subcategories.Tops': 'Camisetas',
+    'project.catalog.Subcategories.Scarf': 'Bufandas',
+    'project.catalog.Subcategories.Sweater': 'Jerséis',
+    'project.catalog.Subcategories.Pants': 'Pantalones',
+    'project.catalog.Subcategories.Hat': 'Gorros',
+    'project.catalog.Subcategories.Bag': 'Bolsas',
+    'project.catalog.Subcategories.Blanket': 'Mantas',
+    'project.catalog.Subcategories.Pillow': 'Cojines',
     'project.catalog.Subcategories.unknown': 'Desconocida',
 
     'project.catalog.Product.type': 'Tipo de producto',
@@ -206,6 +224,7 @@ export default {
 
     'project.shopping.AddToCart.add': 'Añadir al carrito',
     'project.shopping.BuyForm.title': 'Comprar',
+    'project.shopping.BuyForm.payment':'Proceder al pago',
     'project.shopping.Cart.title': 'Carrito de compra',
     'project.shopping.FindOrdersResult.noOrders': 'No se encontraron pedidos',
     'project.shopping.PurchaseCompleted.purchaseOrderGenerated': 'Orden de compra generada',
@@ -217,14 +236,18 @@ export default {
     'project.shopping.Purchase.address': 'Dirección de envío',
     'project.shopping.Purchase.address.complete': 'Complete su pedido añadiendo la dirección de envío',
     'project.shopping.Purchases.header': 'Mis compras',
+    'project.shopping.Purchases.orders.header': 'Pedidos realizados',
     'project.shopping.Purchases.order':'Número de pedido',
     'project.shopping.Purchases.number':'Compra',
     'project.shopping.Purchases.notFound':'No se ha realizado ninguna compra',
     'project.shopping.Purchases.completed': '¡Tu compra se ha realizado con éxito!',
     'project.shopping.Purchases.completed.message': 'Haz click para ver los detalles concretos de la compra: ',
-    'project.shopping.Purchase.paymentMethod':'Selecciona tu método de pago',
+
     'project.shopping.Purchase.payPal': 'PayPal',
     'project.shopping.Purchase.totalPrice': 'Precio total a pagar: ',
+    'project.shopping.Purchase.paymentMethod':'Método de pago',
+    'project.shopping.Purchase.paymentMethod.complete': 'Completa el pago introduciendo los datos de tu método de pago',
+    'project.shopping.Purchase.paymentMethod.complete.card': 'Tarjeta de crédito',
 
 
     'project.reviews.User.header': 'Reseñas que has realizado',
@@ -268,4 +291,8 @@ export default {
     'project.pattern.instructions.step.instruction':'Instrucción',
     'project.pattern.instructions.step.add':'Añadir paso',
     'project.pattern.instructions.step.error':'Completa todos los campos para añadir un paso',
+
+    'project.pattern.purchased.notFound': 'Aún no se han comprado ningún patrón',
+    'project.pattern.purchased.heading': 'Patrones comprados',
+    'project.pattern.purchased.view': 'Ver Detalles del Patrón',
 }

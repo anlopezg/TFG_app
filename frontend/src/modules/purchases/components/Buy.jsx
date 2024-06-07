@@ -21,13 +21,13 @@ const Buy = () => {
                         <FormattedMessage id="project.shopping.Purchase.review"/>
                     </h3>
                     <ShoppingItemList list={cart}/>
-                </div>
 
+                </div>
                 <div className="col-md-6">
                     <PurchaseForm shoppingCartId={cart.id}/>
                 </div>
-            </div>
 
+            </div>
 
         </div>
     );
