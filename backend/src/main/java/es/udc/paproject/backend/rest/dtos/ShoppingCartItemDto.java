@@ -6,10 +6,12 @@ public class ShoppingCartItemDto {
 
     private Long productId;
     private String productName;
-    private Long categoryId;
+    private Long subcategoryId;
     private BigDecimal productPrice;
     private int quantity;
     private String mainImageUrl;
+
+    private String productType;
 
     // Add physicals maxAmount
     private int maxAmount;
@@ -18,15 +20,16 @@ public class ShoppingCartItemDto {
 
     public ShoppingCartItemDto() {}
 
-    public ShoppingCartItemDto(Long productId, String productName, Long categoryId, BigDecimal productPrice,
-                               int quantity, String mainImageUrl) {
+    public ShoppingCartItemDto(Long productId, String productName, Long subcategoryId, BigDecimal productPrice,
+                               int quantity, String mainImageUrl, String productType) {
 
         this.productId = productId;
         this.productName = productName;
-        this.categoryId = categoryId;
+        this.subcategoryId = subcategoryId;
         this.productPrice = productPrice;
         this.quantity = quantity;
         this.mainImageUrl = mainImageUrl;
+        this.productType = productType;
 
     }
 
@@ -46,12 +49,12 @@ public class ShoppingCartItemDto {
         this.productName = productName;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public Long getSubcategoryId() {
+        return subcategoryId;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setSubcategoryId(Long subcategoryId) {
+        this.subcategoryId = subcategoryId;
     }
 
     public BigDecimal getProductPrice() {
@@ -86,4 +89,11 @@ public class ShoppingCartItemDto {
         this.maxAmount = maxAmount;
     }
 
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
 }

@@ -60,7 +60,7 @@ public class ReviewController {
     public ReviewDto publishReview(@RequestAttribute Long userId,
                                    @Validated @RequestBody ReviewDto reviewDto) throws InstanceNotFoundException, CantReviewTwiceException, NotPurchasedProductException {
 
-        return toReviewDto(reviewService.publishReview(userId, reviewDto.getProductId(),
+        return toReviewDto(reviewService.createReview(userId, reviewDto.getProductId(),
                 reviewDto.getRating(), reviewDto.getComment()));
     }
 

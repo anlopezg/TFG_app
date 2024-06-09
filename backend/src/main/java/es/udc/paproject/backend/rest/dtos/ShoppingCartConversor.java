@@ -34,7 +34,7 @@ public class ShoppingCartConversor {
 
         return new ShoppingCartItemDto(item.getProduct().getId(), item.getProduct().getTitle(),
                 item.getProduct().getSubcategory().getId(), item.getProduct().getPrice(), item.getQuantity(),
-                mainImageUrl);
+                mainImageUrl, item.getProduct().getProductType());
 
     }
 

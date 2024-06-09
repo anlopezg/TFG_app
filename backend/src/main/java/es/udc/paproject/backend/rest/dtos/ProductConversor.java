@@ -66,30 +66,60 @@ public class ProductConversor {
     }
 
 
-
-
-    /* Physical Conversor */
-    public final static PhysicalDto toPhysicalDto(Physical physical){
-
-        return new PhysicalDto(physical.getId(),
-                physical.getUser().getId(),
-                physical.getCraft().getId(),
-                physical.getSubcategory().getId(),
-                physical.getTitle(),
-                physical.getDescription(),
-                physical.getPrice(),
-                physical.getActive(),
-                physical.getUser().getUsername(),
-                physical.getProductType(),
-                physical.getAmount(),
-                productImagesToStringList(physical),
-                physical.getAvgRating(),
-                physical.getSize(),
-                physical.getColor(),
-                physical.getDetails());
-    }
-
     public final static List<PhysicalDto> toPhysicalDtos(List<Physical> physicals){
         return physicals.stream().map(o-> toPhysicalDto(o)).collect(Collectors.toList());
+
     }
+
+    public static ProductDto toProductDtoType(Product product) {
+        if (product instanceof Physical) {
+            return toPhysicalDto((Physical) product);
+        } else if (product instanceof Pattern) {
+            PatternDto patternDto = toPatternDto((Pattern) product);
+            patternDto.setAmount(1);
+            return patternDto;
+        } else {
+            throw new IllegalArgumentException("Unknown product type");
+        }
+    }
+
+    private static void copyCommonAttributes(Product product, ProductDto dto) {
+        dto.setId(product.getId());
+        dto.setUserId(product.getUser().getId());
+        dto.setCraftId(product.getCraft().getId());
+        dto.setSubcategoryId(product.getSubcategory().getId());
+        dto.setTitle(product.getTitle());
+        dto.setDescription(product.getDescription());
+        dto.setPrice(product.getPrice());
+        dto.setActive(product.getActive());
+        dto.setUsername(product.getUser().getUsername());
+        dto.setImagesUrl(productImagesToStringList(product));
+        dto.setAvgRating(product.getAvgRating());
+        dto.setProductType(product.getClass().getSimpleName());
+    }
+
+    public static PhysicalDto toPhysicalDto(Physical physical) {
+        PhysicalDto dto = new PhysicalDto();
+        copyCommonAttributes(physical, dto);
+
+        dto.setAmount(physical.getAmount());
+        dto.setColor(physical.getColor());
+        dto.setDetails(physical.getDetails());
+        dto.setSize(physical.getSize());
+
+        return dto;
+    }
+
+    public static PatternDto toPatternDto(Pattern pattern) {
+        PatternDto dto = new PatternDto();
+        copyCommonAttributes(pattern, dto);
+
+        dto.setDifficultyLevel(pattern.getDifficultyLevel());
+        dto.setTime(pattern.getTime());
+        dto.setLanguage(pattern.getLanguage());
+
+        return dto;
+    }
+
+
 }

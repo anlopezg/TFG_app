@@ -1,18 +1,19 @@
 import {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {FormattedMessage, FormattedNumber} from 'react-intl';
-import {Form, Link, useNavigate, useParams} from 'react-router-dom';
+import {FormattedMessage} from 'react-intl';
+import {Link,  useParams} from 'react-router-dom';
 
 import users from '../../users';
 import * as selectors from '../selectors';
 import * as actions from '../actions';
 
-import {BackLink, Errors, UserLink} from '../../common';
+import {BackLink, Errors} from '../../common';
 import ProductType from "./ProductType.jsx";
 import ImagesCarousel from "./ImagesCarousel.jsx";
 import {AddItemToCart} from "../../purchases/index.js";
 import FavoriteHeart from "./FavoriteHeart.jsx";
 import FindProductReviews from "../../reviews/components/FindProductReviews.jsx";
+import AdditionalFeatures from "./AdditionalFeatures.jsx";
 
 const ProductDetails = () => {
 
@@ -23,6 +24,7 @@ const ProductDetails = () => {
     const dispatch = useDispatch();
     const {id} = useParams();
     const [backendErrors, setBackendErrors] = useState(null);
+
 
 
     useEffect(() => {
@@ -148,7 +150,13 @@ const ProductDetails = () => {
                         }
                     </div>
 
+                    <div>
+                        <AdditionalFeatures product={product} />
+                    </div>
+
                     <div className="col-md-12 mt-3">
+                        <br/>
+                        <br/>
                         <hr/>
                         <FindProductReviews productId={product.id} avgRating={product.avgRating}/>
                     </div>

@@ -4,14 +4,14 @@ const ProductType = ({productType}) =>{
 
     const productLabel = () => {
         switch (productType) {
-            case 'pattern':
+            case 'Pattern':
                 return (
                     <label className="product-type-label">
                         <FormattedMessage id="project.product.ProductType.Pattern"/>
 
                     </label>
                 );
-            case 'physical':
+            case 'Physical':
                 return (
                     <label className="product-type-label">
                         <FormattedMessage id="project.product.ProductType.Physical"/>

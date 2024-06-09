@@ -13,6 +13,7 @@ public class PurchaseItem {
     private Purchase purchase;
     private BigDecimal productPrice;
     private int quantity;
+
     private Payment payment;
 
 
@@ -85,4 +86,5 @@ public class PurchaseItem {
     public void setPayment(Payment payment) {
         this.payment = payment;
     }
+
 }

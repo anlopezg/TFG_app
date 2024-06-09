@@ -30,6 +30,9 @@ export default {
     'project.global.fields.email': 'Email address',
     'project.global.fields.firstName': 'First name',
     'project.global.fields.language': 'Language',
+    'project.global.language.english': 'English',
+    'project.global.language.spanish': 'Spanish',
+    'project.global.language.galician': 'Galician',
     'project.global.fields.region':'Region',
     'project.global.fields.country': 'Country',
     'project.global.fields.select.country': 'Select a country',
@@ -206,6 +209,7 @@ export default {
     'project.catalog.Subcategories.Blanket': 'Blanket',
     'project.catalog.Subcategories.Pillow': 'Pillow',
     'project.catalog.Subcategories.unknown': 'Unknown',
+    'project.catalog.Additional.features': 'Additional information about the product',
 
     'project.catalog.Product.type': 'Product type',
     'project.catalog.Search.ByUsername': 'Enter a username',

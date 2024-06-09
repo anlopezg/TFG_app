@@ -21,7 +21,8 @@ const PurchaseForm = ({shoppingCartId}) => {
     const [backendErrors, setBackendErrors] = useState(null);
     let form;
 
-    const handleSubmit = event => {
+
+    const handleSubmit = (event) => {
 
         event.preventDefault();
 
@@ -33,7 +34,7 @@ const PurchaseForm = ({shoppingCartId}) => {
                 region.trim(),
                 country.trim(),
                 postalCode.trim(),
-                () => navigate('/shopping/purchase-completed'),
+                navigate('/shopping/purchase/payment'),
                 errors => setBackendErrors(errors)));
 
         } else {
@@ -43,14 +44,15 @@ const PurchaseForm = ({shoppingCartId}) => {
 
     }
 
-    console.log("Country: ", country);
-
     return (
 
         <div>
             <Errors errors={backendErrors}
                     onClose={() => setBackendErrors(null)}/>
 
+            <form ref={node => form = node}
+                  className="needs-validation" noValidate
+                  onSubmit={(e) => handleSubmit(e)}>
             <div className="card shopping-card">
                 <div className="card-body">
                     <h3 className="retro text-center">
@@ -59,11 +61,6 @@ const PurchaseForm = ({shoppingCartId}) => {
                     <p className="small muted text-center it">
                         <FormattedMessage id="project.shopping.Purchase.address.complete"/>
                     </p>
-
-                        <form ref={node => form = node}
-                              className="needs-validation" noValidate
-                              onSubmit={(e) => handleSubmit(e)}>
-
                             <div className="form-group row">
                                 <label htmlFor="postalAddress" className="col-md-12 col-form-label bold-label">
                                     <FormattedMessage id="project.global.fields.postalAddress"/>
@@ -147,17 +144,18 @@ const PurchaseForm = ({shoppingCartId}) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="form-group row mt-2">
-                                <div className="col-md-12 d-flex justify-content-center">
-                                    <button type="submit" className="btn button-lime">
-                                        <FormattedMessage id="project.shopping.BuyForm.title"/>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-
+                    </div>
                 </div>
-            </div>
+
+
+                <div className="form-group row mt-4">
+                    <div className="col-md-12 d-flex justify-content-center">
+                        <button type="submit" className="btn button-lime">
+                            <FormattedMessage id="project.shopping.BuyForm.payment"/>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
 
     );

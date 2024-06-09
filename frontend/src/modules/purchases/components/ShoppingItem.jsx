@@ -5,7 +5,7 @@ import {FormattedMessage, FormattedNumber} from 'react-intl';
 import {ProductLink} from '../../common';
 import {useSelector} from "react-redux";
 import * as selectors from "../../catalog/selectors.js";
-import {Form, Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const ShoppingItem = ({shoppingItemListId, item, edit, onUpdateQuantity,
     onRemoveItem, onBackendErrors, addReview}) => {
@@ -78,7 +78,7 @@ const ShoppingItem = ({shoppingItemListId, item, edit, onUpdateQuantity,
                                 <FormattedMessage id="project.catalog.Category.field"/>
                             </p>
                             <p className="lead fw-normal mb-0">
-                                {selectors.getSubcategoryName(categories, item.categoryId)}
+                                {selectors.getSubcategoryName(categories, item.subcategoryId)}
                             </p>
                         </div>
 

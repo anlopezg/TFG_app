@@ -39,7 +39,7 @@ public class ReviewServiceImpl implements ReviewService{
 
 
     @Override
-    public Review publishReview(Long userId, Long productId, int rating, String comment) throws InstanceNotFoundException, CantReviewTwiceException, NotPurchasedProductException {
+    public Review createReview(Long userId, Long productId, int rating, String comment) throws InstanceNotFoundException, CantReviewTwiceException, NotPurchasedProductException {
 
         User user = permissionChecker.checkUser(userId);
         Product product = permissionChecker.checkActiveProduct(productId);

@@ -2,9 +2,7 @@ package es.udc.paproject.backend.test.model.services;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Account;
-import com.stripe.model.File;
 import com.stripe.model.PaymentIntent;
-import com.stripe.param.PaymentIntentCreateParams;
 import es.udc.paproject.backend.model.entities.User;
 import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
@@ -13,7 +11,6 @@ import es.udc.paproject.backend.model.services.StripeService;
 import es.udc.paproject.backend.model.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +23,6 @@ import java.io.IOException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -60,7 +56,7 @@ public class StripeServiceTest {
         User seller = createUser("seller2" , email);
         userService.signUp(seller);
 
-        Account account = stripeService.createFullConnectedAccount(seller);
+        Account account = stripeService.createStripeAccount(seller);
         assertNotNull(account);
         assertNotNull(account.getId());
         assertNotNull(account.getEmail());
@@ -73,7 +69,7 @@ public class StripeServiceTest {
         User seller = createUser("seller2" , email);
         userService.signUp(seller);
 
-        Account createdAccount = stripeService.createFullConnectedAccount(seller);
+        Account createdAccount = stripeService.createStripeAccount(seller);
         Account retrievedAccount = stripeService.getAccount(createdAccount.getId());
         assertNotNull(retrievedAccount);
         assertNotNull(retrievedAccount.getId());

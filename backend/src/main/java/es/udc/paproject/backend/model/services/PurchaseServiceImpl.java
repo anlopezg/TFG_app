@@ -147,7 +147,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 
     @Override
     public void processPaymentForPurchase(String paymentMethodId, Purchase purchase)
-            throws StripeException, PaymentProcessingException, InstanceNotFoundException {
+            throws StripeException, PaymentProcessingException, InstanceNotFoundException, PaymentAlreadyProcessedException {
 
         List<PurchaseItem> purchaseItems = new ArrayList<>(purchase.getItems());
 
@@ -156,8 +156,8 @@ public class PurchaseServiceImpl implements PurchaseService{
         for (PurchaseItem purchaseItem : purchaseItems) {
 
             // Payment is processed in cents by Stripe
-            BigDecimal itemAmount = purchaseItem.getTotalPrice().multiply(new BigDecimal(100));
-            totalAmount = totalAmount.add(itemAmount);
+            BigDecimal itemAmountInCents = purchaseItem.getTotalPrice().multiply(new BigDecimal(100));
+            totalAmount = totalAmount.add(itemAmountInCents);
 
             // Get the stripe account of the owner of the product
             User productOwner = purchaseItem.getProduct().getUser();
@@ -167,8 +167,14 @@ public class PurchaseServiceImpl implements PurchaseService{
             }
             String stripeAccountId = stripeAccount.getStripeAccountId();
 
+
+            //Check the payment hasn't been processed yet
+            if (purchaseItem.getPayment().getPaymentStatus().equalsIgnoreCase("succeeded")) {
+                throw new PaymentAlreadyProcessedException("Product's id = " + purchaseItem.getProduct().getId());
+            }
+
             // Create the PaymentIntent for the prodcut
-            PaymentIntent paymentIntent = stripeService.createPaymentIntent(itemAmount.longValueExact(), "eur", stripeAccountId, paymentMethodId);
+            PaymentIntent paymentIntent = stripeService.createPaymentIntent(itemAmountInCents.longValueExact(), "eur", stripeAccountId, paymentMethodId);
             if (paymentIntent == null || !"succeeded".equals(paymentIntent.getStatus())) {
                 throw new PaymentProcessingException("PaymentIntent was not confirmed successfully for product: " + purchaseItem.getProduct().getId() + ". Status: " + (paymentIntent != null ? paymentIntent.getStatus() : "null"));
             }
@@ -179,7 +185,7 @@ public class PurchaseServiceImpl implements PurchaseService{
             payment.setPaymentId(paymentIntent.getId());
             payment.setPaymentMethod(paymentMethodId);
             payment.setPaymentStatus(paymentIntent.getStatus());
-            payment.setAmount(itemAmount);
+            payment.setAmount(itemAmountInCents.divide(new BigDecimal(100)));
             payment.setCurrency("eur");
             payment.setPaymentDate(LocalDateTime.now());
             payment.setStripeAccountId(stripeAccountId);
@@ -201,7 +207,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 
 
     @Override
-    public Purchase findPurchase(Long userId, Long orderId) throws InstanceNotFoundException, PermissionException {
+    public Purchase findPurchaseById(Long userId, Long orderId) throws InstanceNotFoundException, PermissionException {
         return permissionChecker.checkPurchaseExistsAndBelongsTo(orderId, userId);
     }
 
@@ -211,16 +217,6 @@ public class PurchaseServiceImpl implements PurchaseService{
         Slice<Purchase> slice = purchaseDao.findByUserIdOrderByDateDesc(userId, PageRequest.of(page, size));
 
         return new Block<>(slice.getContent(), slice.hasNext());
-    }
-
-
-    private StripeAccount getStripeAccountByProduct(Product product) throws InstanceNotFoundException {
-
-        StripeAccount stripeAccount = product.getUser().getStripeAccount();
-        if (stripeAccount == null) {
-            throw new InstanceNotFoundException("project.entities.stripeAccount ", stripeAccount.getStripeAccountId());
-        }
-        return stripeAccount;
     }
 
 

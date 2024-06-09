@@ -19,7 +19,7 @@ public interface ReviewService {
      * @throws CantReviewTwiceException A user cannot review a Product Twice
      * @throws NotPurchasedProductException A user cannot review a product they have not bought
      */
-    Review publishReview(Long userId, Long productId, int rating, String comment) throws InstanceNotFoundException, CantReviewTwiceException, NotPurchasedProductException;
+    Review createReview(Long userId, Long productId, int rating, String comment) throws InstanceNotFoundException, CantReviewTwiceException, NotPurchasedProductException;
 
 
     /**

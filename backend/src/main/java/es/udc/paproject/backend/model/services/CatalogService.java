@@ -26,12 +26,6 @@ public interface CatalogService {
 
 
     /**
-     * Returns the class of the product type
-     */
-    Class<?> getProductTypeClass(String productType);
-
-
-    /**
      * Returns all active Products, that match the given criteria
      */
     Block<Product> findProducts(Long craftId, Long subcategoryId, String keywords, String productType, int page, int size);
@@ -40,7 +34,7 @@ public interface CatalogService {
     /**
      * Returns a specific Product that matches the productId
      */
-    Product findProduct(Long productId) throws InstanceNotFoundException;
+    Product findProductById(Long productId) throws InstanceNotFoundException;
 
     void getProductType(Product product);
 

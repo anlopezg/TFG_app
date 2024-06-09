@@ -30,6 +30,9 @@ const handleOkResponse = (response, onSuccess) => {
 
     if (isJson(response)) {
         response.json().then(payload => onSuccess(payload));
+    } else {
+        // Handle text response
+        response.text().then(payload => onSuccess(payload));
     }
 
     return true;

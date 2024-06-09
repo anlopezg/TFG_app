@@ -1,7 +1,6 @@
 package es.udc.paproject.backend.rest.controllers;
 
 import es.udc.paproject.backend.model.entities.Favorite;
-import es.udc.paproject.backend.model.entities.Physical;
 import es.udc.paproject.backend.model.entities.Product;
 import es.udc.paproject.backend.model.entities.User;
 import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
@@ -24,7 +23,6 @@ import java.util.Optional;
 import static es.udc.paproject.backend.rest.dtos.CategoryConversor.toCategoryDtos;
 import static es.udc.paproject.backend.rest.dtos.CraftConversor.toCraftDtos;
 import static es.udc.paproject.backend.rest.dtos.FavoriteDto.toFavoriteDto;
-import static es.udc.paproject.backend.rest.dtos.FavoriteDto.toOptionalFavoriteDto;
 import static es.udc.paproject.backend.rest.dtos.ProductConversor.*;
 import static es.udc.paproject.backend.rest.dtos.UserConversor.toUserDtos;
 
@@ -82,15 +80,9 @@ public class CatalogController {
     @GetMapping("/products/{id}")
     public ProductDto findProductById(@PathVariable Long id) throws InstanceNotFoundException{
 
-        Product product = catalogService.findProduct(id);
+        Product product = catalogService.findProductById(id);
 
-        System.out.println("**********************Average rating" + product.getAvgRating());
-
-        if(product instanceof Physical){
-            return toPhysicalDto((Physical) product);
-        } else{
-            return toProductDto(product);
-        }
+        return toProductDtoType(product);
     }
 
 

@@ -8,27 +8,29 @@ import {FormattedMessage} from "react-intl";
 import {Link} from "react-router-dom";
 import {useState} from "react";
 import {Errors} from "../../common/index.js";
+import errors from "../../common/components/Errors.jsx";
 
 
 
 const BecomesSeller = () => {
 
-    const user = useSelector(selectors.getUser);
     const isUser = useSelector(selectors.isUser);
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     const [backendErrors, setBackendErrors] = useState(null);
+
     let form;
 
-    const handleSubmit = () => {
+    const handleBecomeSeller = (event) => {
+
+        event.preventDefault();
 
         dispatch(actions.userBecomesSeller(
-            user.id,
-            () => navigate('/publications/products'),
-            errors => setBackendErrors(errors)));
-
-    }
+            navigate('/users/view-profile'),
+            errors => setBackendErrors(errors)
+            )
+        );
+    };
 
     return(
         <div>
@@ -43,20 +45,27 @@ const BecomesSeller = () => {
                     </h2>
                     <div className="card-body p-5 ">
                         <form ref={node => form = node}
-                                 className="needs-validation" noValidate onSubmit={e => handleSubmit(e)}>
+                                 className="needs-validation" noValidate onSubmit={e => handleBecomeSeller(e)}>
                             <div className="row justify-content-center">
                                 <h4>
                                     <FormattedMessage id="project.users.BecomeSeller.intro"/>
                                 </h4>
                             </div>
-                            <div className="mt-5 container-button-row">
+
+                            <div className="row justify-content-center mt-2">
+                                <p className="text-center text-muted italic-message">
+                                    <FormattedMessage id="project.users.BecomeSeller.account"/>
+                                </p>
+                            </div>
+
+                            <div className="mt-4 container-button-row">
                                 <div className="container-button-area">
                                     <Link className="btn button-options" to="/" style={{ textTransform: 'uppercase' }}>
                                         <FormattedMessage id="project.global.buttons.cancel" />
                                     </Link>
                                 </div>
                                 <div className="container-button-area">
-                                    <button type="submit" className="btn button-options extra-bold-label" style={{ textTransform: 'uppercase' }}>
+                                    <button onClick={handleBecomeSeller} className="btn button-options extra-bold-label" style={{ textTransform: 'uppercase' }}>
                                         <FormattedMessage id="project.global.buttons.ok" />
                                     </button>
                                 </div>

@@ -27,8 +27,6 @@ const FindProductReviews = ({productId, avgRating}) => {
         return null;
     }
 
-    console.log("Average rating", avgRating);
-
 
     return(
         <div>

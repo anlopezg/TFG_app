@@ -17,8 +17,15 @@ export const purchaseCart = (shoppingCartId, postalAddress, locality, region, co
     appFetch(`/shopping/carts/${shoppingCartId}/purchase`,
         config('POST', {postalAddress, locality, region, country, postalCode}), onSuccess, onErrors);
 
+export const processPaymentForPurchase = (purchaseId, paymentMethodId, onSuccess, onErrors) =>
+    appFetch(`/shopping/purchases/${purchaseId}/processPayment`, config('POST', {paymentMethodId}), onSuccess, onErrors);
+
+
 export const findPurchase = (purchaseId, onSuccess) =>
     appFetch(`/shopping/purchases/${purchaseId}`, config('GET'), onSuccess);
 
 export const findPurchases = ({page}, onSuccess) =>
     appFetch(`/shopping/purchases?page=${page}`, config('GET'), onSuccess);
+
+
+

@@ -148,7 +148,7 @@ public class PublicationServiceTest {
     @Test
     public void testDeleteNonExistentProduct(){
         assertThrows(InstanceNotFoundException.class, ()->
-                publicationService.deletePhysicalProduct(NON_EXISTENT_ID, NON_EXISTENT_ID));
+                publicationService.deletePhysical(NON_EXISTENT_ID, NON_EXISTENT_ID));
     }
 
     @Test
@@ -157,7 +157,7 @@ public class PublicationServiceTest {
         Physical physical = createFullPhysical();
 
         assertThrows(PermissionException.class, ()->
-                publicationService.deletePhysicalProduct(NON_EXISTENT_ID, physical.getId()));
+                publicationService.deletePhysical(NON_EXISTENT_ID, physical.getId()));
 
     }
 
@@ -166,7 +166,7 @@ public class PublicationServiceTest {
 
         Physical physical = createFullPhysical();
 
-        publicationService.deletePhysicalProduct(physical.getUser().getId(), physical.getId());
+        publicationService.deletePhysical(physical.getUser().getId(), physical.getId());
 
         assertThrows(InstanceNotFoundException.class, ()->
                 publicationService.findProductById(physical.getId()));

@@ -112,7 +112,7 @@ public class PublicationController {
     public void deletePhysicalProduct(@RequestAttribute Long userId, @PathVariable Long id)
             throws InstanceNotFoundException, UserNotOwnerException, PermissionException {
 
-        publicationService.deletePhysicalProduct(userId, id);
+        publicationService.deletePhysical(userId, id);
 
     }
 }

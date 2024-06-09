@@ -11,3 +11,6 @@ export const getPurchaseSearch = state =>
 
 export const getPurchase = state =>
     getModuleState(state).purchase;
+
+export const getPayment = state =>
+    getModuleState(state).payment;

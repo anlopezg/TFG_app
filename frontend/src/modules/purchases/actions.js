@@ -40,15 +40,34 @@ const purchaseCompleted = (purchaseId) => ({
 });
 
 
-export const purchase = (shoppingCartId, postalAddress,locality, region, country, postalCode, onSuccess,
+export const purchase = (shoppingCartId, postalAddress,locality, region, country, postalCode,  onSuccess,
                     onErrors) => dispatch =>
-    backend.purchaseService.purchaseCart(shoppingCartId, postalAddress, locality, region, country, postalCode, id => {
-            dispatch(purchaseCompleted(id));
+    backend.purchaseService.purchaseCart(shoppingCartId, postalAddress, locality, region, country, postalCode,
+            purchase => {
+
+            dispatch(purchaseCompleted(purchase.id));
+            onSuccess(purchase);
+        },
+        onErrors);
+
+/******************************************* PAYMENT ************************************************/
+const paymentCompleted = (payment) => ({
+    type: actionTypes.PAYMENT_CREATED,
+    payment
+})
+
+export const processPaymentForPurchase = (purchaseId, paymentMethodId, onSuccess, onErrors) => dispatch =>
+    backend.purchaseService.processPaymentForPurchase(purchaseId, paymentMethodId,
+        payment => {
+            console.log("Received purchaseId:", purchaseId);
+            dispatch(paymentCompleted(payment));
             onSuccess();
         },
         onErrors);
 
 
+
+/******************************************* FIND PURCHASES ************************************************/
 
 const findPurchasesCompleted = purchaseSearch => ({
     type: actionTypes.FIND_PURCHASES_COMPLETED,
@@ -90,3 +109,6 @@ export const findPurchase = purchaseId => dispatch => {
         dispatch(findPurchaseCompleted(purchase));
     });
 }
+
+
+

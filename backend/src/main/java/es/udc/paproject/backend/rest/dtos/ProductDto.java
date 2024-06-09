@@ -19,14 +19,18 @@ public class ProductDto {
     private String description;
     private BigDecimal price;
     private Boolean active;
-
     private String username;
-    private String productType;
-
-    private int amount;
 
     private List<String> imagesUrl;
     private double avgRating;
+
+    /* Specific attributes to show in product details*/
+    private String productType;
+
+    /* Physical attributes*/
+    private int amount;
+
+
 
     public ProductDto(){}
 
@@ -44,8 +48,9 @@ public class ProductDto {
         this.username = username;
     }
 
+
     public ProductDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
-                      Boolean active, String username, String productType, int amount,List<String> imagesUrl, double avgRating){
+                      Boolean active, String username, String productType, int amount, List<String> imagesUrl, double avgRating){
 
         this.id=id;
         this.userId =user;
@@ -174,4 +179,5 @@ public class ProductDto {
     public void setAvgRating(double avgRating) {
         this.avgRating = avgRating;
     }
+
 }

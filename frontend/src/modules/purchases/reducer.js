@@ -7,7 +7,8 @@ const initialState = {
     shoppingCart: null,
     lastPurchaseId: null,
     purchaseSearch: null,
-    purchase: null
+    purchase: null,
+    payment: null
 };
 
 const shoppingCart = (state = initialState.shoppingCart, action) => {
@@ -81,11 +82,22 @@ const purchase = (state = initialState.purchase, action) => {
 
 }
 
+const payment = (state = initialState.payment, action) => {
+
+    switch (action.type) {
+        case actionTypes.PAYMENT_CREATED:
+            return action.payment;
+        default:
+            return state;
+    }
+}
+
 const reducer = combineReducers({
     shoppingCart,
     lastPurchaseId,
     purchaseSearch,
-    purchase
+    purchase,
+    payment
 });
 
 export default reducer;

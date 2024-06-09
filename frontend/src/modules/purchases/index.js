@@ -11,5 +11,7 @@ export {default as Buy} from './components/Buy.jsx';
 export {default as PurchaseCompleted} from './components/PurchaseCompleted.jsx';
 export {default as FindPurchasesResult} from './components/FindPurchasesResult.jsx';
 export {default as PurchaseDetails} from './components/PurchaseDetails.jsx';
+//export {default as PaymentSelection} from './components/PaymentSelection.jsx';
+export {default as Payment} from './components/Payment.jsx';
 
 export default {actions, reducer, selectors};

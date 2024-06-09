@@ -147,7 +147,7 @@ public class PublicationServiceImpl implements PublicationService{
     }
 
     @Override
-    public void deletePhysicalProduct(Long userId, Long productId) throws InstanceNotFoundException, PermissionException {
+    public void deletePhysical(Long userId, Long productId) throws InstanceNotFoundException, PermissionException {
 
         Product product = findProductById(productId);
 

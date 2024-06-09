@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserService {
 		}
 
 		// Create Stripe Account with user's email
-		Account account = stripeService.createFullConnectedAccount(user);
+		Account account = stripeService.createStripeAccount(user);
 		StripeAccount stripeAccount = new StripeAccount(user, account.getId(), account.getEmail());
 
 		stripeAccount = stripeAccountDao.save(stripeAccount);

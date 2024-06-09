@@ -1,11 +1,27 @@
-import {useSelector} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import * as selectors from "../selectors.js";
 import {FormattedMessage} from "react-intl";
 import {Link} from "react-router-dom";
+import {useEffect} from "react";
+import * as actions from '../actions.js';
+import GetStripeAccount from "./Stripe/GetStripeAccount.jsx";
+
 
 const ViewProfile = () => {
 
     const user = useSelector(selectors.getUser);
+    const dispatch = useDispatch();
+    const seller = useSelector(selectors.isSeller);
+    const accountId = useSelector(selectors.getAccountId);
+
+
+    useEffect(() => {
+        if(seller && accountId){
+            dispatch(actions.getStripeAccount(accountId));
+        }
+    }, [seller, accountId, dispatch]);
+
+
 
     const getLevelName = (level) => {
         switch (level){
@@ -128,6 +144,9 @@ const ViewProfile = () => {
                         </div>
                     </div>
 
+
+
+
                     <div className="row justify-content-center">
                         <div className="col-md-6 mt-4">
                             <Link className="btn button-pink extra-bold-label" to="/users/update-profile">
@@ -138,6 +157,17 @@ const ViewProfile = () => {
                     </div>
                 </div>
             </div>
+
+            {seller && accountId ? (
+                <div className="row justify-content-center">
+                    <GetStripeAccount/>
+                </div>
+            ):(
+                <div>
+
+                </div>
+            )}
+
 
         </div>
     )

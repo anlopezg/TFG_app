@@ -2,12 +2,47 @@ import React, {useEffect} from 'react';
 import {FormattedMessage, FormattedNumber} from "react-intl";
 import CraftSelector from "../../catalog/components/CraftSelector.jsx";
 import SubcategorySelector from "../../catalog/components/SubcategorySelector.jsx";
+import LanguageSelect from 'react-languages-select';
+import 'react-languages-select/css/react-languages-select.css';
+import Select from "react-select/base";
+
+
+const languageOptions = [
+    { value: 'en', label: 'English' },
+    { value: 'es', label: 'Spanish' },
+    { value: 'gl', label: 'Galician' }
+];
+
 
 const Step1_General = ({ data, onChange, handleImagesChange, handleDeleteImage, previewUrls  }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         onChange({ [name]: value });
     };
+
+    const handleTimeChange = (e) => {
+        const { name, value } = e.target;
+        const newTimeData = {
+            ...data,
+            [name]: value,
+            time: `${data.timeValue} ${data.timeUnit}`
+        };
+        if (name === 'timeValue') {
+            newTimeData.timeValue = value;
+        } else if (name === 'timeUnit') {
+            newTimeData.timeUnit = value;
+        }
+        onChange(newTimeData);
+    };
+
+    const handleLanguageChange = (languageCode) => {
+        setPattern(prevPattern => ({
+            ...prevPattern,
+            language: languageCode
+        }));
+    };
+
+
 
     useEffect(() => {
         return () => {
@@ -161,11 +196,84 @@ const Step1_General = ({ data, onChange, handleImagesChange, handleDeleteImage, 
                                         </div>
                                     ))}
                                 </div>
+
+                                <div className="form-group row mt-3 ">
+                                    <div className="col-md-6">
+                                        <label htmlFor="time" className=" col-form-label bold-label">
+                                            <FormattedMessage id="project.products.Pattern.time"/>
+                                        </label>
+
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <input type="number" id="time" className="form-control"
+                                                       name="timeValue"
+                                                       value={data.timeValue || ''}
+                                                       onChange={handleTimeChange}
+                                                       required/>
+                                                <div className="invalid-feedback">
+                                                    <FormattedMessage id='project.global.validator.required'/>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <select id="timeUnit" className="form-control form-select"
+                                                        name="timeUnit"
+                                                        value={data.timeUnit || 'minutes'}
+                                                        onChange={handleTimeChange} required>
+                                                    <option value="minutes"><FormattedMessage id="project.products.Pattern.time.minutes"/></option>
+                                                    <option value="hours"><FormattedMessage id="project.products.Pattern.time.hours"/></option>
+                                                    <option value="days"><FormattedMessage id="project.products.Pattern.time.days"/></option>
+                                                    <option value="weeks"><FormattedMessage id="project.products.Pattern.time.weeks"/></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <p className="small muted italic-message">
+                                            <FormattedMessage id="project.products.Pattern.time.desc"/>
+                                        </p>
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="difficultyLevel" className="col-form-label bold-label">
+                                            <FormattedMessage id="project.products.Pattern.difficultyLevel"/>
+                                        </label>
+                                        <select id="difficultyLevel" className="form-select"  name="difficultyLevel" value={data.difficultyLevel}
+                                                onChange={handleChange}
+                                                required>
+                                            <option value="0">
+                                                <FormattedMessage id="project.global.fields.level.beginner"/></option>
+                                            <option value="1">
+                                                <FormattedMessage id="project.global.fields.level.intermediate"/></option>
+                                            <option value="2">
+                                                <FormattedMessage id="project.global.fields.level.advanced"/></option>
+                                        </select>
+                                        <div className="invalid-feedback">
+                                            <FormattedMessage id='project.global.validator.required'/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="language" className="col-form-label bold-label">
+                                        <FormattedMessage id="project.global.fields.language" />
+                                    </label>
+                                    <select id="language" className="form-select" name="language" value={data.language}
+                                            onChange={handleChange} required>
+                                        <option value="EN">
+                                            <FormattedMessage id="project.global.language.english" />
+                                        </option>
+                                        <option value="ES">
+                                            <FormattedMessage id="project.global.language.spanish" />
+                                        </option>
+                                        <option value="GL">
+                                            <FormattedMessage id="project.global.language.galician"  />
+                                        </option>
+                                    </select>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required' />
+                                    </div>
+                                </div>
+
                             </div>
-
-
-
-                        </div>
+                    </div>
             </div>
         </div>
     );

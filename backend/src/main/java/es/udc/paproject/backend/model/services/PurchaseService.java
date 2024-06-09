@@ -20,9 +20,9 @@ public interface PurchaseService {
                             String region, String country, String postalCode)
             throws InstanceNotFoundException, PermissionException, EmptyShoppingCartException, StripeException, MaxItemsExceededException;
 
-    void processPaymentForPurchase(String paymentMethodId, Purchase purchase) throws StripeException, PaymentProcessingException, InstanceNotFoundException;
+    void processPaymentForPurchase(String paymentMethodId, Purchase purchase) throws StripeException, PaymentProcessingException, InstanceNotFoundException, PaymentAlreadyProcessedException;
 
-    Purchase findPurchase(Long userId, Long orderId) throws InstanceNotFoundException, PermissionException;
+    Purchase findPurchaseById(Long userId, Long orderId) throws InstanceNotFoundException, PermissionException;
 
     Block<Purchase> findPurchases(Long userId, int page, int size);
 

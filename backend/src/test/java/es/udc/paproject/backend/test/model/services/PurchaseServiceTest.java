@@ -106,7 +106,7 @@ public class PurchaseServiceTest {
         String region = "Region";
         String country = "Country";
         Purchase purchase = new Purchase(user, date, postalAddress, locality, region, country, postalCode);
-        PurchaseItem item = new PurchaseItem(product, product.getPrice(), 1);
+        PurchaseItem item = new PurchaseItem(product, product.getPrice(), 1 );
 
         purchaseDao.save(purchase);
         purchase.addItem(item);
@@ -506,7 +506,7 @@ public class PurchaseServiceTest {
 
         // Realizar la compra con un método de pago de prueba válido
         Purchase purchase = purchaseService.createPurchase(user.getId(), user.getShoppingCart().getId(), locality, region, country, postalAddress, postalCode);
-        Purchase foundPurchase = purchaseService.findPurchase(user.getId(), purchase.getId());
+        Purchase foundPurchase = purchaseService.findPurchaseById(user.getId(), purchase.getId());
 
         // Verificar la compra
         assertEquals(purchase, foundPurchase);
@@ -579,7 +579,7 @@ public class PurchaseServiceTest {
 
         User user = signUpUser("user");
 
-        assertThrows(InstanceNotFoundException.class, () ->	purchaseService.findPurchase(user.getId(), NON_EXISTENT_ID));
+        assertThrows(InstanceNotFoundException.class, () ->	purchaseService.findPurchaseById(user.getId(), NON_EXISTENT_ID));
 
     }
 
@@ -600,7 +600,7 @@ public class PurchaseServiceTest {
         Purchase order = purchaseService.createPurchase(user1.getId(), user1.getShoppingCart().getId(), "Postal Address",
                 "Locality", "Region", "Country","12345");
 
-        assertThrows(PermissionException.class, () -> purchaseService.findPurchase(user2.getId(), order.getId()));
+        assertThrows(PermissionException.class, () -> purchaseService.findPurchaseById(user2.getId(), order.getId()));
 
     }
 
@@ -620,7 +620,7 @@ public class PurchaseServiceTest {
         Purchase order = purchaseService.createPurchase(user.getId(), user.getShoppingCart().getId(),
                 "Postal Address", "Locality", "Region", "Country","12345");
 
-        assertThrows(PermissionException.class, () -> purchaseService.findPurchase(NON_EXISTENT_ID, order.getId()));
+        assertThrows(PermissionException.class, () -> purchaseService.findPurchaseById(NON_EXISTENT_ID, order.getId()));
 
     }
 
@@ -658,7 +658,7 @@ public class PurchaseServiceTest {
 
     @Test
     public void testProcessPaymentForPurchase() throws InstanceNotFoundException, PermissionException, MaxQuantityExceededException,
-            MaxItemsExceededException, EmptyShoppingCartException, StripeException, PaymentProcessingException {
+            MaxItemsExceededException, EmptyShoppingCartException, StripeException, PaymentProcessingException, PaymentAlreadyProcessedException {
 
         User user = signUpUser("user");
         StripeAccount stripeAccount = createStripeAccount(user);
@@ -683,7 +683,7 @@ public class PurchaseServiceTest {
         // Process the Payment for the purchase made
         purchaseService.processPaymentForPurchase( "pm_card_visa", purchase);
 
-        Purchase foundPurchase = purchaseService.findPurchase(user.getId(), purchase.getId());
+        Purchase foundPurchase = purchaseService.findPurchaseById(user.getId(), purchase.getId());
 
         for (PurchaseItem purchaseItem : foundPurchase.getItems()) {
             assertNotNull(purchaseItem.getPayment());

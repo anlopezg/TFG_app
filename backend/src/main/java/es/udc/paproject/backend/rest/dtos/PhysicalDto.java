@@ -17,7 +17,7 @@ public class PhysicalDto extends ProductDto{
     private List<String> imagesUrl;
 
 
-    private PhysicalDto(){}
+    public PhysicalDto(){}
 
     public PhysicalDto(Long id, Long user, Long craft, Long subcategory, String title, String description, BigDecimal price,
                        Boolean active, String username, String productType, int amount, List<String> imagesUrl, double avgRating,

@@ -53,6 +53,6 @@ public interface PublicationService {
      * @throws InstanceNotFoundException No product found
      * @throws UserNotOwnerException Given user is not the owner of the product
      */
-    void deletePhysicalProduct(Long userId, Long productId) throws InstanceNotFoundException, UserNotOwnerException, PermissionException;
+    void deletePhysical(Long userId, Long productId) throws InstanceNotFoundException, UserNotOwnerException, PermissionException;
 
 }

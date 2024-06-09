@@ -6,3 +6,9 @@ export const USER_BECOMES_SELLER_COMPLETED = "./project/users/userBecomesSellerC
 
 export const FIND_USER_COMPLETED = "./project/users/findUserCompleted";
 export const CLEAR_USER = "./project/users/clearUser";
+
+
+export const CREATE_STRIPE_ACCOUNT_COMPLETED = "project/users/createStripeAccountCompleted";
+export const GET_STRIPE_ACCOUNT_COMPLETED = "project/users/getStripeAccountCompleted";
+
+export const GET_STRIPE_ACCOUNT_FAILURE = 'project/users/getStripeAccountFailure';

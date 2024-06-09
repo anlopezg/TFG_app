@@ -3,7 +3,8 @@ import {combineReducers} from 'redux';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-    user: null
+    user: null,
+    stripeAccount: null
 };
 
 const user = (state = initialState.user, action) => {
@@ -38,8 +39,27 @@ const user = (state = initialState.user, action) => {
 
 }
 
+const stripeAccount = (state = initialState.stripeAccount, action)=>{
+    switch (action.type){
+
+        case actionTypes.GET_STRIPE_ACCOUNT_COMPLETED:
+            return action.stripeAccount;
+
+        case actionTypes.GET_STRIPE_ACCOUNT_FAILURE:
+            return null;
+
+
+        case actionTypes.CREATE_STRIPE_ACCOUNT_COMPLETED:
+            return action.stripeAccount;
+
+        default:
+            return state;
+    }
+}
+
 const reducer = combineReducers({
-    user
+    user,
+    stripeAccount
 });
 
 export default reducer;

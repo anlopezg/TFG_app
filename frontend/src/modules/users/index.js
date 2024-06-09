@@ -10,5 +10,7 @@ export {default as ChangePassword} from './components/ChangePassword';
 export {default as Logout} from './components/Logout';
 export {default as ViewProfile} from './components/ViewProfile';
 export {default as BecomesSeller} from './components/BecomesSeller.jsx';
+export {default as BecomesSellerStripe} from './components/BecomesSellerStripe.jsx';
+
 
 export default {actions, actionTypes, reducer, selectors};

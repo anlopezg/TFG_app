@@ -9,6 +9,8 @@ const ShoppingItemList = ({list, edit, onUpdateQuantity, onRemoveItem, addReview
 
     const [backendErrors, setBackendErrors] = useState(null);
 
+    console.log("Shopping list", list);
+
     return (
         <div>
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>

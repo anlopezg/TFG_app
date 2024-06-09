@@ -102,9 +102,9 @@ const AddReview = () => {
                             </div>
                         </div>
 
-                        <div className="form-group row justify-content-center">
+                        <div className="form-group row justify-content-center align-items-center">
                             <div className="col-md-6 mt-4">
-                                <button type="submit" className="btn button-coral bold-label">
+                                <button type="submit" className="btn button-coral bold-label mx-4">
                                     <FormattedMessage id="project.reviews.add.publish"/>
                                     <i className="fa-solid fa-upload mx-2"></i>
                                 </button>

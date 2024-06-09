@@ -56,7 +56,11 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
 
-    @Override
+
+
+    /**
+     * Returns the class of the product type
+     */
     @Transactional(readOnly=true)
     public Class<?> getProductTypeClass(String productType){
         return switch (productType) {
@@ -105,7 +109,7 @@ public class CatalogServiceImpl implements CatalogService{
 
     @Override
     @Transactional(readOnly=true)
-    public Product findProduct(Long productId) throws InstanceNotFoundException {
+    public Product findProductById(Long productId) throws InstanceNotFoundException {
 
         Optional<Product> product = productDao.findByIdAndActive(productId, true);
 

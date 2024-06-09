@@ -62,6 +62,8 @@ export const updateProfile = (user, onSuccess, onErrors) => dispatch =>
         },
         onErrors);
 
+
+
 export const changePassword = (id, oldPassword, newPassword, onSuccess, onErrors) => () =>
     backend.userService.changePassword(id, oldPassword, newPassword, onSuccess, onErrors);
 
@@ -69,13 +71,12 @@ export const changePassword = (id, oldPassword, newPassword, onSuccess, onErrors
 const userBecomesSellerCompleted = user =>({
     type: actionTypes.USER_BECOMES_SELLER_COMPLETED,
     user
-})
+});
 
-export const userBecomesSeller = (id, onSuccess, onErrors) => dispatch =>
-    backend.userService.userBecomesSeller(id,
+export const userBecomesSeller = ( onSuccess, onErrors) => dispatch =>
+    backend.userService.userBecomesSeller(
         user => {
-        dispatch(userBecomesSellerCompleted(user));
-        onSuccess();
+            dispatch(userBecomesSellerCompleted(user));
         },
         onErrors);
 
@@ -93,3 +94,33 @@ export const findUserByUsername = username => dispatch =>
 export const clearUser = () => ({
     type: actionTypes.CLEAR_USER
 })
+
+
+
+
+export const createStripeAccountCompleted = accountId =>({
+    type: actionTypes.CREATE_STRIPE_ACCOUNT_COMPLETED,
+    accountId
+});
+
+export const getStripeAccountCompleted = stripeAccount =>({
+    type: actionTypes.GET_STRIPE_ACCOUNT_COMPLETED,
+    stripeAccount
+});
+
+export const getStripeAccountFailure = (error) => ({
+    type: actionTypes.GET_STRIPE_ACCOUNT_FAILURE,
+    payload: error
+});
+
+export const getStripeAccount = (accountId) => dispatch =>
+
+    backend.userService.getStripeAccount(accountId,
+        (stripeAccount) => {
+            dispatch(getStripeAccountCompleted(stripeAccount));
+            },
+
+        (error)=>{
+        dispatch(getStripeAccountFailure(error));
+        }
+    );

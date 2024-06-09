@@ -2,12 +2,9 @@ package es.udc.paproject.backend.model.services;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Account;
-import com.stripe.model.File;
 import com.stripe.model.PaymentIntent;
 import com.stripe.model.Transfer;
 import es.udc.paproject.backend.model.entities.User;
-
-import java.io.IOException;
 
 public interface StripeService {
 
@@ -38,5 +35,5 @@ public interface StripeService {
 
     Account getAccount(String accountId) throws StripeException;
 
-    Account createFullConnectedAccount(User user) throws StripeException;
+    Account createStripeAccount(User user) throws StripeException;
 }

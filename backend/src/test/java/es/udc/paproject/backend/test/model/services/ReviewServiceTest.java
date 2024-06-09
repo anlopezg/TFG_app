@@ -122,7 +122,7 @@ public class ReviewServiceTest {
 
         Purchase purchase = createPurchase(user, product, LocalDateTime.of(2017, 10, 1, 10, 2, 3));
 
-        Review createdReview = reviewService.publishReview(user.getId(), product.getId(), 3, "Comment");
+        Review createdReview = reviewService.createReview(user.getId(), product.getId(), 3, "Comment");
 
         assertNotNull(createdReview);
         assertEquals(3, createdReview.getRating());
@@ -147,10 +147,10 @@ public class ReviewServiceTest {
 
         Purchase purchase = createPurchase(user, product, LocalDateTime.of(2017, 10, 1, 10, 2, 3));
 
-        Review createdReview1 = reviewService.publishReview(user.getId(), product.getId(), 3, "Comment");
+        Review createdReview1 = reviewService.createReview(user.getId(), product.getId(), 3, "Comment");
 
         // Attempt second review
-        assertThrows(CantReviewTwiceException.class, () -> reviewService.publishReview(user.getId(), product.getId(), 3, "Comment"));
+        assertThrows(CantReviewTwiceException.class, () -> reviewService.createReview(user.getId(), product.getId(), 3, "Comment"));
     }
 
     @Test
@@ -163,7 +163,7 @@ public class ReviewServiceTest {
         Product product = createProduct(user, craft1, subcategory1, "Product1");
 
         // Attempt to review a non purchased product
-        assertThrows(NotPurchasedProductException.class, () -> reviewService.publishReview(user.getId(), product.getId(), 3, "Comment"));
+        assertThrows(NotPurchasedProductException.class, () -> reviewService.createReview(user.getId(), product.getId(), 3, "Comment"));
     }
 
     @Test
@@ -177,7 +177,7 @@ public class ReviewServiceTest {
 
         Purchase purchase = createPurchase(user, product, LocalDateTime.of(2017, 10, 1, 10, 2, 3));
 
-        Review createdReview1 = reviewService.publishReview(user.getId(), product.getId(), 3, "Comment");
+        Review createdReview1 = reviewService.createReview(user.getId(), product.getId(), 3, "Comment");
 
         Block<Review> expectedBlock = new Block<>(Arrays.asList(createdReview1), false);
 
@@ -195,7 +195,7 @@ public class ReviewServiceTest {
 
         Purchase purchase = createPurchase(user, product, LocalDateTime.of(2017, 10, 1, 10, 2, 3));
 
-        Review createdReview1 = reviewService.publishReview(user.getId(), product.getId(), 3, "Comment");
+        Review createdReview1 = reviewService.createReview(user.getId(), product.getId(), 3, "Comment");
 
         Block<Review> expectedBlock = new Block<>(Arrays.asList(createdReview1), false);
 
@@ -212,7 +212,7 @@ public class ReviewServiceTest {
         Product product = createProduct(user, craft1, subcategory1, "Product1");
 
         Purchase purchase = createPurchase(user, product, LocalDateTime.of(2017, 10, 1, 10, 2, 3));
-        Review review = reviewService.publishReview(user.getId(), product.getId(), 5, "Initial comment");
+        Review review = reviewService.createReview(user.getId(), product.getId(), 5, "Initial comment");
 
         System.out.println("Avg rating before edit: " + product.getAvgRating());
         // Edit the published review
@@ -236,7 +236,7 @@ public class ReviewServiceTest {
         Product product = createProduct(user, craft1, subcategory1, "Product1");
 
         Purchase purchase = createPurchase(user, product, LocalDateTime.of(2017, 10, 1, 10, 2, 3));
-        Review review = reviewService.publishReview(user.getId(), product.getId(), 5, "Initial comment");
+        Review review = reviewService.createReview(user.getId(), product.getId(), 5, "Initial comment");
 
         // Check the average rating before removing the review
          product.calculateAvgRating();

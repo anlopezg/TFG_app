@@ -103,7 +103,7 @@ public class StripeServiceImpl implements StripeService{
 
 
     @Override
-    public Account createFullConnectedAccount(User user) throws StripeException {
+    public Account createStripeAccount(User user) throws StripeException {
         AccountCreateParams params = AccountCreateParams.builder()
                 .setType(AccountCreateParams.Type.EXPRESS)
                 .setCountry("US")

@@ -307,7 +307,7 @@ public class CatalogServiceTest {
 
 
     /**
-     *  Test for the method {@link CatalogService#findProduct(Long)}
+     *  Test for the method {@link CatalogService#findProductById(Long)}
      */
     @Test
     public void testFindProduct() throws InstanceNotFoundException{
@@ -320,13 +320,13 @@ public class CatalogServiceTest {
 
         Product product1 = createProduct(user1, craft1, subcategory1, "Product1");
 
-        assertEquals(product1, catalogService.findProduct(product1.getId()));
+        assertEquals(product1, catalogService.findProductById(product1.getId()));
     }
 
     @Test
     public void testFindProductByNonExistentId(){
         assertThrows(InstanceNotFoundException.class, ()->
-                catalogService.findProduct(NON_EXISTENT_ID));
+                catalogService.findProductById(NON_EXISTENT_ID));
     }
 
     /**

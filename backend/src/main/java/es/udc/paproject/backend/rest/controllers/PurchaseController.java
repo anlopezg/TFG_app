@@ -26,6 +26,12 @@ public class PurchaseController {
     private final static String MAX_QUANTITY_EXCEEDED_EXCEPTION_CODE = "project.exceptions.MaxQuantityExceededException";
     private final static String MAX_ITEMS_EXCEEDED_EXCEPTION_CODE = "project.exceptions.MaxItemsExceededException";
     private final static String EMPTY_SHOPPING_CART_EXCEPTION_CODE = "project.exceptions.EmptyShoppingCartException";
+    private static final String STRIPE_EXCEPTION_CODE = "project.exceptions.StripeException";
+    private static final String PAYMENT_PROCESSING_EXCEPTION_CODE = "project.exceptions.PaymentProcessingException";
+
+    private static final String PAYMENT_ALREADY_PROCESSED_EXCEPTION_CODE = "project.exceptions.PaymentAlreadyProcessedException";
+
+
 
     @Autowired
     private MessageSource messageSource;
@@ -69,6 +75,32 @@ public class PurchaseController {
 
     }
 
+    @ExceptionHandler(StripeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ErrorsDto handleStripeException(StripeException exception, Locale locale) {
+        String errorMessage = messageSource.getMessage(STRIPE_EXCEPTION_CODE, new Object[]{exception.getMessage()}, STRIPE_EXCEPTION_CODE, locale);
+        return new ErrorsDto(errorMessage);
+    }
+
+    @ExceptionHandler(PaymentProcessingException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ErrorsDto handlePaymentProcessingException(PaymentProcessingException exception, Locale locale) {
+        String errorMessage = messageSource.getMessage(PAYMENT_PROCESSING_EXCEPTION_CODE, new Object[]{exception.getMessage()}, PAYMENT_PROCESSING_EXCEPTION_CODE, locale);
+        return new ErrorsDto(errorMessage);
+    }
+
+    @ExceptionHandler(PaymentAlreadyProcessedException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
+    public ErrorsDto handlePaymentAlreadyProcessedException(PaymentAlreadyProcessedException exception, Locale locale) {
+        String errorMessage = messageSource.getMessage(PAYMENT_ALREADY_PROCESSED_EXCEPTION_CODE, new Object[]{exception.getMessage()}, PAYMENT_ALREADY_PROCESSED_EXCEPTION_CODE, locale);
+        return new ErrorsDto(errorMessage);
+    }
+
+
+
     @PostMapping("/carts/{shoppingCartId}/addItem")
     public ShoppingCartDto addItemToCart(@RequestAttribute Long userId, @PathVariable Long shoppingCartId,
                                      @Validated @RequestBody ShoppingCartParamsDto params) throws InstanceNotFoundException, PermissionException, MaxQuantityExceededException, MaxItemsExceededException {
@@ -94,7 +126,7 @@ public class PurchaseController {
 
     @PostMapping ("/carts/{shoppingCartId}/purchase")
     public PurchasePaymentDto purchaseCart(@RequestAttribute Long userId, @PathVariable Long shoppingCartId,
-                             @Validated @RequestBody PurchaseParamsDto params) throws PermissionException, EmptyShoppingCartException, InstanceNotFoundException, StripeException {
+                             @Validated @RequestBody PurchaseParamsDto params) throws PermissionException, EmptyShoppingCartException, InstanceNotFoundException, StripeException, MaxItemsExceededException {
 
         Purchase purchaseCreated = purchaseService.createPurchase(userId, shoppingCartId, params.getPostalAddress(), params.getLocality(),
                 params.getRegion(), params.getCountry(), params.getPostalCode());
@@ -107,9 +139,11 @@ public class PurchaseController {
     @PostMapping("/purchases/{purchaseId}/processPayment")
     public ResponseEntity<Void> processPaymentForPurchase(@RequestAttribute Long userId, @PathVariable Long purchaseId,
                                                           @Validated @RequestBody PaymentParamsDto paymentParams)
-            throws InstanceNotFoundException, StripeException, PaymentProcessingException, PermissionException {
+            throws InstanceNotFoundException, StripeException, PaymentProcessingException, PermissionException, PaymentAlreadyProcessedException {
 
-        Purchase purchase = purchaseService.findPurchase(userId, purchaseId);
+        System.out.println("******************* Received purchaseId: " + purchaseId);
+
+        Purchase purchase = purchaseService.findPurchaseById(userId, purchaseId);
         purchaseService.processPaymentForPurchase(paymentParams.getPaymentMethodId(), purchase);
 
         return ResponseEntity.ok().build();
@@ -119,7 +153,7 @@ public class PurchaseController {
     @GetMapping("/purchases/{purchaseId}")
     public PurchaseDto findPurchase(@RequestAttribute Long userId, @PathVariable Long purchaseId) throws InstanceNotFoundException, PermissionException{
 
-        return toPurchaseDto(purchaseService.findPurchase(userId, purchaseId));
+        return toPurchaseDto(purchaseService.findPurchaseById(userId, purchaseId));
     }
 
     @GetMapping("/purchases")
@@ -130,28 +164,4 @@ public class PurchaseController {
         return new BlockDto<>(toPurchaseSummaryDtos(purchaseBlock.getItems()), purchaseBlock.getExistMoreItems());
     }
 
-    /*
-    @PostMapping("/create")
-    public ResponseEntity<Purchase> createPurchase(@RequestBody PurchaseDto purchaseRequest) {
-        Purchase purchase = new Purchase();
-        // Configurar otros campos de Purchase desde purchaseRequest
-        purchase.setPaymentStatus(PaymentStatus.PENDING);
-
-        purchase = purchaseService.save(purchase); // Guardar la compra en la base de datos
-        return ResponseEntity.ok(purchase);
-    }
-
-    @PostMapping("/updatePaymentStatus")
-    public ResponseEntity<Purchase> updatePaymentStatus(@RequestParam Long purchaseId, @RequestParam PaymentStatus status) {
-        Purchase purchase = purchaseService.findById(purchaseId);
-        if (purchase != null) {
-            purchase.setPaymentStatus(status);
-            purchaseService.save(purchase);
-            return ResponseEntity.ok(purchase);
-        } else {
-            return ResponseEntity.status(404).body(null);
-        }
-    }/*
-
-     */
 }
