@@ -40,6 +40,8 @@ const ShoppingItem = ({shoppingItemListId, item, edit, onUpdateQuantity,
 
     }
 
+    console.log(item);
+
     const handleRemoveItem = () => {
 
         onRemoveItem(shoppingItemListId,
@@ -53,6 +55,19 @@ const ShoppingItem = ({shoppingItemListId, item, edit, onUpdateQuantity,
         navigate('/reviews/add-review', {state: {productId: item.productId,
                 productName: item.productName}});
     }
+
+    const getPaymentStatusMessageId = (status) => {
+        switch (status) {
+            case 'succeeded':
+                return 'project.shopping.Purchase.paymentStatus.succeeded';
+            case 'pending':
+                return 'project.shopping.Purchase.paymentStatus.pending';
+            case 'failed':
+                return 'project.shopping.Purchase.paymentStatus.failed';
+            default:
+                return 'project.shopping.Purchase.paymentStatus.unknown';
+        }
+    };
 
     return (
         <div className="col-md-12">
@@ -148,12 +163,24 @@ const ShoppingItem = ({shoppingItemListId, item, edit, onUpdateQuantity,
                         )}
 
                         {addReview && (
-                            <div className="row justify-content-center">
-                                <div className="col-md-6 mt-3 d-flex flex-column ">
-                                    <button className="btn button-coral" onClick={handleReviewProduct}>
-                                        <i className="fa-solid fa-star mx-1"></i>
-                                        <FormattedMessage id="project.reviews.purchase.add"/>
-                                    </button>
+                            <div>
+                                <div className="col-md-2 d-flex flex-column justify-content-center mt-1">
+                                    <p className="small text-muted mb-2 text-center">
+                                        <FormattedMessage id="project.shopping.Purchase.paymentStatus"/>
+                                    </p>
+                                    <p className="lead fw-normal mb-0 text-center">
+                                        <i className="fa-solid fa-sack-dollar mx-1"></i>
+                                        <FormattedMessage id={getPaymentStatusMessageId(item.paymentStatus)} />
+                                    </p>
+                                </div>
+
+                                <div className="row justify-content-center">
+                                    <div className="col-md-6 mt-3 d-flex flex-column ">
+                                        <button className="btn button-coral" onClick={handleReviewProduct}>
+                                            <i className="fa-solid fa-star mx-1"></i>
+                                            <FormattedMessage id="project.reviews.purchase.add"/>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 

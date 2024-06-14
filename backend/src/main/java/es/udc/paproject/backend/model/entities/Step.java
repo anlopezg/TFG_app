@@ -9,7 +9,6 @@ public class Step {
     private Section section;
     private String rowNumber;
     private String instructions;
-
     private int stepOrder;
 
     public Step() {}

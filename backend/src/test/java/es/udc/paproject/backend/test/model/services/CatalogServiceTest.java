@@ -368,6 +368,21 @@ public class CatalogServiceTest {
     }
 
     @Test
+    public void testMarkAsFavoriteProductDuplicated() throws InstanceNotFoundException, DuplicateInstanceException, OwnerOfProductException {
+
+        User user1 = createUser("user1");
+        User user2 = createUser("user2");
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+        Product product1 = createProduct(user1, craft1, subcategory1, "Product1");
+
+        catalogService.markAsFavoriteProduct(user2.getId(), product1.getId());
+
+        assertThrows(DuplicateInstanceException.class, ()-> catalogService.markAsFavoriteProduct(user2.getId(),product1.getId()));
+    }
+
+    @Test
     public void testGetFavoriteProducts() throws InstanceNotFoundException, DuplicateInstanceException, OwnerOfProductException {
 
         User user1 = createUser("user1");
@@ -425,10 +440,31 @@ public class CatalogServiceTest {
                 catalogService.findFavoriteById(foundFavorite.get().getId()));
     }
 
+
     @Test
     public void testRemoveNonExistentFavoriteProduct(){
 
         assertThrows(InstanceNotFoundException.class, () ->
                 catalogService.removeFavoriteProduct(NON_EXISTENT_ID, NON_EXISTENT_ID));
     }
+
+    @Test
+    void testFindFavoriteByIdNonExistent(){
+        assertThrows(InstanceNotFoundException.class, ()-> catalogService.findFavoriteById(NON_EXISTENT_ID));
+    }
+
+
+    @Test
+    void testRemoveFavoriteProductFavoriteNonExistent(){
+        User user1 = createUser("user1");
+        Craft craft1 = createCraft("Crochet");
+        Category category1 = createCategory("Tops");
+        Subcategory subcategory1 = createSubcategory("Jacket", category1);
+        Product product1 = createProduct(user1, craft1, subcategory1, "Product1");
+
+        assertThrows(InstanceNotFoundException.class, () ->
+                catalogService.removeFavoriteProduct(user1.getId(), product1.getId()));
+    }
+
+
 }

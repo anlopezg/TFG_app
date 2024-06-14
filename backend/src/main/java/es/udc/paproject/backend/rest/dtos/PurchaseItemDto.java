@@ -10,11 +10,12 @@ public class PurchaseItemDto {
     private BigDecimal productPrice;
     private int quantity;
     private String mainImageUrl;
+    private String paymentStatus;
 
     public PurchaseItemDto() {}
 
     public PurchaseItemDto(Long id, Long productId, String productName, BigDecimal productPrice, int quantity,
-                           String mainImageUrl) {
+                           String mainImageUrl, String paymentStatus) {
 
         this.id = id;
         this.productId = productId;
@@ -22,6 +23,7 @@ public class PurchaseItemDto {
         this.productPrice = productPrice;
         this.quantity = quantity;
         this.mainImageUrl = mainImageUrl;
+        this.paymentStatus = paymentStatus;
     }
 
     public Long getId() {
@@ -70,5 +72,13 @@ public class PurchaseItemDto {
 
     public void setMainImageUrl(String mainImageUrl) {
         this.mainImageUrl = mainImageUrl;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

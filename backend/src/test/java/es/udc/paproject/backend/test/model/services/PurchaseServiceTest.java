@@ -2,25 +2,28 @@ package es.udc.paproject.backend.test.model.services;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
+import java.util.*;
 
 import com.stripe.exception.StripeException;
+import com.stripe.model.Account;
+import com.stripe.model.PaymentIntent;
 import es.udc.paproject.backend.model.daos.*;
 import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.model.exceptions.*;
-import es.udc.paproject.backend.model.services.PurchaseService;
+import es.udc.paproject.backend.model.services.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.udc.paproject.backend.model.services.Block;
-import es.udc.paproject.backend.model.services.UserService;
-
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -35,6 +38,13 @@ public class PurchaseServiceTest {
     @Autowired
     private PurchaseService purchaseService;
 
+    @InjectMocks
+    private PurchaseServiceImpl purchaseServiceImpl;
+
+    @Autowired
+    private StripeService stripeService;
+
+
     @Autowired
     private CraftDao craftDao;
     @Autowired
@@ -47,6 +57,9 @@ public class PurchaseServiceTest {
     private ProductDao productDao;
 
     @Autowired
+    private PaymentDao paymentDao;
+
+    @Autowired
     private ShoppingCartItemDao shoppingCartItemDao;
 
     @Autowired
@@ -54,6 +67,16 @@ public class PurchaseServiceTest {
 
     @Autowired
     private PurchaseItemDao purchaseItemDao;
+
+    private Purchase purchase;
+    private PurchaseItem purchaseItem;
+    private Physical physicalProduct;
+    private Payment payment;
+    private StripeAccount stripeAccount;
+    private User productOwner;
+
+    private String stripeAccountId;
+    private String paymentIntentId;
 
     private User signUpUser(String username) {
 
@@ -118,9 +141,44 @@ public class PurchaseServiceTest {
 
     private StripeAccount createStripeAccount(User user) {
         StripeAccount stripeAccount = new StripeAccount();
-        stripeAccount.setStripeAccountId("acct_1PMy8yPC211iYDLj");
+        stripeAccount.setStripeAccountId("acct_1PRZrtPGEwNaqJ7s");
         user.setStripeAccount(stripeAccount);
         return stripeAccount;
+    }
+
+    @BeforeEach
+    void setUp() {
+        productOwner = new User();
+        stripeAccount = new StripeAccount();
+        stripeAccountId = "acct_1PRZrtPGEwNaqJ7s";
+        stripeAccount.setStripeAccountId(stripeAccountId);
+        productOwner.setStripeAccount(stripeAccount);
+
+        physicalProduct = new Physical();
+        physicalProduct.setAmount(10);
+        physicalProduct.setUser(productOwner);
+
+        payment = new Payment();
+        payment.setPaymentStatus("pending");
+
+        purchaseItem = new PurchaseItem();
+        purchaseItem.setProduct(physicalProduct);
+        purchaseItem.setPayment(payment);
+        purchaseItem.setQuantity(1);
+
+        Set<PurchaseItem> items = new HashSet<>();
+        items.add(purchaseItem);
+
+        purchase = new Purchase();
+        purchase.setItems(items);
+    }
+
+    @AfterEach
+    void tearDown() throws StripeException {
+        if (paymentIntentId != null) {
+            PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
+            paymentIntent.cancel();
+        }
     }
 
     @Test
@@ -691,15 +749,16 @@ public class PurchaseServiceTest {
             assertEquals("eur", purchaseItem.getPayment().getCurrency());
             assertNotNull(purchaseItem.getPayment().getPaymentDate());
             assertEquals(purchaseItem.getProduct().getUser().getStripeAccount().getStripeAccountId(), purchaseItem.getPayment().getStripeAccountId());
-            assertEquals(purchaseItem.getTotalPrice().multiply(new BigDecimal(100)), purchaseItem.getPayment().getAmount());
+            assertEquals(purchaseItem.getTotalPrice(), purchaseItem.getPayment().getAmount());
         }
 
         // Verify the sum of totalAmount of each Item, is the same as the total Price of the Purchase
         BigDecimal totalAmount = foundPurchase.getItems().stream()
                 .map(item -> item.getPayment().getAmount())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        assertEquals(foundPurchase.getTotalPrice().multiply(new BigDecimal(100)), totalAmount);
+        assertEquals(foundPurchase.getTotalPrice(), totalAmount);
     }
+
 
 
 }

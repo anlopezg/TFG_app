@@ -9,7 +9,9 @@ import es.udc.paproject.backend.model.services.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,6 +173,58 @@ public class PublicationServiceTest {
         assertThrows(InstanceNotFoundException.class, ()->
                 publicationService.findProductById(physical.getId()));
 
+    }
+
+
+    @Test
+    public void testEditProduct() throws Exception {
+
+        Physical physical = createFullPhysical();
+
+        List<String> imagesUrl = Arrays.asList("image1.jpg", "image2.jpg");
+
+        Physical updatedPhysical = publicationService.editPhysical(
+                physical.getId(), physical.getUser().getId(), physical.getCraft().getId(), physical.getSubcategory().getId(), "Updated Title", "Updated Description",
+                new BigDecimal("20.00"), false, 10, "L", "Blue",
+                "Updated Details", imagesUrl);
+
+
+        assertEquals("Updated Title", updatedPhysical.getTitle());
+        assertEquals("Updated Description", updatedPhysical.getDescription());
+        assertEquals(new BigDecimal("20.00"), updatedPhysical.getPrice());
+        assertFalse(updatedPhysical.getActive());
+        assertEquals(10, updatedPhysical.getAmount());
+        assertEquals("L", updatedPhysical.getSize());
+        assertEquals("Blue", updatedPhysical.getColor());
+        assertEquals("Updated Details", updatedPhysical.getDetails());
+        assertEquals(imagesUrl.size(), updatedPhysical.getImages().size());
+
+    }
+
+    @Test
+    public void testFindAddedPhysicals() throws Exception {
+
+        User user = createSellerUser("username");
+
+        Craft craft = createCraft("Crochet");
+        Category category = createCategory("Accesories");
+        Subcategory subcategory= createSubcategory("Ring", category);
+        List<String> imagesUrl = Arrays.asList("image1.jpg", "image2.jpg");
+
+        String title1 = "product1";
+        String title2 = "product2";
+        BigDecimal price = BigDecimal.valueOf(10);
+
+        Physical physical1 = publicationService.createPhysical(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
+                price, true, 1, "L", "color", "details", imagesUrl);
+
+        Physical physical2 = publicationService.createPhysical(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
+                price, true, 1, "L", "color", "details", imagesUrl);
+
+        Block<Physical> expectedBlock = new Block<>(Arrays.asList(physical1, physical2), false);
+        Block<Physical> foundPhysicals = publicationService.findAddedPhysicals(user.getId(), 0, 2);
+
+        assertEquals(expectedBlock, foundPhysicals);
     }
 
 }

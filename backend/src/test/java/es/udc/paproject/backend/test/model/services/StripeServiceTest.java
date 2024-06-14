@@ -2,7 +2,9 @@ package es.udc.paproject.backend.test.model.services;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Account;
+import com.stripe.model.AccountLink;
 import com.stripe.model.PaymentIntent;
+import com.stripe.param.AccountLinkCreateParams;
 import es.udc.paproject.backend.model.entities.User;
 import es.udc.paproject.backend.model.exceptions.DuplicateInstanceException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
@@ -12,7 +14,9 @@ import es.udc.paproject.backend.model.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,6 +27,7 @@ import java.io.IOException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -37,6 +42,9 @@ public class StripeServiceTest {
 
     @Mock
     private PaymentIntent paymentIntent;
+
+    @Mock
+    private AccountLink accountLinkMock;
 
     @BeforeEach
     public void setUp() {
@@ -92,37 +100,29 @@ public class StripeServiceTest {
         assertEquals(account.getEmail(), email);
     }
 
-    /*
     @Test
-    public void testCreatePaymentIntent() throws StripeException {
+    void createAccountLink_ShouldReturnAccountLinkUrl() throws StripeException {
         // Arrange
-        Long amount = 5000L; // 50.00 EUR in cents
-        String currency = "eur";
-        String accountId = "acct_test";
+        String accountId = "acct_123";
+        String expectedUrl = "http://test-url";
 
-        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-                .setAmount(amount)
-                .setCurrency(currency)
-                .setTransferData(PaymentIntentCreateParams.TransferData.builder()
-                        .setDestination(accountId)
-                        .build())
-                .build();
+        try (MockedStatic<AccountLink> mockedStatic = Mockito.mockStatic(AccountLink.class)) {
+            mockedStatic.when(() -> AccountLink.create(any(AccountLinkCreateParams.class)))
+                    .thenReturn(accountLinkMock);
 
-        when(PaymentIntent.create(any(PaymentIntentCreateParams.class))).thenReturn(paymentIntent);
+            when(accountLinkMock.getUrl()).thenReturn(expectedUrl);
 
-        // Act
-        PaymentIntent result = stripeService.createPaymentIntent(amount, currency, accountId);
+            // Act
+            String resultUrl = stripeService.createAccountLink(accountId);
 
-        // Assert
-        ArgumentCaptor<PaymentIntentCreateParams> captor = ArgumentCaptor.forClass(PaymentIntentCreateParams.class);
-        verify(PaymentIntent.class).create(captor.capture());
-        PaymentIntentCreateParams capturedParams = captor.getValue();
+            // Assert
+            assertEquals(expectedUrl, resultUrl);
 
-        assertEquals(amount, capturedParams.getAmount());
-        assertEquals(currency, capturedParams.getCurrency());
-        assertEquals(accountId, capturedParams.getTransferData().getDestination());
-        assertEquals(paymentIntent, result);
-    }*/
+            // Verify that the create method was called with the expected parameters
+            mockedStatic.verify(() -> AccountLink.create(any(AccountLinkCreateParams.class)));
+            verify(accountLinkMock).getUrl();
+        }
+    }
 
 
 }

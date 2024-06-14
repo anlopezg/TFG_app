@@ -141,8 +141,6 @@ public class PurchaseController {
                                                           @Validated @RequestBody PaymentParamsDto paymentParams)
             throws InstanceNotFoundException, StripeException, PaymentProcessingException, PermissionException, PaymentAlreadyProcessedException {
 
-        System.out.println("******************* Received purchaseId: " + purchaseId);
-
         Purchase purchase = purchaseService.findPurchaseById(userId, purchaseId);
         purchaseService.processPaymentForPurchase(paymentParams.getPaymentMethodId(), purchase);
 

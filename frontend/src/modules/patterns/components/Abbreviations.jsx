@@ -42,9 +42,9 @@ const Abbreviations = ({ craft, standard }) => {
     }
 
 
-    if (craft === 'crochet') {
+    if (craft === 1) {
         abbreviations = standard === 'ES' ? crochetAbbreviationsES : crochetAbbreviationsUS;
-    } else if (craft === 'knit') {
+    } else if (craft === 2) {
         abbreviations = standard === 'ES' ? knitAbbreviationsES : knitAbbreviationsUS;
     }
 

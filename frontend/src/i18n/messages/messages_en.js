@@ -251,6 +251,11 @@ export default {
     'project.shopping.Purchase.paymentMethod':'Payment method',
     'project.shopping.Purchase.paymentMethod.complete': 'Complete your payment method information',
     'project.shopping.Purchase.paymentMethod.complete.card': 'Card',
+    'project.shopping.Purchase.paymentStatus': 'Payment Status',
+    "project.shopping.Purchase.paymentStatus.succeeded": "Succeeded",
+    "project.shopping.Purchase.paymentStatus.pending": "Pending",
+    "project.shopping.Purchase.paymentStatus.failed": "Failed",
+    "project.shopping.Purchase.paymentStatus.unknown": "Unknown",
 
 
     'project.reviews.User.header': 'Reviews you have published',

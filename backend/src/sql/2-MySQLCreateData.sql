@@ -61,10 +61,15 @@ INSERT INTO Product (userId, craftId, subcategoryId, title, description, price, 
             (2, 1, 2, 'Off shoulder sweater', 'Wool sweater', 10.00, TRUE, '2024-02-05 18:15:00','PATTERN', 0,0.0,
              NULL, NULL, NULL, NULL,
              'How to crochet the sweater',  'Crochet loosely', '25 hours', 2 ,'US', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S', 'en'),
-      -- Pattern
+      -- Pattern id=4
             (2, 1, 6, 'Crochet bag', 'This is a pattern to make a crochet bag', 20.00, TRUE, '2024-03-05 18:15:00', 'PATTERN',0, 0.0,
              NULL, NULL, NULL, NULL,
-             'How to crochet a bag', 'Crochet loosely', '25 hours', 2 ,'US', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S', 'en');
+             'How to crochet a bag', 'Crochet loosely', '25 hours', 2 ,'US', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S', 'en'),
+
+      -- Pattern id=5
+      (2, 1, 6, 'Summer crochet bag', 'This is a pattern to make a summer crochet bag', 12.00, TRUE, '2024-06-05 11:00:00', 'PATTERN',0, 0.0,
+       NULL, NULL, NULL, NULL,
+       'How to crochet a bag', 'Crochet loosely', '40 hours', 2 ,'US', 'None', '4x4 15 stitches 12 rows', 'Unique', 'en');
 
 
 INSERT INTO Favorite (userId, productId, liked) VALUES
@@ -81,7 +86,8 @@ INSERT INTO ProductImages (productId, imageUrl) VALUES
             (4, "https://res.cloudinary.com/dhj64eq7m/image/upload/v1713639493/tfg/k9rmyhnlqa5i8dbfuaff.jpg"),
             (4, "https://res.cloudinary.com/dhj64eq7m/image/upload/v1713639494/tfg/yevn2muo0alh47ytqygi.jpg"),
             (4, "https://res.cloudinary.com/dhj64eq7m/image/upload/v1713639494/tfg/jbsfohay7hg5lpg1wph4.jpg"),
-            (4, "https://res.cloudinary.com/dhj64eq7m/image/upload/v1713639494/tfg/pflndu5cr3dwmu523luz.jpg");
+            (4, "https://res.cloudinary.com/dhj64eq7m/image/upload/v1713639494/tfg/pflndu5cr3dwmu523luz.jpg"),
+            (5, "https://res.cloudinary.com/dhj64eq7m/image/upload/v1717177497/wfihgxnik8jb9veu7tge.png");
 
 
 INSERT INTO ShoppingCart (userId) VALUES
@@ -96,11 +102,14 @@ INSERT INTO ShoppingCartItem (productId, quantity, shoppingCartId) VALUES
 
 INSERT INTO Purchase (userId, date, postalAddress, locality, region, country, postalCode) VALUES
             (1, '2024-02-02 16:00:00', 'Calle Alfonso 3', 'A Coruña', 'A Coruña', 'España', '15003'),
-            (4, '2024-04-06 12:00:00', 'Avenida Montserrat', 'Madrid', 'Madrid', 'España', '52000');
+            (4, '2024-04-06 12:00:00', 'Avenida Montserrat', 'Madrid', 'Madrid', 'España', '52000'),
+            (1, '2024-02-02 16:00:00', 'Calle Alfonso 3', 'A Coruña', 'A Coruña', 'España', '15003');
+
 
 INSERT INTO PurchaseItem(productId, productPrice, quantity, purchaseId) VALUES
             (3, 20.0, 2, 1),
-            (3, 22.0, 1, 2);
+            (3, 22.0, 1, 2),
+            (5, 12.0, 1, 3);
 
 
 INSERT INTO Review(userId, productId, rating, comment, date) VALUES
@@ -109,34 +118,45 @@ INSERT INTO Review(userId, productId, rating, comment, date) VALUES
 
 
 INSERT INTO StripeAccount(userId, stripeAccountId, stripeEmail, accountStatus) VALUES
-            (2, "acct_1PMy8yPC211iYDLj", "seller@a.com", "new");
+            (2, "acct_1PRZrtPGEwNaqJ7s", "seller@a.com", "new");
 
 
 INSERT INTO Yarn (productId, brand, name, color, amount, fiberContent, weight, length) VALUES
     (3, 'Stylecraft', 'Special Chunky', 'Red', '2', 'Wool', '500g', '200m'),
-    (3, 'Stylecraft', 'Special DK', 'Blue', '5', 'Cotton', '100g', '300m');
+    (3, 'Stylecraft', 'Special DK', 'Blue', '5', 'Cotton', '100g', '300m'),
+    (5, 'Stylecraft', 'Special DK', 'Beis', '3', 'Cord', '200g', '400m');
 
 INSERT INTO Tool (productId, toolName, amount) VALUES
     (3, '5mm Hook',  1),
     (3, 'Needle', 1),
-    (4, '10mm Hook', 1);
+    (4, '10mm Hook', 1),
+    (5, '7mmHook', 1);
 
 INSERT INTO Section (productId, title, description, sectionOrder) VALUES
     (3, 'Front Section', 'This sections describes the process of how to do the front part of the sweater', 1),
     (3, 'Back Section', 'This sections describes the process of how to do the back part of the sweater', 2),
-    (3, 'Final Section', 'This sections describes the process of how to do the end of the sweater', 3);
+    (3, 'Final Section', 'This sections describes the process of how to do the end of the sweater', 3),
+    (5, 'Front Part', 'This sections describes how to crochet the front of the bag', 1),
+    (5, 'Side Section', 'This sections describes how to crochet the side part of the bag', 2);
 
 INSERT INTO Step (sectionId, rowNumber, instructions, stepOrder) VALUES
     (1, 'Row 1', 'Ch 100', 1),
     (1, 'Row 2', 'Sc 100', 2),
     (2, 'Row 1', 'Ch 4', 1),
-    (2, 'Rows 2 to 50', 'Hdc 4', 2);
+    (2, 'Rows 2 to 50', 'Hdc 4', 2),
+    (4, 'Row 1', '5 SC', 1),
+    (4, 'Row 2', '5 SC + 2 SCTOG', 2);
 
 INSERT INTO Payment (paymentId, paymentMethod, paymentStatus, amount, currency, paymentDate, stripeAccountId, stripeTransactionId, purchaseItemId)
 VALUES
     ('pi_3PNYi8AurJ6JByYJ1h9BR7Mu', 'pm_card_visa', 'succeeded', 9.00, 'eur', NOW(), 'acct_1PMy8yPC211iYDLj',
      'req_ZoDS0pI4yAYiLg', 1),
     ('pi_3PNYi8AurJ6JByYJ1h9BR7Mu', 'pm_card_visa', 'succeeded', 10.00, 'eur', NOW(), 'acct_1PMy8yPC211iYDLj',
-     'req_ZoDS0pI4yAYiLg', 2);
+     'req_ZoDS0pI4yAYiLg', 2),
+    ('pi_3PNYi8AurJ6JByYJ1h9BR7Mu', 'pm_card_visa', 'succeeded', 12.00, 'eur', NOW(), 'acct_1PMy8yPC211iYDLj',
+     'req_ZoDS0pI4yAYiLg', 3);
 
 
+INSERT INTO SectionImages (sectionId, imageUrl) VALUES
+    (4, "https://res.cloudinary.com/dhj64eq7m/image/upload/v1717177497/aoqiwqq7eudza27kyyeo.png"),
+    (5, "https://res.cloudinary.com/dhj64eq7m/image/upload/v1717173905/qwxkk4h0jphjh54outgn.png");

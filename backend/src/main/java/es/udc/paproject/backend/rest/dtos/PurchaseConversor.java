@@ -43,7 +43,7 @@ public class PurchaseConversor {
         String mainImageUrl  = images.iterator().next().getImageUrl();
 
         return new PurchaseItemDto(item.getId(), item.getProduct().getId(), item.getProduct().getTitle(), item.getProductPrice(),
-                item.getQuantity(), mainImageUrl);
+                item.getQuantity(), mainImageUrl, item.getPayment().getPaymentStatus());
 
     }
 

@@ -159,29 +159,6 @@ public class PatternServiceTest {
     /*   SERVICE'S TESTS  */
 
 
-    // ELIMINAR
-    @Test
-    public void testCreatePattern() throws Exception {
-
-        User user = createSellerUser("username");
-        Craft craft = createCraft("Crochet");
-        Category category = createCategory("Accesories");
-        Subcategory subcategory= createSubcategory("Ring", category);
-
-        String title = "title";
-        BigDecimal price = BigDecimal.valueOf(10);
-        Pattern expectedPattern = createPattern(user, craft, subcategory, title, price, LocalDateTime.now());
-
-        Pattern createdPattern = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "ES" , Collections.emptyList());
-
-
-        assertEquals(expectedPattern.getUser(),createdPattern.getUser());
-        assertEquals(expectedPattern.getCraft(), createdPattern.getCraft());
-        assertEquals(expectedPattern.getSubcategory(), createdPattern.getSubcategory());
-        assertEquals(expectedPattern.getTitle(), createdPattern.getTitle());
-        assertTrue(expectedPattern.getPrice().compareTo(createdPattern.getPrice()) == 0);
-    }
 
     @Test
     public void testCreatePatternExtended() throws InstanceNotFoundException, UserNotSellerException, StripeException, UserAlreadySellerException, IOException, DuplicateInstanceException, MaxItemsExceededException {
@@ -267,7 +244,8 @@ public class PatternServiceTest {
         assertThrows(UserNotSellerException.class, ()->
                 patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "title", "Description",
                         BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours", "US Standard", "None", "US", Collections.emptyList()));
+                        "Sizing", 1, "10 hours", "US Standard", "None", "US",
+                        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList()));
     }
 
     @Test
@@ -275,7 +253,8 @@ public class PatternServiceTest {
         assertThrows(InstanceNotFoundException.class, ()->
                 patternService.createPattern(NON_EXISTENT_ID, NON_EXISTENT_ID, NON_EXISTENT_ID, "title", "Description",
                         BigDecimal.valueOf(10), true, "Introduction", "Notes", "Gauge",
-                        "Sizing", 1, "10 hours", "US Standard", "None", "US", Collections.emptyList()));
+                        "Sizing", 1, "10 hours", "US Standard", "None",
+                        "US", Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList()));
     }
 
     @Test
@@ -292,10 +271,12 @@ public class PatternServiceTest {
         BigDecimal price = BigDecimal.valueOf(10);
 
         Pattern pattern1 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours",
+                "US Standard", "None", "US",Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
         Pattern pattern2 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours",
+                "US Standard", "None", "US",Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
         Block<Pattern> expectedBlock = new Block<>(Arrays.asList(pattern1, pattern2), false);
         Block<Pattern> foundPatterns = patternService.findAddedPatterns(user.getId(), 0, 2);
@@ -318,13 +299,16 @@ public class PatternServiceTest {
         BigDecimal price = BigDecimal.valueOf(10);
 
         Pattern pattern1 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title1, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours",
+                "US Standard", "None", "US",Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
         Pattern pattern2 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title2, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours",
+                "US Standard", "None", "US",Collections.emptyList(),Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
         Pattern pattern3 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), title3, "Description",
-                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
+                price, true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours",
+                "US Standard", "None", "US",Collections.emptyList(),Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
 
         Block<Pattern> firstBlock = new Block<>(Arrays.asList(pattern1, pattern2), true);
@@ -356,7 +340,8 @@ public class PatternServiceTest {
         Subcategory subcategory= createSubcategory("Ring", category);
 
         Pattern pattern1 = patternService.createPattern(user.getId(), craft.getId(), subcategory.getId(), "Title1", "Description",
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None", "US",Collections.emptyList());
+                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours",
+                "US Standard", "None", "US",Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
         assertEquals(pattern1, patternService.findPatternById(user.getId(), pattern1.getId()));
     }
@@ -365,37 +350,6 @@ public class PatternServiceTest {
     public void testFindPatternByNonExistentId(){
         assertThrows(InstanceNotFoundException.class, ()->
                 patternService.findPatternById(NON_EXISTENT_ID, NON_EXISTENT_ID));
-    }
-
-
-    // ELIMINAR
-    @Test
-    public void testEditPattern() throws Exception {
-
-        Pattern pattern1 = createPatternExtended();
-
-        String updatedTitle = "titleUpdated";
-        String updatedDescr = "descripUpdated";
-
-        pattern1.setTitle(updatedTitle);
-        pattern1.setDescription(updatedDescr);
-
-        Pattern updatedPattern = patternService.editPattern(pattern1.getId(), pattern1.getUser().getId(), pattern1.getCraft().getId(), pattern1.getSubcategory().getId(), updatedTitle, updatedDescr,
-                BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1, "10 hours", "US Standard", "None",  "US", Collections.emptyList());
-
-        assertEquals(pattern1, updatedPattern);
-    }
-
-    @Test
-    public void testEditPatternNotOwner() throws Exception {
-
-        User notOwner = createSellerUser("notOwner");
-        Pattern pattern1 = createPatternExtended();
-
-        assertThrows(PermissionException.class, ()->
-                patternService.editPattern(pattern1.getId(), notOwner.getId(), pattern1.getCraft().getId(), pattern1.getSubcategory().getId(), pattern1.getTitle(), pattern1.getDescription(),
-                        BigDecimal.valueOf(50), true, "Introduction", "Notes", "Gauge", "Sizing", 1,
-                        "10 hours", "US Standard", "None", "US", Collections.emptyList()));
     }
 
 
@@ -588,6 +542,16 @@ public class PatternServiceTest {
         assertNotNull(boughtPattern);
         assertEquals(1, boughtPattern.size());
         assertTrue(boughtPattern.contains(pattern));
+    }
+
+
+    @Test
+    void findPurchasedPatternByIdNonExistent() throws DuplicateInstanceException {
+
+        User buyer = createNormalUser("buyer");
+
+        assertThrows(InstanceNotFoundException.class, ()-> patternService.findPurchasedPatternById(buyer.getId(), NON_EXISTENT_ID));
+
     }
 
 

@@ -11,18 +11,6 @@ import java.util.List;
 
 public interface PatternService {
 
-    /**
-     * Creates a new Product of type Pattern given the following params
-     * @throws InstanceNotFoundException User, Craft or Subcategory not found
-     * @throws UserNotSellerException The user must be a Seller
-     */
-    Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
-                          BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                          String sizing, int difficultyLevel, String time,
-                          String abbreviations, String specialAbbreviations, String language,
-                          List<String> imagesUrl)
-            throws InstanceNotFoundException, UserNotSellerException;
-
 
     Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                           BigDecimal price, Boolean active, String introduction, String notes, String gauge,
@@ -41,10 +29,6 @@ public interface PatternService {
     Pattern findPatternById(Long userId, Long productId) throws InstanceNotFoundException, UserNotOwnerException, PermissionException;
 
 
-    Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
-                        BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                        String sizing, int difficultyLevel, String time,
-                        String abbreviations, String specialAbbreviations, String language, List<String> imagesUrl) throws InstanceNotFoundException, UserNotOwnerException, PermissionException;
 
 
     Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,

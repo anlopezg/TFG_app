@@ -9,7 +9,6 @@ import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.PatternService;
 import es.udc.paproject.backend.rest.dtos.BlockDto;
 import es.udc.paproject.backend.rest.dtos.PatternDto;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static es.udc.paproject.backend.rest.dtos.PatternConversor.*;
 import static es.udc.paproject.backend.rest.dtos.SectionDto.toSections;
@@ -99,13 +97,13 @@ public class PatternController {
     }
 
     @GetMapping("/purchased/{id}")
-    public PatternDto getPurchasedPatternById(@RequestAttribute Long userId, @PathVariable Long id) throws InstanceNotFoundException, PermissionException {
+    public PatternDto findPurchasedPatternById(@RequestAttribute Long userId, @PathVariable Long id) throws InstanceNotFoundException, PermissionException {
         Pattern pattern = patternService.findPurchasedPatternById(userId, id);
         return toPatternDtoFull(pattern);
     }
 
     @GetMapping("/purchased")
-    public List<PatternDto> getPurchasedPatterns(@RequestAttribute Long userId) throws InstanceNotFoundException {
+    public List<PatternDto> findPurchasedPatterns(@RequestAttribute Long userId) throws InstanceNotFoundException {
 
         List<Pattern> patterns = patternService.findPurchasedPatterns(userId);
 

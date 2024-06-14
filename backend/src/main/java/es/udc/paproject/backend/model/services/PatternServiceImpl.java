@@ -53,36 +53,6 @@ public class PatternServiceImpl implements PatternService{
     @Autowired
     private PurchaseItemDao purchaseItemDao;
 
-
-
-    @Override
-    public Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
-                                 BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                                 String sizing, int difficultyLevel, String time, String abbreviations,
-                                 String specialAbbreviations, String language, List<String> imagesUrl)
-            throws InstanceNotFoundException, UserNotSellerException {
-
-        User user = permissionChecker.checkSellerUser(userId);
-        Craft craft = permissionChecker.checkCraft(craftId);
-        Subcategory subcategory = permissionChecker.checkSubcategory(subcategoryId);
-
-        LocalDateTime creationDate = LocalDateTime.now();
-
-        Pattern patternCreated = new Pattern(user, craft, subcategory,
-                title, description, price, active, creationDate,introduction, notes, gauge, sizing, difficultyLevel, time, abbreviations, specialAbbreviations, language);
-
-        productDao.save(patternCreated);
-
-        for(String imageUrl : imagesUrl){
-            ProductImages productImage = new ProductImages(patternCreated, imageUrl);
-            patternCreated.addImage(productImage);
-            productImagesDao.save(productImage);
-        }
-
-
-        return patternCreated;
-    }
-
     @Override
     public Pattern createPattern(Long userId, Long craftId, Long subcategoryId, String title, String description,
                                  BigDecimal price, Boolean active, String introduction, String notes, String gauge,
@@ -162,51 +132,6 @@ public class PatternServiceImpl implements PatternService{
         permissionChecker.checkProductExistsAndBelongsTo(patternId, userId);
 
         return pattern.get();
-    }
-
-    @Override
-    public Pattern editPattern(Long productId, Long userId, Long craftId, Long subcategoryId, String title, String description,
-                               BigDecimal price, Boolean active, String introduction, String notes, String gauge,
-                               String sizing, int difficultyLevel, String time, String abbreviations,
-                               String specialAbbreviations, String language,
-                               List<String> imagesUrl) throws InstanceNotFoundException, PermissionException {
-
-
-        User user = permissionChecker.checkUser(userId);
-        Craft craft  = permissionChecker.checkCraft(craftId);
-        Subcategory subcategory= permissionChecker.checkSubcategory(subcategoryId);
-
-        Pattern pattern = findPatternById(userId, productId);
-
-        pattern.setUser(user);
-        pattern.setCraft(craft);
-        pattern.setSubcategory(subcategory);
-        pattern.setTitle(title);
-        pattern.setDescription(description);
-        pattern.setPrice(price);
-        pattern.setActive(active);
-        pattern.setIntroduction(introduction);
-        pattern.setNotes(notes);
-        pattern.setGauge(gauge);
-        pattern.setSizing(sizing);
-        pattern.setDifficultyLevel(difficultyLevel);
-        pattern.setTime(time);
-        pattern.setAbbreviations(abbreviations);
-        pattern.setSpecialAbbreviations(specialAbbreviations);
-        pattern.setLanguage(language);
-
-        Set<ProductImages> productImages = new HashSet<>();
-        for (String imageUrl : imagesUrl) {
-            ProductImages productImage = new ProductImages();
-            productImage.setImageUrl(imageUrl);
-            productImage.setProduct(pattern);
-            productImages.add(productImage);
-        }
-        pattern.setImages(productImages);
-
-        patternDao.save(pattern);
-
-        return pattern;
     }
 
     @Override

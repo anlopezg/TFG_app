@@ -26,6 +26,7 @@ const PurchasedPatternDetails_Directions = ({ pattern }) => {
         }));
     };
 
+
     const renderSections = () => {
 
 
@@ -38,7 +39,12 @@ const PurchasedPatternDetails_Directions = ({ pattern }) => {
                     </Accordion.Header>
                     <Accordion.Body>
                         <p>{section.description}</p>
-                        {section.imagesUrl && <ImagesCarousel images={section.imagesUrl} />}
+
+                        {section.imagesUrl && section.imagesUrl.length > 0 && (
+                            <div className="mb-3">
+                                <ImagesCarousel images={section.imagesUrl.map(img => img.imageUrl)} />
+                            </div>
+                        )}
 
                         {section.steps.map((step, stepIndex) => (
                             <div key={stepIndex} className="mb-3">

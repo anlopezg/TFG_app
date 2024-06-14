@@ -5,6 +5,8 @@ export const initReactIntl = () => {
     let locale = (navigator.languages && navigator.languages[0]) ||
         navigator.language || navigator.userLanguage || 'en';
 
+    console.log("Browser locale: ", locale);
+
     const localeWithoutRegionCode = locale.toLowerCase().split(/[_-]+/)[0];
     const localeMessages = messages[locale] || 
         messages[localeWithoutRegionCode] || messages['en'];

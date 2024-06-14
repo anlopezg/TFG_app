@@ -21,7 +21,7 @@ const PurchasedPatternDetails_Intro = ({ pattern }) => {
 
     const renderAbbreviations = () => {
         if (pattern.abbreviations === 'None') return null;
-        return <Abbreviations craft={pattern.craft} standard={pattern.abbreviations}/>;
+        return <Abbreviations craft={pattern.craftId} standard={pattern.abbreviations}/>;
     }
 
 

@@ -252,6 +252,11 @@ export default {
     'project.shopping.Purchase.paymentMethod':'Método de pago',
     'project.shopping.Purchase.paymentMethod.complete': 'Completa el pago introduciendo los datos de tu método de pago',
     'project.shopping.Purchase.paymentMethod.complete.card': 'Tarjeta de crédito',
+    'project.shopping.Purchase.paymentStatus': 'Estado del pago',
+    "project.shopping.Purchase.paymentStatus.succeeded": "Pagado",
+    "project.shopping.Purchase.paymentStatus.pending": "Pendiente",
+    "project.shopping.Purchase.paymentStatus.failed": "Fallido",
+    "project.shopping.Purchase.paymentStatus.unknown": "Desconocido",
 
 
     'project.reviews.User.header': 'Reseñas que has realizado',

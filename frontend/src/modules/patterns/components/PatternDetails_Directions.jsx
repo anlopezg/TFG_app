@@ -28,9 +28,15 @@ const PatternDetails_Directions = ({pattern}) => {
                                     <p>{sec.description}</p>
                                     <div>
                                         <div style={{maxWidth: "400px", maxHeight: "100%"}}>
-                                            <ImagesCarousel images={sec.imagesUrl}/>
+                                            {sec.imagesUrl && sec.imagesUrl.length > 0 && (
+                                                <div className="mb-3">
+                                                    <ImagesCarousel images={sec.imagesUrl.map(img => img.imageUrl)} />
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
+
+
                                     <div className="mx-4">
                                         <div className="bold-label text-uppercase"><FormattedMessage id="project.pattern.instructions.step.short" /></div>
                                         <ul>

@@ -15,19 +15,6 @@ import java.util.List;
 public class StripeServiceImpl implements StripeService{
 
 
-    private static final Logger logger = LoggerFactory.getLogger(StripeService.class);
-
-    @Override
-    public Account createConnectedAccount(String email) throws StripeException {
-        AccountCreateParams params = AccountCreateParams.builder()
-                .setType(AccountCreateParams.Type.EXPRESS)
-                .setCountry("ES")
-                .setEmail(email)
-                .build();
-
-        return Account.create(params);
-    }
-
     @Override
     public String createAccountLink(String accountId) throws StripeException {
         AccountLinkCreateParams params = AccountLinkCreateParams.builder()
@@ -41,11 +28,6 @@ public class StripeServiceImpl implements StripeService{
         return accountLink.getUrl();
     }
 
-
-    /*
-    * Al utilizar setOnBehalfOf(stripeAccountId), estás indicando a Stripe que el pago debe ser transferido a la cuenta de
-    *  Stripe del propietario del producto, en lugar de la cuenta predeterminada de tu aplicación.
-    *  De esta manera, el dinero se transfiere automáticamente al propietario correcto.*/
     @Override
     public PaymentIntent createPaymentIntent(Long amount, String currency, String stripeAccountId, String paymentMethodId) throws StripeException {
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
@@ -62,38 +44,6 @@ public class StripeServiceImpl implements StripeService{
         System.out.println("Created payment intent"+ paymentIntent );
 
         return paymentIntent;
-    }
-
-    @Override
-
-    public PaymentIntent confirmPaymentIntent(String paymentIntentId, String paymentMethodId, String accountId) throws StripeException {
-        logger.info("Confirming PaymentIntent: {}", paymentIntentId);
-
-        PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
-        PaymentIntentConfirmParams confirmParams = PaymentIntentConfirmParams.builder()
-                .setPaymentMethod(paymentMethodId)
-                .build();
-
-        PaymentIntent confirmedPaymentIntent = paymentIntent.confirm(confirmParams, RequestOptions.builder()
-                .setStripeAccount(accountId)
-                .build());
-
-        System.out.println("Confirmed PaymentIntent: "+ confirmedPaymentIntent.getId());
-
-        return confirmedPaymentIntent;
-
-    }
-
-
-    @Override
-    public Transfer createTransfer(int amount, String currency, String connectedAccountId) throws StripeException {
-        TransferCreateParams params = TransferCreateParams.builder()
-                .setAmount((long) amount)
-                .setCurrency(currency)
-                .setDestination(connectedAccountId)
-                .build();
-
-        return Transfer.create(params);
     }
 
     @Override

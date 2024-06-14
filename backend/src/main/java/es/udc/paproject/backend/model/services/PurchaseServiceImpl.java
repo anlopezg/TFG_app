@@ -220,7 +220,7 @@ public class PurchaseServiceImpl implements PurchaseService{
     }
 
 
-    private void updateProductStock(Product product, int boughtQuantity) {
+    public void updateProductStock(Product product, int boughtQuantity) {
         if (product instanceof Physical) {
             Physical physical = (Physical) product;
             int currentAmount = physical.getAmount();

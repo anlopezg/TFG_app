@@ -1,5 +1,6 @@
 package es.udc.paproject.backend.test.model.services;
 
+import com.stripe.exception.StripeException;
 import es.udc.paproject.backend.model.exceptions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.paproject.backend.model.entities.User;
 import es.udc.paproject.backend.model.services.UserService;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -175,7 +178,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void testUserBecomesSeller() throws Exception {
+	public void testUserBecomesSeller() throws  DuplicateInstanceException, StripeException, UserAlreadySellerException, InstanceNotFoundException, IOException{
 
 		User user = createUser("user" ,"email");
 
@@ -187,7 +190,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void testUserAlreadySeller() throws Exception {
+	public void testUserAlreadySeller() throws DuplicateInstanceException, StripeException, UserAlreadySellerException, InstanceNotFoundException, IOException {
 
 		User user = createUser("user" ,"email");
 
@@ -198,6 +201,18 @@ public class UserServiceTest {
 
 		assertThrows(UserAlreadySellerException.class, ()->
 				userService.userBecomesSeller(user.getId()));
+	}
+
+
+	@Test
+	public void testFindUserByUsername() throws DuplicateInstanceException, InstanceNotFoundException {
+		User user = createUser("user" ,"email");
+
+		userService.signUp(user);
+
+		User userFound = userService.findUserByUsername(user.getUsername());
+
+		assertEquals(user, userFound);
 	}
 
 }
