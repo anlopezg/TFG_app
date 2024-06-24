@@ -56,7 +56,7 @@ export const nextFindProductsResultPage = criteria =>
     findProducts({...criteria, page: criteria.page+1});
 
 
-const clearProductSearch = () => ({
+export const clearProductSearch = () => ({
     type: actionTypes.CLEAR_PRODUCT_SEARCH
 });
 
@@ -76,9 +76,11 @@ export const clearProduct = () => ({
 
 export const findUserProducts = (username, criteria, onErrors) => dispatch => {
     backend.catalogService.findUserProducts(username, criteria,
-        result => dispatch(findProductsCompleted({criteria, result}),
-            onErrors));
-}
+        result =>
+            dispatch(findProductsCompleted({criteria, result})),
+                onErrors)
+        };
+
 
 
 const findUsersCompleted = userSearch => ({
@@ -103,6 +105,8 @@ export const nextFindUsersResultPage = criteria =>
 export const clearUserSearch = () => ({
     type: actionTypes.CLEAR_USER_SEARCH
 });
+
+
 
 
 /************************** FAVORITES ************************/

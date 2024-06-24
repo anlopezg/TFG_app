@@ -61,12 +61,15 @@ const BecomesSeller = () => {
                             <div className="mt-4 container-button-row">
                                 <div className="container-button-area">
                                     <Link className="btn button-options" to="/" style={{ textTransform: 'uppercase' }}>
+                                        <i className="fa-solid fa-xmark mx-2"></i>
                                         <FormattedMessage id="project.global.buttons.cancel" />
                                     </Link>
                                 </div>
                                 <div className="container-button-area">
                                     <button onClick={handleBecomeSeller} className="btn button-options extra-bold-label" style={{ textTransform: 'uppercase' }}>
                                         <FormattedMessage id="project.global.buttons.ok" />
+                                        <i className="fa-solid fa-check mx-2"></i>
+
                                     </button>
                                 </div>
                             </div>

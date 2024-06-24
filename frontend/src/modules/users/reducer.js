@@ -4,7 +4,8 @@ import * as actionTypes from './actionTypes';
 
 const initialState = {
     user: null,
-    stripeAccount: null
+    stripeAccount: null,
+    userStore:null
 };
 
 const user = (state = initialState.user, action) => {
@@ -36,7 +37,21 @@ const user = (state = initialState.user, action) => {
             return state;
 
     }
+}
 
+const userStore = (state = initialState.userStore, action) =>{
+    switch (action.type) {
+
+        case actionTypes.FIND_USER_BY_USERNAME_COMPLETED:
+            return {...state,
+                foundUser: action.payload}
+
+        case actionTypes.CLEAR_FOUND_USER:
+            return initialState.userStore
+
+        default:
+            return state;
+    }
 }
 
 const stripeAccount = (state = initialState.stripeAccount, action)=>{
@@ -52,6 +67,9 @@ const stripeAccount = (state = initialState.stripeAccount, action)=>{
         case actionTypes.CREATE_STRIPE_ACCOUNT_COMPLETED:
             return action.stripeAccount;
 
+        case actionTypes.CLEAR_STRIPE_ACCOUNT:
+            return initialState.stripeAccount;
+
         default:
             return state;
     }
@@ -59,7 +77,8 @@ const stripeAccount = (state = initialState.stripeAccount, action)=>{
 
 const reducer = combineReducers({
     user,
-    stripeAccount
+    stripeAccount,
+    userStore
 });
 
 export default reducer;

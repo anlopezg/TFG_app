@@ -117,10 +117,10 @@ const CreatePattern = () => {
                 </h2>
             </div>
 
-            <div className="d-flex h-100 justify-content-center">
+            <div className="d-flex flex-column flex-lg-row h-100 justify-content-center">
                 <SideBar steps={steps} currentStep={currentStep} onStepClick={handleStepClick} />
 
-                <div className="card pattern-card">
+                <div className="card pattern-card flex-grow-1">
                     <div className="card-body">
                         <div className="form-content p-3 flex-grow-1">
                             <form ref={node => form = node}

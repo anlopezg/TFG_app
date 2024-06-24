@@ -12,13 +12,13 @@
 ```
 Start Mysql server if not running (e.g. mysqld).
 
-mysqladmin -u root create tfg -p
-mysqladmin -u root create tfgtest -p
+mysqladmin -u root create yarncrafters -p
+mysqladmin -u root create yarncrafterstest -p
 
 mysql -u root -p
-    CREATE USER 'tfg'@'localhost' IDENTIFIED BY 'tfg';
-    GRANT ALL PRIVILEGES ON tfg.* to 'tfg'@'localhost' WITH GRANT OPTION;
-    GRANT ALL PRIVILEGES ON tfgtest.* to 'tfg'@'localhost' WITH GRANT OPTION;
+    CREATE USER 'yarncrafters'@'localhost' IDENTIFIED BY 'yarncrafters';
+    GRANT ALL PRIVILEGES ON yarncrafters.* to 'yarncrafters'@'localhost' WITH GRANT OPTION;
+    GRANT ALL PRIVILEGES ON yarncrafterstest.* to 'yarncrafters'@'localhost' WITH GRANT OPTION;
     exit
 ```
 

@@ -42,6 +42,7 @@ const ViewAddedPhysicals = () => {
                     <div className="col-md-4 me-5">
                         <Link className="btn button-dark-blue bold-label " to="/publications/create-physical">
                             <FormattedMessage id="project.products.CreatePhysical.heading"/>
+                            <i className="fa-solid fa-plus mx-2"></i>
                         </Link>
                     </div>
                 </div>

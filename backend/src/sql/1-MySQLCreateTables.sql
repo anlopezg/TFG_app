@@ -83,7 +83,6 @@ CREATE TABLE Product (
     active BOOLEAN NOT NULL,
     creationDate DATETIME NOT NULL,
     productType VARCHAR(20) NOT NULL,
-    version BIGINT NOT NULL,
     avgRating DECIMAL(3,2),
 
     -- Physical products attributes

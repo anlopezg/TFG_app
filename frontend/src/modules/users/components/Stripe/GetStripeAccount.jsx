@@ -6,13 +6,9 @@ import * as selectors from "../../selectors.js";
 
 const GetStripeAccount = () =>{
 
-    const dispatch = useDispatch();
-    const seller = useSelector(selectors.isSeller);
     const stripeAccount = useSelector(selectors.getStripeAccount);
-    const accountId = useSelector(selectors.getAccountId);
 
-
-    const getChargesValue = (charges) =>{
+    const getValue = (charges) =>{
         if(charges === true){
             return <FormattedMessage id="project.users.StripeAccount.charges.true"/>
         }else{
@@ -24,56 +20,64 @@ const GetStripeAccount = () =>{
     return (
         <div>
             {stripeAccount ? (
-                <div>
-                    <div className="card">
+                <div className="mt-4 mb-4 container d-flex justify-content-center">
+                    <div className="card shopping-card min-width-card">
 
-                        <h2 className="retro card-header back-color-pink">
-                            <FormattedMessage id="project.users.StripeAccount.title"/>
-                        </h2>
+                        <div className="card-header coral ">
+                            <h2 className="retro">
+                                <FormattedMessage id="project.users.StripeAccount.title"/>
+                            </h2>
+                        </div>
 
                         <div className="card-body">
 
-                            <div className="row justify-content-center">
-                                <div className="col-md-4">
-                                    <label htmlFor="id" className="col-form-label bold-label">
-                                        <FormattedMessage id="project.users.StripeAccount.accountId"/>
-                                    </label>
-                                </div>
-                                <div className="col-md-4 col-form-label">
-                                    <p>{stripeAccount.id}</p>
+
+
+                            <div className="form-group ">
+                                <label className="col-form-label bold-label">
+                                    <FormattedMessage id="project.users.StripeAccount.charges"/>
+                                </label>
+                                <p className="text-muted ">
+                                    <FormattedMessage id="project.users.StripeAccount.charges.descr"/>
+                                </p>
+                                <div className="form-control-plaintext border rounded p-2">
+                                    {getValue(stripeAccount.chargesEnabled)}
                                 </div>
                             </div>
 
-                            <div className="row justify-content-center">
-                                <div className="col-md-4">
-                                    <label htmlFor="email" className="col-form-label bold-label">
-                                        <FormattedMessage id="project.users.StripeAccount.email"/>
-                                    </label>
-                                </div>
-                                <div className="col-md-4 col-form-label">
-                                    <p>{stripeAccount.email}</p>
-                                </div>
-                            </div>
-
-                            <div className="row justify-content-center">
-                                <div className="col-md-4">
-                                    <label htmlFor="country" className="col-form-label bold-label">
-                                        <FormattedMessage id="project.users.StripeAccount.country"/>
-                                    </label>
-                                </div>
-                                <div className="col-md-4 col-form-label">
-                                    <p>{stripeAccount.country}</p>
+                            <div className="form-group ">
+                                <label className="col-form-label bold-label">
+                                    <FormattedMessage id="project.users.StripeAccount.payouts"/>
+                                </label>
+                                <p className="text-muted ">
+                                    <FormattedMessage id="project.users.StripeAccount.payouts.descr"/>
+                                </p>
+                                <div className="form-control-plaintext border rounded p-2">
+                                    {getValue(stripeAccount.payoutsEnabled)}
                                 </div>
                             </div>
 
-                            <div className="row justify-content-center">
-                                <div className="col-md-4">
-                                    <label htmlFor="charges" className="col-form-label bold-label">
-                                        <FormattedMessage id="project.users.StripeAccount.charges"/>
-                                    </label>
+                            <div className="row">
+
+                                <div className="col-md-6">
+                                    <div className="form-group mt-3">
+                                        <label className="col-form-label bold-label">
+                                            <FormattedMessage id="project.users.StripeAccount.country"/>
+                                        </label>
+                                        <div className="form-control-plaintext border rounded p-2">
+                                            {stripeAccount.country}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="col-md-4 col-form-label">
-                                    <p>{getChargesValue(stripeAccount.chargesEnabled)}</p>
+                                <div className="col-md-6">
+                                    <div className="form-group mt-3">
+                                        <label className="col-form-label bold-label">
+                                            <FormattedMessage id="project.users.StripeAccount.currency" />
+                                        </label>
+                                        <div className="form-control-plaintext border rounded p-2">
+                                            {stripeAccount.defaultCurrency}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

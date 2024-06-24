@@ -2,11 +2,8 @@ package es.udc.paproject.backend.model.services;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.*;
-import com.stripe.net.RequestOptions;
 import com.stripe.param.*;
 import es.udc.paproject.backend.model.entities.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

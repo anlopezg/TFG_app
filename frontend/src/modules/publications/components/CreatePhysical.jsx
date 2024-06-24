@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, FormattedNumber} from 'react-intl';
 import {Form, useNavigate} from 'react-router-dom';
 
 
@@ -96,7 +96,7 @@ const CreatePhysical = () => {
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             <div className="mt-4 mb-4 container d-flex justify-content-center align-items-center">
                 <div className="card bg-light mb-3 ">
-                    <h2 className="retro card-header">
+                    <h2 className="retro card-header pink">
                         <FormattedMessage id="project.products.CreatePhysical.heading"/>
                     </h2>
 

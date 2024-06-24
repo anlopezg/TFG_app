@@ -35,10 +35,12 @@ const AddedPhysicals= ({physicals}) =>(
 
                             <div className="text-center mt-3">
                                 <a href={`/publications/manage-physical/${physical.id}`} className="btn btn-primary mx-2">
+                                    <i className="fa-solid fa-pen-nib mx-2"></i>
                                     <FormattedMessage id="project.global.buttons.edit"/>
                                 </a>
                                 <a href={`/publications/delete-physical/${physical.id}`} className="btn btn-danger mx-2">
                                     <FormattedMessage id="project.global.buttons.delete"/>
+                                    <i className="fa-solid fa-trash-can mx-2"></i>
                                 </a>
                             </div>
 

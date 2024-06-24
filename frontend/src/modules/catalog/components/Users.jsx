@@ -5,6 +5,8 @@ import {UserLink} from "../../common/index.js";
 
 const Users = ({users}) => {
 
+    console.log("", users);
+
     return (
         <div className="container user-result">
             {users.map(user =>
@@ -30,14 +32,8 @@ const Users = ({users}) => {
                                             </small>
                                         </p>
                                         <p className="card-text">{user.bio}</p>
-
-
                                     </div>
-
-
                                 </div>
-
-
                             </div>
                         </div>
                     </div>

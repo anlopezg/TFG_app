@@ -61,9 +61,6 @@ export const findUserByUsername = (username, onSuccess) =>
     appFetch(`/users/${username}`, config('GET'), onSuccess);
 
 
-export const updatePaypalAccount = (paypalEmail, onSuccess, onErrors) =>
-    appFetch('/users/updatePaypalAccount', config('PUT', {paypalEmail}), onSuccess, onErrors);
-
 export const getStripeAccount = (accountId, onSuccess, onErrors) =>{
     appFetch(`/api/payments/accounts/${accountId}`, config('GET'), onSuccess, onErrors);
 }

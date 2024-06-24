@@ -28,7 +28,6 @@ public class Product{
     // Reviews
     private Set<Review> reviews = new HashSet<>();
     private double avgRating;
-    private Integer version;
 
     private String productType;
 
@@ -187,15 +186,6 @@ public class Product{
                 .mapToDouble(Review::getRating)
                 .average()
                 .orElse(0.0);
-    }
-
-    @Version
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
 

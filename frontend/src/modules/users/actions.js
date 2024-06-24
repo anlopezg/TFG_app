@@ -86,14 +86,27 @@ const findUserCompleted = user => ({
     user
 });
 
-export const findUserByUsername = username => dispatch =>
-    backend.userService.findUserByUsername(username ,
-        user => dispatch(findUserCompleted(user)));
 
 
 export const clearUser = () => ({
     type: actionTypes.CLEAR_USER
 })
+
+
+
+/* USER STORE CATALOG SEARCH*/
+const findUserByUsernameCompleted = (user) => ({
+    type: actionTypes.FIND_USER_BY_USERNAME_COMPLETED,
+    payload: user
+});
+
+export const clearFoundUser = () => ({
+    type: actionTypes.CLEAR_FOUND_USER
+});
+
+export const findUserByUsername = (username) => dispatch =>
+    backend.userService.findUserByUsername(username ,
+        user => dispatch(findUserByUsernameCompleted(user)));
 
 
 
@@ -111,6 +124,10 @@ export const getStripeAccountCompleted = stripeAccount =>({
 export const getStripeAccountFailure = (error) => ({
     type: actionTypes.GET_STRIPE_ACCOUNT_FAILURE,
     payload: error
+});
+
+export const clearStripeAccount = () => ({
+    type: actionTypes.CLEAR_STRIPE_ACCOUNT
 });
 
 export const getStripeAccount = (accountId) => dispatch =>

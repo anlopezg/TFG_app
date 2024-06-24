@@ -44,30 +44,30 @@ INSERT INTO Subcategory (subcategoryName, categoryId) VALUES
             ('Pillow', 3);
 
 
-INSERT INTO Product (userId, craftId, subcategoryId, title, description, price, active, creationDate, productType, version, avgRating,
+INSERT INTO Product (userId, craftId, subcategoryId, title, description, price, active, creationDate, productType, avgRating,
                      amount, size, color, details,
                      introduction, notes, time, difficultyLevel, abbreviations, specialAbbreviations, gauge, sizing, language) VALUES
       -- Physical Product
-            (2, 1, 1, 'Floral Crochet Top', 'Top with floral pattern', 25.00, TRUE, '2024-01-20 12:30:00', 'PHYSICAL', 0, 4.0,
+            (2, 1, 1, 'Floral Crochet Top', 'Top with floral pattern', 25.00, TRUE, '2024-01-20 12:30:00', 'PHYSICAL',  4.0,
              5, 'EU M', 'Light green', 'Made with acrylic yarn',
              NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 
       -- Physical Product
-            (2, 2, 4, 'Long Knit Scarf', 'Wool scarf', 14.00, TRUE, '2024-02-02 16:00:00', 'PHYSICAL', 0, 0.0,
+            (2, 2, 4, 'Long Knit Scarf', 'Wool scarf', 14.00, TRUE, '2024-02-02 16:00:00', 'PHYSICAL',  0.0,
              10, 'Only size', 'Pastel pink', 'Made with wool',
              NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 
       -- Pattern id = 3
-            (2, 1, 2, 'Off shoulder sweater', 'Wool sweater', 10.00, TRUE, '2024-02-05 18:15:00','PATTERN', 0,0.0,
+            (2, 1, 2, 'Off shoulder sweater', 'Wool sweater', 10.00, TRUE, '2024-02-05 18:15:00','PATTERN', 0.0,
              NULL, NULL, NULL, NULL,
              'How to crochet the sweater',  'Crochet loosely', '25 hours', 2 ,'US', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S', 'en'),
       -- Pattern id=4
-            (2, 1, 6, 'Crochet bag', 'This is a pattern to make a crochet bag', 20.00, TRUE, '2024-03-05 18:15:00', 'PATTERN',0, 0.0,
+            (2, 1, 6, 'Crochet bag', 'This is a pattern to make a crochet bag', 20.00, TRUE, '2024-03-05 18:15:00', 'PATTERN', 0.0,
              NULL, NULL, NULL, NULL,
              'How to crochet a bag', 'Crochet loosely', '25 hours', 2 ,'US', 'Ss - slip stitch', '4x4 15 stitches 12 rows', 'EU S', 'en'),
 
       -- Pattern id=5
-      (2, 1, 6, 'Summer crochet bag', 'This is a pattern to make a summer crochet bag', 12.00, TRUE, '2024-06-05 11:00:00', 'PATTERN',0, 0.0,
+      (2, 1, 6, 'Summer crochet bag', 'This is a pattern to make a summer crochet bag', 12.00, TRUE, '2024-06-05 11:00:00', 'PATTERN', 0.0,
        NULL, NULL, NULL, NULL,
        'How to crochet a bag', 'Crochet loosely', '40 hours', 2 ,'US', 'None', '4x4 15 stitches 12 rows', 'Unique', 'en');
 

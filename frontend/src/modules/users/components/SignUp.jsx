@@ -94,10 +94,13 @@ const SignUp = () => {
         <div>
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             <div className="mt-4 mb-4 container d-flex justify-content-center align-items-center">
-                <div className="card">
-                    <h2 className="retro card-header">
-                        <FormattedMessage id="project.users.SignUp.title"/>
-                    </h2>
+                <div className="card shopping-card min-width-card">
+                    <div className="card-header coral">
+                        <h2 className="retro">
+                            <FormattedMessage id="project.users.SignUp.title"/>
+                        </h2>
+                    </div>
+
                     <div className="card-body">
                         <form ref={node => form = node}
                             className="needs-validation" noValidate
@@ -211,7 +214,7 @@ const SignUp = () => {
                                             value={country}
                                             onChange={(val) => setCountry(val)}
                                             defaultOptionLabel={<FormattedMessage id="project.global.fields.select.country"/>}
-                                            id="country" className="form-control custom-country-dropdown"/>
+                                            id="country" className="form-control form-select"/>
                                         <div className="invalid-feedback">
                                             <FormattedMessage id='project.global.validator.required'/>
                                         </div>
@@ -227,7 +230,7 @@ const SignUp = () => {
                                             value={region}
                                             onChange={(val) => setRegion(val)}
 
-                                            id="region" className="form-control custom-country-dropdown"
+                                            id="region" className="form-select form-control"
                                             defaultOptionLabel={<FormattedMessage id="project.global.fields.select.region"/>}
                                         />
 
@@ -247,7 +250,7 @@ const SignUp = () => {
                                             <FormattedMessage id="project.global.fields.crochetLevel"/>
                                         </label>
 
-                                        <select id="crochetLevel" className="form-control" value={crochetLevel}
+                                        <select id="crochetLevel" className="form-select form-control" value={crochetLevel}
                                                 onChange={e => setCrochetLevel(e.target.value)}
                                                 required>
                                             <option value="0">
@@ -270,7 +273,7 @@ const SignUp = () => {
                                             <FormattedMessage id="project.global.fields.knitLevel"/>
                                         </label>
 
-                                        <select id="knitLevel" className="form-control" value={knitLevel}
+                                        <select id="knitLevel" className="form-select form-control" value={knitLevel}
                                                 onChange={e => setKnitLevel(e.target.value)}
                                                 required>
                                             <option value="0">
@@ -306,7 +309,7 @@ const SignUp = () => {
 
                             <div className="form-group row justify-content-center">
                                 <div className="col-md-6 mt-4">
-                                    <button type="submit" className="btn button-pink bold-label">
+                                    <button type="submit" className="btn button-pink text-uppercase bold-label">
                                         <FormattedMessage id="project.users.SignUp.title"/>
                                     </button>
                                 </div>

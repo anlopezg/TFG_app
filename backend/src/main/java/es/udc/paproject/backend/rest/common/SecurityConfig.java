@@ -63,13 +63,13 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.DELETE, "/publications/physicals/delete/*").hasRole("SELLER")
 
 					/********************* PATTERN CONTROLLER *********************/
-					.requestMatchers(HttpMethod.POST, "/patterns/create").hasRole("SELLER")
+					.requestMatchers(HttpMethod.POST, "/patterns").hasRole("SELLER")
 
-					.requestMatchers(HttpMethod.GET, "/patterns/uploaded").hasRole("SELLER")
-					.requestMatchers(HttpMethod.GET, "/patterns/uploaded/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.GET, "/patterns").hasRole("SELLER")
+					.requestMatchers(HttpMethod.GET, "/patterns/*").hasRole("SELLER")
 
-					.requestMatchers(HttpMethod.PUT, "/patterns/edit/*").hasRole("SELLER")
-					.requestMatchers(HttpMethod.DELETE, "/patterns/delete/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.PUT, "/patterns/*").hasRole("SELLER")
+					.requestMatchers(HttpMethod.DELETE, "/patterns/*").hasRole("SELLER")
 
 					.requestMatchers(HttpMethod.GET, "/patterns/purchased").hasAnyRole("USER", "SELLER")
 					.requestMatchers(HttpMethod.GET, "/patterns/purchased/*").hasAnyRole("USER", "SELLER")

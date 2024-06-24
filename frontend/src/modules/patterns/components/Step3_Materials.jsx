@@ -117,8 +117,8 @@ const Step3_Materials = ({ data, onChange }) => {
                             <div className="card-body ">
 
 
-                                <div className="row">
-                                    <div className="col-md-6">
+                                <div className="row ">
+                                    <div className="col-md-6 form-group no-validation">
                                         <label htmlFor="amount">
                                             <FormattedMessage id="project.products.Pattern.toolName"/>
                                         </label>

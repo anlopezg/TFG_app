@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 import {Link} from 'react-router-dom';
-import ProductLink from "./ProductLink.jsx";
 
 const UserLink = ({id, username}) =>{
 

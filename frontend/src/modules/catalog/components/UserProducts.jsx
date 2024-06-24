@@ -19,20 +19,30 @@ const UserProducts = () => {
     const dispatch = useDispatch();
     const { username } = useParams();
     const [backendErrors, setBackendErrors] = useState(null);
-    const user = useSelector(userSelectors.getUser);
+
+    const userStore = useSelector(userSelectors.getUserStore);
+
 
     useEffect(() => {
 
-        dispatch(userActions.findUserByUsername(username,));
+        dispatch(userActions.findUserByUsername(username));
 
         dispatch(actions.findUserProducts(username, {page:0},
             errors => setBackendErrors(errors),
             ));
 
+        return ()=>{
+            dispatch(userActions.clearFoundUser());
+            dispatch(actions.clearProductSearch());
+        };
 
 
-    },[dispatch]);
 
+    },[dispatch, username]);
+
+    if (!userStore) {
+        return null;
+    }
 
     if (!productSearch) {
         return null;
@@ -59,8 +69,8 @@ const UserProducts = () => {
 
                                 <div className="profile-header-info">
                                     <h3 className="text-left retro">{username}</h3>
-                                    <p>{user.firstName}, {user.bio}</p>
-                                    <p>{user.region}/ {user.country} </p>
+                                    <p>{userStore.foundUser.firstName}, {userStore.foundUser.bio}</p>
+                                    <p>{userStore.foundUser.region}/ {userStore.foundUser.country} </p>
                                 </div>
                             </div>
 

@@ -51,8 +51,6 @@ const ProductDetails = () => {
         return null;
     }
 
-    console.log("Product", product);
-
     const craftNameTranslation = (craftName) =>{
         return <FormattedMessage id={`project.catalog.Crafts.${craftName}`}/>
     }

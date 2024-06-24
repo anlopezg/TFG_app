@@ -63,178 +63,168 @@ const UpdateProfile = () => {
         <div>
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
 
-            <div className="mt-4 mb-4 container justify-content-center align-items-center">
-                <div className="card">
-                    <h2 className="retro card-header">
-                        <FormattedMessage id="project.users.UpdateProfile.title"/>
-                    </h2>
+            <BackLink />
+            <div className="mt-4 mb-4 container d-flex justify-content-center align-items-center">
+                <div className="card shopping-card min-width-card">
+                    <div className="card-header coral">
+                        <h2 className="retro">
+                            <FormattedMessage id="project.users.UpdateProfile.title"/>
+                        </h2>
+                    </div>
+
 
                     <div className="card-body">
                         <form ref={node => form = node}
                               className="needs-validation" noValidate onSubmit={e => handleSubmit(e)}>
-                            <div className="form-group row justify-content-center">
-                                <label htmlFor="userName" className="col-md-4 col-form-label  bold-label">
-                                    <FormattedMessage id="project.global.fields.userName"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="text" id="userName" className="form-control"
-                                           value={userName}
-                                           onChange={e => setUserName(e.target.value)}
-                                           autoFocus
-                                           required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
+
+                            <div className="text-center">
+                                <div className="italic-message">
+                                    <FormattedMessage id="project.global.form.updateProfile"/>
                                 </div>
                             </div>
 
-                            <div className="form-group row justify-content-center">
-                                <label htmlFor="email" className="col-md-4 col-form-label  bold-label">
-                                    <FormattedMessage id="project.global.fields.email"/>
+                            <div className="form-group ">
+                                <label className="col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.userName" />
                                 </label>
-                                <div className="col-md-4">
-                                    <input type="email" id="email" className="form-control"
-                                           value={email}
-                                           onChange={e => setEmail(e.target.value)}
-                                           required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
+                                <input type="text" id="userName" className="form-control"
+                                       value={userName}
+                                       onChange={e => setUserName(e.target.value)}
+                                       autoFocus
+                                       required />
+                                <div className="invalid-feedback">
+                                    <FormattedMessage id='project.global.validator.required' />
+                                </div>
+                            </div>
+                            <div className="form-group mt-3">
+                                <label className="col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.email" />
+                                </label>
+                                <input type="email" id="email" className="form-control"
+                                       value={email}
+                                       onChange={e => setEmail(e.target.value)}
+                                       required />
+                                <div className="invalid-feedback">
+                                    <FormattedMessage id='project.global.validator.required' />
                                 </div>
                             </div>
 
-                            <div className="form-group row justify-content-center">
-                                <label htmlFor="firstName" className="col-md-4 col-form-label bold-label">
-                                    <FormattedMessage id="project.global.fields.firstName"/>
+                            <div className="form-group mt-3">
+                                <label className="col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.firstName" />
                                 </label>
-                                <div className="col-md-4">
-                                    <input type="text" id="firstName" className="form-control"
-                                           value={firstName}
-                                           onChange={e => setFirstName(e.target.value)}
-                                           autoFocus
-                                           required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
+                                <input type="text" id="firstName" className="form-control"
+                                       value={firstName}
+                                       onChange={e => setFirstName(e.target.value)}
+                                       required />
+                                <div className="invalid-feedback">
+                                    <FormattedMessage id='project.global.validator.required' />
                                 </div>
                             </div>
 
-                            <div className="form-group row justify-content-center">
-                                <label htmlFor="language" className="col-md-4 col-form-label bold-label">
-                                    <FormattedMessage id="project.global.fields.language"/>
+                            <div className="form-group mt-3">
+                                <label className="col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.language" />
                                 </label>
-                                <div className="col-md-4">
-                                    <input type="text" id="language" className="form-control"
-                                           value={language}
-                                           onChange={e => setLanguage(e.target.value)}
-                                           autoFocus
-                                           required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
+                                <input type="text" id="language" className="form-control"
+                                       value={language}
+                                       onChange={e => setLanguage(e.target.value)}
+                                       required />
+                                <div className="invalid-feedback">
+                                    <FormattedMessage id='project.global.validator.required' />
                                 </div>
                             </div>
 
-                            <div className="form-group row justify-content-center">
-                                <label htmlFor="country" className="col-md-4 col-form-label bold-label">
-                                    <FormattedMessage id="project.global.fields.country"/>
-                                </label>
-                                <div className="col-md-4">
+                            <div className="form-group row">
+                                <div className=" col-md-6">
+                                    <label className="col-form-label bold-label">
+                                        <FormattedMessage id="project.global.fields.country" />
+                                    </label>
                                     <CountryDropdown
                                         value={country}
                                         onChange={(val) => setCountry(val)}
                                         defaultOptionLabel={country}
-                                        id="country" className="form-control custom-country-dropdown"/>
+                                        id="country" className="form-control form-select" />
                                     <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
+                                        <FormattedMessage id='project.global.validator.required' />
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="form-group row justify-content-center mt-1 mb-1">
-                                <label htmlFor="region" className="col-md-4 col-form-label bold-label">
-                                    <FormattedMessage id="project.global.fields.region"/>
-                                </label>
-                                <div className="col-md-4">
+                                <div className="form-group col-md-6">
+                                    <label className="col-form-label bold-label">
+                                        <FormattedMessage id="project.global.fields.region" />
+                                    </label>
                                     <RegionDropdown
                                         disableWhenEmpty={true}
                                         country={country}
                                         value={region}
                                         onChange={(val) => setRegion(val)}
-
-                                        id="region" className="form-control custom-country-dropdown"
-                                        defaultOptionLabel={region}
-                                    />
+                                        id="region" className="form-control form-select"
+                                        defaultOptionLabel={region} />
                                     <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
+                                        <FormattedMessage id='project.global.validator.required' />
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="form-group row justify-content-center">
-                                <label htmlFor="crochetLevel" className="col-md-4 col-form-label bold-label">
-                                    <FormattedMessage id="project.global.fields.crochetLevel"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <select id="crochetLevel" className="form-control" value={crochetLevel}
+                            <div className="form-group row">
+                                <div className="col-md-6">
+                                    <label className="col-form-label bold-label">
+                                        <FormattedMessage id="project.global.fields.crochetLevel" />
+                                    </label>
+                                    <select id="crochetLevel" className="form-control form-select" value={crochetLevel}
                                             onChange={e => setCrochetLevel(e.target.value)}
                                             required>
                                         <option value="0">
-                                            <FormattedMessage id="project.global.fields.level.none"/></option>
+                                            <FormattedMessage id="project.global.fields.level.none" /></option>
                                         <option value="1">
-                                            <FormattedMessage id="project.global.fields.level.beginner"/></option>
+                                            <FormattedMessage id="project.global.fields.level.beginner" /></option>
                                         <option value="2">
-                                            <FormattedMessage id="project.global.fields.level.intermediate"/></option>
+                                            <FormattedMessage id="project.global.fields.level.intermediate" /></option>
                                         <option value="3">
-                                            <FormattedMessage id="project.global.fields.level.advanced"/></option>
+                                            <FormattedMessage id="project.global.fields.level.advanced" /></option>
                                     </select>
-
                                     <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
+                                        <FormattedMessage id='project.global.validator.required' />
                                     </div>
                                 </div>
-                            </div>
-                            <div className="form-group row justify-content-center">
-                                <label htmlFor="knitLevel" className="col-md-4 col-form-label bold-label">
-                                    <FormattedMessage id="project.global.fields.knitLevel"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <select id="knitLevel" className="form-control" value={knitLevel}
+
+                                <div className="form-group col-md-6">
+                                    <label className="col-form-label bold-label">
+                                        <FormattedMessage id="project.global.fields.knitLevel" />
+                                    </label>
+                                    <select id="knitLevel" className="form-control form-select" value={knitLevel}
                                             onChange={e => setKnitLevel(e.target.value)}
                                             required>
                                         <option value="0">
-                                            <FormattedMessage id="project.global.fields.level.none"/></option>
+                                            <FormattedMessage id="project.global.fields.level.none" /></option>
                                         <option value="1">
-                                            <FormattedMessage id="project.global.fields.level.beginner"/></option>
+                                            <FormattedMessage id="project.global.fields.level.beginner" /></option>
                                         <option value="2">
-                                            <FormattedMessage id="project.global.fields.level.intermediate"/></option>
+                                            <FormattedMessage id="project.global.fields.level.intermediate" /></option>
                                         <option value="3">
-                                            <FormattedMessage id="project.global.fields.level.advanced"/></option>
+                                            <FormattedMessage id="project.global.fields.level.advanced" /></option>
                                     </select>
-
                                     <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
+                                        <FormattedMessage id='project.global.validator.required' />
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="form-group row justify-content-center">
-                                <label htmlFor="bio" className="col-md-4 col-form-label bold-label">
-                                    <FormattedMessage id="project.global.fields.bio"/>
+                            <div className="form-group mt-3">
+                                <label className="col-form-label bold-label">
+                                    <FormattedMessage id="project.global.fields.bio" />
                                 </label>
-                                <div className="col-md-4">
-                                    <textarea  id="bio" className="form-control" rows="2"
-                                               value={bio}
-                                               maxLength={200}
-                                               onChange={e => setBio(e.target.value)}
-                                    />
-
-                                </div>
+                                <textarea id="bio" className="form-control" rows="2"
+                                          value={bio}
+                                          maxLength={200}
+                                          onChange={e => setBio(e.target.value)}
+                                />
                             </div>
 
                             <div className="form-group row justify-content-center">
                                 <div className="col-md-6 mt-4">
-                                    <button type="submit" className="btn button-pink extra-bold-label">
+                                    <button type="submit" className="btn button-pink text-uppercase bold-label">
                                         <FormattedMessage id="project.global.buttons.save"/>
                                     </button>
                                 </div>
@@ -244,10 +234,6 @@ const UpdateProfile = () => {
                     </div>
 
                 </div>
-            </div>
-
-            <div className="ml-3">
-                <BackLink/>
             </div>
 
         </div>

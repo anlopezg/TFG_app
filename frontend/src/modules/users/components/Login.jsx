@@ -44,10 +44,14 @@ const Login = () => {
         <div>
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             <div className="mt-4 mb-4 container d-flex justify-content-center align-items-center">
-                <div className="card ">
-                    <h2 className="retro card-header back-color-pink">
-                        <FormattedMessage id="project.users.Login.title"/>
-                    </h2>
+                <div className="card mb-3 card shopping-card min-width-card">
+
+                    <div className="card-header coral">
+                        <h2 className="retro ">
+                            <FormattedMessage id="project.users.Login.title"/>
+                        </h2>
+                    </div>
+
                     <div className="card-body">
                         <form ref={node => form = node}
                             className="needs-validation" noValidate
@@ -82,8 +86,8 @@ const Login = () => {
                                 </div>
                             </div>
                             <div className="form-group row justify-content-center">
-                                <div className="col-md-6 mt-4">
-                                    <button type="submit" className="btn button-light-pink bold-label">
+                                <div className="col-md-6 mt-5">
+                                    <button type="submit" className="btn button-pink bold-label">
                                         <FormattedMessage id="project.global.buttons.submit"/>
                                     </button>
                                 </div>

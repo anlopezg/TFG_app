@@ -10,5 +10,11 @@ export const CLEAR_USER = "./project/users/clearUser";
 
 export const CREATE_STRIPE_ACCOUNT_COMPLETED = "project/users/createStripeAccountCompleted";
 export const GET_STRIPE_ACCOUNT_COMPLETED = "project/users/getStripeAccountCompleted";
-
 export const GET_STRIPE_ACCOUNT_FAILURE = 'project/users/getStripeAccountFailure';
+export const CLEAR_STRIPE_ACCOUNT = "project/users/clearStripeAccount";
+
+
+/* USER STORE CATALOG SEARCH*/
+export const FIND_USER_BY_USERNAME_COMPLETED = "project/catalog/findUserByUsernameCompleted";
+
+export const CLEAR_FOUND_USER = "project/catalog/clearFoundUser";

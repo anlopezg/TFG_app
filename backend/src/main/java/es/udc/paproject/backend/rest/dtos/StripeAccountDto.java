@@ -5,28 +5,26 @@ import com.stripe.model.Account;
 public class StripeAccountDto {
 
     private String id;
-    private String email;
-
-    private String businessType;
     private Boolean chargesEnabled;
     private Boolean payoutsEnabled;
     private String country;
 
+    private String defaultCurrency;
+
     public StripeAccountDto() {
     }
 
-    public StripeAccountDto(String id, String email, String businessType, Boolean chargesEnabled, Boolean payoutsEnabled, String country) {
+    public StripeAccountDto(String id, Boolean chargesEnabled, Boolean payoutsEnabled, String country, String defaultCurrency) {
         this.id = id;
-        this.email = email;
-        this.businessType = businessType;
         this.chargesEnabled = chargesEnabled;
         this.payoutsEnabled = payoutsEnabled;
         this.country = country;
+        this.defaultCurrency = defaultCurrency;
     }
 
     public static StripeAccountDto stripeAccountToDto(Account account){
-        return new StripeAccountDto(account.getId(), account.getEmail(), account.getBusinessType(), account.getChargesEnabled(),
-                account.getPayoutsEnabled(), account.getCountry());
+        return new StripeAccountDto(account.getId(), account.getChargesEnabled(),
+                account.getPayoutsEnabled(), account.getCountry(), account.getDefaultCurrency());
     }
 
     public String getId() {
@@ -35,22 +33,6 @@ public class StripeAccountDto {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getBusinessType() {
-        return businessType;
-    }
-
-    public void setBusinessType(String businessType) {
-        this.businessType = businessType;
     }
 
     public Boolean getChargesEnabled() {
@@ -75,5 +57,13 @@ public class StripeAccountDto {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getDefaultCurrency() {
+        return defaultCurrency;
+    }
+
+    public void setDefaultCurrency(String defaultCurrency) {
+        this.defaultCurrency = defaultCurrency;
     }
 }

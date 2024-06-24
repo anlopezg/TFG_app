@@ -42,6 +42,9 @@ const Step1_General = ({ data, onChange, handleImagesChange, handleDeleteImage, 
         }));
     };
 
+    const handleCheckboxChange = (value) => {
+        onChange({ active: value === 'publish' });
+    };
 
 
     useEffect(() => {
@@ -270,6 +273,30 @@ const Step1_General = ({ data, onChange, handleImagesChange, handleDeleteImage, 
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required' />
                                     </div>
+                                </div>
+
+                                <div className="form-group row">
+                                    <p className="col-md-12 col-form-label bold-label">
+                                        <FormattedMessage id="project.products.Product.active.message"/>
+                                    </p>
+                                    <div className="col-md-12 ml-5 mt-2">
+                                        <input type="radio" id="publish" className="form-check-input"
+                                               checked={data.active}
+                                               onChange={()=> handleCheckboxChange('publish')}/>
+                                        <label htmlFor="publish" className="form-check-label mx-2">
+                                            <FormattedMessage id="project.products.Product.publish"/>
+                                        </label>
+                                    </div>
+
+                                    <div className="col-md-12 ml-5 mt-2">
+                                        <input type="radio" id="draft" className="form-check-input"
+                                               checked={!data.active}
+                                               onChange={()=> handleCheckboxChange('draft')}/>
+                                        <label htmlFor="draft" className="form-check-label mx-2">
+                                            <FormattedMessage id="project.products.Product.draft"/>
+                                        </label>
+                                    </div>
+
                                 </div>
 
                             </div>

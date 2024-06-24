@@ -66,7 +66,7 @@ const PhysicalDetails = () =>{
             <div className="mt-4 mb-4 justify-content-center align-items-center">
                 <div className="container d-flex">
                     <div className="card mb-3 mx-auto ">
-                        <h2 className="retro card-header">
+                        <h2 className="retro card-header pink">
                             <FormattedMessage id="project.products.ViewProduct.heading"/>
                         </h2>
                         <div className="card-body">

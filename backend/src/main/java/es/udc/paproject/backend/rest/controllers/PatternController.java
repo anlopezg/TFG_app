@@ -30,7 +30,7 @@ public class PatternController {
     @Autowired
     private PatternService patternService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<PatternDto> createPattern(@RequestAttribute Long userId,
                                                     @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto) throws InstanceNotFoundException, PermissionException, UserNotSellerException, MaxItemsExceededException {
 
@@ -54,7 +54,7 @@ public class PatternController {
         return new ResponseEntity<>(createdPatternDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/uploaded")
+    @GetMapping
     public BlockDto<PatternDto> findAddedPatterns(@RequestAttribute Long userId, @RequestParam(defaultValue = "0") int page) throws InstanceNotFoundException, UserNotSellerException {
 
         Block<Pattern> patternBlock = patternService.findAddedPatterns(userId, page,6 );
@@ -62,13 +62,13 @@ public class PatternController {
         return new BlockDto<>(toPatternDtos(patternBlock.getItems()), patternBlock.getExistMoreItems());
     }
 
-    @GetMapping("/uploaded/{id}")
+    @GetMapping("/{id}")
     public PatternDto findPatternById(@RequestAttribute Long userId, @PathVariable Long id) throws InstanceNotFoundException, UserNotOwnerException, PermissionException {
 
         return toFullPatternDto(patternService.findPatternById(userId, id));
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public PatternDto editPattern(@RequestAttribute Long userId,  @PathVariable Long id,  @Validated({PatternDto.AllValidations.class}) @RequestBody PatternDto patternDto) throws InstanceNotFoundException, UserNotOwnerException, PermissionException, MaxItemsExceededException {
 
         if (!userId.equals(patternDto.getUserId())) {
@@ -88,7 +88,7 @@ public class PatternController {
         return toPatternDtoFull(updatedPattern);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePattern(@RequestAttribute Long userId, @PathVariable Long id) throws InstanceNotFoundException, PermissionException {
 

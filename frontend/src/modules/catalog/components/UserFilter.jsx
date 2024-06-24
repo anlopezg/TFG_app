@@ -1,8 +1,9 @@
 import {useDispatch} from "react-redux";
 import * as actions from '../actions';
+import * as userActions from '../../users/actions.js';
 import {useState} from "react";
 import {FormattedMessage} from "react-intl";
-import {Form, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const UserFilter = () =>{
 
@@ -13,11 +14,15 @@ const UserFilter = () =>{
     const handleSubmit = event =>{
         event.preventDefault();
 
+        dispatch(actions.clearUserSearch());
+        dispatch(actions.clearProductSearch());
+        dispatch(userActions.clearFoundUser());
+
         dispatch(actions.findUsers({
             username: username.trim(),
             page:0}));
 
-        dispatch(actions.clearUserSearch());
+        //dispatch(actions.clearUserSearch());
         setUsername('');
 
         navigate('/catalog/find-users-result');

@@ -33,11 +33,13 @@ const AddedPatterns= ({patterns}) =>(
 
                             <div className="text-center mt-3">
                                 <a href={`/publications/manage-pattern/${pattern.id}`} className="btn btn-primary mx-2">
+                                    <i className="fa-solid fa-pen-nib mx-2"></i>
                                     <FormattedMessage id="project.global.buttons.edit"/>
                                 </a>
 
                                 <Link to={`/publications/delete-pattern/${pattern.id}`} className="btn btn-danger mx-2">
                                     <FormattedMessage id="project.global.buttons.delete"/>
+                                    <i className="fa-solid fa-trash-can mx-2"></i>
                                 </Link>
                             </div>
 

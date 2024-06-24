@@ -9,6 +9,9 @@ export const isLoggedIn = state =>
 export const getUserName = state => 
     isLoggedIn(state) ? getUser(state).userName : null;
 
+export const getUserStore = state =>
+    getModuleState(state).userStore;
+
 export const isSeller = state =>
     isLoggedIn(state) ? getUser(state).role === 'SELLER' : null;
 

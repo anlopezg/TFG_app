@@ -7,6 +7,7 @@ import Errors from "../../common/components/Errors.jsx";
 import {FormattedMessage} from "react-intl";
 import CraftSelector from "../../catalog/components/CraftSelector.jsx";
 import SubcategorySelector from "../../catalog/components/SubcategorySelector.jsx";
+import BackLink from "../../common/components/BackLink.jsx";
 
 const EditPhysical = () =>{
 
@@ -72,9 +73,10 @@ const EditPhysical = () =>{
     return (
         <div>
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
+            <BackLink/>
             <div className="mt-4 mb-4 justify-content-center align-items-center">
                 <div className="card bg-light mb-3">
-                    <h2 className="retro card-header">
+                    <h2 className="retro card-header pink">
                         <FormattedMessage id="project.products.EditPhysical.heading"/>
                     </h2>
 
@@ -82,12 +84,6 @@ const EditPhysical = () =>{
                         <form ref={node => form = node}
                               className="needs-validation" noValidate
                               onSubmit={(e)=> handleSubmit(e)}>
-
-                            <div className="p-3 text-center">
-                                <div className="framed-title disabled bold-label">
-                                    <FormattedMessage id="project.products.Pattern.generalInfo"/>
-                                </div>
-                            </div>
 
                             <div className="mb-3 text-center">
                                 <div className="italic-message small">
